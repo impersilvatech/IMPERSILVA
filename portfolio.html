@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfólio — IMPERSILVA TECH</title>
+<meta name="description" content="Sites profissionais criados pela IMPERSILVA TECH para negócios angolanos. Veja os nossos trabalhos e resultados reais."/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="js/config.js"></script>
+<style>
+/* ═══════════════════════════════════════
+   IMPERSILVA TECH — BASE STYLES
+   Shared across all tech/ pages
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2e2e33;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);--green-lt:#4ade80;
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.1);
+  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
+  --radius:12px;--radius-lg:18px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;padding-top:68px}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:all .3s}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
+.logo-main{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.logo-main .r{color:var(--red)}.logo-main .b{color:var(--blue-lt)}
+.logo-sub{font-size:.44rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.nav-links a.active{border-bottom:1px solid var(--red);padding-bottom:2px}
+.nav-cta{background:var(--red)!important;color:#fff!important;padding:.45rem 1.1rem;border-radius:6px;font-weight:700!important;letter-spacing:.06em!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--red-lt)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:1px;transition:all .3s}
+
+/* ── SECTION COMMONS ── */
+.eyebrow{display:flex;align-items:center;gap:.6rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
+.eyebrow::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
+.eyebrow::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:.8rem}
+.sec-title .r{color:var(--red)}.sec-title .b{color:var(--blue-lt)}.sec-title .g{color:var(--green)}
+.sec-sub{font-size:.95rem;font-weight:300;color:var(--gray-lt);line-height:1.75;max-width:640px}
+.container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+section{padding:5rem 1.5rem}
+
+/* ── BUTTONS ── */
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s}
+.btn-primary:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.35)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .25s}
+.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.06)}
+.btn-blue{background:var(--blue)!important}.btn-blue:hover{background:var(--blue-lt)!important}
+.btn-green{background:var(--green)!important}.btn-green:hover{background:var(--green-lt)!important}
+.btn-sm{padding:.55rem 1.1rem!important;font-size:.78rem!important}
+
+/* ── CARDS ── */
+.card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);transition:all .3s}
+.card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.card-pad{padding:1.5rem}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;gap:.4rem;border-radius:50px;padding:.3rem .8rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.badge-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.badge-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
+.badge-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.badge-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+
+/* ── STATS ── */
+.stats-bar{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:2.5rem 1.5rem}
+.stats-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:.3rem}
+.stat-lbl{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+
+/* ── WPP FLOAT ── */
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);animation:wpp-pulse 3s ease-in-out infinite}
+.wpp-float:hover{transform:scale(1.12)}
+@keyframes wpp-pulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+
+/* ── DRAWER (mobile) ── */
+.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:8000}
+.mm-overlay.active{display:block}
+.mm-drawer{position:fixed;top:0;right:0;width:80%;max-width:320px;height:100%;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
+.mm-drawer.active{transform:translateX(0)}
+.mm-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.mm-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.mm-close{background:rgba(255,255,255,.08);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.mm-body{flex:1;overflow-y:auto;padding:.5rem 0 2rem}
+.mm-section-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);padding:.9rem 1.2rem .4rem}
+.mm-nav a{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;padding:.8rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04);transition:all .15s}
+.mm-nav a i{width:18px;text-align:center;font-size:.85rem;flex-shrink:0}
+.mm-nav a span.mm-badge{margin-left:auto;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.15rem .5rem;border-radius:50px}
+.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+.mm-nav a.mm-active{color:#fff;background:rgba(255,255,255,.05)}
+.mm-divider{height:1px;background:rgba(255,255,255,.06);margin:.5rem 1.2rem}
+.mm-cta{margin:1rem 1.2rem 0}
+
+/* ── FOOTER ── */
+footer{background:var(--black);border-top:1px solid var(--divider);padding:3rem 1.5rem 2rem}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+.footer-brand .logo-main{font-size:1.3rem}
+.footer-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.7;margin-top:.7rem;max-width:280px}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.9rem}
+.footer-col a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;font-weight:300;margin-bottom:.5rem;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{max-width:1280px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.72rem;color:var(--gray)}
+.footer-bottom a{color:var(--gray);text-decoration:none}
+.footer-bottom a:hover{color:var(--white)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--black);padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
+.page-hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(214,40,40,.12) 0%,transparent 70%)}
+.page-hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.7rem;color:var(--gray);margin-bottom:1.2rem}
+.breadcrumb a{color:var(--gray);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb-sep{opacity:.4}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-brand{grid-column:1/-1}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  section{padding:3.5rem 1rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .footer-inner{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
+  .stat-val{font-size:2rem}
+}
+
+/* ── PORTFOLIO PAGE ── */
+.port-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.port-filter{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--gray);font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.45rem .9rem;border-radius:50px;cursor:pointer;transition:all .2s;border-style:solid}
+.port-filter.active,.port-filter:hover{background:var(--red-dim);border-color:rgba(214,40,40,.4);color:var(--white)}
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.port-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:14px;overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
+.port-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.15);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.port-card.hidden{display:none}
+.port-card-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--charcoal-lt);cursor:pointer}
+.port-card-img .port-thumb{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(255,255,255,.1)}
+.port-card:hover .port-card-img .port-thumb{transform:scale(1.05)}
+.port-stripe{position:absolute;bottom:0;left:0;right:0;height:3px;display:flex}
+.port-stripe span:first-child{flex:1;background:var(--red)}
+.port-stripe span:last-child{flex:1;background:var(--blue-lt)}
+.port-overlay{position:absolute;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.port-card:hover .port-overlay{opacity:1}
+.port-overlay-btn{display:flex;align-items:center;gap:.5rem;background:var(--white);color:var(--black);padding:.6rem 1.2rem;border-radius:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s}
+.port-overlay-btn:hover{transform:scale(1.04)}
+.port-card-body{padding:1.3rem;flex:1;display:flex;flex-direction:column}
+.port-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .55rem;border-radius:50px;margin-bottom:.6rem}
+.port-tag.t-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
+.port-tag.t-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.port-tag.t-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.port-tag.t-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.port-name{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.35rem}
+.port-desc{font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.55;flex:1;margin-bottom:.8rem}
+.port-result{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--green);font-weight:600;margin-bottom:.8rem}
+.port-result i{font-size:.62rem}
+.port-footer{display:flex;gap:.5rem;padding-top:.7rem;border-top:1px solid var(--divider);flex-wrap:wrap}
+.port-btn{display:inline-flex;align-items:center;gap:.35rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .8rem;border-radius:6px;text-decoration:none;transition:all .2s;cursor:pointer;border:none}
+.port-btn-primary{background:var(--red);color:#fff}
+.port-btn-primary:hover{background:var(--red-lt)}
+.port-btn-secondary{background:rgba(255,255,255,.07);color:var(--gray-lt);border:1px solid var(--divider)!important;border-style:solid!important}
+.port-btn-secondary:hover{color:var(--white);border-color:rgba(255,255,255,.2)!important}
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;display:none;align-items:center;justify-content:center;padding:1.5rem}
+.lightbox.active{display:flex}
+.lb-inner{max-width:900px;width:100%;position:relative}
+.lb-close{position:absolute;top:-3rem;right:0;background:rgba(255,255,255,.1);border:none;color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.lb-img-wrap{aspect-ratio:16/9;background:var(--charcoal);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,.1)}
+.lb-img-wrap img{width:100%;height:100%;object-fit:cover}
+.lb-info{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;flex-wrap:wrap;gap:.8rem}
+.lb-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.lb-nav{display:flex;gap:.5rem}
+.lb-nav button{background:rgba(255,255,255,.08);border:1px solid var(--divider);color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s}
+.lb-nav button:hover{background:rgba(255,255,255,.15)}
+/* Stats row */
+.port-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem;padding:1.5rem;background:var(--charcoal);border:1px solid var(--divider);border-radius:14px}
+.port-stat{text-align:center}
+.port-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;line-height:1}
+.port-stat-lbl{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-top:.3rem}
+/* Testimonial cards */
+.port-depo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:4rem}
+.port-depo{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.5rem}
+.port-depo-text{font-size:.84rem;color:var(--gray-lt);font-weight:300;line-height:1.75;margin-bottom:1rem;font-style:italic}
+.port-depo-text::before{content:'"';font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:900;color:var(--red);line-height:0;vertical-align:-.4em;margin-right:.15rem}
+.port-depo-author{display:flex;align-items:center;gap:.7rem}
+.port-depo-av{width:34px;height:34px;border-radius:50%;background:var(--charcoal-lt);border:1px solid var(--divider);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:900;flex-shrink:0}
+.port-depo-name{font-size:.82rem;font-weight:600}
+.port-depo-role{font-size:.68rem;color:var(--gray);font-weight:300}
+.port-depo-badge{display:inline-flex;align-items:center;gap:.35rem;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);border-radius:50px;padding:.25rem .6rem;font-size:.62rem;font-weight:700;color:var(--green);margin-top:.6rem}
+@media(max-width:900px){
+  .port-grid{grid-template-columns:repeat(2,1fr)}
+  .port-depo-grid{grid-template-columns:1fr 1fr}
+  .port-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .port-grid{grid-template-columns:1fr}
+  .port-depo-grid{grid-template-columns:1fr}
+  .port-stats{grid-template-columns:repeat(2,1fr);gap:.7rem;padding:1rem}
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="logo-link" href="index.html">
+      <span class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> <span style="color:var(--blue-lt);font-size:1rem">|</span> TECH</span>
+      <span class="logo-sub">Customização Digital</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="portfolio.html" class="active">Portfólio</a>
+      <a href="como-funciona.html">Como Funciona</a>
+      <a href="precos.html">Preços</a>
+      <a href="orcamento.html" class="nav-cta">Orçamento</a>
+      
+    </div>
+    <button class="hamburger" id="hamburger" onclick="openDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav><div class="mm-overlay" id="mmOverlay" onclick="closeDrawer()"></div>
+<div class="mm-drawer" id="mmDrawer">
+  <div class="mm-head">
+    <span class="mm-logo">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span> TECH</span>
+    <button class="mm-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="mm-body">
+    <div class="mm-section-label">Navegação</div>
+    <nav class="mm-nav">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Início</a>
+      <a href="servicos.html"><i class="fa-solid fa-layer-group"></i> Serviços <span class="mm-badge">9 tipos</span></a>
+      <a href="portfolio.html"><i class="fa-solid fa-briefcase"></i> Portfólio</a>
+      <a href="como-funciona.html"><i class="fa-solid fa-route"></i> Como Funciona</a>
+      <a href="precos.html"><i class="fa-solid fa-tag"></i> Preços</a>
+      <a href="orcamento.html"><i class="fa-solid fa-file-invoice"></i> Orçamento</a>
+    </nav>
+    <div class="mm-divider"></div>
+    <div class="mm-section-label">Tipos de Sites</div>
+    <nav class="mm-nav">
+      <a href="servicos.html#roupa"><i class="fa-solid fa-shirt" style="color:var(--red)"></i> Lojas de Roupa & Sapatos</a>
+      <a href="servicos.html#celulares"><i class="fa-solid fa-mobile-screen" style="color:var(--blue-lt)"></i> Celulares & Acessórios</a>
+      <a href="servicos.html#restaurante"><i class="fa-solid fa-utensils" style="color:var(--green)"></i> Restaurante & Delivery</a>
+      <a href="servicos.html#fastfood"><i class="fa-solid fa-burger" style="color:var(--amber)"></i> Hamburgueria & Fast Food</a>
+      <a href="servicos.html#bolos"><i class="fa-solid fa-cake-candles" style="color:var(--blue-lt)"></i> Padaria & Bolos</a>
+      <a href="servicos.html#eventos"><i class="fa-solid fa-ticket" style="color:var(--green)"></i> Eventos & Bilhetes</a>
+      <a href="servicos.html#salao"><i class="fa-solid fa-scissors" style="color:var(--red)"></i> Salão de Beleza</a>
+      <a href="servicos.html#livros"><i class="fa-solid fa-book-open" style="color:var(--blue-lt)"></i> Livros & Produtos</a>
+      <a href="servicos.html#escritorio"><i class="fa-solid fa-briefcase" style="color:var(--amber)"></i> Escritório & Serviços</a>
+    </nav>
+    <div class="mm-divider"></div>
+    <div class="mm-cta">
+      <a href="orcamento.html" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none" onclick="closeDrawer()">
+        <i class="fa-solid fa-file-invoice"></i> Pedir Orçamento
+      </a>
+    </div>
+  </div>
+</div><a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA%20TECH!%20Vi%20o%20site%20e%20quero%20saber%20mais." target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Início</a><span class="breadcrumb-sep">/</span><span>Portfólio</span></div>
+    <div class="eyebrow reveal" style="justify-content:center">Resultados reais</div>
+    <h1 class="sec-title reveal rd1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Sites que <span class="r">já criámos</span></h1>
+    <p class="sec-sub reveal rd2" style="margin:0 auto;text-align:center">Cada site é único e construído à medida do negócio. Veja os resultados reais que os nossos clientes alcançaram.</p>
+  </div>
+</div>
+
+<section style="background:var(--black)">
+  <div class="container">
+
+    <!-- Stats -->
+    <div class="port-stats reveal">
+      <div class="port-stat"><div class="port-stat-val" style="color:var(--red)" data-target="47" data-suffix="+">0</div><div class="port-stat-lbl">Sites entregues</div></div>
+      <div class="port-stat"><div class="port-stat-val" style="color:var(--blue-lt)" data-target="9">0</div><div class="port-stat-lbl">Sectores cobertos</div></div>
+      <div class="port-stat"><div class="port-stat-val" style="color:var(--green)" data-target="100" data-suffix="%">0</div><div class="port-stat-lbl">Clientes satisfeitos</div></div>
+      <div class="port-stat"><div class="port-stat-val" style="color:var(--amber)" data-target="7" data-suffix=" dias">0</div><div class="port-stat-lbl">Prazo médio</div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="port-filters reveal">
+      <button class="port-filter active" onclick="filterPort('all',this)">Todos</button>
+      <button class="port-filter" onclick="filterPort('loja',this)"><i class="fa-solid fa-shirt"></i> Lojas</button>
+      <button class="port-filter" onclick="filterPort('food',this)"><i class="fa-solid fa-utensils"></i> Alimentação</button>
+      <button class="port-filter" onclick="filterPort('eventos',this)"><i class="fa-solid fa-ticket"></i> Eventos</button>
+      <button class="port-filter" onclick="filterPort('servicos',this)"><i class="fa-solid fa-briefcase"></i> Serviços</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="port-grid" id="portGrid">
+      <!-- Os cards são carregados dinamicamente a partir do Cloudflare Worker -->
+      <div id="portLoading" style="grid-column:1/-1;text-align:center;padding:4rem 0;color:var(--gray)">
+        <div style="width:32px;height:32px;border:3px solid var(--divider);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem"></div>
+        A carregar portfólio...
+      </div>
+    </div><!-- end port-grid -->
+
+    <!-- Testimonials -->
+    <div style="margin-top:5rem">
+      <div class="eyebrow reveal">Depoimentos</div>
+      <h2 class="sec-title reveal rd1">O que dizem os <span class="b">nossos clientes</span></h2>
+      <div class="port-depo-grid">
+        <div class="port-depo reveal">
+          <p class="port-depo-text">O site que a IMPERSILVA TECH criou para a minha loja de roupa mudou tudo. No primeiro mês recebi mais de 200 encomendas só pelo site. Nunca imaginei que ia ser tão fácil vender online.</p>
+          <div class="port-depo-author">
+            <div class="port-depo-av" style="color:var(--red)">A</div>
+            <div>
+              <div class="port-depo-name">Ana Rodrigues</div>
+              <div class="port-depo-role">Loja de Moda — Huambo</div>
+              <div class="port-depo-badge"><i class="fa-solid fa-arrow-trend-up"></i> +200 encomendas/mês</div>
+            </div>
+          </div>
+        </div>
+        <div class="port-depo reveal rd1">
+          <p class="port-depo-text">Antes tinha a loja física e mal chegava a 50 clientes por semana. Com o site, os pedidos de delivery triplicaram. O pessoal foi super profissional e rápido.</p>
+          <div class="port-depo-author">
+            <div class="port-depo-av" style="color:var(--blue-lt)">M</div>
+            <div>
+              <div class="port-depo-name">Manuel Costa</div>
+              <div class="port-depo-role">Restaurante — Huambo</div>
+              <div class="port-depo-badge"><i class="fa-solid fa-arrow-trend-up"></i> Pedidos triplicados</div>
+            </div>
+          </div>
+        </div>
+        <div class="port-depo reveal rd2">
+          <p class="port-depo-text">Para o meu salão, o agendamento online foi um game changer. Já não perco clientes por não atender o telemóvel. Elas marcam directamente pelo site a qualquer hora.</p>
+          <div class="port-depo-author">
+            <div class="port-depo-av" style="color:var(--green)">J</div>
+            <div>
+              <div class="port-depo-name">Joana Ferreira</div>
+              <div class="port-depo-role">Salão de Beleza — Huambo</div>
+              <div class="port-depo-badge"><i class="fa-solid fa-arrow-trend-up"></i> Agenda sempre cheia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center;margin-top:4rem;padding:3rem;background:linear-gradient(135deg,var(--red-dim),var(--blue-dim));border:1px solid rgba(255,255,255,.08);border-radius:18px" class="reveal">
+      <h2 class="sec-title" style="margin-bottom:.6rem">Quer um site <span class="r">assim</span>?</h2>
+      <p style="color:var(--gray-lt);font-size:.9rem;font-weight:300;margin-bottom:1.8rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7">Pede um orçamento gratuito e terás o teu site pronto em 3 a 7 dias.</p>
+      <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+        <a href="orcamento.html" class="btn-primary"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento gratuito</a>
+        <a href="servicos.html" class="btn-outline"><i class="fa-solid fa-layer-group"></i> Ver serviços</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLb()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="lb-img-wrap" id="lbImg"><i class="fa-solid fa-image"></i></div>
+    <div class="lb-info">
+      <div>
+        <div class="lb-title" id="lbTitle">—</div>
+        <div style="font-size:.78rem;color:var(--gray);font-weight:300;margin-top:.3rem" id="lbDesc">—</div>
+      </div>
+      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap">
+        <a id="lbLink" href="orcamento.html" class="btn-primary btn-sm"><i class="fa-solid fa-copy"></i> Quero igual</a>
+        <div class="lb-nav">
+          <button onclick="lbNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <button onclick="lbNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <div class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> TECH</div>
+      <p class="footer-desc">Criamos sites profissionais para negócios angolanos. Lojas online, restaurantes, delivery, eventos e muito mais. Rápidos, modernos e acessíveis.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <a href="servicos.html#roupa">Lojas de Roupa</a>
+      <a href="servicos.html#restaurante">Restaurantes</a>
+      <a href="servicos.html#fastfood">Hamburguerias</a>
+      <a href="servicos.html#eventos">Eventos</a>
+      <a href="servicos.html#escritorio">Escritórios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="como-funciona.html">Como Funciona</a>
+      <a href="precos.html">Preços</a>
+      <a href="orcamento.html">Orçamento</a>
+      <a href="../index.html">IMPERSILVA Holding</a>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>© <span class="yr"></span> IMPERSILVA TECH — Customização Digital · Huambo, Angola</span>
+    <a href="https://wa.me/244954288128" target="_blank">+244 954 288 128</a>
+  </div>
+</footer><script>
+// Year
+document.querySelectorAll('.yr').forEach(e => e.textContent = new Date().getFullYear());
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+// Drawer
+function openDrawer(){document.getElementById('mmDrawer').classList.add('active');document.getElementById('mmOverlay').classList.add('active');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';}
+// Counters
+const cObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const target=parseInt(e.target.dataset.target);
+      const suffix=e.target.dataset.suffix||'';
+      let v=0;const step=target/(1800/16);
+      const t=setInterval(()=>{v=Math.min(v+step,target);e.target.textContent=Math.floor(v)+suffix;if(v>=target){e.target.textContent=target+suffix;clearInterval(t);}},16);
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+<script>
+// Filter (funciona com cards dinâmicos)
+function filterPort(cat, btn) {
+  document.querySelectorAll('.port-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.port-card').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+  });
+}
+
+// Lightbox
+var LB_DATA = {};
+var LB_KEYS = [];
+var lbCurrent = 0;
+
+function openLb(id) {
+  lbCurrent = LB_KEYS.indexOf(id);
+  if (lbCurrent < 0) return;
+  renderLb();
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function lbNav(dir) {
+  lbCurrent = (lbCurrent + dir + LB_KEYS.length) % LB_KEYS.length;
+  renderLb();
+}
+function renderLb() {
+  var d = LB_DATA[LB_KEYS[lbCurrent]];
+  if (!d) return;
+  document.getElementById('lbTitle').textContent = d.title;
+  document.getElementById('lbDesc').textContent = d.desc;
+  document.getElementById('lbLink').href = d.link;
+  var imgWrap = document.getElementById('lbImg');
+  if (d.imagem) {
+    imgWrap.innerHTML = '<img src="' + d.imagem + '" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:' + d.color + ';font-size:5rem;color:rgba(255,255,255,.2)&quot;><i class=&quot;fa-solid ' + d.icon + '&quot;></i></div>\'">';
+  } else {
+    imgWrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:' + d.color + ';font-size:5rem;color:rgba(255,255,255,.2)"><i class="fa-solid ' + d.icon + '"></i></div>';
+  }
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'ArrowLeft') lbNav(-1);
+});
+
+// Renderizar card dinamicamente
+function renderCard(item, idx) {
+  var delays = ['', 'rd1', 'rd2'];
+  var delay = delays[idx % 3];
+  var btnVer = item.url_ao_vivo
+    ? '<a href="' + item.url_ao_vivo + '" target="_blank" class="port-btn port-btn-secondary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver ao vivo</a>'
+    : '<button class="port-btn port-btn-secondary" onclick="openLb(\'' + item.id + '\')"><i class="fa-solid fa-eye"></i> Ver site</button>';
+  return '<div class="port-card reveal ' + delay + '" data-cat="' + item.categoria + '" id="' + item.id + '">'
+    + '<div class="port-card-img" onclick="openLb(\'' + item.id + '\')">'
+    + (item.imagem
+        ? '<img class="port-thumb" src="' + item.imagem + '" alt="' + item.nome + '" style="width:100%;height:100%;object-fit:cover">'
+        : '<div class="port-thumb"><i class="fa-solid ' + (item.icone || 'fa-globe') + '"></i></div>')
+    + '<div class="port-stripe"><span></span><span></span></div>'
+    + '<div class="port-overlay"><button class="port-overlay-btn"><i class="fa-solid fa-expand"></i> Ver detalhes</button></div>'
+    + '</div>'
+    + '<div class="port-card-body">'
+    + '<span class="port-tag ' + (item.tag_cor || 't-blue') + '">' + (item.tag_tipo || item.categoria) + '</span>'
+    + '<div class="port-name">' + item.nome + '</div>'
+    + '<div class="port-desc">' + item.descricao + '</div>'
+    + '<div class="port-result"><i class="fa-solid fa-arrow-trend-up"></i> ' + item.resultado + '</div>'
+    + '<div class="port-footer">'
+    + btnVer
+    + '<a href="orcamento.html?tipo=' + (item.orcamento_tipo || item.categoria) + '" class="port-btn port-btn-primary"><i class="fa-solid fa-copy"></i> Quero igual</a>'
+    + '</div></div></div>';
+}
+
+// Carregar portfólio do Worker
+async function loadPortfolio() {
+  try {
+    const items = await api.get('/api/portfolio');
+    const grid = document.getElementById('portGrid');
+
+    // Construir LB_DATA dinâmicamente
+    LB_DATA = {};
+    items.forEach(function(item) {
+      LB_DATA[item.id] = {
+        title: item.nome,
+        desc: item.descricao,
+        icon: item.icone || 'fa-globe',
+        color: item.lb_color || 'rgba(29,78,216,.2)',
+        link: item.url_ao_vivo || ('orcamento.html?tipo=' + (item.orcamento_tipo || item.categoria)),
+        imagem: item.imagem || null
+      };
+    });
+    LB_KEYS = Object.keys(LB_DATA);
+
+    // Renderizar cards
+    grid.innerHTML = items.map(function(item, idx) {
+      return renderCard(item, idx);
+    }).join('');
+
+    // Reactivar observe para animações reveal
+    document.querySelectorAll('#portGrid .reveal').forEach(el => obs.observe(el));
+
+    // Activar filtro actual
+    var activeFilter = document.querySelector('.port-filter.active');
+    if (activeFilter) {
+      var cat = activeFilter.textContent.trim() === 'Todos' ? 'all'
+        : activeFilter.onclick ? activeFilter.getAttribute('onclick').match(/'([^']+)'/)?.[1] : 'all';
+    }
+
+  } catch(e) {
+    document.getElementById('portGrid').innerHTML =
+      '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray)">'
+      + '<p>Não foi possível carregar o portfólio.</p>'
+      + '<p style="font-size:.8rem;margin-top:.5rem">Verifique a ligação ou contacte-nos via WhatsApp.</p>'
+      + '</div>';
+  }
+}
+
+loadPortfolio();
+</script>
+</body>
+</html>

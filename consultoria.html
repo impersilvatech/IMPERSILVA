@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IMPERSILVA CONSULTORIA — Evolução Empresarial</title>
+<meta name="description" content="Ajudamos micro e pequenas empresas a crescer e escalar. O Plano Escalador transforma negócios estagnados em empresas prósperas. Huambo, Angola."/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="js/config.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2e2e33;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);--green-lt:#4ade80;
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.1);
+  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;padding-top:68px}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--divider)}
+.navbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
+.logo-top{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.logo-sub{font-size:.45rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.nav-links{display:flex;align-items:center;gap:1.8rem}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-back{display:inline-flex;align-items:center;gap:.4rem;color:var(--gray)!important;font-size:.78rem!important}
+.nav-back:hover{color:var(--white)!important}
+.nav-cta{background:var(--red)!important;color:#fff!important;padding:.45rem 1rem;border-radius:5px;font-weight:700!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:1px}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--black)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
+.hero-glow-r{position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(214,40,40,.15) 0%,transparent 70%);animation:pulse-glow 4s ease-in-out infinite}
+.hero-glow-b{position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(29,78,216,.12) 0%,transparent 70%);animation:pulse-glow 4s ease-in-out infinite reverse}
+@keyframes pulse-glow{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+.hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:5rem 1.5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(214,40,40,.15);border:1px solid rgba(214,40,40,.3);border-radius:50px;padding:.35rem .9rem;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin-bottom:1.2rem}
+.hero-title .r{color:var(--red)}
+.hero-title .b{color:var(--blue-lt)}
+.hero-sub{font-size:1rem;font-weight:300;color:var(--gray-lt);line-height:1.75;margin-bottom:2rem;max-width:500px}
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s}
+.btn-primary:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.35)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .25s}
+.btn-secondary:hover{border-color:var(--white);background:rgba(255,255,255,.06)}
+/* Hero visual */
+.hero-visual{position:relative}
+.hero-card-stack{position:relative;height:360px}
+.hcard{position:absolute;background:var(--charcoal);border:1px solid var(--divider);border-radius:14px;padding:1.4rem;width:260px}
+.hcard-1{top:0;left:0;border-color:rgba(214,40,40,.3);background:linear-gradient(135deg,rgba(214,40,40,.08),var(--charcoal))}
+.hcard-2{top:80px;left:60px;border-color:rgba(29,78,216,.3);background:linear-gradient(135deg,rgba(29,78,216,.08),var(--charcoal))}
+.hcard-3{top:160px;left:20px;border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,rgba(34,197,94,.06),var(--charcoal))}
+.hcard-icon{font-size:1.4rem;margin-bottom:.6rem}
+.hcard-label{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem}
+.hcard-val{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;line-height:1}
+.hcard-desc{font-size:.72rem;color:var(--gray);font-weight:300;margin-top:.3rem}
+/* Hero stat pills */
+.hero-pills{display:flex;flex-direction:column;gap:.6rem;margin-top:2rem}
+.hero-pill{display:flex;align-items:center;gap:.7rem;background:rgba(255,255,255,.04);border:1px solid var(--divider);border-radius:8px;padding:.6rem 1rem;font-size:.8rem;color:var(--gray-lt)}
+.hero-pill i{color:var(--green);font-size:.8rem;flex-shrink:0}
+
+/* ── STATS BAR ── */
+.stats-bar{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:2.5rem 1.5rem}
+.stats-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
+.stat-item .stat-num{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:.3rem}
+.stat-num.r{color:var(--red)}
+.stat-num.b{color:var(--blue-lt)}
+.stat-num.g{color:var(--green)}
+.stat-num.a{color:var(--amber)}
+.stat-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+
+/* ── SECTION COMMONS ── */
+.eyebrow{display:flex;align-items:center;gap:.6rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
+.eyebrow::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
+.eyebrow::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:.8rem}
+.sec-title .r{color:var(--red)}
+.sec-title .b{color:var(--blue-lt)}
+.sec-title .g{color:var(--green)}
+.sec-sub{font-size:.95rem;font-weight:300;color:var(--gray-lt);line-height:1.75;max-width:640px}
+.sec-header{margin-bottom:3rem}
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+section{padding:5rem 1.5rem}
+
+/* ── DOR / DIAGNÓSTICO ── */
+#dor{background:var(--black)}
+.dor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem}
+.dor-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.5rem;position:relative;overflow:hidden;transition:all .3s}
+.dor-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.12)}
+.dor-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px}
+.dor-card.red::before{background:var(--red)}
+.dor-card.blue::before{background:var(--blue-lt)}
+.dor-card.amber::before{background:var(--amber)}
+.dor-card.green::before{background:var(--green)}
+.dor-icon{font-size:1.5rem;margin-bottom:.9rem}
+.dor-icon.r{color:var(--red)}
+.dor-icon.b{color:var(--blue-lt)}
+.dor-icon.a{color:var(--amber)}
+.dor-icon.g{color:var(--green)}
+.dor-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem}
+.dor-desc{font-size:.82rem;color:var(--gray-lt);font-weight:300;line-height:1.7}
+.dor-quote{background:rgba(214,40,40,.06);border:1px solid rgba(214,40,40,.2);border-radius:10px;padding:1.3rem 1.5rem;margin-top:2.5rem;font-size:.9rem;color:var(--gray-lt);font-style:italic;line-height:1.75;max-width:800px}
+.dor-quote strong{color:var(--white);font-style:normal}
+
+/* ── PLANO ESCALADOR ── */
+#escalador{background:var(--dark)}
+.esc-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.esc-intro{position:sticky;top:6rem}
+.esc-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--red-dim);border:1px solid rgba(214,40,40,.3);border-radius:6px;padding:.4rem .9rem;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem}
+.esc-phases{display:flex;flex-direction:column;gap:0}
+.esc-phase{display:flex;gap:1.2rem;position:relative;padding-bottom:2rem}
+.esc-phase:last-child{padding-bottom:0}
+.esc-phase-left{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0;width:44px}
+.esc-num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;flex-shrink:0;position:relative;z-index:1;border:2px solid}
+.esc-num.r{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+.esc-num.b{background:var(--blue-dim);border-color:var(--blue-lt);color:var(--blue-lt)}
+.esc-num.g{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.esc-num.a{background:var(--amber-dim);border-color:var(--amber);color:var(--amber)}
+.esc-line{width:2px;flex:1;background:var(--divider);margin-top:.3rem}
+.esc-phase:last-child .esc-line{display:none}
+.esc-content{padding-top:.3rem;flex:1}
+.esc-phase-tag{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.25rem}
+.esc-phase-title{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem}
+.esc-phase-desc{font-size:.82rem;color:var(--gray-lt);font-weight:300;line-height:1.7;margin-bottom:.7rem}
+.esc-phase-points{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.esc-phase-points li{display:flex;align-items:flex-start;gap:.5rem;font-size:.77rem;color:var(--gray-lt);font-weight:300}
+.esc-phase-points li i{font-size:.6rem;margin-top:.25rem;flex-shrink:0}
+.esc-phase-points li i.r{color:var(--red)}
+.esc-phase-points li i.b{color:var(--blue-lt)}
+.esc-phase-points li i.g{color:var(--green)}
+.esc-phase-points li i.a{color:var(--amber)}
+
+/* ── CONCEITOS CHAVE (pró-labore etc) ── */
+#conceitos{background:var(--black)}
+.conc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.conc-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.5rem;transition:all .3s}
+.conc-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
+.conc-card-top{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.conc-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.conc-icon.r{background:var(--red-dim);color:var(--red)}
+.conc-icon.b{background:var(--blue-dim);color:var(--blue-lt)}
+.conc-icon.g{background:var(--green-dim);color:var(--green)}
+.conc-icon.a{background:var(--amber-dim);color:var(--amber)}
+.conc-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.conc-term{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.5rem}
+.conc-desc{font-size:.81rem;color:var(--gray-lt);font-weight:300;line-height:1.7}
+.conc-example{margin-top:.8rem;background:rgba(255,255,255,.03);border:1px solid var(--divider);border-radius:7px;padding:.7rem .9rem;font-size:.77rem;color:var(--gray);font-style:italic;line-height:1.6}
+.conc-example strong{color:var(--green);font-style:normal}
+
+/* ── 4 FUNDOS ── */
+#fundos{background:var(--dark)}
+.fundos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.3rem}
+.fundo-card{border-radius:14px;padding:1.8rem;position:relative;overflow:hidden;border:1px solid}
+.fundo-card.maneio{background:linear-gradient(135deg,rgba(29,78,216,.1),rgba(29,78,216,.03));border-color:rgba(29,78,216,.25)}
+.fundo-card.emergencia{background:linear-gradient(135deg,rgba(214,40,40,.1),rgba(214,40,40,.03));border-color:rgba(214,40,40,.25)}
+.fundo-card.fixas{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(245,158,11,.03));border-color:rgba(245,158,11,.25)}
+.fundo-card.expansao{background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(34,197,94,.03));border-color:rgba(34,197,94,.25)}
+.fundo-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.fundo-icon.b{color:var(--blue-lt)}
+.fundo-icon.r{color:var(--red)}
+.fundo-icon.a{color:var(--amber)}
+.fundo-icon.g{color:var(--green)}
+.fundo-num{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;opacity:.5;margin-bottom:.3rem}
+.fundo-name{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem}
+.fundo-desc{font-size:.82rem;color:var(--gray-lt);font-weight:300;line-height:1.7;margin-bottom:.9rem}
+.fundo-tip{display:flex;align-items:flex-start;gap:.5rem;background:rgba(0,0,0,.2);border-radius:7px;padding:.65rem .8rem;font-size:.75rem;color:var(--gray-lt);line-height:1.6}
+.fundo-tip i{font-size:.7rem;margin-top:.2rem;flex-shrink:0;opacity:.7}
+
+/* ── PARA QUEM É ── */
+#para-quem{background:var(--black)}
+.pq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.pq-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.5rem;text-align:center;transition:all .3s;cursor:default}
+.pq-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-3px)}
+.pq-icon{font-size:2rem;margin-bottom:.8rem;display:block}
+.pq-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+.pq-desc{font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.6}
+
+/* ── SERVIÇOS ADICIONAIS ── */
+#servicos-add{background:var(--dark)}
+.srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.3rem}
+.srv-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.6rem;display:flex;gap:1.1rem;align-items:flex-start;transition:all .3s}
+.srv-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
+.srv-icon-wrap{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.srv-icon-wrap.r{background:var(--red-dim);color:var(--red)}
+.srv-icon-wrap.b{background:var(--blue-dim);color:var(--blue-lt)}
+.srv-icon-wrap.g{background:var(--green-dim);color:var(--green)}
+.srv-icon-wrap.a{background:var(--amber-dim);color:var(--amber)}
+.srv-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.35rem}
+.srv-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.65}
+
+/* ── COMO FUNCIONA ── */
+#como-funciona{background:var(--black)}
+.cf-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;position:relative}
+.cf-steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:var(--divider);z-index:0}
+.cf-step{text-align:center;padding:1.5rem 1rem;position:relative;z-index:1}
+.cf-num{width:56px;height:56px;border-radius:50%;border:2px solid var(--divider);background:var(--dark);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;margin:0 auto 1rem;position:relative}
+.cf-num.active{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.cf-step-title{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+.cf-step-desc{font-size:.76rem;color:var(--gray);font-weight:300;line-height:1.6}
+
+/* ── DEPOIMENTOS ── */
+#depoimentos{background:var(--dark)}
+.depo-wrap{overflow:hidden}
+.depo-slides{display:flex;transition:transform .5s ease}
+.depo-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:14px;padding:2rem;min-width:100%;width:100%;flex-shrink:0;box-sizing:border-box}
+.depo-stars{color:var(--amber);font-size:.8rem;margin-bottom:1rem;letter-spacing:.1em}
+.depo-text{font-size:.9rem;color:var(--gray-lt);font-weight:300;line-height:1.8;font-style:italic;margin-bottom:1.4rem}
+.depo-text::before{content:'"';font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:900;color:var(--red);line-height:0;vertical-align:-.5em;margin-right:.2rem}
+.depo-author{display:flex;align-items:center;gap:.9rem}
+.depo-av{width:40px;height:40px;border-radius:50%;background:var(--charcoal-lt);border:1px solid var(--divider);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;color:var(--gray);flex-shrink:0}
+.depo-name{font-size:.85rem;font-weight:600;color:var(--white)}
+.depo-role{font-size:.7rem;color:var(--gray);font-weight:300;margin-top:.1rem}
+.depo-result{display:inline-flex;align-items:center;gap:.4rem;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);border-radius:50px;padding:.3rem .7rem;font-size:.65rem;font-weight:700;color:var(--green);margin-top:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.depo-nav{display:flex;justify-content:center;gap:.6rem;margin-top:1.5rem}
+.depo-dot{width:8px;height:8px;border-radius:50%;background:var(--divider);border:none;cursor:pointer;transition:all .25s}
+.depo-dot.active{background:var(--red);transform:scale(1.25)}
+.depo-controls{display:flex;justify-content:center;gap:.8rem;margin-top:1rem}
+.depo-btn{width:36px;height:36px;border-radius:50%;background:var(--charcoal);border:1px solid var(--divider);color:var(--gray);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s}
+.depo-btn:hover{border-color:rgba(255,255,255,.2);color:var(--white)}
+
+/* ── FAQ ── */
+#faq{background:var(--black)}
+.faq-wrap{max-width:800px;margin:0 auto;background:var(--charcoal);border:1px solid var(--divider);border-radius:14px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--divider)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.6rem;gap:1rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-align:left;transition:background .2s}
+.faq-q:hover,.faq-q.open{background:rgba(255,255,255,.03)}
+.faq-q .faq-ico{font-size:.7rem;color:var(--gray);transition:transform .25s;flex-shrink:0}
+.faq-q.open .faq-ico{transform:rotate(180deg);color:var(--red)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:.85rem;color:var(--gray-lt);font-weight:300;line-height:1.75;padding:0 1.6rem}
+.faq-a.open{max-height:500px;padding:.2rem 1.6rem 1.3rem}
+
+/* ── CTA FINAL ── */
+#cta-final{background:var(--dark);padding:6rem 1.5rem}
+.cta-box{max-width:750px;margin:0 auto;background:linear-gradient(135deg,var(--red-dim),var(--blue-dim));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3rem 2rem;text-align:center}
+.cta-tag{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--red);color:#fff;padding:.3rem .8rem;border-radius:50px;margin-bottom:1rem}
+.cta-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;text-transform:uppercase;line-height:1.05;margin-bottom:.8rem}
+.cta-sub{font-size:.9rem;color:var(--gray-lt);font-weight:300;margin-bottom:2rem;line-height:1.7;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-guarantees{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.cta-guarantee{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--gray-lt)}
+.cta-guarantee i{color:var(--green);font-size:.7rem}
+
+/* ── MODAL CONTACTO ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:var(--charcoal);border:1px solid rgba(255,255,255,.1);border-radius:18px 18px 0 0;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;transform:translateY(40px);transition:transform .35s ease}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:1rem auto .5rem;display:block}
+.modal-head{padding:.8rem 1.4rem 1rem;border-bottom:1px solid var(--divider);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.modal-close{background:rgba(255,255,255,.08);border:none;color:var(--gray);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.modal-close:hover{background:rgba(255,255,255,.15);color:var(--white)}
+.modal-body{padding:1.4rem}
+.mfield{margin-bottom:1rem}
+.mlabel{display:block;font-size:.63rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:.4rem}
+.minput{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.65rem .9rem;color:var(--white);font-family:'Barlow',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;box-sizing:border-box}
+.minput:focus{border-color:rgba(214,40,40,.4);background:rgba(214,40,40,.03)}
+.minput::placeholder{color:rgba(255,255,255,.22)}
+textarea.minput{min-height:80px;resize:vertical}
+.mopts{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.3rem}
+.mopt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:.4rem .8rem;font-size:.76rem;font-weight:500;color:var(--gray-lt);cursor:pointer;transition:all .2s;user-select:none}
+.mopt.sel{background:var(--red-dim);border-color:rgba(214,40,40,.4);color:var(--white)}
+.mopt:hover:not(.sel){border-color:rgba(255,255,255,.2);color:var(--white)}
+.mopt-multi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:.4rem .8rem;font-size:.76rem;font-weight:500;color:var(--gray-lt);cursor:pointer;transition:all .2s;user-select:none}
+.mopt-multi.sel{background:var(--blue-dim);border-color:rgba(29,78,216,.4);color:var(--white)}
+.mopt-multi:hover:not(.sel){border-color:rgba(255,255,255,.2);color:var(--white)}
+.mdivider{height:1px;background:var(--divider);margin:1.1rem 0}
+.msubmit{width:100%;display:flex;align-items:center;justify-content:center;gap:.6rem;background:var(--green);color:#fff;border:none;border-radius:10px;padding:1rem;font-family:'Barlow',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-bottom:.4rem}
+.msubmit:hover{background:var(--green-lt);transform:translateY(-1px)}
+.mhint{text-align:center;font-size:.7rem;color:var(--gray);font-weight:300}
+@media(min-width:640px){
+  .modal-overlay{align-items:center}
+  .modal-box{border-radius:18px;max-height:85vh}
+}
+
+/* ── WPP FLOAT ── */
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);animation:wpp-pulse 3s ease-in-out infinite}
+.wpp-float:hover{transform:scale(1.12)}
+@keyframes wpp-pulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+
+/* ── MOBILE MENU ── */
+.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:8000}
+.mm-overlay.active{display:block}
+.mm-drawer{position:fixed;top:0;right:0;width:55%;max-width:280px;height:100%;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column}
+.mm-drawer.active{transform:translateX(0)}
+.mm-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.mm-title-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.mm-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.2rem;cursor:pointer}
+.mm-nav a{display:block;color:rgba(255,255,255,.75);text-decoration:none;font-size:.95rem;padding:.85rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.05);transition:all .15s}
+.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+
+/* ── FOOTER ── */
+footer{background:var(--black);border-top:1px solid var(--divider);padding:2rem 1.5rem;text-align:center}
+.footer-txt{font-size:.72rem;color:var(--gray);line-height:1.8}
+.footer-txt a{color:var(--gray);text-decoration:none}
+.footer-txt a:hover{color:var(--white)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+.reveal-d4{transition-delay:.4s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:2rem}
+  .hero-visual{display:none}
+  .esc-grid{grid-template-columns:1fr}
+  .esc-intro{position:static}
+  .cf-steps::before{display:none}
+  .stats-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  section{padding:3.5rem 1rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero-inner{padding:3.5rem 1rem 3rem}
+  .fundos-grid,.dor-grid,.pq-grid,.conc-grid,.srv-grid{grid-template-columns:1fr}
+  .cta-box{padding:2rem 1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="logo-link" href="index.html">
+      <span class="logo-top">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span> <span style="color:var(--blue-lt);font-size:1rem">|</span> <span style="font-size:1rem">CONSULTORIA</span></span>
+      <span class="logo-sub">Evolução Empresarial</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao site</a>
+      <a href="#escalador">Plano Escalador</a>
+      <a href="#fundos">Os 4 Fundos</a>
+      <a href="#como-funciona">Como Funciona</a>
+      <a href="#faq">FAQ</a>
+      <button onclick="abrirModal()" class="nav-cta" style="font-family:'Barlow',sans-serif;border:none;cursor:pointer;letter-spacing:.05em">Diagnóstico Gratuito</button>
+    </nav>
+    <button class="hamburger" id="hamburger" onclick="document.getElementById('mmDrawer').classList.toggle('active');document.getElementById('mmOverlay').classList.toggle('active')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-r"></div>
+  <div class="hero-glow-b"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge reveal"><i class="fa-solid fa-chart-line"></i> Plano Escalador de Empresas</div>
+      <h1 class="hero-title reveal reveal-d1">
+        O seu negócio<br>está <span class="r">parado.</span><br>Nós sabemos<br><span class="b">porquê.</span>
+      </h1>
+      <p class="hero-sub reveal reveal-d2">A maioria das micro e pequenas empresas angolanas não crescem por causa de pequenos detalhes que passam despercebidos. Nós identificamos esses detalhes e transformamos a sua empresa numa máquina de crescimento.</p>
+      <div class="hero-btns reveal reveal-d3">
+        <button onclick="abrirModal()" class="btn-primary"><i class="fa-solid fa-stethoscope"></i> Diagnóstico Gratuito</button>
+        <a href="#escalador" class="btn-secondary"><i class="fa-solid fa-arrow-down"></i> Ver o Plano Escalador</a>
+      </div>
+      <div class="hero-pills reveal reveal-d4">
+        <div class="hero-pill"><i class="fa-solid fa-check-circle"></i> Sem crescimento? Encontramos a causa em 48 horas</div>
+        <div class="hero-pill"><i class="fa-solid fa-check-circle"></i> Metodologia testada em dezenas de empresas angolanas</div>
+        <div class="hero-pill"><i class="fa-solid fa-check-circle"></i> Resultados visíveis nos primeiros 90 dias</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="hcard hcard-1 reveal reveal-d1">
+          <div class="hcard-icon" style="color:var(--red)"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="hcard-label">Resultado médio</div>
+          <div class="hcard-val" style="color:var(--red)">+73%</div>
+          <div class="hcard-desc">crescimento em 6 meses</div>
+        </div>
+        <div class="hcard hcard-2 reveal reveal-d2">
+          <div class="hcard-icon" style="color:var(--blue-lt)"><i class="fa-solid fa-users"></i></div>
+          <div class="hcard-label">Empresas acompanhadas</div>
+          <div class="hcard-val" style="color:var(--blue-lt)">60+</div>
+          <div class="hcard-desc">em Huambo e províncias</div>
+        </div>
+        <div class="hcard hcard-3 reveal reveal-d3">
+          <div class="hcard-icon" style="color:var(--green)"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="hcard-label">Diagnóstico inicial</div>
+          <div class="hcard-val" style="color:var(--green)">Gratuito</div>
+          <div class="hcard-desc">sem compromisso</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num r" data-target="60" data-suffix="+">0</div>
+      <div class="stat-label">Empresas Acompanhadas</div>
+    </div>
+    <div class="stat-item reveal reveal-d1">
+      <div class="stat-num b" data-target="73" data-suffix="%">0</div>
+      <div class="stat-label">Crescimento Médio</div>
+    </div>
+    <div class="stat-item reveal reveal-d2">
+      <div class="stat-num g" data-target="90" data-suffix=" dias">0</div>
+      <div class="stat-label">Para Ver Resultados</div>
+    </div>
+    <div class="stat-item reveal reveal-d3">
+      <div class="stat-num a" data-target="5">0</div>
+      <div class="stat-label">Províncias Servidas</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- DOR / DIAGNÓSTICO -->
+<section id="dor">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow reveal">O problema</div>
+      <h2 class="sec-title reveal reveal-d1">Reconhece algum<br>destes <span class="r">sintomas</span>?</h2>
+      <p class="sec-sub reveal reveal-d2">Estas são as 5 razões mais comuns pelas quais micro e pequenas empresas não crescem em Angola. Se reconhece pelo menos 2, precisa do Plano Escalador.</p>
+    </div>
+    <div class="dor-grid">
+      <div class="dor-card red reveal">
+        <div class="dor-icon r"><i class="fa-solid fa-chart-bar"></i></div>
+        <div class="dor-title">Fatura mas não cresce</div>
+        <div class="dor-desc">Trabalha todos os dias, vende, mas no fim do mês o dinheiro desaparece e a empresa continua no mesmo sítio. Sente que está sempre a correr para ficar parado. Isto não é azar — é falta de estrutura financeira.</div>
+      </div>
+      <div class="dor-card blue reveal reveal-d1">
+        <div class="dor-icon b"><i class="fa-solid fa-users"></i></div>
+        <div class="dor-title">Capital humano desvalorizado</div>
+        <div class="dor-desc">A equipa não é treinada, não tem motivação, a rotatividade é alta. Uma empresa cujo capital humano é ignorado está sujeita a arruinar-se. O seu maior activo são as pessoas — e muitos empresários esquecem isso.</div>
+      </div>
+      <div class="dor-card amber reveal reveal-d2">
+        <div class="dor-icon a"><i class="fa-solid fa-wallet"></i></div>
+        <div class="dor-title">Confunde salário com lucro</div>
+        <div class="dor-desc">Após pagar as despesas, o dinheiro restante vai directamente para o bolso. Não há distinção entre pró-labore (o seu salário) e o evento de liquidez (o lucro real da empresa). Este erro destrói empresas silenciosamente.</div>
+      </div>
+      <div class="dor-card green reveal reveal-d1">
+        <div class="dor-icon g"><i class="fa-solid fa-boxes-stacked"></i></div>
+        <div class="dor-title">Compras diárias e desorganizadas</div>
+        <div class="dor-desc">Compra matéria-prima ou produtos diariamente, ao invés de semanal ou mensalmente. Paga mais caro, não aproveita descontos de quantidade, e gasta mais tempo e dinheiro em deslocações. Uma mudança simples que muda tudo.</div>
+      </div>
+      <div class="dor-card red reveal reveal-d2">
+        <div class="dor-icon r"><i class="fa-solid fa-piggy-bank"></i></div>
+        <div class="dor-title">Sem fundos estratégicos</div>
+        <div class="dor-desc">Não tem fundo de emergência, fundo de maneio, fundo de despesas fixas nem fundo de expansão. Quando surge um imprevisto, a empresa fica em colapso. Sem reservas, qualquer crise vira catástrofe.</div>
+      </div>
+    </div>
+    <div class="dor-quote reveal">
+      <strong>"O problema não é a falta de dinheiro. O problema é a falta de controlo sobre o dinheiro que já entra."</strong><br>Quando se tem controlo sobre estes pequenos detalhes, o jogo vira. Empresas que aplicam o Plano Escalador transformam os mesmos recursos em resultados completamente diferentes.
+    </div>
+  </div>
+</section>
+
+<!-- PLANO ESCALADOR -->
+<section id="escalador">
+  <div class="container">
+    <div class="esc-grid">
+      <div class="esc-intro">
+        <div class="esc-badge reveal"><i class="fa-solid fa-rocket"></i> Metodologia exclusiva</div>
+        <h2 class="sec-title reveal reveal-d1">O Plano<br><span class="r">Escalador</span></h2>
+        <p class="sec-sub reveal reveal-d2">Uma metodologia desenvolvida para a realidade das micro e pequenas empresas angolanas. 6 fases sequenciais que transformam qualquer negócio estagnado numa empresa em crescimento.</p>
+        <div style="margin-top:2rem" class="reveal reveal-d3">
+          <div style="background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.3rem">
+            <div style="font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem">O que garante o Plano</div>
+            <div style="display:flex;flex-direction:column;gap:.6rem">
+              <div style="display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--gray-lt)"><i class="fa-solid fa-circle-check" style="color:var(--green);font-size:.75rem"></i> Diagnóstico completo do negócio</div>
+              <div style="display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--gray-lt)"><i class="fa-solid fa-circle-check" style="color:var(--green);font-size:.75rem"></i> Plano de acção personalizado</div>
+              <div style="display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--gray-lt)"><i class="fa-solid fa-circle-check" style="color:var(--green);font-size:.75rem"></i> Acompanhamento mensal</div>
+              <div style="display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--gray-lt)"><i class="fa-solid fa-circle-check" style="color:var(--green);font-size:.75rem"></i> Formação da equipa incluída</div>
+              <div style="display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--gray-lt)"><i class="fa-solid fa-circle-check" style="color:var(--green);font-size:.75rem"></i> Relatórios de progresso</div>
+            </div>
+          </div>
+          <button onclick="abrirModal()" class="btn-primary" style="width:100%;justify-content:center;margin-top:1rem;border:none;cursor:pointer"><i class="fa-solid fa-calendar-check"></i> Quero o Plano Escalador</button>
+        </div>
+      </div>
+      <div class="esc-phases">
+        <div class="esc-phase reveal">
+          <div class="esc-phase-left"><div class="esc-num r">01</div><div class="esc-line"></div></div>
+          <div class="esc-content">
+            <div class="esc-phase-tag">Fase 1</div>
+            <div class="esc-phase-title">Diagnóstico Empresarial</div>
+            <div class="esc-phase-desc">Analisamos profundamente o seu negócio: fluxo financeiro, processos operacionais, equipa, produtos e mercado. Identificamos exactamente onde estão os pontos de bloqueio que impedem o crescimento.</div>
+            <ul class="esc-phase-points">
+              <li><i class="fa-solid fa-arrow-right r"></i> Análise financeira completa</li>
+              <li><i class="fa-solid fa-arrow-right r"></i> Mapeamento de processos actuais</li>
+              <li><i class="fa-solid fa-arrow-right r"></i> Avaliação do capital humano</li>
+              <li><i class="fa-solid fa-arrow-right r"></i> Identificação de perdas invisíveis</li>
+            </ul>
+          </div>
+        </div>
+        <div class="esc-phase reveal reveal-d1">
+          <div class="esc-phase-left"><div class="esc-num b">02</div><div class="esc-line"></div></div>
+          <div class="esc-content">
+            <div class="esc-phase-tag">Fase 2</div>
+            <div class="esc-phase-title">Capital Humano</div>
+            <div class="esc-phase-desc">O pilar de qualquer empresa são as suas pessoas. Trabalhamos no treinamento, motivação e valorização da equipa. Uma equipa bem treinada e motivada multiplica resultados — uma equipa desmotivada destrói negócios.</div>
+            <ul class="esc-phase-points">
+              <li><i class="fa-solid fa-arrow-right b"></i> Programa de treinamento da equipa</li>
+              <li><i class="fa-solid fa-arrow-right b"></i> Sistema de metas e incentivos</li>
+              <li><i class="fa-solid fa-arrow-right b"></i> Definição clara de funções</li>
+              <li><i class="fa-solid fa-arrow-right b"></i> Cultura de responsabilidade</li>
+            </ul>
+          </div>
+        </div>
+        <div class="esc-phase reveal reveal-d2">
+          <div class="esc-phase-left"><div class="esc-num a">03</div><div class="esc-line"></div></div>
+          <div class="esc-content">
+            <div class="esc-phase-tag">Fase 3</div>
+            <div class="esc-phase-title">Gestão Financeira</div>
+            <div class="esc-phase-desc">A má gestão financeira é a principal causa de falência de empresas. Implementamos um sistema financeiro claro: pró-labore definido, fluxo de caixa controlado, DRE simplificada e os 4 fundos estratégicos.</div>
+            <ul class="esc-phase-points">
+              <li><i class="fa-solid fa-arrow-right a"></i> Definição do pró-labore correcto</li>
+              <li><i class="fa-solid fa-arrow-right a"></i> Controlo de fluxo de caixa</li>
+              <li><i class="fa-solid fa-arrow-right a"></i> Implementação dos 4 fundos</li>
+              <li><i class="fa-solid fa-arrow-right a"></i> Evento de liquidez anual planeado</li>
+            </ul>
+          </div>
+        </div>
+        <div class="esc-phase reveal">
+          <div class="esc-phase-left"><div class="esc-num g">04</div><div class="esc-line"></div></div>
+          <div class="esc-content">
+            <div class="esc-phase-tag">Fase 4</div>
+            <div class="esc-phase-title">Gestão de Produtos e Processos</div>
+            <div class="esc-phase-desc">Optimizamos as compras, o stock e os processos operacionais. Passamos das compras diárias às compras semanais ou mensais — poupando dinheiro, tempo e aproveitando descontos de quantidade.</div>
+            <ul class="esc-phase-points">
+              <li><i class="fa-solid fa-arrow-right g"></i> Sistema de compras a grosso</li>
+              <li><i class="fa-solid fa-arrow-right g"></i> Controlo de stock optimizado</li>
+              <li><i class="fa-solid fa-arrow-right g"></i> Processos operacionais mapeados</li>
+              <li><i class="fa-solid fa-arrow-right g"></i> Eliminação de desperdícios</li>
+            </ul>
+          </div>
+        </div>
+        <div class="esc-phase reveal reveal-d1">
+          <div class="esc-phase-left"><div class="esc-num r">05</div><div class="esc-line"></div></div>
+          <div class="esc-content">
+            <div class="esc-phase-tag">Fase 5</div>
+            <div class="esc-phase-title">Fundos Estratégicos</div>
+            <div class="esc-phase-desc">Implementamos os 4 fundos essenciais para qualquer empresa saudável. Com os fundos correctos, nenhum imprevisto derruba o negócio e a expansão acontece de forma planeada e segura.</div>
+            <ul class="esc-phase-points">
+              <li><i class="fa-solid fa-arrow-right r"></i> Fundo de maneio (capital de giro)</li>
+              <li><i class="fa-solid fa-arrow-right r"></i> Fundo de emergência</li>
+              <li><i class="fa-solid fa-arrow-right r"></i> Fundo de despesas fixas</li>
+              <li><i class="fa-solid fa-arrow-right r"></i> Fundo de expansão</li>
+            </ul>
+          </div>
+        </div>
+        <div class="esc-phase reveal reveal-d2">
+          <div class="esc-phase-left"><div class="esc-num b">06</div><div class="esc-line"></div></div>
+          <div class="esc-content">
+            <div class="esc-phase-tag">Fase 6</div>
+            <div class="esc-phase-title">Escala e Expansão</div>
+            <div class="esc-phase-desc">Com a base sólida construída nas fases anteriores, a empresa está pronta para crescer de forma sustentável. Definimos o plano de expansão: novos produtos, novos mercados, novas províncias.</div>
+            <ul class="esc-phase-points">
+              <li><i class="fa-solid fa-arrow-right b"></i> Plano de expansão personalizado</li>
+              <li><i class="fa-solid fa-arrow-right b"></i> Entrada em novos mercados</li>
+              <li><i class="fa-solid fa-arrow-right b"></i> Estratégia de marketing</li>
+              <li><i class="fa-solid fa-arrow-right b"></i> Presença digital (site e redes)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEITOS CHAVE -->
+<section id="conceitos">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow reveal">Educação financeira</div>
+      <h2 class="sec-title reveal reveal-d1">Conceitos que toda<br>empresa precisa <span class="b">dominar</span></h2>
+      <p class="sec-sub reveal reveal-d2">Muitos empreendedores angolanos desconhecem estes conceitos fundamentais. Ignorá-los é uma das principais causas de falência de negócios com potencial.</p>
+    </div>
+    <div class="conc-grid">
+      <div class="conc-card reveal">
+        <div class="conc-card-top">
+          <div class="conc-icon r"><i class="fa-solid fa-user-tie"></i></div>
+          <div><div class="conc-title">Pró-labore</div><div class="conc-term">O seu salário como dono</div></div>
+        </div>
+        <div class="conc-desc">O pró-labore é o salário que o dono da empresa retira pelo seu trabalho. É um valor fixo, definido previamente, independente do faturamento do mês. A maioria dos empresários angolanos não separa o seu salário do lucro da empresa — e isso compromete tudo.</div>
+        <div class="conc-example">Exemplo: A sua empresa fatura Kz 500.000/mês. O seu pró-labore é <strong>Kz 80.000</strong> (o que você retira como "salário"). O resto pertence à empresa.</div>
+      </div>
+      <div class="conc-card reveal reveal-d1">
+        <div class="conc-card-top">
+          <div class="conc-icon g"><i class="fa-solid fa-champagne-glasses"></i></div>
+          <div><div class="conc-title">Evento de Liquidez</div><div class="conc-term">O lucro real da empresa</div></div>
+        </div>
+        <div class="conc-desc">O evento de liquidez é o momento em que o sócio ou dono retira o lucro acumulado da empresa — normalmente anualmente. É diferente do pró-labore. A mentalidade de esperar pelo evento de liquidez em vez de consumir o lucro mensalmente é o que separa empresas que crescem das que ficam paradas.</div>
+        <div class="conc-example">Exemplo: No final do ano, após todos os fundos estarem abastecidos, distribui-se o lucro real acumulado. <strong>Nesse momento a coisa é mais bonita.</strong></div>
+      </div>
+      <div class="conc-card reveal reveal-d2">
+        <div class="conc-card-top">
+          <div class="conc-icon a"><i class="fa-solid fa-cart-flatbed"></i></div>
+          <div><div class="conc-title">Compras a Grosso</div><div class="conc-term">Comprar mais, gastar menos</div></div>
+        </div>
+        <div class="conc-desc">Comprar matéria-prima ou produtos diariamente custa muito mais do que comprar semanalmente ou mensalmente. Além de pagar preços de retalho, perde-se tempo e dinheiro em deslocações constantes. Comprar a grosso permite negociar descontos e ter previsibilidade de custos.</div>
+        <div class="conc-example">Exemplo: Comprar frango diariamente a Kz 1.500/kg vs comprar semanalmente a Kz 1.200/kg. <strong>Poupar Kz 300/kg × 50kg = Kz 15.000 por semana.</strong></div>
+      </div>
+      <div class="conc-card reveal">
+        <div class="conc-card-top">
+          <div class="conc-icon b"><i class="fa-solid fa-arrow-trend-up"></i></div>
+          <div><div class="conc-title">Reinvestimento</div><div class="conc-term">A mentalidade de crescimento</div></div>
+        </div>
+        <div class="conc-desc">Não é que falta dinheiro — é que o dinheiro não fica na empresa tempo suficiente para trabalhar. A mentalidade de reinvestir uma parte do lucro em vez de consumir tudo é o motor do crescimento. Empresas que reinvestem crescem. Empresas que apenas consomem, ficam paradas.</div>
+        <div class="conc-example">Exemplo: Reservar apenas <strong>20% do faturamento</strong> para reinvestimento pode dobrar o negócio em 18 meses.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OS 4 FUNDOS -->
+<section id="fundos">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow reveal">Estrutura financeira</div>
+      <h2 class="sec-title reveal reveal-d1">Os <span class="r">4 fundos</span><br>que toda empresa precisa</h2>
+      <p class="sec-sub reveal reveal-d2">Sem estes 4 fundos, qualquer imprevisto pode derrubar o seu negócio. Com eles, a empresa tem estabilidade para crescer e expandir com segurança.</p>
+    </div>
+    <div class="fundos-grid">
+      <div class="fundo-card maneio reveal">
+        <i class="fundo-icon b fa-solid fa-rotate"></i>
+        <div class="fundo-num">Fundo 01</div>
+        <div class="fundo-name" style="color:var(--blue-lt)">Fundo de Maneio</div>
+        <div class="fundo-desc">Também chamado de capital de giro. É o dinheiro que mantém a empresa a funcionar no dia-a-dia: pagar fornecedores, salários e despesas operacionais sem depender do faturamento do dia. Sem este fundo, qualquer mês fraco paralisa o negócio.</div>
+        <div class="fundo-tip"><i class="fa-solid fa-lightbulb" style="color:var(--blue-lt)"></i> Recomendado: mínimo de 2 a 3 meses de despesas operacionais guardados neste fundo.</div>
+      </div>
+      <div class="fundo-card emergencia reveal reveal-d1">
+        <i class="fundo-icon r fa-solid fa-shield-halved"></i>
+        <div class="fundo-num">Fundo 02</div>
+        <div class="fundo-name" style="color:var(--red)">Fundo de Emergência</div>
+        <div class="fundo-desc">Reserva para imprevistos: avaria de equipamento, queda de vendas inesperada, crise no mercado ou qualquer situação que exija recursos rápidos. Empresas sem fundo de emergência tomam empréstimos caros ou fecham portas em crises.</div>
+        <div class="fundo-tip"><i class="fa-solid fa-lightbulb" style="color:var(--red)"></i> Recomendado: 10 a 15% do faturamento mensal até atingir o valor de 6 meses de despesas.</div>
+      </div>
+      <div class="fundo-card fixas reveal reveal-d2">
+        <i class="fundo-icon a fa-solid fa-calendar-days"></i>
+        <div class="fundo-num">Fundo 03</div>
+        <div class="fundo-name" style="color:var(--amber)">Fundo de Despesas Fixas</div>
+        <div class="fundo-desc">Renda, luz, água, internet, salários fixos — são despesas que existem independente das vendas. Este fundo garante que estas obrigações são sempre cumpridas, mesmo em meses de baixo faturamento, protegendo a reputação e continuidade da empresa.</div>
+        <div class="fundo-tip"><i class="fa-solid fa-lightbulb" style="color:var(--amber)"></i> Estratégia: deposite o valor exacto das despesas fixas neste fundo logo que o dinheiro entra.</div>
+      </div>
+      <div class="fundo-card expansao reveal reveal-d3">
+        <i class="fundo-icon g fa-solid fa-rocket"></i>
+        <div class="fundo-num">Fundo 04</div>
+        <div class="fundo-name" style="color:var(--green)">Fundo de Expansão</div>
+        <div class="fundo-desc">O fundo que financia o crescimento. Novas máquinas, novo espaço, novo produto, nova cidade. Empresas que constroem este fundo expandem sem contrair dívidas. É a diferença entre crescer com os seus próprios recursos ou ficar dependente de bancos.</div>
+        <div class="fundo-tip"><i class="fa-solid fa-lightbulb" style="color:var(--green)"></i> Meta: 5 a 10% do faturamento mensal. Em 12 a 24 meses terá capital para expandir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section id="para-quem" style="background:var(--black)">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow reveal">Público</div>
+      <h2 class="sec-title reveal reveal-d1">Para quem é a<br>nossa <span class="b">consultoria</span>?</h2>
+      <p class="sec-sub reveal reveal-d2">Trabalhamos com qualquer tipo de negócio ou empreendedor que queira crescer. O tamanho não importa — a vontade de evoluir importa.</p>
+    </div>
+    <div class="pq-grid">
+      <div class="pq-card reveal">
+        <i class="pq-icon fa-solid fa-store" style="color:var(--red)"></i>
+        <div class="pq-title">Pequenos Comerciantes</div>
+        <div class="pq-desc">Lojas, bancas e vendedores que querem organizar as suas finanças e aumentar as margens de lucro.</div>
+      </div>
+      <div class="pq-card reveal reveal-d1">
+        <i class="pq-icon fa-solid fa-utensils" style="color:var(--amber)"></i>
+        <div class="pq-title">Restaurantes & Food</div>
+        <div class="pq-desc">Restaurantes, hamburguerias e produtores de comida que precisam de controlar custos e escalar as vendas.</div>
+      </div>
+      <div class="pq-card reveal reveal-d2">
+        <i class="pq-icon fa-solid fa-scissors" style="color:var(--blue-lt)"></i>
+        <div class="pq-title">Salões & Serviços</div>
+        <div class="pq-desc">Salões de beleza, barbearias e prestadores de serviços que querem fidelizar clientes e crescer.</div>
+      </div>
+      <div class="pq-card reveal">
+        <i class="pq-icon fa-solid fa-shirt" style="color:var(--green)"></i>
+        <div class="pq-title">Lojistas & Retalhistas</div>
+        <div class="pq-desc">Lojas de roupa, sapatos, celulares e outros produtos que precisam de gerir stock e maximizar vendas.</div>
+      </div>
+      <div class="pq-card reveal reveal-d1">
+        <i class="pq-icon fa-solid fa-seedling" style="color:var(--red)"></i>
+        <div class="pq-title">Startups & Novos Negócios</div>
+        <div class="pq-desc">Empreendedores que estão a começar e querem começar certo, com uma base financeira e operacional sólida.</div>
+      </div>
+      <div class="pq-card reveal reveal-d2">
+        <i class="pq-icon fa-solid fa-briefcase" style="color:var(--blue-lt)"></i>
+        <div class="pq-title">Empresas Estagnadas</div>
+        <div class="pq-desc">Negócios que funcionam há anos mas não crescem — a nossa especialidade é identificar e resolver exactamente isto.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS ADICIONAIS -->
+<section id="servicos-add">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow reveal">Serviços</div>
+      <h2 class="sec-title reveal reveal-d1">O que mais<br><span class="r">oferecemos</span></h2>
+      <p class="sec-sub reveal reveal-d2">Para além do Plano Escalador, apoiamos os empreendedores em todos os aspectos da vida empresarial.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card reveal">
+        <div class="srv-icon-wrap r"><i class="fa-solid fa-file-contract"></i></div>
+        <div>
+          <div class="srv-title">Constituição de Empresas</div>
+          <div class="srv-desc">Tratamos de todo o processo de abertura e formalização da sua empresa. Documentação, registo comercial, NIF e todos os trâmites legais necessários para operar formalmente em Angola.</div>
+        </div>
+      </div>
+      <div class="srv-card reveal reveal-d1">
+        <div class="srv-icon-wrap b"><i class="fa-solid fa-folder-open"></i></div>
+        <div>
+          <div class="srv-title">Tratamento de Documentos</div>
+          <div class="srv-desc">Apoio no tratamento e organização de documentos empresariais: licenças, alvarás, actualizações de dados, declarações fiscais e outros documentos administrativos necessários ao funcionamento da empresa.</div>
+        </div>
+      </div>
+      <div class="srv-card reveal reveal-d2">
+        <div class="srv-icon-wrap g"><i class="fa-solid fa-chalkboard-user"></i></div>
+        <div>
+          <div class="srv-title">Formação Empresarial</div>
+          <div class="srv-desc">Workshops e formações presenciais sobre gestão financeira, liderança, gestão de equipas e empreendedorismo. Formamos donos de negócios e equipas para tomarem melhores decisões.</div>
+        </div>
+      </div>
+      <div class="srv-card reveal">
+        <div class="srv-icon-wrap a"><i class="fa-solid fa-chart-gantt"></i></div>
+        <div>
+          <div class="srv-title">Plano de Negócios</div>
+          <div class="srv-desc">Desenvolvemos planos de negócios completos para quem quer formalizar a sua ideia, candidatar-se a financiamento ou apresentar o seu projecto a investidores e parceiros.</div>
+        </div>
+      </div>
+      <div class="srv-card reveal reveal-d1">
+        <div class="srv-icon-wrap r"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <div>
+          <div class="srv-title">Auditoria Interna</div>
+          <div class="srv-desc">Análise detalhada dos processos internos, fluxo financeiro e operacional da sua empresa. Identificamos desperdícios, ineficiências e oportunidades de melhoria que passam despercebidos no dia-a-dia.</div>
+        </div>
+      </div>
+      <div class="srv-card reveal reveal-d2">
+        <div class="srv-icon-wrap b"><i class="fa-solid fa-globe"></i></div>
+        <div>
+          <div class="srv-title">Presença Digital</div>
+          <div class="srv-desc">Em parceria com a IMPERSILVA TECH, criamos sites profissionais e gerimos redes sociais para os nossos clientes de consultoria. Crescimento interno e externo numa só solução.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" style="background:var(--black)">
+  <div class="container">
+    <div class="sec-header" style="text-align:center">
+      <div class="eyebrow reveal" style="justify-content:center">Processo</div>
+      <h2 class="sec-title reveal reveal-d1">Do contacto ao<br><span class="g">resultado</span></h2>
+      <p class="sec-sub reveal reveal-d2" style="margin:0 auto">Em 5 passos simples, transformamos a situação do seu negócio.</p>
+    </div>
+    <div class="cf-steps">
+      <div class="cf-step reveal">
+        <div class="cf-num active"><i class="fa-solid fa-comments"></i></div>
+        <div class="cf-step-title">Contacto</div>
+        <div class="cf-step-desc">Fala connosco pelo WhatsApp ou preenche o formulário. Marcamos uma reunião gratuita.</div>
+      </div>
+      <div class="cf-step reveal reveal-d1">
+        <div class="cf-num"><i class="fa-solid fa-stethoscope"></i></div>
+        <div class="cf-step-title">Diagnóstico</div>
+        <div class="cf-step-desc">Análise completa e gratuita do seu negócio. Identificamos os bloqueios em 48h.</div>
+      </div>
+      <div class="cf-step reveal reveal-d2">
+        <div class="cf-num"><i class="fa-solid fa-file-lines"></i></div>
+        <div class="cf-step-title">Plano</div>
+        <div class="cf-step-desc">Criamos um plano de acção personalizado com metas claras e prazo definido.</div>
+      </div>
+      <div class="cf-step reveal reveal-d3">
+        <div class="cf-num"><i class="fa-solid fa-gears"></i></div>
+        <div class="cf-step-title">Implementação</div>
+        <div class="cf-step-desc">Acompanhamos a implementação passo a passo, corrigindo em tempo real.</div>
+      </div>
+      <div class="cf-step reveal reveal-d4">
+        <div class="cf-num active"><i class="fa-solid fa-rocket"></i></div>
+        <div class="cf-step-title">Crescimento</div>
+        <div class="cf-step-desc">Monitorizamos os resultados e ajustamos a estratégia para crescimento contínuo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow reveal">Resultados reais</div>
+      <h2 class="sec-title reveal reveal-d1">Empresas que<br><span class="b">escalaram</span> com a gente</h2>
+    </div>
+    <div class="depo-wrap reveal reveal-d1">
+      <div class="depo-slides" id="depoSlides">
+
+        <div class="depo-card">
+          <div class="depo-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="depo-text">Antes de conhecer a IMPERSILVA CONSULTORIA, eu tirava dinheiro da caixa todos os dias sem controlo. Achava que estava a ganhar bem porque havia sempre dinheiro. Com o Plano Escalador percebi que estava a arruinar a minha própria empresa. Em 4 meses organizei as finanças e as vendas aumentaram 60%.</p>
+          <div class="depo-author">
+            <div class="depo-av" style="color:var(--red)">M</div>
+            <div>
+              <div class="depo-name">Manuel A.</div>
+              <div class="depo-role">Proprietário de Restaurante — Huambo</div>
+              <div class="depo-result"><i class="fa-solid fa-arrow-trend-up"></i> +60% de crescimento em 4 meses</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="depo-card">
+          <div class="depo-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="depo-text">Sempre achei que o problema da minha loja era falta de clientes. A consultoria mostrou que o problema era eu — estava a comprar produtos todos os dias a preços de retalho quando podia comprar mensalmente a grosso e poupar muito mais. Mudei isso e a margem de lucro quase dobrou.</p>
+          <div class="depo-author">
+            <div class="depo-av" style="color:var(--blue-lt)">A</div>
+            <div>
+              <div class="depo-name">Ana S.</div>
+              <div class="depo-role">Loja de Roupa — Huambo</div>
+              <div class="depo-result"><i class="fa-solid fa-arrow-trend-up"></i> Margem de lucro quase duplicada</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="depo-card">
+          <div class="depo-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="depo-text">Abri a minha padaria há 3 anos e nunca consegui guardar dinheiro. Faturava bem mas no fim do mês não havia nada. Com o Plano Escalador aprendi a separar o que é meu do que é da empresa, criei os 4 fundos e hoje já tenho capital guardado para abrir uma segunda loja.</p>
+          <div class="depo-author">
+            <div class="depo-av" style="color:var(--green)">L</div>
+            <div>
+              <div class="depo-name">Lurdes F.</div>
+              <div class="depo-role">Padaria — Huambo</div>
+              <div class="depo-result"><i class="fa-solid fa-arrow-trend-up"></i> A caminho da 2ª loja em 8 meses</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="depo-card">
+          <div class="depo-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="depo-text">O que mais me marcou foi perceber que eu estava a pagar a mim mesmo de forma errada há anos. Não sabia o que era pró-labore. Gastava o lucro como se fosse meu salário e a empresa ficava sem fôlego. Hoje tenho pró-labore definido, fundo de emergência e já sobrou para o evento de liquidez no fim do ano.</p>
+          <div class="depo-author">
+            <div class="depo-av" style="color:var(--amber)">P</div>
+            <div>
+              <div class="depo-name">Pedro N.</div>
+              <div class="depo-role">Loja de Celulares — Huambo</div>
+              <div class="depo-result"><i class="fa-solid fa-arrow-trend-up"></i> Primeiro evento de liquidez realizado</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="depo-controls">
+      <button class="depo-btn" onclick="moveDepo(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="depo-btn" onclick="moveDepo(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="depo-nav" id="depoNav"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="sec-header" style="text-align:center">
+      <div class="eyebrow reveal" style="justify-content:center">FAQ</div>
+      <h2 class="sec-title reveal reveal-d1">Perguntas <span class="r">frequentes</span></h2>
+    </div>
+    <div class="faq-wrap reveal reveal-d1">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">O diagnóstico inicial é mesmo gratuito?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">Sim, o diagnóstico inicial é completamente gratuito e sem compromisso. Analisamos o seu negócio, identificamos os principais problemas e apresentamos um relatório. A decisão de avançar com o Plano Escalador completo é sempre sua.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Em quanto tempo verei resultados?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">Os primeiros resultados visíveis surgem geralmente entre os 30 e 90 dias após o início da implementação. Mudanças financeiras e de processos têm impacto imediato. O crescimento acelerado começa a partir dos 3 a 6 meses, dependendo da situação inicial da empresa.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">A minha empresa é muito pequena para precisar de consultoria?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">Não existe empresa pequena demais. Na verdade, quanto mais cedo uma empresa adoptar boas práticas de gestão, mais fácil é crescer. Trabalhamos com vendedores individuais, empreendedores que trabalham sozinhos e empresas com equipas. O tamanho não importa — a vontade de crescer importa.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">O acompanhamento é presencial ou pode ser à distância?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">Oferecemos ambos os formatos. Para clientes em Huambo e províncias próximas, fazemos acompanhamento presencial. Para outras regiões de Angola, o acompanhamento é feito por WhatsApp, videochamada e ferramentas digitais. A eficácia é a mesma.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Qual é o custo do Plano Escalador?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">O investimento no Plano Escalador é definido após o diagnóstico gratuito, pois depende da situação e necessidades específicas de cada empresa. O que garantimos é que o retorno sobre o investimento é sempre muito superior ao custo. Fale connosco para receber uma proposta personalizada.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Ajudam também na abertura de empresas?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">Sim. Para além do Plano Escalador, oferecemos apoio completo na constituição de empresas: documentação, registo comercial, NIF, licenças e todos os processos legais necessários para formalizar o seu negócio em Angola.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Trabalham com empresas fora de Huambo?<i class="fa-solid fa-chevron-down faq-ico"></i></button>
+        <div class="faq-a">Sim. Já trabalhámos com empresas em várias províncias de Angola. Para clientes fora de Huambo, o acompanhamento é feito de forma remota via WhatsApp e videochamada, com deslocações presenciais agendadas quando necessário.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-tag"><i class="fa-solid fa-fire"></i> Comece hoje</div>
+      <h2 class="cta-title">O seu negócio<br>pode ser<br><span style="color:var(--green)">muito mais.</span></h2>
+      <p class="cta-sub">Junte-se a dezenas de empreendedores angolanos que transformaram as suas empresas com o Plano Escalador. A primeira conversa é gratuita e pode mudar tudo.</p>
+      <div class="cta-guarantees">
+        <div class="cta-guarantee"><i class="fa-solid fa-check-circle"></i> Diagnóstico gratuito</div>
+        <div class="cta-guarantee"><i class="fa-solid fa-check-circle"></i> Resultados em 90 dias</div>
+        <div class="cta-guarantee"><i class="fa-solid fa-check-circle"></i> Acompanhamento personalizado</div>
+        <div class="cta-guarantee"><i class="fa-solid fa-check-circle"></i> Sem compromisso inicial</div>
+      </div>
+      <button onclick="abrirModal()" class="btn-primary" style="font-size:1rem;padding:1.1rem 2.5rem;border:none;cursor:pointer"><i class="fa-solid fa-stethoscope"></i> Pedir Diagnóstico Gratuito</button>
+    </div>
+  </div>
+</section>
+
+<!-- WPP FLOAT -->
+<a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA%20CONSULTORIA!%20Quero%20saber%20mais%20sobre%20o%20Plano%20Escalador." target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+
+<!-- MOBILE MENU -->
+<div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active')"></div>
+<div class="mm-drawer" id="mmDrawer">
+  <div class="mm-header"><span class="mm-title-label">Menu</span><button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active')"></button></div>
+  <nav class="mm-nav">
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar ao site principal</a>
+    <a href="#escalador" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active')">Plano Escalador</a>
+    <a href="#conceitos" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active')">Conceitos Chave</a>
+    <a href="#fundos" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active')">Os 4 Fundos</a>
+    <a href="#como-funciona" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active')">Como Funciona</a>
+    <a href="#faq" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active')">FAQ</a>
+    <a onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');abrirModal()" style="cursor:pointer;color:var(--green);font-weight:600"><i class="fa-solid fa-stethoscope"></i> Diagnóstico Gratuito</a>
+  </nav>
+</div>
+
+<!-- MODAL CONTACTO -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)fecharModal()">
+  <div class="modal-box" id="modalBox">
+    <span class="modal-handle"></span>
+    <div class="modal-head">
+      <div class="modal-title">Diagnóstico <span style="color:var(--green)">Gratuito</span></div>
+      <button class="modal-close" onclick="fecharModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.82rem;color:var(--gray-lt);font-weight:300;line-height:1.7;margin-bottom:1.2rem">Preencha o formulário e entraremos em contacto em menos de 24 horas para agendar o seu diagnóstico gratuito.</p>
+
+      <div class="mfield">
+        <label class="mlabel"><i class="fa-solid fa-user"></i> O seu nome *</label>
+        <input class="minput" id="mNome" type="text" placeholder="Nome completo">
+      </div>
+      <div class="mfield">
+        <label class="mlabel"><i class="fa-brands fa-whatsapp"></i> Número de WhatsApp *</label>
+        <input class="minput" id="mTel" type="tel" placeholder="244 9XX XXX XXX">
+      </div>
+      <div class="mfield">
+        <label class="mlabel"><i class="fa-solid fa-store"></i> Nome e tipo do negócio</label>
+        <input class="minput" id="mNeg" type="text" placeholder="Ex: Restaurante Sabor do Sul, loja de roupa...">
+      </div>
+
+      <div class="mdivider"></div>
+
+      <div class="mfield">
+        <label class="mlabel"><i class="fa-solid fa-clock"></i> Há quanto tempo tem o negócio?</label>
+        <div class="mopts" id="mTempo">
+          <div class="mopt" onclick="mSel(this,'mTempo')">Menos de 1 ano</div>
+          <div class="mopt" onclick="mSel(this,'mTempo')">1 a 3 anos</div>
+          <div class="mopt" onclick="mSel(this,'mTempo')">3 a 5 anos</div>
+          <div class="mopt" onclick="mSel(this,'mTempo')">Mais de 5 anos</div>
+        </div>
+      </div>
+
+      <div class="mfield">
+        <label class="mlabel"><i class="fa-solid fa-triangle-exclamation"></i> Qual é o maior problema do seu negócio? (pode escolher vários)</label>
+        <div class="mopts" id="mProblemas" style="gap:.4rem">
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Não consigo guardar dinheiro</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Não sei o meu lucro real</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Equipa desmotivada</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Compras desorganizadas</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Sem fundo de emergência</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Fatura mas não cresce</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Processos desorganizados</div>
+          <div class="mopt-multi" onclick="this.classList.toggle('sel')">Quero abrir uma empresa</div>
+        </div>
+      </div>
+
+      <div class="mfield">
+        <label class="mlabel"><i class="fa-solid fa-message"></i> Descreva a sua situação (opcional)</label>
+        <textarea class="minput" id="mNota" placeholder="Conte-nos mais sobre o seu negócio e o que pretende melhorar..."></textarea>
+      </div>
+
+      <button class="msubmit" onclick="enviarModal()">
+        <i class="fa-brands fa-whatsapp"></i> Enviar e agendar diagnóstico
+      </button>
+      <div class="mhint">Resposta garantida em menos de 24 horas. Diagnóstico 100% gratuito.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-txt">
+    © <span id="yr"></span> IMPERSILVA CONSULTORIA — Evolução Empresarial · Parte do grupo <a href="index.html">IMPERSILVA HOLDING SGPS</a><br>
+    Huambo, Angola · <a href="https://wa.me/244954288128" target="_blank">+244 954 288 128</a>
+  </div>
+</footer>
+
+<script>
+// ── YEAR ──
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ── REVEAL ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── COUNTERS ──
+function animCounter(el, target, suffix) {
+  let v = 0;
+  const step = target / (1800 / 16);
+  const t = setInterval(() => {
+    v = Math.min(v + step, target);
+    el.textContent = Math.floor(v) + (suffix || '');
+    if (v >= target) { el.textContent = target + (suffix || ''); clearInterval(t); }
+  }, 16);
+}
+const cObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animCounter(e.target, parseInt(e.target.dataset.target), e.target.dataset.suffix || '');
+      cObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => cObs.observe(el));
+
+// ── FAQ ──
+function toggleFaq(btn) {
+  const ans = btn.nextElementSibling;
+  const open = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+  if (!open) { btn.classList.add('open'); ans.classList.add('open'); }
+}
+
+// ── DEPOIMENTOS ──
+(function() {
+  const slides = document.getElementById('depoSlides');
+  const nav = document.getElementById('depoNav');
+  if (!slides) return;
+  const cards = slides.querySelectorAll('.depo-card');
+  const total = cards.length;
+  let current = 0;
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'depo-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goDepo(i);
+    nav.appendChild(dot);
+  });
+  function goDepo(idx) {
+    current = idx;
+    slides.style.transform = 'translateX(-' + (current * 100) + '%)';
+    document.querySelectorAll('.depo-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+  window.moveDepo = function(dir) { goDepo((current + dir + total) % total); };
+  setInterval(() => goDepo((current + 1) % total), 6000);
+})();
+
+// ── MODAL ──
+function abrirModal() {
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('modalBox').scrollTop = 0;
+}
+function fecharModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function mSel(el, grp) {
+  document.querySelectorAll('#' + grp + ' .mopt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function enviarModal() {
+  const nome = document.getElementById('mNome').value.trim();
+  const tel = document.getElementById('mTel').value.trim();
+  if (!nome) { document.getElementById('mNome').focus(); return; }
+  if (!tel) { document.getElementById('mTel').focus(); return; }
+  const neg = document.getElementById('mNeg').value.trim();
+  const tempoEl = document.querySelector('#mTempo .mopt.sel');
+  const tempo = tempoEl ? tempoEl.textContent : 'Nao especificado';
+  const problemas = Array.from(document.querySelectorAll('#mProblemas .mopt-multi.sel')).map(e => e.textContent).join(', ') || 'Nao especificado';
+  const nota = document.getElementById('mNota').value.trim();
+  const msg = 'Ola IMPERSILVA CONSULTORIA! Quero o Plano Escalador.\n\n' +
+    'Nome: ' + nome + '\n' +
+    'WhatsApp: ' + tel + '\n' +
+    (neg ? 'Negocio: ' + neg + '\n' : '') +
+    'Tempo no mercado: ' + tempo + '\n' +
+    'Principais problemas: ' + problemas + '\n' +
+    (nota ? 'Notas: ' + nota + '\n' : '') +
+    '\nAguardo o diagnostico gratuito!';
+  window.open('https://wa.me/244954288128?text=' + encodeURIComponent(msg), '_blank');
+  fecharModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>

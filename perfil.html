@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Perfil — IMPERSILVA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="js/config.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
+  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;padding-top:68px}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider)}
+.navbar-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
+.logo-letters{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.logo-sub{font-size:.5rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.btn-back{display:flex;align-items:center;gap:.4rem;color:var(--gray-lt);font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:.45rem .9rem;border-radius:5px;border:1px solid rgba(255,255,255,.1);transition:all .22s;background:transparent;cursor:pointer}
+.btn-back:hover{color:var(--white);border-color:var(--red);background:var(--red-dim)}
+.btn-back .arrow{color:var(--red)}
+
+/* HERO DO PERFIL */
+.perfil-hero{
+  position:relative;overflow:hidden;
+  min-height:380px;
+  display:flex;align-items:flex-end;
+}
+.perfil-hero-bg{
+  position:absolute;inset:0;
+  background:var(--black);
+}
+.perfil-hero-img{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center top;
+  opacity:.35;
+  transition:opacity .3s;
+}
+.perfil-hero-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, transparent 20%, var(--dark) 100%);
+}
+.perfil-hero-content{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;width:100%;
+  padding:2rem 1.5rem 3rem;
+  display:flex;align-items:flex-end;gap:2rem;
+}
+.perfil-avatar{
+  width:110px;height:110px;border-radius:50%;
+  overflow:hidden;flex-shrink:0;
+  border:3px solid rgba(255,255,255,.15);
+  background:var(--charcoal);
+}
+.perfil-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.perfil-avatar-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:900;color:var(--gray);
+}
+.perfil-info{flex:1;min-width:0}
+.perfil-empresa{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.4rem}
+.perfil-nome{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,6vw,3.5rem);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:.95;color:var(--white);margin-bottom:.4rem}
+.perfil-cargo{font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
+.perfil-cargo.red{color:var(--red)}
+.perfil-cargo.blue{color:var(--blue-lt)}
+.perfil-cargo.gray{color:var(--gray-lt)}
+.perfil-loc{font-size:.78rem;color:var(--gray);display:flex;align-items:center;gap:.4rem}
+
+/* BODY */
+.perfil-body{max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 5rem;display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start}
+
+/* FRASE */
+.perfil-frase{
+  background:var(--charcoal);border:1px solid var(--divider);
+  border-left:3px solid var(--red);
+  border-radius:0 10px 10px 0;
+  padding:1.2rem 1.5rem;margin-bottom:2rem;
+}
+.perfil-frase-text{font-size:1.05rem;font-weight:300;font-style:italic;color:var(--gray-lt);line-height:1.7}
+
+/* SECÇÕES */
+.section-label{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.section-label::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
+.section-label::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
+.bio-text{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:2rem}
+
+/* ESPECIALIDADES */
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.tag{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:50px;padding:.35rem .85rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--gray-lt);
+}
+
+/* SIDEBAR */
+.perfil-sidebar{display:flex;flex-direction:column;gap:1rem;position:sticky;top:80px}
+.sidebar-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.3rem}
+.sidebar-card-title{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--divider)}
+.contact-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem}
+.contact-item:last-child{border-bottom:none}
+.contact-item i{width:16px;text-align:center;color:var(--gray);font-size:.85rem}
+.contact-item a{color:var(--gray-lt);text-decoration:none;transition:color .2s}
+.contact-item a:hover{color:var(--white)}
+.btn-wpp{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  background:#25D366;color:#fff;text-decoration:none;
+  font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:.85rem;border-radius:8px;
+  transition:all .2s;margin-top:.8rem;
+}
+.btn-wpp:hover{background:#1da851;transform:translateY(-2px)}
+
+/* NAV ENTRE PERFIS */
+.perfil-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  max-width:1100px;margin:0 auto;padding:1.5rem;
+  border-top:1px solid var(--divider);
+}
+.perfil-nav a{display:flex;align-items:center;gap:.5rem;color:var(--gray);text-decoration:none;font-size:.8rem;font-weight:500;transition:color .2s}
+.perfil-nav a:hover{color:var(--white)}
+.perfil-nav a.disabled{opacity:.3;pointer-events:none}
+
+/* LOADING */
+#loading{display:flex;align-items:center;justify-content:center;min-height:60vh;color:var(--gray)}
+.spinner{width:28px;height:28px;border:3px solid var(--divider);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin-right:.8rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* WPP FLOAT */
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);transition:transform .25s}
+.wpp-float:hover{transform:scale(1.1)}
+.wpp-float svg{width:28px;height:28px}
+
+/* MENU MOBILE */
+.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:8000}
+.mm-overlay.active{display:block}
+.mm-drawer{position:fixed;top:0;right:0;width:55%;max-width:280px;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:0;overflow:hidden;height:auto;max-height:100dvh}
+.mm-drawer.active{transform:translateX(0)}
+.mm-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.mm-title{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.mm-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.2rem;cursor:pointer;line-height:1;padding:.3rem;transition:color .2s}
+.mm-close:hover{color:#fff}
+.mm-nav{flex:1;overflow-y:auto;padding:.5rem 0}
+.mm-nav a{display:block;color:rgba(255,255,255,.75);text-decoration:none;font-size:.95rem;font-weight:400;padding:.85rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.05);transition:all .15s}
+.mm-nav a:last-child{border-bottom:none}
+.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04);padding-left:1.5rem}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all .3s;border-radius:1px}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-links{display:none}
+  .perfil-hero-content{flex-direction:column;align-items:flex-start;gap:1rem;padding-bottom:2rem}
+  .perfil-avatar{width:88px;height:88px}
+  .perfil-body{grid-template-columns:1fr;gap:1.5rem}
+  .perfil-sidebar{position:static}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="logo-link" href="index.html">
+      <span class="logo-letters">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span></span>
+      <span class="logo-sub">Holding SGPS</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:.8rem">
+      <a href="javascript:history.back()" class="btn-back"><span class="arrow">&#8592;</span> Voltar</a>
+      <button class="hamburger" id="hamburger" onclick="var d=document.getElementById('mmDrawer'),o=document.getElementById('mmOverlay');d.classList.toggle('active');o.classList.toggle('active');document.body.style.overflow=d.classList.contains('active')?'hidden':'';">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="loading"><div class="spinner"></div> A carregar perfil...</div>
+
+<div id="perfilContent" style="display:none">
+  <!-- HERO -->
+  <div class="perfil-hero">
+    <div class="perfil-hero-bg"></div>
+    <div class="perfil-hero-img" id="heroBg"></div>
+    <div class="perfil-hero-gradient"></div>
+    <div class="perfil-hero-content">
+      <div class="perfil-avatar">
+        <img id="avatarImg" src="" alt="">
+        <div class="perfil-avatar-placeholder" id="avatarPlaceholder" style="display:none"></div>
+      </div>
+      <div class="perfil-info">
+        <div class="perfil-empresa" id="pEmpresa"></div>
+        <div class="perfil-nome" id="pNome"></div>
+        <div class="perfil-cargo" id="pCargo"></div>
+        <div class="perfil-loc"><i class="fa-solid fa-location-dot" style="color:var(--red);font-size:.75rem"></i> <span id="pLoc"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="perfil-body">
+    <div>
+      <!-- FRASE -->
+      <div class="perfil-frase" id="perfilFraseBox">
+        <div class="perfil-frase-text" id="pFrase"></div>
+      </div>
+
+      <!-- BIO LONGA -->
+      <div class="section-label">Sobre</div>
+      <p class="bio-text" id="pBioLonga"></p>
+
+      <!-- ESPECIALIDADES -->
+      <div class="section-label">Especialidades</div>
+      <div class="tags" id="pTags"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="perfil-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-title"><i class="fa-solid fa-address-card"></i> Contacto</div>
+        <div id="pContacts"></div>
+        <a id="pWppBtn" href="#" target="_blank" class="btn-wpp">
+          <i class="fa-brands fa-whatsapp"></i> Enviar Mensagem
+        </a>
+      </div>
+      <div class="sidebar-card" id="linkedinCard" style="display:none">
+        <div class="sidebar-card-title"><i class="fa-brands fa-linkedin"></i> LinkedIn</div>
+        <a id="pLinkedin" href="#" target="_blank" style="color:var(--blue-lt);font-size:.82rem;word-break:break-all;text-decoration:none"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV ENTRE PERFIS -->
+  <div class="perfil-nav" id="perfilNav"></div>
+</div>
+
+<!-- MENU MOBILE -->
+<div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
+<div class="mm-drawer" id="mmDrawer">
+  <div class="mm-header">
+    <span class="mm-title">Menu</span>
+    <button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button>
+  </div>
+  <nav class="mm-nav">
+    <a href="index.html">Início</a>
+    <a href="sobre.html">Sobre Nós</a>
+    <a href="projetos.html">Projectos</a>
+    <a href="consultoria.html">Consultoria</a>
+    <a href="tech.html">IMPERSILVA TECH</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="verificar-site.html">Portal de Clientes</a>
+  </nav>
+</div>
+
+<a href="https://wa.me/244954288128?text=Ol%C3%A1%20IMPERSILVA!" target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+
+<script>
+const COR_MAP = { red:'var(--red)', blue:'var(--blue-lt)', gray:'var(--gray-lt)', white:'var(--white)' };
+
+async function loadPerfil() {
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id') || '0');
+
+  try {
+    let equipa;
+    try {
+      equipa = await api.get('/api/equipa');
+    } catch(fetchErr) {
+      throw new Error('Não foi possível carregar os dados da equipa: ' + fetchErr.message);
+    }
+    if (!Array.isArray(equipa) || equipa.length === 0) throw new Error('Dados da equipa inválidos');
+    const membro = equipa.find(function(m) { return m.id === id; }) || equipa[id];
+    if (!membro) throw new Error('Membro #' + id + ' não encontrado');
+
+    document.title = membro.nome + ' — IMPERSILVA';
+
+    // Hero bg
+    document.getElementById('heroBg').style.backgroundImage = 'url(' + membro.foto + ')';
+    const avatarImg = document.getElementById('avatarImg');
+    avatarImg.src = membro.foto;
+    avatarImg.alt = membro.nome;
+    avatarImg.onerror = function() {
+      this.style.display = 'none';
+      const ph = document.getElementById('avatarPlaceholder');
+      ph.style.display = 'flex';
+      ph.textContent = membro.placeholder || membro.nome[0];
+    };
+
+    document.getElementById('pEmpresa').textContent = membro.empresa || 'IMPERSILVA';
+    document.getElementById('pNome').textContent = membro.nome;
+    const cargoEl = document.getElementById('pCargo');
+    cargoEl.textContent = membro.cargo;
+    cargoEl.className = 'perfil-cargo ' + (membro.cor || 'gray');
+    document.getElementById('pLoc').textContent = membro.localizacao || 'Huambo, Angola';
+
+    // Frase
+    if (membro.frase) {
+      document.getElementById('pFrase').textContent = '" ' + membro.frase + ' "';
+      const fBox = document.getElementById('perfilFraseBox');
+      fBox.style.borderLeftColor = COR_MAP[membro.cor] || 'var(--red)';
+    } else {
+      document.getElementById('perfilFraseBox').style.display = 'none';
+    }
+
+    document.getElementById('pBioLonga').textContent = membro.bio_longa || membro.bio || '';
+
+    // Tags especialidades
+    const tagsEl = document.getElementById('pTags');
+    (membro.especialidades || []).forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = t;
+      tagsEl.appendChild(span);
+    });
+
+    // Contactos sidebar
+    const contactsEl = document.getElementById('pContacts');
+    contactsEl.innerHTML = `
+      <div class="contact-item"><i class="fa-solid fa-building"></i><span>${membro.empresa || 'IMPERSILVA'}</span></div>
+      <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>${membro.localizacao || 'Huambo, Angola'}</span></div>
+      ${membro.whatsapp ? '<div class="contact-item"><i class="fa-brands fa-whatsapp"></i><a href="https://wa.me/'+membro.whatsapp+'">+'+membro.whatsapp+'</a></div>' : ''}
+    `;
+    if (membro.whatsapp) {
+      document.getElementById('pWppBtn').href = 'https://wa.me/' + membro.whatsapp + '?text=Ol%C3%A1%20' + encodeURIComponent(membro.nome) + '!';
+    }
+
+    // Galeria
+    if (membro.galeria && Array.isArray(membro.galeria) && membro.galeria.length > 0) {
+      var galBox = document.getElementById('perfilGaleria');
+      var galGrid = document.getElementById('galeriaGrid');
+      if (galBox) galBox.style.display = 'block';
+      membro.galeria.filter(function(s){return typeof s==='string'&&s.trim();}).forEach(function(src, i) {
+        var div = document.createElement('div');
+        div.style.cssText = 'aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:var(--charcoal);cursor:pointer;border:1px solid var(--divider)';
+        div.onclick = function() {
+          document.getElementById('galLbImg').src = src;
+          var lb = document.getElementById('galLightbox');
+          lb.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        };
+        var img = document.createElement('img');
+        img.src = src;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;transition:transform .3s';
+        img.onerror = function() { div.style.display = 'none'; };
+        div.onmouseover = function() { img.style.transform = 'scale(1.05)'; };
+        div.onmouseout = function() { img.style.transform = 'scale(1)'; };
+        div.appendChild(img);
+        galGrid.appendChild(div);
+      });
+    }
+
+    // Social links
+    var socialLinks = [
+      {key:'linkedin', label:'LinkedIn', icon:'fa-linkedin', color:'#0077b5'},
+      {key:'instagram', label:'Instagram', icon:'fa-instagram', color:'#e1306c'},
+      {key:'facebook', label:'Facebook', icon:'fa-facebook', color:'#1877f2'},
+      {key:'tiktok', label:'TikTok', icon:'fa-tiktok', color:'#fff'}
+    ];
+    var socialHtml = '';
+    socialLinks.forEach(function(s) {
+      if (membro[s.key]) {
+        socialHtml += '<a href="' + membro[s.key] + '" target="_blank" class="contact-item" style="color:var(--gray-lt);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.04)">' +
+          '<i class="fa-brands ' + s.icon + '" style="color:' + s.color + ';width:16px"></i>' +
+          '<span>' + s.label + '</span></a>';
+      }
+    });
+    if (socialHtml) {
+      var sc = document.getElementById('pContacts');
+      if (sc) sc.insertAdjacentHTML('beforeend', socialHtml);
+    }
+    // LinkedIn legacy
+    if (membro.linkedin) {
+      document.getElementById('linkedinCard').style.display = 'block';
+      const li = document.getElementById('pLinkedin');
+      li.href = membro.linkedin;
+      li.textContent = membro.linkedin;
+    }
+
+    // Nav entre perfis
+    const navEl = document.getElementById('perfilNav');
+    const prev = id > 0 ? equipa[id-1] : null;
+    const next = id < equipa.length-1 ? equipa[id+1] : null;
+    navEl.innerHTML = `
+      <a href="perfil.html?id=${id-1}" class="${prev ? '' : 'disabled'}">
+        ← ${prev ? prev.nome : 'Anterior'}
+      </a>
+      <a href="sobre.html" style="color:var(--gray);font-size:.75rem">Ver toda a equipa</a>
+      <a href="perfil.html?id=${id+1}" class="${next ? '' : 'disabled'}">
+        ${next ? next.nome : 'Próximo'} →
+      </a>
+    `;
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('perfilContent').style.display = 'block';
+
+  } catch(e) {
+    document.getElementById('loading').innerHTML = '<div style="text-align:center;padding:3rem 1rem"><p style="color:var(--gray);font-size:.9rem">Perfil não encontrado.</p><a href="sobre.html" style="color:var(--red);font-size:.85rem;margin-top:1rem;display:inline-block">← Voltar à equipa</a></div>';
+  }
+}
+
+loadPerfil();
+document.getElementById('yr') && (document.getElementById('yr').textContent = new Date().getFullYear());
+</script>
+</body>
+</html>

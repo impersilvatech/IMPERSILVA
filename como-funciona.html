@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Como Funciona — IMPERSILVA TECH</title>
+<meta name="description" content="Do contacto ao site no ar em 6 passos. Processo transparente, sem surpresas, entrega em 3 a 7 dias."/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="js/config.js"></script>
+<style>
+/* ═══════════════════════════════════════
+   IMPERSILVA TECH — BASE STYLES
+   Shared across all tech/ pages
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2e2e33;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);--green-lt:#4ade80;
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.1);
+  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
+  --radius:12px;--radius-lg:18px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;padding-top:68px}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:all .3s}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
+.logo-main{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.logo-main .r{color:var(--red)}.logo-main .b{color:var(--blue-lt)}
+.logo-sub{font-size:.44rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.nav-links a.active{border-bottom:1px solid var(--red);padding-bottom:2px}
+.nav-cta{background:var(--red)!important;color:#fff!important;padding:.45rem 1.1rem;border-radius:6px;font-weight:700!important;letter-spacing:.06em!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--red-lt)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:1px;transition:all .3s}
+
+/* ── SECTION COMMONS ── */
+.eyebrow{display:flex;align-items:center;gap:.6rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
+.eyebrow::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
+.eyebrow::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:.8rem}
+.sec-title .r{color:var(--red)}.sec-title .b{color:var(--blue-lt)}.sec-title .g{color:var(--green)}
+.sec-sub{font-size:.95rem;font-weight:300;color:var(--gray-lt);line-height:1.75;max-width:640px}
+.container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+section{padding:5rem 1.5rem}
+
+/* ── BUTTONS ── */
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s}
+.btn-primary:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.35)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .25s}
+.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.06)}
+.btn-blue{background:var(--blue)!important}.btn-blue:hover{background:var(--blue-lt)!important}
+.btn-green{background:var(--green)!important}.btn-green:hover{background:var(--green-lt)!important}
+.btn-sm{padding:.55rem 1.1rem!important;font-size:.78rem!important}
+
+/* ── CARDS ── */
+.card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);transition:all .3s}
+.card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.card-pad{padding:1.5rem}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;gap:.4rem;border-radius:50px;padding:.3rem .8rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.badge-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.badge-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
+.badge-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.badge-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+
+/* ── STATS ── */
+.stats-bar{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:2.5rem 1.5rem}
+.stats-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:.3rem}
+.stat-lbl{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+
+/* ── WPP FLOAT ── */
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);animation:wpp-pulse 3s ease-in-out infinite}
+.wpp-float:hover{transform:scale(1.12)}
+@keyframes wpp-pulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+
+/* ── DRAWER (mobile) ── */
+.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:8000}
+.mm-overlay.active{display:block}
+.mm-drawer{position:fixed;top:0;right:0;width:80%;max-width:320px;height:100%;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
+.mm-drawer.active{transform:translateX(0)}
+.mm-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.mm-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.mm-close{background:rgba(255,255,255,.08);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.mm-body{flex:1;overflow-y:auto;padding:.5rem 0 2rem}
+.mm-section-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);padding:.9rem 1.2rem .4rem}
+.mm-nav a{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;padding:.8rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04);transition:all .15s}
+.mm-nav a i{width:18px;text-align:center;font-size:.85rem;flex-shrink:0}
+.mm-nav a span.mm-badge{margin-left:auto;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.15rem .5rem;border-radius:50px}
+.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+.mm-nav a.mm-active{color:#fff;background:rgba(255,255,255,.05)}
+.mm-divider{height:1px;background:rgba(255,255,255,.06);margin:.5rem 1.2rem}
+.mm-cta{margin:1rem 1.2rem 0}
+
+/* ── FOOTER ── */
+footer{background:var(--black);border-top:1px solid var(--divider);padding:3rem 1.5rem 2rem}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+.footer-brand .logo-main{font-size:1.3rem}
+.footer-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.7;margin-top:.7rem;max-width:280px}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.9rem}
+.footer-col a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;font-weight:300;margin-bottom:.5rem;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{max-width:1280px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.72rem;color:var(--gray)}
+.footer-bottom a{color:var(--gray);text-decoration:none}
+.footer-bottom a:hover{color:var(--white)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--black);padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
+.page-hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(214,40,40,.12) 0%,transparent 70%)}
+.page-hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.7rem;color:var(--gray);margin-bottom:1.2rem}
+.breadcrumb a{color:var(--gray);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb-sep{opacity:.4}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-brand{grid-column:1/-1}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  section{padding:3.5rem 1rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .footer-inner{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
+  .stat-val{font-size:2rem}
+}
+
+/* ── COMO FUNCIONA PAGE ── */
+/* Timeline */
+.timeline-wrap{max-width:800px;margin:0 auto;position:relative}
+.timeline-line{position:absolute;left:28px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--red),var(--blue-lt));opacity:.35}
+.tl-step{display:flex;gap:1.5rem;margin-bottom:3rem;position:relative}
+.tl-step:last-child{margin-bottom:0}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0}
+.tl-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;flex-shrink:0;position:relative;z-index:1;border:2px solid}
+.tl-num.r{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+.tl-num.b{background:var(--blue-dim);border-color:var(--blue-lt);color:var(--blue-lt)}
+.tl-num.g{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.tl-num.a{background:var(--amber-dim);border-color:var(--amber);color:var(--amber)}
+.tl-content{flex:1;padding-top:.5rem}
+.tl-tag{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem}
+.tl-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem}
+.tl-desc{font-size:.85rem;color:var(--gray-lt);font-weight:300;line-height:1.75;margin-bottom:.8rem}
+.tl-points{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.tl-points li{display:flex;align-items:flex-start;gap:.5rem;font-size:.8rem;color:var(--gray-lt);font-weight:300}
+.tl-points li i{font-size:.62rem;margin-top:.25rem;flex-shrink:0}
+.tl-duration{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.05);border:1px solid var(--divider);border-radius:50px;padding:.3rem .7rem;font-size:.65rem;font-weight:600;color:var(--gray-lt);margin-top:.6rem}
+/* Stack */
+.stack-grid{display:flex;flex-wrap:wrap;gap:.7rem}
+.stack-item{display:flex;align-items:center;gap:.5rem;background:var(--charcoal);border:1px solid var(--divider);border-radius:50px;padding:.5rem 1rem;font-size:.78rem;font-weight:600;color:var(--gray-lt);transition:all .25s}
+.stack-item:hover{border-color:rgba(255,255,255,.2);color:var(--white);transform:scale(1.03)}
+.stack-item i{font-size:.9rem}
+/* FAQ */
+.faq-wrap{max-width:800px;margin:0 auto;background:var(--charcoal);border:1px solid var(--divider);border-radius:14px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--divider)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;gap:1rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-align:left;transition:background .2s}
+.faq-q:hover,.faq-q.open{background:rgba(255,255,255,.03)}
+.faq-ico{font-size:.7rem;color:var(--gray);transition:transform .25s;flex-shrink:0}
+.faq-q.open .faq-ico{transform:rotate(180deg);color:var(--red)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:.85rem;color:var(--gray-lt);font-weight:300;line-height:1.75;padding:0 1.5rem}
+.faq-a.open{max-height:500px;padding:.2rem 1.5rem 1.2rem}
+/* Guarantee cards */
+.guarantee-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.guarantee-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.5rem;text-align:center}
+.g-icon{font-size:1.8rem;margin-bottom:.8rem;display:block}
+.g-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+.g-desc{font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.6}
+@media(max-width:640px){
+  .timeline-line{left:22px}
+  .tl-num{width:44px;height:44px;font-size:.95rem}
+  .tl-left{width:44px}
+  .guarantee-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="logo-link" href="index.html">
+      <span class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> <span style="color:var(--blue-lt);font-size:1rem">|</span> TECH</span>
+      <span class="logo-sub">Customização Digital</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="como-funciona.html" class="active">Como Funciona</a>
+      <a href="precos.html">Preços</a>
+      <a href="orcamento.html" class="nav-cta">Orçamento</a>
+      
+    </div>
+    <button class="hamburger" id="hamburger" onclick="openDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav><div class="mm-overlay" id="mmOverlay" onclick="closeDrawer()"></div>
+<div class="mm-drawer" id="mmDrawer">
+  <div class="mm-head">
+    <span class="mm-logo">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span> TECH</span>
+    <button class="mm-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="mm-body">
+    <div class="mm-section-label">Navegação</div>
+    <nav class="mm-nav">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Início</a>
+      <a href="servicos.html"><i class="fa-solid fa-layer-group"></i> Serviços <span class="mm-badge">9 tipos</span></a>
+      <a href="portfolio.html"><i class="fa-solid fa-briefcase"></i> Portfólio</a>
+      <a href="como-funciona.html"><i class="fa-solid fa-route"></i> Como Funciona</a>
+      <a href="precos.html"><i class="fa-solid fa-tag"></i> Preços</a>
+      <a href="orcamento.html"><i class="fa-solid fa-file-invoice"></i> Orçamento</a>
+    </nav>
+    <div class="mm-divider"></div>
+    <div class="mm-section-label">Tipos de Sites</div>
+    <nav class="mm-nav">
+      <a href="servicos.html#roupa"><i class="fa-solid fa-shirt" style="color:var(--red)"></i> Lojas de Roupa & Sapatos</a>
+      <a href="servicos.html#celulares"><i class="fa-solid fa-mobile-screen" style="color:var(--blue-lt)"></i> Celulares & Acessórios</a>
+      <a href="servicos.html#restaurante"><i class="fa-solid fa-utensils" style="color:var(--green)"></i> Restaurante & Delivery</a>
+      <a href="servicos.html#fastfood"><i class="fa-solid fa-burger" style="color:var(--amber)"></i> Hamburgueria & Fast Food</a>
+      <a href="servicos.html#bolos"><i class="fa-solid fa-cake-candles" style="color:var(--blue-lt)"></i> Padaria & Bolos</a>
+      <a href="servicos.html#eventos"><i class="fa-solid fa-ticket" style="color:var(--green)"></i> Eventos & Bilhetes</a>
+      <a href="servicos.html#salao"><i class="fa-solid fa-scissors" style="color:var(--red)"></i> Salão de Beleza</a>
+      <a href="servicos.html#livros"><i class="fa-solid fa-book-open" style="color:var(--blue-lt)"></i> Livros & Produtos</a>
+      <a href="servicos.html#escritorio"><i class="fa-solid fa-briefcase" style="color:var(--amber)"></i> Escritório & Serviços</a>
+    </nav>
+    <div class="mm-divider"></div>
+    <div class="mm-cta">
+      <a href="orcamento.html" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none" onclick="closeDrawer()">
+        <i class="fa-solid fa-file-invoice"></i> Pedir Orçamento
+      </a>
+    </div>
+  </div>
+</div><a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA%20TECH!%20Vi%20o%20site%20e%20quero%20saber%20mais." target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Início</a><span class="breadcrumb-sep">/</span><span>Como Funciona</span></div>
+    <div class="eyebrow reveal" style="justify-content:center">Processo transparente</div>
+    <h1 class="sec-title reveal rd1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Do contacto ao <span class="b">site no ar</span></h1>
+    <p class="sec-sub reveal rd2" style="margin:0 auto;text-align:center">Em 6 passos simples e transparentes, transformamos a sua ideia num site profissional e funcional. Sem surpresas, sem jargão técnico.</p>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section style="background:var(--black)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start">
+      <div>
+        <div class="eyebrow reveal">O processo</div>
+        <h2 class="sec-title reveal rd1">6 passos, <span class="r">1 resultado</span></h2>
+        <p class="sec-sub reveal rd2" style="margin-bottom:2.5rem">Cada passo foi desenhado para garantir que o site final é exactamente o que precisa — e que chegará nos prazos prometidos.</p>
+        <div class="timeline-wrap">
+          <div class="timeline-line"></div>
+          <div class="tl-step reveal">
+            <div class="tl-left"><div class="tl-num r"><i class="fa-solid fa-comments"></i></div></div>
+            <div class="tl-content">
+              <div class="tl-tag">Passo 1</div>
+              <div class="tl-title">Primeiro Contacto</div>
+              <div class="tl-desc">Fala connosco pelo WhatsApp ou formulário. Conta-nos o teu negócio, o que vendes e o que precisas. A primeira conversa é gratuita e sem compromisso.</div>
+              <ul class="tl-points">
+                <li><i class="fa-solid fa-check" style="color:var(--green)"></i>Análise inicial do negócio</li>
+                <li><i class="fa-solid fa-check" style="color:var(--green)"></i>Recomendação do tipo de site ideal</li>
+              </ul>
+              <span class="tl-duration"><i class="fa-solid fa-clock"></i> No mesmo dia</span>
+            </div>
+          </div>
+          <div class="tl-step reveal rd1">
+            <div class="tl-left"><div class="tl-num b"><i class="fa-solid fa-file-lines"></i></div></div>
+            <div class="tl-content">
+              <div class="tl-tag">Passo 2</div>
+              <div class="tl-title">Briefing & Proposta</div>
+              <div class="tl-desc">Enviamos uma proposta detalhada com o pacote recomendado, todas as funcionalidades incluídas, o prazo de entrega e o investimento. Tudo por escrito.</div>
+              <ul class="tl-points">
+                <li><i class="fa-solid fa-check" style="color:var(--blue-lt)"></i>Proposta escrita com tudo incluído</li>
+                <li><i class="fa-solid fa-check" style="color:var(--blue-lt)"></i>Sem custos ocultos ou surpresas</li>
+              </ul>
+              <span class="tl-duration"><i class="fa-solid fa-clock"></i> 24 horas</span>
+            </div>
+          </div>
+          <div class="tl-step reveal rd2">
+            <div class="tl-left"><div class="tl-num g"><i class="fa-solid fa-palette"></i></div></div>
+            <div class="tl-content">
+              <div class="tl-tag">Passo 3</div>
+              <div class="tl-title">Design & Aprovação</div>
+              <div class="tl-desc">Criamos o design personalizado para o teu negócio com as tuas cores, logótipo e identidade. Apresentamos para aprovação antes de avançar — tens sempre a última palavra.</div>
+              <ul class="tl-points">
+                <li><i class="fa-solid fa-check" style="color:var(--green)"></i>Design 100% personalizado</li>
+                <li><i class="fa-solid fa-check" style="color:var(--green)"></i>Revisões incluídas até aprovação total</li>
+              </ul>
+              <span class="tl-duration"><i class="fa-solid fa-clock"></i> 1 a 2 dias</span>
+            </div>
+          </div>
+          <div class="tl-step reveal">
+            <div class="tl-left"><div class="tl-num a"><i class="fa-solid fa-code"></i></div></div>
+            <div class="tl-content">
+              <div class="tl-tag">Passo 4</div>
+              <div class="tl-title">Desenvolvimento</div>
+              <div class="tl-desc">Desenvolvemos o site completo com todos os produtos, textos, imagens e funcionalidades aprovadas. Optimizado para mobile, velocidade e motores de busca.</div>
+              <ul class="tl-points">
+                <li><i class="fa-solid fa-check" style="color:var(--amber)"></i>Mobile first em todos os dispositivos</li>
+                <li><i class="fa-solid fa-check" style="color:var(--amber)"></i>WhatsApp e admin integrados</li>
+                <li><i class="fa-solid fa-check" style="color:var(--amber)"></i>SEO básico incluído</li>
+              </ul>
+              <span class="tl-duration"><i class="fa-solid fa-clock"></i> 2 a 4 dias</span>
+            </div>
+          </div>
+          <div class="tl-step reveal rd1">
+            <div class="tl-left"><div class="tl-num r"><i class="fa-solid fa-magnifying-glass-chart"></i></div></div>
+            <div class="tl-content">
+              <div class="tl-tag">Passo 5</div>
+              <div class="tl-title">Revisão & Entrega</div>
+              <div class="tl-desc">Apresentamos o site completo para aprovação final. Fazemos as revisões necessárias e publicamos no teu link personalizado. Treino do painel de administração incluído.</div>
+              <ul class="tl-points">
+                <li><i class="fa-solid fa-check" style="color:var(--red)"></i>Publicação no GitHub Pages gratuito</li>
+                <li><i class="fa-solid fa-check" style="color:var(--red)"></i>Treino do painel de admin</li>
+              </ul>
+              <span class="tl-duration"><i class="fa-solid fa-clock"></i> 1 dia</span>
+            </div>
+          </div>
+          <div class="tl-step reveal rd2">
+            <div class="tl-left"><div class="tl-num b"><i class="fa-solid fa-headset"></i></div></div>
+            <div class="tl-content">
+              <div class="tl-tag">Passo 6</div>
+              <div class="tl-title">Suporte Contínuo</div>
+              <div class="tl-desc">Após a entrega, continuamos disponíveis para actualizações, ajustes e melhorias. O teu sucesso online é o nosso sucesso. Suporte via WhatsApp sempre acessível.</div>
+              <ul class="tl-points">
+                <li><i class="fa-solid fa-check" style="color:var(--blue-lt)"></i>Suporte pós-entrega incluído</li>
+                <li><i class="fa-solid fa-check" style="color:var(--blue-lt)"></i>Actualizações de conteúdo simplificadas</li>
+              </ul>
+              <span class="tl-duration"><i class="fa-solid fa-clock"></i> Contínuo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side info -->
+      <div>
+        <div class="card card-pad reveal" style="margin-bottom:1.2rem;background:linear-gradient(135deg,var(--red-dim),var(--charcoal))">
+          <div style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem">Prazo total garantido</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:900;color:var(--white);line-height:1">3 a 7 <span style="font-size:1.5rem;color:var(--gray)">dias úteis</span></div>
+          <div style="font-size:.8rem;color:var(--gray-lt);font-weight:300;margin-top:.6rem;line-height:1.65">Da aprovação da proposta à publicação do site. Sem atrasos, sem desculpas.</div>
+        </div>
+        <div class="card card-pad reveal rd1" style="margin-bottom:1.2rem">
+          <div style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.9rem">O que precisas de fornecer</div>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--gray-lt);font-weight:300"><i class="fa-solid fa-check-circle" style="color:var(--green);font-size:.7rem;margin-top:.2rem;flex-shrink:0"></i>Fotos dos produtos ou serviços</div>
+            <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--gray-lt);font-weight:300"><i class="fa-solid fa-check-circle" style="color:var(--green);font-size:.7rem;margin-top:.2rem;flex-shrink:0"></i>Logótipo (se tiver) ou preferências de cores</div>
+            <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--gray-lt);font-weight:300"><i class="fa-solid fa-check-circle" style="color:var(--green);font-size:.7rem;margin-top:.2rem;flex-shrink:0"></i>Lista de produtos, preços e descrições</div>
+            <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--gray-lt);font-weight:300"><i class="fa-solid fa-check-circle" style="color:var(--green);font-size:.7rem;margin-top:.2rem;flex-shrink:0"></i>Número de WhatsApp para encomendas</div>
+            <div style="display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--gray-lt);font-weight:300"><i class="fa-solid fa-circle-info" style="color:var(--blue-lt);font-size:.7rem;margin-top:.2rem;flex-shrink:0"></i>Textos e textos: ajudamos a escrever se necessário</div>
+          </div>
+        </div>
+        <div class="card card-pad reveal rd2">
+          <div style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem">Comunicação durante o processo</div>
+          <div style="font-size:.82rem;color:var(--gray-lt);font-weight:300;line-height:1.75;margin-bottom:.8rem">Toda a comunicação é feita pelo WhatsApp — sem emails complicados, sem reuniões desnecessárias. Podes seguir o progresso do teu site em tempo real.</div>
+          <a href="orcamento.html" class="btn-primary" style="width:100%;justify-content:center"><i class="fa-brands fa-whatsapp"></i> Começar agora</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section style="background:var(--dark)">
+  <div class="container">
+    <div class="eyebrow reveal">Tecnologia</div>
+    <h2 class="sec-title reveal rd1">O que usamos para <span class="r">construir</span></h2>
+    <p class="sec-sub reveal rd2" style="margin-bottom:2rem">Ferramentas modernas, testadas e optimizadas para o mercado angolano.</p>
+    <div class="stack-grid reveal rd2">
+      <div class="stack-item"><i class="fa-brands fa-html5" style="color:#e34f26"></i> HTML5</div>
+      <div class="stack-item"><i class="fa-brands fa-css3-alt" style="color:#1572b6"></i> CSS3</div>
+      <div class="stack-item"><i class="fa-brands fa-js" style="color:#f7df1e"></i> JavaScript</div>
+      <div class="stack-item"><i class="fa-brands fa-github" style="color:#fff"></i> GitHub Pages</div>
+      <div class="stack-item"><i class="fa-brands fa-whatsapp" style="color:#25D366"></i> WhatsApp API</div>
+      <div class="stack-item"><i class="fa-solid fa-mobile-screen" style="color:var(--blue-lt)"></i> Mobile First</div>
+      <div class="stack-item"><i class="fa-solid fa-bolt" style="color:var(--amber)"></i> Performance</div>
+      <div class="stack-item"><i class="fa-solid fa-lock" style="color:var(--green)"></i> HTTPS</div>
+      <div class="stack-item"><i class="fa-solid fa-magnifying-glass" style="color:#a78bfa"></i> SEO Básico</div>
+      <div class="stack-item"><i class="fa-brands fa-google" style="color:#4285f4"></i> Google Maps</div>
+      <div class="stack-item"><i class="fa-brands fa-instagram" style="color:#e1306c"></i> Instagram Feed</div>
+      <div class="stack-item"><i class="fa-solid fa-image" style="color:#0ea5e9"></i> Galeria Fotos</div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIAS -->
+<section style="background:var(--black)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="eyebrow reveal" style="justify-content:center">Garantias</div>
+      <h2 class="sec-title reveal rd1">O que garantimos <span class="b">sempre</span></h2>
+    </div>
+    <div class="guarantee-grid">
+      <div class="guarantee-card reveal">
+        <i class="g-icon fa-solid fa-shield-halved" style="color:var(--green)"></i>
+        <div class="g-title">Aprovação prévia</div>
+        <div class="g-desc">Não avançamos para a fase seguinte sem a tua aprovação. Tens sempre controlo total do processo.</div>
+      </div>
+      <div class="guarantee-card reveal rd1">
+        <i class="g-icon fa-solid fa-calendar-check" style="color:var(--blue-lt)"></i>
+        <div class="g-title">Prazo respeitado</div>
+        <div class="g-desc">Entregamos no prazo prometido. Se houver atraso por nossa parte, avisamos com antecedência.</div>
+      </div>
+      <div class="guarantee-card reveal rd2">
+        <i class="g-icon fa-solid fa-rotate" style="color:var(--amber)"></i>
+        <div class="g-title">Revisões incluídas</div>
+        <div class="g-desc">Fazemos as revisões necessárias após a entrega sem custo adicional durante o período de suporte.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:var(--dark)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="eyebrow reveal" style="justify-content:center">FAQ</div>
+      <h2 class="sec-title reveal rd1">Perguntas <span class="r">frequentes</span></h2>
+    </div>
+    <div class="faq-wrap reveal rd1">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quanto tempo demora a criar o meu site?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Em média entre 3 a 7 dias úteis, dependendo da complexidade. Sites simples podem ficar prontos em 48 horas. O prazo exacto é definido após o briefing e aprovação da proposta.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Preciso de saber programar para gerir o site?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Não! O painel de administração permite actualizar produtos, preços e imagens sem qualquer conhecimento técnico. É tão simples quanto usar o WhatsApp.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">O site funciona no telemóvel dos meus clientes?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Sim, todos os sites são 100% responsivos e optimizados para telemóvel. Como a maioria dos angolanos acede à internet pelo telemóvel, isto é uma prioridade absoluta.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quanto custa manter o site depois de pronto?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">A hospedagem no GitHub Pages é completamente gratuita para sempre. Não há custos mensais. Os únicos custos opcionais são o domínio personalizado (ex: minhaloja.ao) se o quiseres.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Posso adicionar mais produtos depois?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Sim! Com o painel de administração podes adicionar, editar e remover produtos a qualquer momento. Também podes enviar as actualizações via WhatsApp durante o período de suporte.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">E se não gostar do design?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Apresentamos o design para aprovação antes de desenvolver. Se não gostar, fazemos as revisões sem custo adicional. A tua satisfação é garantida antes de avançar.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">O meu site vai aparecer no Google?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Sim! Todos os sites incluem SEO básico — títulos, descrições e estrutura optimizada. Também configuramos o Google Meu Negócio gratuitamente para aparecer nas pesquisas locais.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Trabalham fora de Huambo?<i class="fa-solid fa-chevron-down faq-ico"></i></button><div class="faq-a">Sim! Já trabalhámos com clientes em várias províncias de Angola. O desenvolvimento é feito de forma remota via WhatsApp e entrega digital. A qualidade é a mesma.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--black);text-align:center">
+  <div class="container">
+    <div class="badge badge-green reveal" style="margin-bottom:1rem"><i class="fa-solid fa-rocket"></i> Pronto para começar?</div>
+    <h2 class="sec-title reveal rd1" style="margin-bottom:.8rem">O teu site pode estar <span class="g">no ar em 7 dias</span></h2>
+    <p style="font-size:.9rem;color:var(--gray-lt);font-weight:300;max-width:500px;margin:0 auto 2rem;line-height:1.7" class="reveal rd2">Pede um orçamento gratuito hoje e tens o teu negócio online na próxima semana.</p>
+    <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap" class="reveal rd3">
+      <a href="orcamento.html" class="btn-primary"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento gratuito</a>
+      <a href="precos.html" class="btn-outline"><i class="fa-solid fa-tag"></i> Ver preços</a>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <div class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> TECH</div>
+      <p class="footer-desc">Criamos sites profissionais para negócios angolanos. Lojas online, restaurantes, delivery, eventos e muito mais. Rápidos, modernos e acessíveis.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <a href="servicos.html#roupa">Lojas de Roupa</a>
+      <a href="servicos.html#restaurante">Restaurantes</a>
+      <a href="servicos.html#fastfood">Hamburguerias</a>
+      <a href="servicos.html#eventos">Eventos</a>
+      <a href="servicos.html#escritorio">Escritórios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="como-funciona.html">Como Funciona</a>
+      <a href="precos.html">Preços</a>
+      <a href="orcamento.html">Orçamento</a>
+      <a href="../index.html">IMPERSILVA Holding</a>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>© <span class="yr"></span> IMPERSILVA TECH — Customização Digital · Huambo, Angola</span>
+    <a href="https://wa.me/244954288128" target="_blank">+244 954 288 128</a>
+  </div>
+</footer><script>
+// Year
+document.querySelectorAll('.yr').forEach(e => e.textContent = new Date().getFullYear());
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+// Drawer
+function openDrawer(){document.getElementById('mmDrawer').classList.add('active');document.getElementById('mmOverlay').classList.add('active');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';}
+// Counters
+const cObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const target=parseInt(e.target.dataset.target);
+      const suffix=e.target.dataset.suffix||'';
+      let v=0;const step=target/(1800/16);
+      const t=setInterval(()=>{v=Math.min(v+step,target);e.target.textContent=Math.floor(v)+suffix;if(v>=target){e.target.textContent=target+suffix;clearInterval(t);}},16);
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+<script>
+function toggleFaq(btn) {
+  var ans = btn.nextElementSibling;
+  var open = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+  if (!open) { btn.classList.add('open'); ans.classList.add('open'); }
+}
+</script>
+</body>
+</html>

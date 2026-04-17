@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Projecto — IMPERSILVA TECH</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="js/config.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2e2e33;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
+  --green:#22c55e;
+  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;padding-top:68px;overflow-x:hidden}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider)}
+.navbar-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
+.logo-letters{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
+.logo-sub{font-size:.5rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.btn-back{display:flex;align-items:center;gap:.4rem;color:var(--gray-lt);font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:.45rem .9rem;border-radius:5px;border:1px solid rgba(255,255,255,.1);transition:all .22s;background:transparent;cursor:pointer}
+.btn-back:hover,.btn-back:active{color:var(--white);border-color:var(--red);background:var(--red-dim)}
+.btn-back .arr{color:var(--red)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all .3s;border-radius:1px}
+@media(max-width:768px){.hamburger{display:flex}}
+
+/* HERO */
+.proj-hero{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:flex-end}
+.proj-hero-bg{position:absolute;inset:0;background:var(--black)}
+.proj-hero-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.3;transition:opacity .3s}
+.proj-hero-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,var(--dark) 100%)}
+.proj-hero-content{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%;padding:2rem 1.5rem 2.5rem}
+.proj-tag{display:inline-flex;align-items:center;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px;margin-bottom:.9rem}
+.tag-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
+.tag-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.proj-nome{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,7vw,4rem);font-weight:900;text-transform:uppercase;letter-spacing:.01em;line-height:.95;color:var(--white);margin-bottom:.8rem}
+.proj-destaque{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:500;color:var(--green)}
+.proj-destaque i{font-size:.75rem}
+
+/* GALERIA */
+.galeria{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;position:relative}
+.gal-main{width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--charcoal);margin-bottom:.7rem;cursor:pointer;position:relative}
+.gal-main img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.gal-main:hover img{transform:scale(1.03)}
+.gal-main-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:.85rem;flex-direction:column;gap:.5rem}
+.gal-main-placeholder i{font-size:2rem;opacity:.3}
+.gal-counter{position:absolute;bottom:.7rem;right:.7rem;background:rgba(0,0,0,.6);color:var(--white);font-size:.7rem;font-weight:600;padding:.3rem .6rem;border-radius:20px;backdrop-filter:blur(4px)}
+.gal-thumbs{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.3rem;scrollbar-width:none}
+.gal-thumbs::-webkit-scrollbar{display:none}
+.gal-thumb{width:72px;height:52px;border-radius:7px;overflow:hidden;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.gal-thumb.active{border-color:var(--red)}
+.gal-thumb img{width:100%;height:100%;object-fit:cover}
+.gal-thumb-placeholder{width:100%;height:100%;background:var(--charcoal);display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:.7rem}
+.gal-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:none;color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;backdrop-filter:blur(4px);transition:background .2s;z-index:5}
+.gal-nav-btn:hover{background:rgba(214,40,40,.7)}
+.gal-prev{left:.6rem}.gal-next{right:.6rem}
+
+/* LIGHTBOX */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center}
+#lightbox.open{display:flex}
+#lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;border-radius:8px}
+.lb-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(255,255,255,.7);font-size:1.6rem;cursor:pointer;line-height:1;padding:.3rem}
+.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:.7rem .9rem;border-radius:8px;transition:background .2s}
+.lb-prev{left:1rem}.lb-next{right:1rem}
+.lb-prev:hover,.lb-next:hover{background:rgba(214,40,40,.5)}
+
+/* BODY */
+.proj-body{max-width:1100px;margin:0 auto;padding:0 1.5rem 5rem;display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start}
+.section-tag{display:flex;align-items:center;gap:.6rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.7rem}
+.section-tag::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
+.section-tag::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
+.proj-desc-text{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:2rem}
+
+/* RESULTADOS */
+.resultados{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem}
+.resultado-item{display:flex;align-items:center;gap:.8rem;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:8px;padding:.8rem 1rem}
+.resultado-item i{color:var(--green);font-size:.85rem;flex-shrink:0}
+.resultado-item span{font-size:.85rem;font-weight:500;color:var(--white)}
+
+/* TECNOLOGIAS */
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.tech-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:.35rem .85rem;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-lt)}
+
+/* SIDEBAR */
+.proj-sidebar{display:flex;flex-direction:column;gap:1rem;position:sticky;top:80px}
+.scard{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.2rem}
+.scard-title{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1px solid var(--divider)}
+.scard-row{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem}
+.scard-row:last-child{border-bottom:none}
+.scard-row i{width:16px;text-align:center;color:var(--gray);font-size:.82rem;flex-shrink:0}
+.scard-row span{color:var(--gray-lt)}
+.btn-cta{display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--red);color:#fff;text-decoration:none;font-family:'Barlow',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.9rem;border-radius:8px;transition:all .2s;margin-top:.8rem;border:none;cursor:pointer;width:100%}
+.btn-cta:hover,.btn-cta:active{background:var(--red-lt);transform:translateY(-2px)}
+.btn-cta-wpp{background:#25D366}.btn-cta-wpp:hover,.btn-cta-wpp:active{background:#1da851}
+
+/* NAV */
+.proj-nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;padding:1.5rem;border-top:1px solid var(--divider)}
+.pnav-a{display:flex;flex-direction:column;gap:.2rem;text-decoration:none;color:var(--gray);transition:color .2s;max-width:45%}
+.pnav-a:hover{color:var(--white)}
+.pnav-a.right{text-align:right}
+.pnav-dir{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);display:flex;align-items:center;gap:.3rem}
+.pnav-a.right .pnav-dir{justify-content:flex-end}
+.pnav-nome{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;color:var(--white)}
+.pnav-a.disabled{opacity:.3;pointer-events:none}
+
+/* WPP FLOAT */
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);transition:transform .25s;animation:wppP 3s ease-in-out infinite}
+.wpp-float:hover{transform:scale(1.1)}
+@keyframes wppP{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+
+/* MOBILE */
+.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:8000}
+.mm-overlay.active{display:block}
+.mm-drawer{position:fixed;top:0;right:0;width:55%;max-width:280px;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:0;overflow:hidden;height:auto;max-height:100dvh}
+.mm-drawer.active{transform:translateX(0)}
+.mm-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.mm-title{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.mm-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.2rem;cursor:pointer;line-height:1;padding:.3rem}
+.mm-nav{flex:1;overflow-y:auto;padding:.5rem 0}
+.mm-nav a{display:block;color:rgba(255,255,255,.75);text-decoration:none;font-size:.95rem;padding:.85rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.05);transition:all .15s}
+.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+
+/* LOADING */
+#loading{display:flex;align-items:center;justify-content:center;min-height:60vh;color:var(--gray)}
+.spinner{width:26px;height:26px;border:3px solid var(--divider);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin-right:.8rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  .proj-body{grid-template-columns:1fr;gap:1.5rem}
+  .proj-sidebar{position:static}
+  .proj-nav{padding:1rem}
+  .gal-nav-btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="logo-link" href="index.html">
+      <span class="logo-letters">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span></span>
+      <span class="logo-sub">Holding SGPS</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:.8rem">
+      <a href="javascript:history.back()" class="btn-back"><span class="arr">&#8592;</span> Voltar</a>
+      <button class="hamburger" id="hamburger" onclick="var d=document.getElementById('mmDrawer'),o=document.getElementById('mmOverlay');d.classList.toggle('active');o.classList.toggle('active');document.body.style.overflow=d.classList.contains('active')?'hidden':'';">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="loading"><div class="spinner"></div> A carregar...</div>
+
+<div id="projetoContent" style="display:none">
+
+  <div class="proj-hero">
+    <div class="proj-hero-bg"></div>
+    <div class="proj-hero-img" id="heroBg"></div>
+    <div class="proj-hero-grad"></div>
+    <div class="proj-hero-content">
+      <div class="proj-tag" id="pTag"></div>
+      <div class="proj-nome" id="pNome"></div>
+      <div class="proj-destaque" id="pDestaque"><i class="fa-solid fa-trophy"></i> <span></span></div>
+    </div>
+  </div>
+
+  <!-- GALERIA -->
+  <div class="galeria">
+    <div class="gal-main" id="galMain">
+      <img id="galMainImg" src="" alt="" onclick="openLightbox(currentImg)">
+      <div class="gal-main-placeholder" id="galPlaceholder" style="display:none">
+        <i class="fa-solid fa-images"></i>
+        <span>Imagens em breve</span>
+      </div>
+      <div class="gal-counter" id="galCounter"></div>
+      <button class="gal-nav-btn gal-prev" onclick="galNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="gal-nav-btn gal-next" onclick="galNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="gal-thumbs" id="galThumbs"></div>
+  </div>
+
+  <!-- BODY -->
+  <div class="proj-body">
+    <div>
+      <div class="section-tag">Sobre o Projecto</div>
+      <p class="proj-desc-text" id="pDescLonga"></p>
+
+      <div class="section-tag">Resultados</div>
+      <div class="resultados" id="pResultados"></div>
+
+      <div class="section-tag">Tecnologias</div>
+      <div class="tags" id="pTecnologias"></div>
+    </div>
+
+    <div class="proj-sidebar">
+      <div class="scard">
+        <div class="scard-title"><i class="fa-solid fa-circle-info"></i> Informações</div>
+        <div class="scard-row"><i class="fa-solid fa-tag"></i><span id="sTipo"></span></div>
+        <div class="scard-row"><i class="fa-solid fa-calendar"></i><span id="sAno"></span></div>
+        <div class="scard-row"><i class="fa-solid fa-location-dot"></i><span>Huambo, Angola</span></div>
+        <div class="scard-row"><i class="fa-brands fa-github"></i><span>GitHub Pages</span></div>
+      </div>
+      <div class="scard" id="siteCard" style="display:none">
+        <div class="scard-title"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder ao Site</div>
+        <a id="siteBtn" href="#" target="_blank" class="btn-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site</a>
+        <a id="adminSiteBtn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.6rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--gray-lt);text-decoration:none;font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.75rem;border-radius:8px;transition:all .2s">
+          <i class="fa-solid fa-lock-open"></i> Painel Admin do Site
+        </a>
+      </div>
+      <div class="scard">
+        <div class="scard-title"><i class="fa-solid fa-handshake"></i> Quer um site assim?</div>
+        <p style="font-size:.78rem;color:var(--gray);font-weight:300;margin-bottom:.8rem;line-height:1.6">Criamos para si uma solução personalizada. Fale connosco!</p>
+        <a href="https://wa.me/244954288128?text=Ol%C3%A1!%20Vi%20o%20portf%C3%B3lio%20da%20IMPERSILVA%20TECH%20e%20quero%20um%20site%20assim!" target="_blank" class="btn-cta btn-cta-wpp"><i class="fa-brands fa-whatsapp"></i> Solicitar Orçamento</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV ENTRE PROJECTOS -->
+  <div class="proj-nav" id="projNav"></div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">&#10005;</button>
+  <button class="lb-prev" onclick="lbNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-next" onclick="lbNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<!-- MENU MOBILE -->
+<div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
+<div class="mm-drawer" id="mmDrawer">
+  <div class="mm-header"><span class="mm-title">Menu</span><button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button></div>
+  <nav class="mm-nav">
+    <a href="index.html">Início</a>
+    <a href="sobre.html">Sobre Nós</a>
+    <a href="projetos.html">Projectos</a>
+    <a href="consultoria.html">Consultoria</a>
+    <a href="tech.html">IMPERSILVA TECH</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="verificar-site.html">Portal de Clientes</a>
+  </nav>
+</div>
+
+<a href="https://wa.me/244954288128?text=Ol%C3%A1%20IMPERSILVA!" target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+
+<script>
+
+let projeto = null;
+let portfolio = [];
+let currentImg = 0;
+let galeria = [];
+
+async function loadProjeto() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
+  try {
+    // Buscar todos os projectos para navegação prev/next
+    let portfolio_data;
+    try {
+      portfolio_data = await api.get('/api/portfolio');
+    } catch(fetchErr) {
+      throw new Error('Não foi possível carregar o portfólio: ' + fetchErr.message);
+    }
+    if (!Array.isArray(portfolio_data) || portfolio_data.length === 0) throw new Error('Portfólio vazio');
+    portfolio = portfolio_data;
+
+    // Buscar projecto específico pelo id (string ou numérico)
+    projeto = portfolio.find(function(p) {
+      return String(p.id) === String(id);
+    });
+    if (!projeto) throw new Error('Projecto #' + id + ' não encontrado');
+
+    document.title = projeto.nome + ' — IMPERSILVA TECH';
+    renderProjeto();
+
+  } catch(e) {
+    document.getElementById('loading').innerHTML = '<div style="text-align:center;padding:3rem 1rem"><i class="fa-solid fa-circle-exclamation" style="font-size:2rem;color:var(--red);margin-bottom:.8rem;display:block"></i><p style="color:var(--gray);font-size:.9rem">Projecto não encontrado.</p><a href="tech.html" style="color:var(--red);font-size:.85rem;margin-top:1rem;display:inline-block">← Ver todos os projectos</a></div>';
+  }
+}
+
+function renderProjeto() {
+  const p = projeto;
+
+  // Hero
+  document.getElementById('heroBg').style.backgroundImage = 'url(' + p.img_capa + ')';
+  const tagEl = document.getElementById('pTag');
+  tagEl.textContent = p.tag;
+  tagEl.className = 'proj-tag ' + (p.tagClass || 'tag-blue');
+  document.getElementById('pNome').textContent = p.nome;
+  const dest = document.getElementById('pDestaque');
+  if (p.destaque) { dest.querySelector('span').textContent = p.destaque; }
+  else { dest.style.display = 'none'; }
+
+  // Galeria
+  galeria = p.galeria || [p.img_capa];
+  currentImg = 0;
+  renderGaleria();
+
+  // Body
+  document.getElementById('pDescLonga').textContent = p.desc_longa || p.desc || '';
+
+  // Resultados
+  const resEl = document.getElementById('pResultados');
+  (p.resultados || []).forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'resultado-item';
+    div.innerHTML = '<i class="fa-solid fa-check-circle"></i><span>' + r + '</span>';
+    resEl.appendChild(div);
+  });
+
+  // Tecnologias
+  const tecEl = document.getElementById('pTecnologias');
+  (p.tecnologias || []).forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tech-tag';
+    span.textContent = t;
+    tecEl.appendChild(span);
+  });
+
+  // Sidebar
+  document.getElementById('sTipo').textContent = p.tag;
+  document.getElementById('sAno').textContent = p.ano || '2024';
+  if (p.url) {
+    document.getElementById('siteCard').style.display = 'block';
+    document.getElementById('siteBtn').href = p.url;
+  }
+
+  // Nav prev/next
+  const idx = portfolio.findIndex(function(p){ return String(p.id) === String(projeto.id); });
+  const prev = portfolio[idx - 1];
+  const next = portfolio[idx + 1];
+  document.getElementById('projNav').innerHTML = `
+    <a href="projeto.html?id=${prev ? prev.id : ''}" class="pnav-a ${prev ? '' : 'disabled'}">
+      <span class="pnav-dir"><i class="fa-solid fa-arrow-left"></i> Anterior</span>
+      <span class="pnav-nome">${prev ? prev.nome : '—'}</span>
+    </a>
+    <a href="tech.html#portfolio" style="font-size:.72rem;color:var(--gray);text-decoration:none;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--gray)'">Ver todos</a>
+    <a href="projeto.html?id=${next ? next.id : ''}" class="pnav-a right ${next ? '' : 'disabled'}">
+      <span class="pnav-dir" style="justify-content:flex-end">Próximo <i class="fa-solid fa-arrow-right"></i></span>
+      <span class="pnav-nome">${next ? next.nome : '—'}</span>
+    </a>
+  `;
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('projetoContent').style.display = 'block';
+}
+
+function renderGaleria() {
+  const mainImg = document.getElementById('galMainImg');
+  const placeholder = document.getElementById('galPlaceholder');
+  const counter = document.getElementById('galCounter');
+
+  if (galeria.length === 0 || !galeria[currentImg]) {
+    mainImg.style.display = 'none';
+    placeholder.style.display = 'flex';
+    counter.style.display = 'none';
+    return;
+  }
+
+  mainImg.src = galeria[currentImg];
+  mainImg.style.display = 'block';
+  placeholder.style.display = 'none';
+  mainImg.onerror = function() {
+    this.style.display = 'none';
+    placeholder.style.display = 'flex';
+  };
+  counter.textContent = (currentImg + 1) + ' / ' + galeria.length;
+
+  // Thumbs
+  const thumbsEl = document.getElementById('galThumbs');
+  thumbsEl.innerHTML = '';
+  galeria.forEach((src, i) => {
+    const div = document.createElement('div');
+    div.className = 'gal-thumb' + (i === currentImg ? ' active' : '');
+    div.onclick = () => setImg(i);
+    const img = document.createElement('img');
+    img.src = src;
+    img.onerror = function() {
+      this.parentElement.innerHTML = '<div class="gal-thumb-placeholder"><i class="fa-solid fa-image"></i></div>';
+    };
+    div.appendChild(img);
+    thumbsEl.appendChild(div);
+  });
+}
+
+function setImg(i) {
+  currentImg = i;
+  renderGaleria();
+}
+function galNav(dir) {
+  currentImg = (currentImg + dir + galeria.length) % galeria.length;
+  renderGaleria();
+}
+
+// Lightbox
+function openLightbox(i) {
+  currentImg = i;
+  document.getElementById('lbImg').src = galeria[i];
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbNav(dir) {
+  currentImg = (currentImg + dir + galeria.length) % galeria.length;
+  document.getElementById('lbImg').src = galeria[currentImg];
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+loadProjeto();
+
+</script>
+</body>
+</html>
