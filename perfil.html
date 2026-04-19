@@ -269,7 +269,7 @@ const COR_MAP = { red:'var(--red)', blue:'var(--blue-lt)', gray:'var(--gray-lt)'
 
 async function loadPerfil() {
   const params = new URLSearchParams(window.location.search);
-  const id = parseInt(params.get('id') || '0');
+  const idParam = params.get('id') || '0';
 
   try {
     let equipa;
@@ -279,8 +279,30 @@ async function loadPerfil() {
       throw new Error('Não foi possível carregar os dados da equipa: ' + fetchErr.message);
     }
     if (!Array.isArray(equipa) || equipa.length === 0) throw new Error('Dados da equipa inválidos');
-    const membro = equipa.find(function(m) { return m.id === id; }) || equipa[id];
-    if (!membro) throw new Error('Membro #' + id + ' não encontrado');
+    // Support both string slug IDs and numeric index IDs
+    const membro = equipa.find(function(m) { return String(m.id) === String(idParam); })
+                || equipa[parseInt(idParam)];
+    // Parse especialidades if it's a JSON string from D1
+    if (membro && typeof membro.especialidades === 'string') {
+      try { membro.especialidades = JSON.parse(membro.especialidades); } catch(e) {
+        membro.especialidades = membro.especialidades ? membro.especialidades.split(',').map(function(s){return s.trim();}) : [];
+      }
+    }
+    // Parse galeria if it's a JSON string
+    if (membro && typeof membro.galeria === 'string') {
+      try { membro.galeria = JSON.parse(membro.galeria); } catch(e) { membro.galeria = []; }
+    }
+    // Fill missing fields gracefully
+    if (membro) {
+      membro.bio_longa = membro.bio_longa || membro.bio || '';
+      membro.empresa = membro.empresa || 'IMPERSILVA';
+      membro.localizacao = membro.localizacao || 'Huambo, Angola';
+      membro.cor = membro.cor || 'red';
+      membro.placeholder = membro.placeholder || (membro.nome ? membro.nome[0] : '?');
+      membro.galeria = membro.galeria || [];
+      membro.whatsapp = membro.whatsapp || null;
+    }
+    if (!membro) throw new Error('Membro #' + idParam + ' não encontrado');
 
     document.title = membro.nome + ' — IMPERSILVA';
 
@@ -388,17 +410,17 @@ async function loadPerfil() {
 
     // Nav entre perfis
     const navEl = document.getElementById('perfilNav');
-    const prev = id > 0 ? equipa[id-1] : null;
-    const next = id < equipa.length-1 ? equipa[id+1] : null;
-    navEl.innerHTML = `
-      <a href="perfil.html?id=${id-1}" class="${prev ? '' : 'disabled'}">
-        ← ${prev ? prev.nome : 'Anterior'}
-      </a>
-      <a href="sobre.html" style="color:var(--gray);font-size:.75rem">Ver toda a equipa</a>
-      <a href="perfil.html?id=${id+1}" class="${next ? '' : 'disabled'}">
-        ${next ? next.nome : 'Próximo'} →
-      </a>
-    `;
+    const idxCurrent = equipa.findIndex(function(m){ return String(m.id) === String(idParam); });
+    const prev = idxCurrent > 0 ? equipa[idxCurrent-1] : null;
+    const next = idxCurrent < equipa.length-1 ? equipa[idxCurrent+1] : null;
+    navEl.innerHTML =
+      '<a href="perfil.html?id='+(prev?prev.id:'')+(prev?'':'')+'" class="'+(prev?'':'disabled')+'">' +
+        '← ' + (prev ? prev.nome : 'Anterior') +
+      '</a>' +
+      '<a href="sobre.html" style="color:var(--gray);font-size:.75rem">Ver toda a equipa</a>' +
+      '<a href="perfil.html?id='+(next?next.id:'')+'" class="'+(next?'':'disabled')+'">' +
+        (next ? next.nome : 'Próximo') + ' →' +
+      '</a>';
 
     document.getElementById('loading').style.display = 'none';
     document.getElementById('perfilContent').style.display = 'block';

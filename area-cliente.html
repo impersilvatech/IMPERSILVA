@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Área de Cliente — IMPERSILVA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0e0f;--card:#1a1a1c;--card2:#242428;
+  --red:#d62828;--blue:#1d4ed8;--blu2:#3b6ef0;
+  --grn:#22c55e;--amb:#f59e0b;
+  --wh:#fff;--gr:#888896;--gr2:#c0c0cc;
+  --div:rgba(255,255,255,.07);
+  --bot:60px;
+}
+html,body{height:100%;font-family:'Barlow',sans-serif;background:var(--bg);color:var(--wh)}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit}
+
+/* LOGIN */
+#ls{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;
+  background:var(--bg);background-image:radial-gradient(ellipse at 20% 40%,rgba(214,40,40,.07) 0%,transparent 60%);}
+.lb{background:var(--card);border:1px solid var(--div);border-radius:14px;padding:2rem 1.5rem;width:100%;max-width:340px}
+.ll{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.8rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem}
+.ll .r{color:var(--red)}.ll .b{color:var(--blu2)}
+.ls2{font-size:.58rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase;margin-bottom:1.6rem}
+.lfi{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.9rem 1rem;color:var(--wh);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none;display:block;margin-bottom:.8rem}
+.lfi:focus{border-color:var(--red)}
+.lfi::placeholder{color:rgba(255,255,255,.2)}
+.lbtn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.lerr{color:var(--red);font-size:.78rem;margin-top:.6rem;display:none;text-align:center}
+.lhelp{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--div);font-size:.73rem;color:var(--gr);text-align:center}
+.lhelp a{color:var(--blu2)}
+
+/* APP */
+#app{display:none;min-height:100vh;padding-bottom:calc(var(--bot)+1rem)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--div);z-index:100;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.hlogo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em}
+.hlogo .r{color:var(--red)}.hlogo .b{color:var(--blu2)}
+.hlogo-s{font-size:.4rem;letter-spacing:.2em;color:var(--gr);text-transform:uppercase;display:block}
+.hright{display:flex;align-items:center;gap:.6rem}
+.hbadge{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.2rem .45rem;border-radius:4px}
+.hname{font-size:.75rem;color:var(--gr2);font-weight:600;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* MAIN */
+.mc{padding:1rem}
+.ph{padding:.7rem 0 1rem;border-bottom:1px solid var(--div);margin-bottom:1rem}
+.pt{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+.pt .r{color:var(--red)}.pt .b{color:var(--blu2)}
+.ps{font-size:.75rem;color:var(--gr);margin-top:.2rem}
+
+/* BOTTOM NAV */
+.bn{position:fixed;bottom:0;left:0;right:0;height:var(--bot);background:var(--bg);border-top:1px solid var(--div);display:flex;z-index:100}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border:none;background:none;color:var(--gr);font-size:.48rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:2px solid transparent;-webkit-tap-highlight-color:transparent}
+.bni.on{color:var(--wh);border-top-color:var(--red)}
+.bni i{font-size:1.1rem}
+.bnb{background:var(--red);color:#fff;font-size:.45rem;font-weight:700;padding:.1rem .3rem;border-radius:8px;min-width:14px;text-align:center;display:none}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--div);border-radius:12px;padding:1rem;margin-bottom:1rem}
+.ct{font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gr);margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1px solid var(--div);display:flex;align-items:center;gap:.5rem}
+
+/* PROGRESS */
+.prog-hero{background:var(--card);border:1px solid var(--div);border-radius:14px;padding:1.2rem;margin-bottom:1rem;position:relative;overflow:hidden}
+.prog-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--red),var(--blu2))}
+.prog-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.15rem}
+.prog-neg{font-size:.75rem;color:var(--gr);margin-bottom:.9rem}
+.prog-bar{background:var(--div);border-radius:4px;height:8px;overflow:hidden;margin:.5rem 0}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--red),var(--blu2));border-radius:4px;transition:width 1s ease}
+.prog-meta{display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:var(--gr)}
+.prog-pct{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:var(--wh);line-height:1}
+.prog-estado{font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border-radius:50px}
+.e-prog{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
+.e-rev{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.3)}
+.e-ok{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.e-pau{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+
+/* ETAPAS */
+.etapa{display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.etapa:last-child{border-bottom:none}
+.etapa-ic{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.etapa-ic.ok{background:rgba(34,197,94,.15);color:var(--grn)}
+.etapa-ic.cur{background:rgba(29,78,216,.15);color:var(--blu2)}
+.etapa-ic.pend{background:rgba(255,255,255,.05);color:var(--gr)}
+.etapa-nome{font-size:.82rem;font-weight:500;flex:1}
+.etapa-nome.ok{color:var(--gr);text-decoration:line-through}
+.etapa-nome.cur{color:var(--wh);font-weight:700}
+.etapa-data{font-size:.65rem;color:var(--gr)}
+
+/* DOCS */
+.doc-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.doc-item:last-child{border-bottom:none}
+.doc-ic{width:36px;height:36px;border-radius:8px;background:rgba(29,78,216,.12);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--blu2);flex-shrink:0}
+.doc-name{font-size:.85rem;font-weight:600;flex:1}
+.doc-tipo{font-size:.6rem;color:var(--gr)}
+.doc-dl{background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;color:var(--gr2);font-size:.7rem;padding:.35rem .7rem;cursor:pointer;display:flex;align-items:center;gap:.3rem;transition:all .15s}
+.doc-dl:hover,.doc-dl:active{border-color:var(--wh);color:var(--wh)}
+
+/* TICKET FORM */
+.inp{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem 1rem;color:var(--wh);font-size:.9rem;outline:none;transition:border-color .2s;-webkit-appearance:none;margin-bottom:.75rem}
+.inp:focus{border-color:var(--red)}
+.inp::placeholder{color:rgba(255,255,255,.2)}
+textarea.inp{resize:vertical;min-height:90px}
+.lbl{display:block;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gr2);margin-bottom:.35rem}
+
+/* TICKET LIST */
+.ticket{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem;cursor:pointer}
+.ticket.aberto{border-left:3px solid var(--red)}
+.ticket-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.ticket-sub{font-weight:600;font-size:.85rem;flex:1}
+.ticket-date{font-size:.65rem;color:rgba(255,255,255,.3);margin-left:auto}
+.ticket-body{display:none;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--div);font-size:.8rem;line-height:1.6;color:var(--gr2)}
+.ticket.open .ticket-body{display:block}
+
+/* MSG */
+.msg{padding:.7rem .9rem;border-radius:10px;margin-bottom:.6rem;max-width:88%;font-size:.83rem;line-height:1.5}
+.msg.cli{background:rgba(29,78,216,.15);border:1px solid rgba(29,78,216,.2);align-self:flex-end;margin-left:auto}
+.msg.emp{background:rgba(255,255,255,.05);border:1px solid var(--div)}
+.msg-wrap{display:flex;flex-direction:column}
+.msg-meta{font-size:.62rem;color:var(--gr);margin-top:.3rem}
+
+/* PERFIL */
+.pf-avatar{width:72px;height:72px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--gr);margin-bottom:.75rem;overflow:hidden;border:2px solid var(--div)}
+.pf-avatar img{width:100%;height:100%;object-fit:cover}
+
+/* BTNS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.1rem;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.bfull{width:100%}
+.bred{background:var(--red);color:#fff}
+.bgh{background:rgba(255,255,255,.05);color:var(--gr2);border:1px solid rgba(255,255,255,.1)}
+.bdng{background:rgba(214,40,40,.08);color:var(--red);border:1px solid rgba(214,40,40,.2)}
+.bsm{padding:.5rem .9rem;font-size:.72rem}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .45rem;border-radius:50px}
+.bg{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.bb{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
+.br{background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.bgr{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+.ba{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.3)}
+
+/* MISC */
+.empty{text-align:center;padding:2rem 1rem;color:var(--gr)}
+.empty i{font-size:2rem;opacity:.3;margin-bottom:.6rem;display:block}
+.empty p{font-size:.82rem}
+.spin{width:18px;height:18px;border:2px solid var(--div);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:2rem;color:var(--gr);font-size:.82rem}
+
+/* TOAST */
+#toast{position:fixed;top:1rem;left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:.82rem}
+#toast.show{opacity:1;transform:translateY(0)}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.g{background:var(--grn)}.r{background:var(--red)}.b{background:var(--blu2)}
+
+/* REGISTAR */
+.reg-note{background:rgba(29,78,216,.08);border:1px solid rgba(29,78,216,.2);border-radius:10px;padding:.9rem;margin-top:1rem;font-size:.78rem;color:var(--gr2);line-height:1.6;text-align:center}
+.reg-note strong{color:var(--wh)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="ls">
+  <div class="lb">
+    <div class="ll">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+    <div class="ls2">Área de Cliente</div>
+
+    <div id="loginForm">
+      <label class="lbl" style="margin-bottom:.35rem;display:block">Código de Acesso</label>
+      <input class="lfi" type="text" id="loginCode" placeholder="Ex: IMP-XXXXXXXX" autocomplete="off" style="text-transform:uppercase;letter-spacing:.1em;font-family:monospace">
+      <div class="lerr" id="loginErr"><i class="fa-solid fa-circle-exclamation"></i> <span id="loginErrMsg">Código não encontrado ou conta inactiva.</span></div>
+      <button class="lbtn" id="loginBtn" onclick="doLogin()"><i class="fa-solid fa-unlock-keyhole"></i> ENTRAR</button>
+      <div class="reg-note">
+        <strong>Ainda não é cliente?</strong><br>
+        Peça um orçamento e receba o seu código de acesso após confirmar o projecto.<br>
+        <a href="orcamento.html" style="color:var(--red);font-weight:700;margin-top:.4rem;display:inline-block"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="hdr">
+    <div>
+      <div class="hlogo">IMPERSIL<span class="r">V</span><span class="b">A</span><span class="hlogo-s">Área de Cliente</span></div>
+    </div>
+    <div class="hright">
+      <span class="hbadge">Cliente</span>
+      <span class="hname" id="hClienteNome">—</span>
+      <button style="background:none;border:none;color:var(--gr);font-size:.9rem;cursor:pointer" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+
+  <div class="mc" id="mc"></div>
+
+  <nav class="bn">
+    <button class="bni on" onclick="goB(this,'inicio')"><i class="fa-solid fa-house"></i><span>Início</span></button>
+    <button class="bni" onclick="goB(this,'projetos')"><i class="fa-solid fa-diagram-project"></i><span>Projecto</span></button>
+    <button class="bni" onclick="goB(this,'documentos')"><i class="fa-solid fa-folder-open"></i><span>Ficheiros</span></button>
+    <button class="bni" onclick="goB(this,'suporte')"><i class="fa-solid fa-headset"></i><span>Suporte</span><span class="bnb" id="bnb-sup">!</span></button>
+    <button class="bni" onclick="goB(this,'perfil')"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
+  </nav>
+</div>
+
+<div id="toast"><div class="tdot" id="td"></div><span id="tm"></span></div>
+
+<script>
+var API = 'https://impersilva-ao.3miliosilva.workers.dev';
+var _cliId = '';
+var _cliData = null;
+var _ttimer;
+
+/* AUTH */
+document.getElementById('loginCode').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('loginCode').addEventListener('input', function(){ this.value = this.value.toUpperCase(); });
+
+async function doLogin() {
+  var code = document.getElementById('loginCode').value.trim().toUpperCase();
+  if(!code){ toast('Insira o seu código de acesso','error'); return; }
+  var btn = document.getElementById('loginBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spin"></div> A verificar...';
+  document.getElementById('loginErr').style.display = 'none';
+  try {
+    var data = await fetch(API+'/api/clientes/'+encodeURIComponent(code)).then(function(r){
+      if(r.status===404) throw new Error('not_found');
+      if(r.status===403) throw new Error('inactive');
+      if(!r.ok) throw new Error('error');
+      return r.json();
+    });
+    _cliId = code;
+    _cliData = data;
+    localStorage.setItem('imp_cli_id', code);
+    startClientApp();
+  } catch(e) {
+    var msgs = {not_found:'Código não encontrado. Verifique se o copiou correctamente.', inactive:'A sua conta está temporariamente inactiva. Contacte a IMPERSILVA.', error:'Erro de ligação. Tente novamente.'};
+    document.getElementById('loginErrMsg').textContent = msgs[e.message] || msgs.error;
+    document.getElementById('loginErr').style.display = 'flex';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> ENTRAR';
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem('imp_cli_id');
+  location.reload();
+}
+
+function startClientApp() {
+  document.getElementById('ls').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('hClienteNome').textContent = (_cliData.nome||'').split(' ')[0];
+  goSection('inicio');
+}
+
+// Auto-login
+var savedId = localStorage.getItem('imp_cli_id');
+if(savedId) {
+  document.getElementById('loginCode').value = savedId;
+  doLogin();
+}
+
+/* TOAST */
+function toast(msg, type) {
+  if(!type) type='success';
+  var el=document.getElementById('toast'), dot=document.getElementById('td');
+  document.getElementById('tm').textContent=msg;
+  dot.className='tdot '+(type==='success'?'g':type==='error'?'r':'b');
+  el.className='show';
+  clearTimeout(_ttimer);
+  _ttimer=setTimeout(function(){ el.className=''; }, 3200);
+}
+
+/* NAV */
+function goB(el, s) {
+  document.querySelectorAll('.bni').forEach(function(i){ i.classList.remove('on'); });
+  el.classList.add('on');
+  goSection(s);
+}
+function goSection(s) {
+  window.scrollTo(0,0);
+  var fns = {inicio:rInicio, projetos:rProjetos, documentos:rDocs, suporte:rSuporte, perfil:rPerfil};
+  if(fns[s]) fns[s]();
+}
+
+/* HELPERS */
+function estadoCls(e){
+  return e==='concluido'?'e-ok':e==='revisao'?'e-rev':e==='pausado'?'e-pau':'e-prog';
+}
+function estadoLabel(e){
+  var m={em_progresso:'Em Progresso',revisao:'Em Revisão',concluido:'Concluído',pausado:'Pausado'};
+  return m[e]||e;
+}
+function timeAgo(d){
+  if(!d) return '';
+  var diff=Date.now()-new Date(d).getTime();
+  var m=Math.floor(diff/60000);
+  if(m<1) return 'agora';
+  if(m<60) return m+'m';
+  var h=Math.floor(m/60);
+  if(h<24) return h+'h';
+  return Math.floor(h/24)+'d';
+}
+function parseEtapas(raw){
+  if(!raw) return [];
+  if(typeof raw==='object') return raw;
+  try{ return JSON.parse(raw); }catch(e){ return []; }
+}
+
+/* INÍCIO */
+async function rInicio() {
+  var c = _cliData;
+  var etapas = parseEtapas(c.etapas);
+  var estadoCl = estadoCls(c.estado);
+  var html =
+    '<div class="ph"><div class="pt">Olá, <span class="r">'+(c.nome||'').split(' ')[0]+'</span>!</div>'+
+    '<div class="ps">Bem-vindo à tua área de cliente IMPERSILVA</div></div>'+
+
+    '<div class="prog-hero">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.2rem">'+
+        '<div>'+
+          '<div class="prog-titulo">'+(c.negocio||'O teu projecto')+'</div>'+
+          '<div class="prog-neg">Site em desenvolvimento</div>'+
+        '</div>'+
+        '<span class="prog-estado '+estadoCl+'">'+estadoLabel(c.estado)+'</span>'+
+      '</div>'+
+      '<div style="display:flex;align-items:flex-end;gap:1rem;margin:.6rem 0">'+
+        '<div class="prog-pct">'+(c.progresso||0)+'%</div>'+
+        '<div style="flex:1">'+
+          '<div class="prog-bar"><div class="prog-fill" id="pfill" style="width:0%"></div></div>'+
+          '<div class="prog-meta">'+
+            '<span>'+(c.etapa_actual||'Em andamento')+'</span>'+
+            (c.previsao?'<span><i class="fa-regular fa-calendar" style="margin-right:.2rem"></i>'+c.previsao+'</span>':'')+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  // Etapas
+  if(etapas.length) {
+    html += '<div class="card"><div class="ct"><i class="fa-solid fa-list-check"></i> Progresso do Projecto</div>';
+    etapas.forEach(function(et){
+      var st = et.estado||'pendente';
+      var ic = st==='concluida'?'fa-check':st==='em_curso'?'fa-circle-half-stroke':'fa-circle';
+      var cls = st==='concluida'?'ok':st==='em_curso'?'cur':'pend';
+      html += '<div class="etapa">'+
+        '<div class="etapa-ic '+cls+'"><i class="fa-solid '+ic+'"></i></div>'+
+        '<div class="etapa-nome '+cls+'">'+et.nome+'</div>'+
+        (et.data?'<div class="etapa-data">'+et.data+'</div>':'')+
+      '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Links rápidos
+  html += '<div class="card"><div class="ct"><i class="fa-solid fa-bolt"></i> Acesso Rápido</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">'+
+      '<button class="btn bgh bfull bsm" onclick="goB(document.querySelectorAll(\'.bni\')[2],\'documentos\')"><i class="fa-solid fa-folder-open"></i> Ficheiros</button>'+
+      '<button class="btn bgh bfull bsm" onclick="goB(document.querySelectorAll(\'.bni\')[3],\'suporte\')"><i class="fa-solid fa-headset"></i> Suporte</button>'+
+      (c.url_site?'<a class="btn bgh bfull bsm" href="'+c.url_site+'" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site</a>':'')+
+      '<a class="btn bgh bfull bsm" href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20O%20meu%20código%20é%20'+_cliId+'" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>'+
+    '</div></div>';
+
+  document.getElementById('mc').innerHTML = html;
+  setTimeout(function(){ var pf=document.getElementById('pfill'); if(pf) pf.style.width=(c.progresso||0)+'%'; }, 100);
+}
+
+/* PROJETOS */
+async function rProjetos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Meu <span class="r">Projecto</span></div></div>'+
+    '<div id="prjC"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data = await fetch(API+'/api/clientes/'+_cliId).then(function(r){ return r.json(); });
+    _cliData = data;
+    var etapas = parseEtapas(data.etapas);
+    var html = '<div class="prog-hero">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.5rem">'+
+        '<div><div class="prog-titulo">'+(data.negocio||'Projecto')+'</div></div>'+
+        '<span class="prog-estado '+estadoCls(data.estado)+'">'+estadoLabel(data.estado)+'</span>'+
+      '</div>'+
+      '<div style="display:flex;align-items:flex-end;gap:1rem">'+
+        '<div class="prog-pct">'+(data.progresso||0)+'%</div>'+
+        '<div style="flex:1">'+
+          '<div class="prog-bar"><div class="prog-fill" id="pfill2" style="width:0%"></div></div>'+
+          '<div class="prog-meta">'+
+            '<span>'+(data.etapa_actual||'—')+'</span>'+
+            (data.previsao?'<span>'+data.previsao+'</span>':'')+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+    if(data.url_site) {
+      html += '<a href="'+data.url_site+'" target="_blank" class="btn bred bfull" style="margin-bottom:1rem"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site</a>';
+    }
+
+    if(etapas.length) {
+      html += '<div class="card"><div class="ct"><i class="fa-solid fa-list-check"></i> Fases do Projecto</div>';
+      etapas.forEach(function(et){
+        var st = et.estado||'pendente';
+        var ic = st==='concluida'?'fa-check':st==='em_curso'?'fa-circle-half-stroke':'fa-circle';
+        var cls = st==='concluida'?'ok':st==='em_curso'?'cur':'pend';
+        html += '<div class="etapa">'+
+          '<div class="etapa-ic '+cls+'"><i class="fa-solid '+ic+'"></i></div>'+
+          '<div class="etapa-nome '+cls+'">'+et.nome+'</div>'+
+          (et.data?'<div class="etapa-data">'+et.data+'</div>':'')+
+        '</div>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div class="empty"><i class="fa-solid fa-diagram-project"></i><p>Sem fases registadas ainda</p></div>';
+    }
+
+    document.getElementById('prjC').innerHTML = html;
+    setTimeout(function(){ var pf=document.getElementById('pfill2'); if(pf) pf.style.width=(data.progresso||0)+'%'; }, 100);
+  } catch(e) {
+    document.getElementById('prjC').innerHTML = '<div class="empty"><p>Erro ao carregar projecto</p></div>';
+  }
+}
+
+/* DOCUMENTOS */
+async function rDocs() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Meus <span class="r">Ficheiros</span></div><div class="ps">Propostas, contratos e entregas</div></div>'+
+    '<div id="docsC"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data = await fetch(API+'/api/cliente/'+_cliId+'/documentos', {headers:{'X-Cliente-Id':_cliId}}).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+    var el = document.getElementById('docsC');
+    if(!data||!data.length){ el.innerHTML='<div class="empty"><i class="fa-solid fa-folder-open"></i><p>Sem ficheiros disponíveis ainda</p><p style="font-size:.72rem;margin-top:.5rem">Os documentos aparecerão aqui assim que forem partilhados.</p></div>'; return; }
+    var html = '<div class="card"><div class="ct"><i class="fa-solid fa-folder-open"></i> '+data.length+' Documento'+(data.length!==1?'s':'')+'</div>';
+    var icons = {proposta:'fa-file-contract',contrato:'fa-file-signature',entrega:'fa-file-check',factura:'fa-file-invoice',outro:'fa-file'};
+    data.forEach(function(d){
+      html += '<div class="doc-item">'+
+        '<div class="doc-ic"><i class="fa-solid '+(icons[d.tipo]||'fa-file')+'"></i></div>'+
+        '<div style="flex:1;min-width:0">'+
+          '<div class="doc-name">'+d.nome+'</div>'+
+          (d.descricao?'<div class="doc-tipo">'+d.descricao+'</div>':'')+
+          '<div class="doc-tipo" style="margin-top:.15rem">'+d.tipo+' • '+timeAgo(d.criado_em)+'</div>'+
+        '</div>'+
+        '<a href="'+d.url+'" target="_blank" class="doc-dl"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir</a>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) {
+    document.getElementById('docsC').innerHTML = '<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* SUPORTE */
+var _ticketsCache = [];
+async function rSuporte() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Su<span class="r">porte</span></div><div class="ps">Envia uma dúvida ou pedido de apoio</div></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-paper-plane"></i> Novo Pedido</div>'+
+      '<label class="lbl">Assunto</label>'+
+      '<input class="inp" type="text" id="tkAssunto" placeholder="Ex: Alterar cor do botão">'+
+      '<label class="lbl">Prioridade</label>'+
+      '<select class="inp" id="tkPrio">'+
+        '<option value="normal">Normal</option>'+
+        '<option value="alta">Alta</option>'+
+        '<option value="urgente">Urgente</option>'+
+      '</select>'+
+      '<label class="lbl">Mensagem</label>'+
+      '<textarea class="inp" id="tkMsg" placeholder="Descreve o teu pedido em detalhe..."></textarea>'+
+      '<button class="btn bred bfull" onclick="enviarTicket()"><i class="fa-solid fa-paper-plane"></i> Enviar Pedido</button>'+
+    '</div>'+
+    '<div id="tkList"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  carregarTickets();
+}
+async function carregarTickets() {
+  try {
+    _ticketsCache = await fetch(API+'/api/cliente/'+_cliId+'/tickets').then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+    var abertos = _ticketsCache.filter(function(t){return t.estado==='aberto';}).length;
+    var bnb = document.getElementById('bnb-sup');
+    if(bnb){ if(abertos>0){bnb.textContent='!';bnb.style.display='block';}else bnb.style.display='none'; }
+    var el = document.getElementById('tkList');
+    if(!el) return;
+    if(!_ticketsCache.length){ el.innerHTML='<div class="empty"><i class="fa-solid fa-ticket"></i><p>Sem pedidos ainda</p></div>'; return; }
+    var html = '<div style="margin-top:.5rem">';
+    _ticketsCache.forEach(function(t){
+      var pCls = t.prioridade==='urgente'?'br':t.prioridade==='alta'?'ba':'bgr';
+      html += '<div class="ticket '+(t.estado==='aberto'?'aberto':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="ticket-top">'+
+          '<span class="badge '+(t.estado==='aberto'?'br':'bg')+'">'+t.estado+'</span>'+
+          '<span class="badge '+pCls+'">'+t.prioridade+'</span>'+
+          '<span class="ticket-sub">'+t.assunto+'</span>'+
+          '<span class="ticket-date">'+timeAgo(t.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="ticket-body">'+
+          '<p>'+t.mensagem+'</p>'+
+          (t.resposta?'<div style="margin-top:.6rem;padding:.6rem;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px"><div style="font-size:.6rem;font-weight:700;color:var(--grn);margin-bottom:.3rem">RESPOSTA DA IMPERSILVA</div>'+t.resposta+'</div>':'')+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) {
+    var el2 = document.getElementById('tkList');
+    if(el2) el2.innerHTML = '<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+async function enviarTicket() {
+  var assunto = document.getElementById('tkAssunto').value.trim();
+  var msg = document.getElementById('tkMsg').value.trim();
+  var prio = document.getElementById('tkPrio').value;
+  if(!assunto||!msg){ toast('Preenche o assunto e a mensagem','error'); return; }
+  try {
+    await fetch(API+'/api/cliente/'+_cliId+'/tickets', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({assunto:assunto, mensagem:msg, prioridade:prio})
+    }).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); });
+    toast('Pedido enviado!');
+    document.getElementById('tkAssunto').value='';
+    document.getElementById('tkMsg').value='';
+    carregarTickets();
+  } catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* PERFIL */
+function rPerfil() {
+  var c = _cliData;
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Meu <span class="r">Perfil</span></div></div>'+
+    '<div class="card">'+
+      '<div class="pf-avatar">'+(c.nome?c.nome[0]:'?')+'</div>'+
+      '<div style="margin-bottom:1rem">'+
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase">'+c.nome+'</div>'+
+        (c.negocio?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0">'+c.negocio+'</div>':'')+
+        '<div style="font-family:monospace;font-size:.85rem;letter-spacing:.1em;background:rgba(255,255,255,.07);padding:.2rem .6rem;border-radius:4px;display:inline-block;margin-top:.4rem;cursor:pointer" onclick="copyTxt(\''+_cliId+'\')" title="Clique para copiar">'+_cliId+'</div>'+
+      '</div>'+
+      '<div style="font-size:.72rem;color:var(--gr);margin-bottom:.6rem">'+
+        (c.telefone?'<div style="margin:.2rem 0"><i class="fa-solid fa-phone" style="width:14px"></i> '+c.telefone+'</div>':'')+
+        '<div style="margin:.2rem 0"><i class="fa-solid fa-clock" style="width:14px"></i> Previsão: '+(c.previsao||'—')+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-headset"></i> Apoio ao Cliente</div>'+
+      '<a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20O%20meu%20código%20é%20'+_cliId+'%20e%20preciso%20de%20ajuda." target="_blank" class="btn bred bfull" style="margin-bottom:.6rem"><i class="fa-brands fa-whatsapp"></i> Contactar via WhatsApp</a>'+
+      '<a href="contacto.html" class="btn bgh bfull"><i class="fa-solid fa-envelope"></i> Formulário de Contacto</a>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-shield-halved"></i> Sessão</div>'+
+      '<p style="font-size:.78rem;color:var(--gr);margin-bottom:.8rem">O teu código de acesso é guardado neste browser. Para sair clica abaixo.</p>'+
+      '<button class="btn bdng bfull" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Terminar Sessão</button>'+
+    '</div>';
+}
+
+function copyTxt(txt) {
+  navigator.clipboard.writeText(txt).then(function(){ toast('Código copiado!'); });
+}
+</script>
+</body>
+</html>

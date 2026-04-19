@@ -520,6 +520,7 @@ function renderCard(item, idx) {
     + '<div class="port-result"><i class="fa-solid fa-arrow-trend-up"></i> ' + item.resultado + '</div>'
     + '<div class="port-footer">'
     + btnVer
+    + '<a href="projeto.html?id=' + item.id + '" class="port-btn port-btn-secondary" style="border-color:rgba(255,255,255,.2)"><i class="fa-solid fa-magnifying-glass"></i> Detalhes</a>'
     + '<a href="orcamento.html?tipo=' + (item.orcamento_tipo || item.categoria) + '" class="port-btn port-btn-primary"><i class="fa-solid fa-copy"></i> Quero igual</a>'
     + '</div></div></div>';
 }
