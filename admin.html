@@ -724,6 +724,7 @@ function openPortModal(id) {
         '<div class="iup-t">Clique para seleccionar<br><strong>JPG, PNG, WEBP</strong></div>'+
         '<img class="ipr" id="pImgPrev"'+(p&&p.imagem?' src="'+p.imagem+'" style="display:block"':'')+'>'+
       '</div>'+
+      (p&&p.imagem?'<button type="button" class="btn bdng bsm" style="margin-top:.4rem;margin-bottom:.4rem" onclick="removeMainPhoto(\'p\')"><i class="fa-solid fa-trash"></i> Remover imagem</button>':'')+
       '<div class="iupg" id="pUpgW"><div class="iupgt" id="pUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="pUpgF" style="width:0%"></div></div></div>'+
       '<input type="hidden" id="pImgUrl" value="'+(p?p.imagem||'':'')+'">'+
     '</div>'+
@@ -775,7 +776,7 @@ async function savePort(eid) {
   try{
     await wPost('/api/admin/portfolio',data);
     btnOk(saveBtn, 'Guardado!');
-    toast('Projecto guardado!');
+    toast('Projecto guardado!'); notify('Sucesso','Projecto guardado no portfólio!','success');
     setTimeout(function(){ closeModal(); rPortfolio(); }, 500);
   }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
 }
@@ -857,6 +858,7 @@ function openEquipaModal(id) {
         '<div class="iup-t">Foto do membro<br><strong>JPG, PNG</strong></div>'+
         '<img class="ipr" id="eImgPrev"'+(m&&m.foto?' src="'+m.foto+'" style="display:block"':'')+'>'+
       '</div>'+
+      (m&&m.foto?'<button type="button" class="btn bdng bsm" style="margin-top:.4rem;margin-bottom:.4rem" onclick="removeMainPhoto(\'e\')"><i class="fa-solid fa-trash"></i> Remover foto</button>':'')+
       '<div class="iupg" id="eUpgW"><div class="iupgt" id="eUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="eUpgF" style="width:0%"></div></div></div>'+
       '<input type="hidden" id="eImgUrl" value="'+(m?m.foto||'':'')+'">'+
     '</div>'+
@@ -906,7 +908,7 @@ async function saveEquipa(eid) {
   try{
     await wPost('/api/admin/equipa',data);
     btnOk(saveBtn, 'Guardado!');
-    toast('Membro guardado!');
+    toast('Membro guardado!'); notify('Sucesso','Membro da equipa guardado!','success');
     setTimeout(function(){ closeModal(); rEquipa(); }, 500);
   }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
 }
@@ -1023,7 +1025,7 @@ async function saveCli(eid) {
   try{
     await wPost('/api/admin/clientes',data);
     btnOk(saveBtn, 'Guardado!');
-    toast('Cliente guardado!');
+    toast('Cliente guardado!'); notify('Sucesso','Cliente guardado com sucesso!','success');
     setTimeout(function(){ closeModal(); rClientes(); }, 500);
   }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
 }
@@ -1136,7 +1138,7 @@ async function saveProj() {
     url_site:document.getElementById('prUrl').value.trim()
   };
   if(!data.cliente_id||!data.nome){toast('Cliente e nome são obrigatórios','error');return;}
-  try{ await wPost('/api/admin/projetos',data); btnOk(saveBtn,'Guardado!'); toast('Projecto guardado!'); setTimeout(function(){ closeModal(); rProjetos(); },500); }
+  try{ await wPost('/api/admin/projetos',data); btnOk(saveBtn,'Guardado!'); toast('Projecto guardado!'); notify('Sucesso','Projecto de cliente guardado!','success'); setTimeout(function(){ closeModal(); rProjetos(); },500); }
   catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
 }
 async function delProj(id) {
@@ -1213,7 +1215,7 @@ async function saveDoc() {
     tipo:document.getElementById('dTipo').value
   };
   if(!data.cliente_id||!data.nome||!data.url){toast('Cliente, nome e URL são obrigatórios','error');return;}
-  try{ await wPost('/api/admin/documentos',data); btnOk(saveBtn,'Guardado!'); toast('Documento guardado!'); setTimeout(function(){ closeModal(); rDocs(); },500); }
+  try{ await wPost('/api/admin/documentos',data); btnOk(saveBtn,'Guardado!'); toast('Documento guardado!'); notify('Sucesso','Documento adicionado!','success'); setTimeout(function(){ closeModal(); rDocs(); },500); }
   catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
 }
 async function delDoc(id) {
@@ -1467,12 +1469,7 @@ function processNQueue() {
     setTimeout(function(){ el.remove(); processNQueue(); }, 350);
   }, 3500);
 }
-// toast now uses notify system
-function toast(msg, type) {
-  if (!type) type = 'success';
-  var titles = {success:'Sucesso', error:'Erro', info:'Informação', warn:'Atenção'};
-  notify(titles[type]||'Aviso', msg, type);
-}
+// toast() defined in main script block
 
 /* BTN LOADING STATE */
 function btnLoad(el, txt) {
@@ -1535,12 +1532,31 @@ async function addGaleriaItem(input, refId, tipo, containerId) {
   } catch(e) { toast('Erro: '+e.message, 'error'); }
 }
 async function delGaleriaItem(id, refId, tipo, containerId) {
-  if (!confirm('Remover esta foto?')) return;
+  toast('A remover foto...','info');
   try {
-    await wDel('/api/admin/galeria/'+id);
+    var r = await fetch(API+'/api/admin/galeria/'+id, {
+      method:'DELETE',
+      headers:{'Authorization':_tok}
+    });
+    if(!r.ok){ var e=await r.json(); throw new Error(e.erro||r.status); }
+    notify('Sucesso','Foto removida da galeria','success');
     toast('Foto removida');
-    loadGaleria(refId, tipo, containerId);
-  } catch(e) { toast('Erro: '+e.message, 'error'); }
+    setTimeout(function(){ loadGaleria(refId, tipo, containerId); }, 300);
+  } catch(e) {
+    toast('Erro ao remover: '+e.message, 'error');
+  }
+}
+
+
+function removeMainPhoto(prefix) {
+  var urlEl = document.getElementById(prefix+'ImgUrl');
+  var prevEl = document.getElementById(prefix==='e'?'ePrev':'pImgPrev');
+  if(urlEl) urlEl.value = '';
+  if(prevEl){ prevEl.src=''; prevEl.style.display='none'; }
+  // Hide the remove button itself
+  var btn = document.querySelector('[onclick*="removeMainPhoto(\''+prefix+'\'"]');
+  if(btn) btn.style.display='none';
+  toast('Foto removida. Clica Guardar para confirmar.','info');
 }
 
 </script>
@@ -1639,7 +1655,7 @@ async function saveFinanca() {
     notas: document.getElementById('fnNotas').value.trim()
   };
   if (!data.cliente_id || !data.descricao || !data.valor) { toast('Preenche todos os campos obrigatórios','error'); btnReset(saveBtn); return; }
-  try { await wPost('/api/admin/financas', data); btnOk(saveBtn,'Guardado!'); toast('Registo guardado!'); setTimeout(function(){ closeModal(); rFinancas(); },500); }
+  try { await wPost('/api/admin/financas', data); btnOk(saveBtn,'Guardado!'); toast('Registo guardado!'); notify('Sucesso','Registo financeiro criado!','success'); setTimeout(function(){ closeModal(); rFinancas(); },500); }
   catch(e) { toast('Erro: '+e.message,'error'); }
 }
 async function pagarFinanca(id) {
@@ -1792,34 +1808,74 @@ async function rLimpeza() {
 async function carregarImgsGH() {
   var el = document.getElementById('ghImgL');
   if (!el) return;
-  el.innerHTML = '<div class="load"><div class="spin"></div> A carregar do GitHub...</div>';
+  el.innerHTML = '<div class="load"><div class="spin"></div> A carregar do GitHub e verificar utilizações...</div>';
   try {
+    // 1. Get all images from GitHub
     var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens', {
       headers: {'Authorization':'token '+_ghtok, 'Accept':'application/vnd.github.v3+json'}
     });
-    if (r.status === 404) { el.innerHTML='<div class="empty"><p>Pasta "imagens" não existe ainda no repositório</p></div>'; return; }
+    if (r.status === 404) { el.innerHTML='<div class="empty"><p>Pasta "imagens" não existe ainda</p></div>'; return; }
     var files = await r.json();
     _ghFiles = Array.isArray(files) ? files.filter(function(f){ return f.type==='file'; }) : [];
     if (!_ghFiles.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-images"></i><p>Sem imagens na pasta /imagens</p></div>'; return; }
-    var html = '<div style="font-size:.72rem;color:var(--gr);margin-bottom:.75rem">'+_ghFiles.length+' ficheiro'+ (_ghFiles.length!==1?'s':'') + ' — Clica no lixo para remover</div>';
-    html += '<div class="card">';
-    _ghFiles.forEach(function(f, i) {
-      var sizeKb = Math.round((f.size||0)/1024);
-      var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
-      html += '<div class="img-file">'+
-        (isImg ?
-          '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy" onerror="this.style.background=\'var(--card2)\'">'
-          :
-          '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>'
-        )+
-        '<div style="flex:1;min-width:0">'+
-          '<div class="img-file-name">'+f.name+'</div>'+
-          '<div class="img-file-size">'+sizeKb+'KB</div>'+
-        '</div>'+
-        '<button class="btn bdng bsm" onclick="removerImgGH('+i+')"><i class="fa-solid fa-trash"></i></button>'+
-      '</div>';
-    });
-    html += '</div>';
+
+    // 2. Get all used image URLs from D1 (portfolio + equipa + galeria)
+    var usedUrls = new Set();
+    try {
+      var port = await wGet('/api/portfolio');
+      port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/imagens/').pop()); });
+    } catch(e2){}
+    try {
+      var eq = await wGet('/api/equipa');
+      eq.forEach(function(m){
+        if(m.foto) usedUrls.add(m.foto.split('/imagens/').pop());
+        if(m.galeria) m.galeria.forEach(function(g){ usedUrls.add((g.url||g).split('/imagens/').pop()); });
+      });
+    } catch(e2){}
+
+    var used = _ghFiles.filter(function(f){ return usedUrls.has(f.name); });
+    var unused = _ghFiles.filter(function(f){ return !usedUrls.has(f.name); });
+
+    var html = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
+      '<span class="badge bg"><i class="fa-solid fa-link"></i> '+used.length+' em uso</span>'+
+      '<span class="badge br"><i class="fa-solid fa-unlink"></i> '+unused.length+' não usadas</span>'+
+      '<span class="badge bgr">Total: '+_ghFiles.length+'</span>'+
+    '</div>';
+
+    if (unused.length) {
+      html += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem">'+
+        '<div class="ct" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i> Imagens não usadas ('+unused.length+')</div>';
+      unused.forEach(function(f, i) {
+        var idx = _ghFiles.indexOf(f);
+        var sizeKb = Math.round((f.size||0)/1024);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
+        html += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy" onerror="this.style.background='var(--card2)'">' :
+            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<button class="btn bdng bsm" onclick="removerImgGH('+idx+')" title="Remover"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (used.length) {
+      html += '<div class="card">'+
+        '<div class="ct" style="color:var(--grn)"><i class="fa-solid fa-link"></i> Em uso ('+used.length+')</div>';
+      used.forEach(function(f) {
+        var idx = _ghFiles.indexOf(f);
+        var sizeKb = Math.round((f.size||0)/1024);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
+        html += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy" onerror="this.style.background='var(--card2)'">' :
+            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<span class="badge bg bsm">em uso</span>'+
+        '</div>';
+      });
+      html += '</div>';
+    }
+
     el.innerHTML = html;
   } catch(e) {
     el.innerHTML = '<div class="empty"><p>Erro ao carregar: '+e.message+'</p></div>';
