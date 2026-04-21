@@ -283,6 +283,31 @@ async function loadProjeto() {
       return String(p.id) === String(id);
     });
     if (!projeto) throw new Error('Projecto #' + id + ' não encontrado');
+    // Map Worker fields to template fields
+    if (!projeto.img_capa) projeto.img_capa = projeto.imagem || '';
+    if (!projeto.tag) projeto.tag = projeto.tag_tipo || '';
+    if (!projeto.tagClass) {
+      var tagMap = {'t-red':'tag-red','t-green':'tag-green','t-amber':'tag-amber','t-blue':'tag-blue'};
+      projeto.tagClass = tagMap[projeto.tag_cor] || 'tag-blue';
+    }
+    if (!projeto.desc_longa) projeto.desc_longa = projeto.descricao || '';
+    if (!projeto.resultados || !projeto.resultados.length) {
+      projeto.resultados = projeto.resultado ? [projeto.resultado] : [];
+    }
+    if (!projeto.galeria || !projeto.galeria.length) {
+      // Load gallery from Worker
+      try {
+        var galResp = await fetch(API + '/api/portfolio/' + id);
+        if(galResp.ok) {
+          var galData = await galResp.json();
+          projeto.galeria = galData.galeria && galData.galeria.length > 0
+            ? galData.galeria
+            : (projeto.imagem ? [projeto.imagem] : []);
+        }
+      } catch(e2) {
+        projeto.galeria = projeto.imagem ? [projeto.imagem] : [];
+      }
+    }
 
     document.title = projeto.nome + ' — IMPERSILVA TECH';
     renderProjeto();
@@ -430,6 +455,16 @@ document.addEventListener('keydown', e => {
 
 loadProjeto();
 
+</script>
+
+<div id="adminFloatBtn" style="display:none;position:fixed;bottom:1.2rem;right:1.2rem;z-index:999">
+  <a href="admin.html" style="display:flex;align-items:center;gap:.4rem;background:rgba(14,14,15,.9);border:1px solid rgba(214,40,40,.4);color:#fff;text-decoration:none;padding:.55rem 1rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,.4)">
+    <i class="fa-solid fa-shield-halved" style="color:#d62828"></i> Admin
+  </a>
+</div>
+<script>
+// Show admin button only if admin session exists
+if(localStorage.getItem('imp_tok')) document.getElementById('adminFloatBtn').style.display='block';
 </script>
 </body>
 </html>

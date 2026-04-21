@@ -679,9 +679,7 @@ function renderPortList() {
           '<span class="badge '+(p.activo?'bg':'bgr')+'">'+(p.activo?'Visível':'Oculto')+'</span>'+
         '</div>'+
       '</div>'+
-      '<div id="portGal_'+p.id+'" style="margin:.5rem 0"></div>'+
       '<div class="lact">'+
-        '<button class="btn bgh bsm" onclick="loadGaleria(\''+p.id+'\',\'portfolio\',\'portGal_'+p.id+'\')" title="Galeria"><i class="fa-solid fa-images"></i></button>'+
         '<button class="btn bgh bsm" onclick="editPort(\''+p.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
         '<button class="btn bdng bsm" onclick="delPort(\''+p.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
       '</div>'+
@@ -729,6 +727,7 @@ function openPortModal(id) {
       '<div class="iupg" id="pUpgW"><div class="iupgt" id="pUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="pUpgF" style="width:0%"></div></div></div>'+
       '<input type="hidden" id="pImgUrl" value="'+(p?p.imagem||'':'')+'">'+
     '</div>'+
+    '<div class="fg" id="portGalSection" style="display:none"><label class="fl"><i class="fa-solid fa-images"></i> Galeria do Projecto</label><div id="inModalGalPort" style="margin-top:.4rem"></div></div>'+
     '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
       '<label class="tog"><input type="checkbox" id="pActivo"'+((!p||p.activo)?' checked':'')+'>'+
       '<span class="tsl"></span></label>'+
@@ -740,7 +739,15 @@ function openPortModal(id) {
     '</div>'
   );
 }
-function editPort(id){ openPortModal(id); }
+function editPort(id){
+  openPortModal(id);
+  setTimeout(function(){
+    var sec = document.getElementById('portGalSection');
+    if(sec) sec.style.display = 'block';
+    var c = document.getElementById('inModalGalPort');
+    if(c){ c.innerHTML='<div class="load" style="padding:.4rem"><div class="spin"></div></div>'; loadGaleria(id,'portfolio','inModalGalPort'); }
+  }, 200);
+}
 async function savePort(eid) {
   var saveBtn = document.querySelector('#mb .btn.bred');
   btnLoad(saveBtn, 'A guardar...');
@@ -785,7 +792,6 @@ var _equipaList = [];
 // Extend equipa modal with galeria
 function openEquipaGaleriaSection(id) {
   var el = document.getElementById('eqGal_'+id);
-  if (el) loadGaleria(id, 'equipa', 'eqGal_'+id);
 }
 
 async function rEquipa() {
@@ -812,9 +818,7 @@ async function rEquipa() {
           '<div class="lidesc">'+m.cargo+'</div>'+
           '<div class="limeta"><span class="badge '+(m.activo?'bg':'bgr')+'">'+(m.activo?'Activo':'Inactivo')+'</span></div>'+
         '</div>'+
-        '<div id="eqGal_'+m.id+'" style="margin:.5rem 0"></div>'+
         '<div class="lact">'+
-          '<button class="btn bgh bsm" onclick="loadGaleria(\''+m.id+'\',\'equipa\',\'eqGal_'+m.id+'\')" title="Galeria"><i class="fa-solid fa-images"></i></button>'+
           '<button class="btn bgh bsm" onclick="editEquipa(\''+m.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
           '<button class="btn bdng bsm" onclick="delEquipa(\''+m.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
         '</div>'+
@@ -856,6 +860,7 @@ function openEquipaModal(id) {
       '<div class="iupg" id="eUpgW"><div class="iupgt" id="eUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="eUpgF" style="width:0%"></div></div></div>'+
       '<input type="hidden" id="eImgUrl" value="'+(m?m.foto||'':'')+'">'+
     '</div>'+
+    '<div class="fg" id="eqGalSection" style="display:none"><label class="fl"><i class="fa-solid fa-images"></i> Galeria de Fotos</label><div id="inModalGal" style="margin-top:.4rem"></div></div>'+
     '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
       '<label class="tog"><input type="checkbox" id="eActivo"'+((!m||m.activo)?' checked':'')+'>'+
       '<span class="tsl"></span></label>'+
@@ -867,7 +872,15 @@ function openEquipaModal(id) {
     '</div>'
   );
 }
-function editEquipa(id){ openEquipaModal(id); }
+function editEquipa(id){
+  openEquipaModal(id);
+  setTimeout(function(){
+    var sec = document.getElementById('eqGalSection');
+    if(sec) sec.style.display = 'block';
+    var c = document.getElementById('inModalGal');
+    if(c){ c.innerHTML='<div class="load" style="padding:.4rem"><div class="spin"></div></div>'; loadGaleria(id,'equipa','inModalGal'); }
+  }, 200);
+}
 async function saveEquipa(eid) {
   var saveBtn = document.querySelector('#mb .btn.bred');
   btnLoad(saveBtn, 'A guardar...');
@@ -1400,19 +1413,22 @@ function rConfig() {
     '</div>';
 }
 function saveGhConfig() {
+  var btn = document.querySelector('#mc .btn.bred');
+  btnLoad(btn, 'A guardar...');
   var tk=document.getElementById('cfGhTok').value.trim();
-  if(!tk){toast('Token em branco','error');return;}
-  _ghtok=tk;
-  localStorage.setItem('imp_ghtok',tk);
-  toast('Token guardado!');
+  if(!tk){ toast('Token em branco','error'); btnReset(btn); return; }
+  _ghtok=tk; localStorage.setItem('imp_ghtok',tk);
+  btnOk(btn,'Guardado!'); toast('Token GitHub guardado!');
 }
 async function testGhConfig() {
-  if(!_ghtok){toast('Configure o token primeiro','error');return;}
-  toast('A testar...','info');
+  if(!_ghtok){ toast('Guarda o token primeiro','error'); return; }
+  var btn = document.querySelector('#mc .btn.bgh');
+  btnLoad(btn, 'A testar...');
   try {
     var r=await fetch('https://api.github.com/repos/'+REPO, {headers:{'Authorization':'token '+_ghtok}});
-    r.ok?toast('GitHub OK!'):toast('Token ou repo inválido','error');
-  }catch(e){toast('Erro: '+e.message,'error');}
+    if(r.ok){ btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
+    else{ btnReset(btn); toast('Token inválido ou repo não encontrado','error'); }
+  }catch(e){ btnReset(btn); toast('Erro de ligação: '+e.message,'error'); }
 }
 
 /* RIPPLE */
@@ -1549,8 +1565,8 @@ async function rFinancas() {
     var pago = data.filter(function(f){ return f.estado==='pago'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
     var pend = data.filter(function(f){ return f.estado==='pendente'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
     document.getElementById('finStats').innerHTML =
-      '<div class="sc"><div class="sn" style="font-size:1.2rem">'+formatKz(pago)+'</div><div class="sl">Recebido</div></div>'+
-      '<div class="sc"><div class="sn" style="font-size:1.2rem;color:var(--amb)">'+formatKz(pend)+'</div><div class="sl">Pendente</div></div>';
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--grn)">'+formatKz(pago)+'</div><div class="sl">Recebido ('+data.filter(function(f){return f.estado==="pago";}).length+')</div></div>'+
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--amb)">'+formatKz(pend)+'</div><div class="sl">Pendente ('+data.filter(function(f){return f.estado==="pendente";}).length+')</div></div>';
     var el = document.getElementById('finL');
     if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-chart-line"></i><p>Sem registos financeiros ainda</p></div>'; return; }
     var html = '';
@@ -1627,8 +1643,16 @@ async function saveFinanca() {
   catch(e) { toast('Erro: '+e.message,'error'); }
 }
 async function pagarFinanca(id) {
-  try { await wPost('/api/admin/financas/'+id+'/estado', {estado:'pago'}); toast('Marcado como pago!'); rFinancas(); }
-  catch(e) { toast('Erro: '+e.message,'error'); }
+  toast('A processar...','info');
+  try {
+    var r = await fetch(API+'/api/admin/financas/'+id+'/estado', {
+      method:'POST', headers:{'Content-Type':'application/json','Authorization':_tok},
+      body:JSON.stringify({estado:'pago'})
+    });
+    if(!r.ok){ var e=await r.json(); throw new Error(e.erro||r.status); }
+    toast('Marcado como pago!');
+    rFinancas();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
 }
 async function delFinanca(id) {
   if (!confirm('Apagar este registo?')) return;

@@ -361,7 +361,9 @@ async function loadPerfil() {
       var galBox = document.getElementById('perfilGaleria');
       var galGrid = document.getElementById('galeriaGrid');
       if (galBox) galBox.style.display = 'block';
-      membro.galeria.filter(function(s){return typeof s==='string'&&s.trim();}).forEach(function(src, i) {
+      // Normalize: galeria items can be strings or {url,legenda,id} objects
+      var galUrls = membro.galeria.map(function(item){ return typeof item==='string' ? item : (item.url||''); }).filter(function(u){ return u && u.trim(); });
+      galUrls.forEach(function(src, i) {
         var div = document.createElement('div');
         div.style.cssText = 'aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:var(--charcoal);cursor:pointer;border:1px solid var(--divider)';
         div.onclick = function() {
@@ -432,6 +434,16 @@ async function loadPerfil() {
 
 loadPerfil();
 document.getElementById('yr') && (document.getElementById('yr').textContent = new Date().getFullYear());
+</script>
+
+<div id="adminFloatBtn" style="display:none;position:fixed;bottom:1.2rem;right:1.2rem;z-index:999">
+  <a href="admin.html" style="display:flex;align-items:center;gap:.4rem;background:rgba(14,14,15,.9);border:1px solid rgba(214,40,40,.4);color:#fff;text-decoration:none;padding:.55rem 1rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,.4)">
+    <i class="fa-solid fa-shield-halved" style="color:#d62828"></i> Admin
+  </a>
+</div>
+<script>
+// Show admin button only if admin session exists
+if(localStorage.getItem('imp_tok')) document.getElementById('adminFloatBtn').style.display='block';
 </script>
 </body>
 </html>
