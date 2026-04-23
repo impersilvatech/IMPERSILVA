@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Admin — IMPERSILVA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0e0f;--card:#1a1a1c;--card2:#242428;
+  --red:#d62828;--blue:#1d4ed8;--blu2:#3b6ef0;
+  --grn:#22c55e;--amb:#f59e0b;
+  --wh:#fff;--gr:#888896;--gr2:#c0c0cc;
+  --div:rgba(255,255,255,.07);
+  --top:52px;--bot:60px;
+}
+html,body{height:100%;font-family:'Barlow',sans-serif;background:var(--bg);color:var(--wh)}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--div);border-radius:2px}
+
+/* LOGIN */
+#ls{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;background:var(--bg)}
+.lb{background:var(--card);border:1px solid var(--div);border-radius:14px;padding:2rem 1.5rem;width:100%;max-width:340px;text-align:center}
+.ll{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:.06em}
+.ll .r{color:var(--red)}.ll .b{color:var(--blu2)}
+.ls{font-size:.58rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase;margin:.2rem 0 1.8rem}
+.li{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem;color:var(--wh);font-size:1rem;outline:none;margin-bottom:1rem;transition:border-color .2s;-webkit-appearance:none}
+.li:focus{border-color:var(--red)}
+.lb-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.9rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.le{color:var(--red);font-size:.78rem;margin-top:.6rem;display:none}
+
+/* APP */
+#app{display:none;min-height:100vh}
+
+/* TOPBAR */
+#tb{position:fixed;top:0;left:0;right:0;height:var(--top);background:var(--bg);border-bottom:1px solid var(--div);display:flex;align-items:center;justify-content:space-between;padding:0 1rem;z-index:100}
+.tl{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em}
+.tl .r{color:var(--red)}.tl .b{color:var(--blu2)}
+.tl-s{font-size:.42rem;letter-spacing:.2em;color:var(--gr);text-transform:uppercase;display:block}
+.tbadge{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.2rem .45rem;border-radius:4px}
+
+/* MAIN */
+#mn{margin-top:var(--top);padding-bottom:calc(var(--bot)+.5rem)}
+#mc{padding:1rem}
+.ph{padding:.8rem 0 1.1rem;border-bottom:1px solid var(--div);margin-bottom:1.1rem}
+.pt{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+.pt .r{color:var(--red)}.pt .b{color:var(--blu2)}
+.ps{font-size:.78rem;color:var(--gr);margin-top:.2rem}
+
+/* BOTTOM NAV */
+#bn{position:fixed;bottom:0;left:0;right:0;height:var(--bot);background:var(--bg);border-top:1px solid var(--div);display:flex;z-index:100}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border:none;background:none;color:var(--gr);font-size:.48rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:2px solid transparent;-webkit-tap-highlight-color:transparent;position:relative}
+.bni.on{color:var(--wh);border-top-color:var(--red)}
+.bni i{font-size:1.1rem}
+.bnb{position:absolute;top:4px;right:calc(50% - 16px);background:var(--red);color:#fff;font-size:.45rem;font-weight:700;padding:.1rem .3rem;border-radius:8px;min-width:14px;text-align:center;display:none}
+
+/* MORE */
+#mov{display:none;position:fixed;inset:0;z-index:98;background:rgba(0,0,0,.5)}
+#mov.o{display:block}
+#mm{position:fixed;bottom:var(--bot);left:0;right:0;background:var(--bg);border-top:1px solid var(--div);z-index:99;transform:translateY(100%);transition:transform .25s;border-radius:14px 14px 0 0;padding:1rem 1rem .5rem}
+#mm.o{transform:translateY(0)}
+.mh{width:36px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto .8rem}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+.mi{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;padding:.7rem .3rem;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.04);border:1px solid var(--div);color:var(--gr);font-size:.52rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center;-webkit-tap-highlight-color:transparent}
+.mi:active{background:rgba(214,40,40,.12);color:var(--wh);border-color:rgba(214,40,40,.3)}
+.mi i{font-size:1.2rem}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--div);border-radius:12px;padding:1rem;margin-bottom:1rem}
+.ct{font-size:.63rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gr);margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1px solid var(--div);display:flex;align-items:center;gap:.5rem}
+
+/* STATS */
+.sr{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+.sc{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;text-align:center}
+.sn{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:900;line-height:1}
+.sl{font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);margin-top:.25rem}
+
+/* LIST */
+.li2{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem;display:flex;align-items:flex-start;gap:.75rem}
+.lin{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:900;color:var(--gr);min-width:20px;padding-top:1px}
+.lib{flex:1;min-width:0}
+.liname{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lidesc{font-size:.73rem;color:var(--gr);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:.15rem 0 .35rem}
+.limeta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.lact{display:flex;flex-direction:column;gap:.35rem;flex-shrink:0}
+
+/* CLIENT CARD */
+.cc{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem}
+.ccid{font-family:monospace;font-size:.88rem;font-weight:700;letter-spacing:.12em;background:rgba(255,255,255,.07);padding:.2rem .55rem;border-radius:4px;cursor:pointer;display:inline-block;margin-bottom:.35rem}
+.ccn{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.pg{background:var(--div);border-radius:4px;height:5px;overflow:hidden;margin:.5rem 0}
+.pgf{height:100%;background:linear-gradient(to right,var(--red),var(--blu2));border-radius:4px}
+
+/* INBOX */
+.inb{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem;cursor:pointer}
+.inb.u{border-left:3px solid var(--red)}
+.inb-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.35rem}
+.inb-nome{font-weight:600;font-size:.9rem}
+.inb-tel{font-size:.75rem;color:var(--gr)}
+.inb-date{font-size:.68rem;color:rgba(255,255,255,.3);margin-left:auto}
+.inb-prev{font-size:.78rem;color:var(--gr);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inb-body{display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--div);font-size:.82rem;line-height:1.6}
+.inb.open .inb-body{display:block}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:.25rem;font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .45rem;border-radius:50px;white-space:nowrap}
+.bg{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.bb{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
+.br{background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.bgr{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+.ba{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.3)}
+
+/* FORM */
+.fg{margin-bottom:.85rem}
+.fl{display:block;font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gr2);margin-bottom:.35rem}
+.fi{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.85rem 1rem;color:var(--wh);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.fi:focus{border-color:var(--red)}
+.fi::placeholder{color:rgba(255,255,255,.2)}
+.fi option{background:var(--card2)}
+textarea.fi{resize:vertical;min-height:85px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.1rem;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;text-decoration:none}
+.bfull{width:100%}
+.bred{background:var(--red);color:#fff}
+.bblue{background:var(--blue);color:#fff}
+.bgh{background:rgba(255,255,255,.05);color:var(--gr2);border:1px solid rgba(255,255,255,.1)}
+.bdng{background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.25)}
+.bsm{padding:.5rem .9rem;font-size:.72rem}
+.brow{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+
+/* TOGGLE */
+.tog{position:relative;display:inline-block;width:36px;height:20px}
+.tog input{opacity:0;width:0;height:0}
+.tsl{position:absolute;inset:0;background:rgba(255,255,255,.15);border-radius:20px;cursor:pointer;transition:.2s}
+.tsl::before{content:'';position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+input:checked+.tsl{background:var(--grn)}
+input:checked+.tsl::before{transform:translateX(16px)}
+
+/* MODAL */
+#mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0}
+#mo.o{display:flex}
+#mb{background:var(--card);border:1px solid var(--div);border-radius:14px 14px 0 0;padding:1.2rem 1.2rem 2rem;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.mh2{width:36px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto .9rem}
+.mtit{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;margin-bottom:1rem}
+.mtit .r{color:var(--red)}.mtit .b{color:var(--blu2)}
+.mcl{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--gr);font-size:1.2rem;cursor:pointer;padding:.3rem}
+.mact{display:flex;gap:.7rem;margin-top:1rem}
+.mact .btn{flex:1}
+
+/* UPLOAD */
+.iup{border:2px dashed rgba(255,255,255,.15);border-radius:10px;padding:1.5rem 1rem;text-align:center;cursor:pointer;position:relative;margin-bottom:.8rem}
+.iup input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.iup i{font-size:1.8rem;color:var(--gr);margin-bottom:.5rem;display:block}
+.iup-t{font-size:.82rem;color:var(--gr2)}
+.iup-t strong{color:var(--red)}
+.ipr{width:100%;max-height:130px;object-fit:cover;border-radius:8px;display:none;margin-top:.75rem}
+.iupg{display:none;margin-top:.6rem}
+.iupgb{height:3px;background:var(--div);border-radius:2px;overflow:hidden;margin-top:.4rem}
+.iupgf{height:100%;background:var(--red);border-radius:2px;transition:width .3s}
+.iupgt{font-size:.7rem;color:var(--gr)}
+
+/* MISC */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--gr)}
+.empty i{font-size:2.5rem;opacity:.3;margin-bottom:.8rem;display:block}
+.empty p{font-size:.85rem}
+.spin{width:18px;height:18px;border:2px solid var(--div);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:2rem;color:var(--gr);font-size:.85rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+
+.btn .spin{vertical-align:middle;margin-right:.3rem;border-color:rgba(255,255,255,.3);border-top-color:#fff}
+
+/* TOAST */
+#toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+#toast.show{opacity:1;transform:translateY(0)}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tdot.g{background:var(--grn)}.tdot.r{background:var(--red)}.tdot.b{background:var(--blu2)}
+
+@media(min-width:700px){
+  #tb,#bn,#mm,#mov{display:none!important}
+  #sb{display:flex!important}
+  #mn{margin-top:0;margin-left:220px;padding-bottom:1.5rem}
+  #mc{padding:1.5rem}
+  .sr{grid-template-columns:repeat(3,1fr)}
+  #mo{align-items:center;padding:1rem}
+  #mb{border-radius:14px;max-width:520px;margin:auto}
+}
+
+/* SIDEBAR */
+#sb{display:none;position:fixed;top:0;left:0;bottom:0;width:220px;flex-direction:column;background:var(--bg);border-right:1px solid var(--div);z-index:100;overflow-y:auto}
+.sbl{padding:1.2rem 1rem .8rem;border-bottom:1px solid var(--div)}
+.sblt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:.05em}
+.sblt .r{color:var(--red)}.sblt .b{color:var(--blu2)}
+.sbls{font-size:.47rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase}
+.sbb{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.25);padding:.15rem .4rem;border-radius:3px;margin-top:.4rem;display:inline-block}
+.sbn{flex:1;padding:.5rem 0}
+.sbsec{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:.7rem 1rem .3rem}
+.sbi{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;font-size:.8rem;font-weight:500;color:var(--gr);cursor:pointer;border-left:2px solid transparent;transition:all .18s;position:relative}
+.sbi:hover{color:var(--wh);background:rgba(255,255,255,.03)}
+.sbi.on{color:var(--wh);border-left-color:var(--red);background:rgba(214,40,40,.08)}
+.sbi i{font-size:.9rem;width:18px;text-align:center}
+.sbib{margin-left:auto;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;padding:.1rem .4rem;border-radius:8px;min-width:16px;text-align:center;display:none}
+.sbf{padding:.8rem 1rem;border-top:1px solid var(--div)}
+.sbfu{font-size:.7rem;color:var(--gr);margin-bottom:.4rem}
+.sbfl{font-size:.7rem;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Barlow',sans-serif;padding:0}
+
+/* RIPPLE */
+.btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:rip .5s linear;background:rgba(255,255,255,.25);pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+
+/* NOTIF TOAST */
+.ntoast{position:fixed;top:calc(var(--top,52px)+.7rem);right:1rem;z-index:9998;max-width:300px;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:flex-start;gap:.6rem;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:translateX(120%);transition:transform .3s;font-size:.82rem}
+.ntoast.show{transform:translateX(0)}
+.ntoast-ic{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.ntoast.success .ntoast-ic{color:var(--grn)}.ntoast.error .ntoast-ic{color:var(--red)}.ntoast.info .ntoast-ic{color:var(--blu2)}.ntoast.warn .ntoast-ic{color:var(--amb)}
+.ntoast-t{font-weight:700;font-size:.78rem;margin-bottom:.2rem}
+.ntoast-m{color:var(--gr2);font-size:.75rem;line-height:1.4}
+
+/* GALERIA */
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem}
+.gal-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--card2)}
+.gal-item img{width:100%;height:100%;object-fit:cover}
+.gal-del{position:absolute;top:.25rem;right:.25rem;background:rgba(214,40,40,.85);color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-add{border:2px dashed rgba(255,255,255,.15);border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--gr);font-size:.65rem;gap:.3rem;transition:all .2s;position:relative}
+.gal-add:hover{border-color:var(--red);background:rgba(214,40,40,.05);color:var(--red)}
+.gal-add input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.gal-add i{font-size:1.3rem}
+
+/* FINANÇA */
+.fin-card{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem}
+.fin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.fin-desc{font-weight:600;font-size:.88rem;flex:1}
+.fin-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;color:var(--wh);white-space:nowrap}
+.fin-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+
+/* USUARIOS */
+.usr-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.usr-item:last-child{border-bottom:none}
+.usr-av{width:36px;height:36px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--gr);font-size:1rem;flex-shrink:0}
+
+/* LIMPEZA */
+.img-file{display:flex;align-items:center;gap:.6rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.img-file:last-child{border-bottom:none}
+.img-file-thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--card2);flex-shrink:0}
+.img-file-name{font-size:.75rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.img-file-size{font-size:.65rem;color:var(--gr);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div id="ls">
+  <div class="lb">
+    <div class="ll">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+    <div class="ls">Admin Panel</div>
+    <input class="li" type="password" id="lp" placeholder="Token de acesso" autocomplete="current-password">
+    <div class="le" id="le">Token incorrecto. Tente novamente.</div>
+    <button class="lb-btn" id="lbtn" onclick="doLogin()"><i class="fa-solid fa-lock-open"></i> ENTRAR</button>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sb">
+    <div class="sbl">
+      <div class="sblt">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+      <div class="sbls">Holding SGPS</div>
+      <div class="sbb">Admin</div>
+    </div>
+    <nav class="sbn">
+      <div class="sbsec">Geral</div>
+      <div class="sbi on" onclick="go('painel',this)"><i class="fa-solid fa-gauge"></i> Painel</div>
+      <div class="sbsec">Conteúdo</div>
+      <div class="sbi" onclick="go('portfolio',this)"><i class="fa-solid fa-briefcase"></i> Portfólio</div>
+      <div class="sbi" onclick="go('equipa',this)"><i class="fa-solid fa-users"></i> Equipa</div>
+      <div class="sbsec">Clientes</div>
+      <div class="sbi" onclick="go('clientes',this)"><i class="fa-solid fa-globe"></i> Clientes</div>
+      <div class="sbi" onclick="go('projetos',this)"><i class="fa-solid fa-diagram-project"></i> Projectos</div>
+      <div class="sbi" onclick="go('documentos',this)"><i class="fa-solid fa-file-arrow-up"></i> Documentos</div>
+      <div class="sbi" onclick="go('tickets',this)"><i class="fa-solid fa-ticket"></i> Suporte <span class="sbib" id="sb-tk">0</span></div>
+      <div class="sbi" onclick="go('mensagens',this)"><i class="fa-solid fa-comments"></i> Mensagens <span class="sbib" id="sb-ms">0</span></div>
+      <div class="sbsec">Leads</div>
+      <div class="sbi" onclick="go('contactos',this)"><i class="fa-solid fa-envelope"></i> Contactos <span class="sbib" id="sb-ct">0</span></div>
+      <div class="sbi" onclick="go('orcamentos',this)"><i class="fa-solid fa-file-invoice"></i> Orçamentos <span class="sbib" id="sb-oc">0</span></div>
+      <div class="sbsec">Sistema</div>
+      <div class="sbi" onclick="go('config',this)"><i class="fa-solid fa-gear"></i> Configurações</div>
+      <div class="sbsec">Negócio</div>
+      <div class="sbi" onclick="go('financas',this)"><i class="fa-solid fa-chart-line"></i> Finanças</div>
+      <div class="sbi" onclick="go('usuarios',this)"><i class="fa-solid fa-user-shield"></i> Utilizadores</div>
+      <div class="sbi" onclick="go('notificacoes',this)"><i class="fa-solid fa-bell"></i> Notificações</div>
+      <div class="sbi" onclick="go('limpeza',this)"><i class="fa-brands fa-github"></i> Limpeza</div>
+    </nav>
+    <div class="sbf">
+      <div class="sbfu">Administrador</div>
+      <button class="sbfl" onclick="doLogout()">Terminar sessão</button>
+    </div>
+  </aside>
+
+  <div id="tb">
+    <div>
+      <div class="tl">IMPERSIL<span class="r">V</span><span class="b">A</span><span class="tl-s">Holding SGPS</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.7rem">
+      <span class="tbadge">Admin</span>
+      <button style="background:none;border:none;color:var(--gr);font-size:1rem;cursor:pointer" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+
+  <div id="mn"><div id="mc"></div></div>
+
+  <nav id="bn">
+    <button class="bni on" onclick="goB(this,'painel')"><i class="fa-solid fa-gauge"></i><span>Painel</span></button>
+    <button class="bni" onclick="goB(this,'clientes')"><i class="fa-solid fa-globe"></i><span>Clientes</span></button>
+    <button class="bni" onclick="goB(this,'portfolio')"><i class="fa-solid fa-briefcase"></i><span>Portfólio</span></button>
+    <button class="bni" onclick="goB(this,'leads')"><i class="fa-solid fa-envelope"></i><span>Leads</span><span class="bnb" id="bn-leads">0</span></button>
+    <button class="bni" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i><span>Mais</span></button>
+  </nav>
+
+  <div id="mov" onclick="closeMore()"></div>
+  <div id="mm">
+    <div class="mh"></div>
+    <div class="mg">
+      <div class="mi" onclick="closeMore();go('equipa')"><i class="fa-solid fa-users"></i>Equipa</div>
+      <div class="mi" onclick="closeMore();go('projetos')"><i class="fa-solid fa-diagram-project"></i>Projectos</div>
+      <div class="mi" onclick="closeMore();go('documentos')"><i class="fa-solid fa-file-arrow-up"></i>Documentos</div>
+      <div class="mi" onclick="closeMore();go('tickets')"><i class="fa-solid fa-ticket"></i>Suporte</div>
+      <div class="mi" onclick="closeMore();go('mensagens')"><i class="fa-solid fa-comments"></i>Mensagens</div>
+      <div class="mi" onclick="closeMore();go('config')"><i class="fa-solid fa-gear"></i>Config</div>
+      <div class="mi" onclick="closeMore();go('financas')"><i class="fa-solid fa-chart-line"></i>Finanças</div>
+      <div class="mi" onclick="closeMore();go('notificacoes')"><i class="fa-solid fa-bell"></i>Notifs</div>
+      <div class="mi" onclick="closeMore();go('limpeza')"><i class="fa-brands fa-github"></i>Limpeza</div>
+      <a class="mi" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Site</a>
+      <a class="mi" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i>Portal</a>
+    </div>
+  </div>
+</div>
+
+<div id="mo" onclick="if(event.target===this)closeModal()"><div id="mb"></div></div>
+<div id="toast"><div class="tdot" id="td"></div><span id="tm"></span></div>
+
+<script>
+var API = 'https://impersilva-ao.3miliosilva.workers.dev';
+var REPO = 'impersilvatech/IMPERSILVA';
+var SITEURL = 'https://impersilvatech.github.io/IMPERSILVA';
+var _tok = '';
+var _ghtok = '';
+var _ttimer;
+
+/* AUTH */
+document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+async function doLogin() {
+  var p = document.getElementById('lp').value.trim();
+  if(!p) return;
+  document.getElementById('lbtn').textContent = 'A verificar...';
+  try {
+    var r = await fetch(API+'/api/admin/contactos', {headers:{'Authorization':p}});
+    if(r.status===401) { showLoginErr(); return; }
+    _tok = p;
+    localStorage.setItem('imp_tok', p);
+    startApp();
+  } catch(e) {
+    _tok = p;
+    localStorage.setItem('imp_tok', p);
+    startApp();
+  }
+}
+
+function showLoginErr() {
+  document.getElementById('le').style.display='block';
+  document.getElementById('lp').value='';
+  document.getElementById('lbtn').textContent='ENTRAR';
+}
+
+function startApp() {
+  document.getElementById('ls').style.display='none';
+  document.getElementById('app').style.display='block';
+  if(window.innerWidth>=700) document.getElementById('sb').style.display='flex';
+  _ghtok = localStorage.getItem('imp_ghtok')||'';
+  // Show loading state immediately
+  document.getElementById('mc').innerHTML = '<div class="load" style="height:50vh;align-items:center"><div class="spin"></div> A carregar painel...</div>';
+  setTimeout(function() {
+    go('painel');
+    loadBadges();
+  }, 100);
+}
+
+function doLogout() {
+  localStorage.removeItem('imp_tok');
+  localStorage.removeItem('imp_session');
+  location.reload();
+}
+
+var saved = localStorage.getItem('imp_tok');
+if(saved) { _tok=saved; startApp(); }
+
+/* API HELPERS */
+async function wGet(path) {
+  var r = await fetch(API+path, {headers:{'Authorization':_tok}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function wPost(path, data) {
+  var r = await fetch(API+path, {method:'POST', headers:{'Content-Type':'application/json','Authorization':_tok}, body:JSON.stringify(data)});
+  var j = await r.json();
+  if(!r.ok) throw new Error(j.erro||r.status);
+  return j;
+}
+async function wDel(path) {
+  var r = await fetch(API+path, {method:'DELETE', headers:{'Authorization':_tok}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+/* GITHUB */
+async function ghUpload(file, folder) {
+  if(!_ghtok) throw new Error('GitHub Token não configurado. Vai a Configurações.');
+  var ext = file.name.split('.').pop().toLowerCase();
+  var fname = folder+'-'+Date.now()+'.'+ext;
+  var path = 'imagens/'+fname;
+  var b64 = await new Promise(function(res,rej){
+    var fr = new FileReader();
+    fr.onload = function(){ res(fr.result.split(',')[1]); };
+    fr.onerror = rej;
+    fr.readAsDataURL(file);
+  });
+  var resp = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path, {
+    method:'PUT',
+    headers:{'Authorization':'token '+_ghtok,'Content-Type':'application/json'},
+    body:JSON.stringify({message:'Admin: upload '+fname, content:b64, branch:'main'})
+  });
+  if(!resp.ok) { var e=await resp.json(); throw new Error(e.message||'Erro GitHub'); }
+  return SITEURL+'/'+path;
+}
+
+/* TOAST */
+function toast(msg, type) {
+  if(!type) type='success';
+  var el=document.getElementById('toast'), dot=document.getElementById('td');
+  document.getElementById('tm').textContent=msg;
+  dot.className='tdot '+(type==='success'?'g':type==='error'?'r':'b');
+  el.className='show';
+  clearTimeout(_ttimer);
+  _ttimer=setTimeout(function(){ el.className=''; }, 3200);
+}
+
+/* MODAL */
+function openModal(html) {
+  document.getElementById('mb').innerHTML='<div class="mh2"></div>'+html;
+  document.getElementById('mo').className='o';
+  document.body.style.overflow='hidden';
+}
+function closeModal() {
+  document.getElementById('mo').className='';
+  document.body.style.overflow='';
+}
+
+/* MORE MENU */
+function toggleMore() {
+  document.getElementById('mm').classList.toggle('o');
+  document.getElementById('mov').classList.toggle('o');
+}
+function closeMore() {
+  document.getElementById('mm').classList.remove('o');
+  document.getElementById('mov').classList.remove('o');
+}
+
+/* NAV */
+var _sec = 'painel';
+var _lastSec = '';
+
+function go(s, el) {
+  window.scrollTo(0,0);
+  _sec = s;
+  document.querySelectorAll('.sbi').forEach(function(i){ i.classList.remove('on'); });
+  if(el) el.classList.add('on');
+  // Show immediate loading feedback for data sections
+  var dataSections = ['portfolio','equipa','clientes','projetos','documentos','tickets','mensagens','contactos','orcamentos','financas','usuarios'];
+  if(dataSections.indexOf(s) >= 0 && s !== _lastSec) {
+    document.getElementById('mc').innerHTML = '<div class="load" style="min-height:30vh;align-items:center"><div class="spin"></div> A carregar...</div>';
+  }
+  _lastSec = s;
+  var fns = {
+    painel:rPainel, portfolio:rPortfolio, equipa:rEquipa,
+    clientes:rClientes, projetos:rProjetos, documentos:rDocs,
+    tickets:rTickets, mensagens:rMensagens,
+    contactos:rContactos, orcamentos:rOrcamentos,
+    config:rConfig, leads:rLeads,
+    financas:rFinancas, usuarios:rUsuarios,
+    notificacoes:rNotificacoes, limpeza:rLimpeza
+  };
+  if(fns[s]) fns[s]();
+}
+function goB(el, s) {
+  document.querySelectorAll('.bni').forEach(function(i){ i.classList.remove('on'); });
+  el.classList.add('on');
+  go(s);
+}
+
+/* BADGES */
+async function loadBadges() {
+  try {
+    var results = await Promise.allSettled([
+      wGet('/api/admin/contactos'),
+      wGet('/api/admin/orcamentos'),
+      wGet('/api/admin/tickets'),
+      wGet('/api/admin/mensagens')
+    ]);
+    var ct = (results[0].value||[]).filter(function(x){return !x.lido;}).length;
+    var oc = (results[1].value||[]).filter(function(x){return !x.lido;}).length;
+    var tk = (results[2].value||[]).filter(function(x){return x.estado==='aberto';}).length;
+    var ms = (results[3].value||[]).filter(function(x){return !x.lido;}).length;
+    setBadge('sb-ct', ct); setBadge('sb-oc', oc);
+    setBadge('sb-tk', tk); setBadge('sb-ms', ms);
+    var leads = ct+oc;
+    var bnl = document.getElementById('bn-leads');
+    if(bnl){ if(leads>0){bnl.textContent=leads;bnl.style.display='block';}else bnl.style.display='none'; }
+  } catch(e){}
+}
+function setBadge(id, n) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  if(n>0){el.textContent=n;el.style.display='inline-flex';}else el.style.display='none';
+}
+
+/* HELPERS */
+function timeAgo(d) {
+  if(!d) return '';
+  var diff = Date.now()-new Date(d).getTime();
+  var m = Math.floor(diff/60000);
+  if(m<1) return 'agora';
+  if(m<60) return m+'m';
+  var h = Math.floor(m/60);
+  if(h<24) return h+'h';
+  return Math.floor(h/24)+'d';
+}
+function estadoBadge(e) {
+  var map = {
+    em_progresso:'<span class="badge bb">Em Progresso</span>',
+    revisao:'<span class="badge ba">Em Revisão</span>',
+    concluido:'<span class="badge bg">Concluído</span>',
+    pausado:'<span class="badge bgr">Pausado</span>',
+    novo:'<span class="badge bb">Novo</span>',
+    em_analise:'<span class="badge ba">Em Análise</span>',
+    proposta_enviada:'<span class="badge bg">Proposta Enviada</span>',
+    fechado:'<span class="badge bgr">Fechado</span>',
+    aberto:'<span class="badge br">Aberto</span>',
+    respondido:'<span class="badge bg">Respondido</span>'
+  };
+  return map[e]||('<span class="badge bgr">'+e+'</span>');
+}
+function genId() {
+  var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var r='IMP-';
+  for(var i=0;i<8;i++) r+=c[Math.floor(Math.random()*c.length)];
+  return r;
+}
+function copyTxt(txt, msg) {
+  navigator.clipboard.writeText(txt).then(function(){ toast(msg||'Copiado!'); });
+}
+function prevImg(input, id) {
+  var f=input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var el=document.getElementById(id);
+    if(el){el.src=e.target.result;el.style.display='block';}
+  };
+  r.readAsDataURL(f);
+}
+async function doUpload(fileInputId, folder, urlInputId, progWrapId, progFillId, progTxtId) {
+  var file = document.getElementById(fileInputId).files[0];
+  if(!file) return null;
+  var pg=document.getElementById(progWrapId), fill=document.getElementById(progFillId), txt=document.getElementById(progTxtId);
+  if(pg) pg.style.display='block';
+  if(fill) fill.style.width='40%';
+  if(txt) txt.textContent='A enviar para GitHub...';
+  try {
+    var url = await ghUpload(file, folder);
+    if(fill) fill.style.width='100%';
+    if(txt) txt.textContent='Concluído!';
+    if(urlInputId) document.getElementById(urlInputId).value=url;
+    return url;
+  } catch(e) {
+    if(txt) txt.textContent='Erro: '+e.message;
+    throw e;
+  }
+}
+
+/* ========================================================
+   SECÇÕES
+   ======================================================== */
+
+/* PAINEL */
+async function rPainel() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Bem-vindo ao <span class="r">Admin</span></div><div class="ps">IMPERSILVA HOLDING SGPS</div></div>'+
+    '<div class="sr">'+
+      '<div class="sc"><div class="sn" id="sp1">—</div><div class="sl">Portfólio</div></div>'+
+      '<div class="sc"><div class="sn" id="sp2">—</div><div class="sl">Clientes</div></div>'+
+      '<div class="sc"><div class="sn" id="sp3">—</div><div class="sl">Orçamentos</div></div>'+
+    '</div>'+
+    '<div class="card"><div class="ct"><i class="fa-solid fa-bolt"></i> Acesso Rápido</div>'+
+      '<div class="grid2">'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'clientes\')"><i class="fa-solid fa-globe"></i> Clientes</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'portfolio\')"><i class="fa-solid fa-briefcase"></i> Portfólio</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'contactos\')"><i class="fa-solid fa-envelope"></i> Contactos</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'orcamentos\')"><i class="fa-solid fa-file-invoice"></i> Orçamentos</button>'+
+        '<a class="btn bgh bsm bfull" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Site</a>'+
+        '<a class="btn bgh bsm bfull" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i> Portal</a>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card"><div class="ct"><i class="fa-solid fa-clock-rotate-left"></i> Actividade Recente</div><div id="paf"><div class="load"><div class="spin"></div> A carregar...</div></div></div>';
+  try {
+    var r1=await wGet('/api/portfolio');
+    document.getElementById('sp1').textContent=r1.length;
+  } catch(e){}
+  try {
+    var r2=await wGet('/api/admin/clientes');
+    document.getElementById('sp2').textContent=r2.length;
+  } catch(e){}
+  try {
+    var r3=await wGet('/api/admin/orcamentos');
+    document.getElementById('sp3').textContent=r3.length;
+    var feed=document.getElementById('paf');
+    if(!feed) return;
+    if(!r3.length){feed.innerHTML='<div class="empty"><i class="fa-solid fa-inbox"></i><p>Sem actividade ainda</p></div>';return;}
+    var html='';
+    r3.slice(0,5).forEach(function(o){
+      html+='<div style="display:flex;align-items:center;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--div)">'+
+        '<span class="badge ba">Orçamento</span>'+
+        '<span style="font-size:.85rem;font-weight:600;flex:1">'+o.nome+'</span>'+
+        '<span style="font-size:.68rem;color:rgba(255,255,255,.3)">'+timeAgo(o.criado_em)+'</span>'+
+      '</div>';
+    });
+    feed.innerHTML=html;
+  } catch(e){
+    var feed2=document.getElementById('paf');
+    if(feed2) feed2.innerHTML='<div class="empty"><p>Sem actividade ainda</p></div>';
+  }
+}
+
+/* PORTFÓLIO */
+var _portList = [];
+async function rPortfolio() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt"><span class="r">Port</span><span class="b">fólio</span></div><div class="ps">Projectos que aparecem no site</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rPortfolio()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openPortModal()"><i class="fa-solid fa-plus"></i> Novo</button>'+
+    '</div>'+
+    '<div id="portL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    _portList = await wGet('/api/portfolio');
+    renderPortList();
+  } catch(e) {
+    var el=document.getElementById('portL');
+    if(el) el.innerHTML='<div class="empty"><i class="fa-solid fa-triangle-exclamation"></i><p>Erro ao carregar</p></div>';
+  }
+}
+function renderPortList() {
+  var el=document.getElementById('portL');
+  if(!el) return;
+  if(!_portList.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-briefcase"></i><p>Sem projectos. Adicione o primeiro!</p></div>';return;}
+  var html='';
+  _portList.forEach(function(p,i){
+    var tc=p.tag_cor==='t-red'?'br':p.tag_cor==='t-green'?'bg':p.tag_cor==='t-amber'?'ba':'bb';
+    html+='<div class="li2">'+
+      '<div class="lin">'+(i+1)+'</div>'+
+      '<div class="lib">'+
+        '<div class="liname">'+p.nome+'</div>'+
+        '<div class="lidesc">'+p.descricao+'</div>'+
+        '<div class="limeta">'+
+          '<span class="badge '+tc+'">'+p.tag_tipo+'</span>'+
+          '<span style="font-size:.6rem;color:var(--gr)">'+p.categoria+'</span>'+
+          '<span class="badge '+(p.activo?'bg':'bgr')+'">'+(p.activo?'Visível':'Oculto')+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="lact">'+
+        '<button class="btn bgh bsm" onclick="editPort(\''+p.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
+        '<button class="btn bdng bsm" onclick="delPort(\''+p.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
+      '</div>'+
+    '</div>';
+  });
+  el.innerHTML=html;
+}
+function openPortModal(id) {
+  var p=id?_portList.find(function(x){return x.id===id;}):null;
+  var cats=['loja','food','eventos','servicos'];
+  var catOpts='';
+  cats.forEach(function(c){catOpts+='<option value="'+c+'"'+(p&&p.categoria===c?' selected':'')+'>'+c+'</option>';});
+  var tagColors=['t-blue','t-red','t-green','t-amber'];
+  var tagOpts='';
+  tagColors.forEach(function(c){tagOpts+='<option value="'+c+'"'+(p&&p.tag_cor===c?' selected':'')+'>'+c+'</option>';});
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(p?'Editar':'Novo')+' <span class="r">Projecto</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">ID (slug)</label><input class="fi" id="pId" value="'+(p?p.id:'')+'" placeholder="belle-cosmeticos"'+(p?' readonly':'')+'>'+
+      (p?'':'<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">Só letras minúsculas e hífens</div>')+'</div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="pNome" value="'+(p?p.nome:'')+'" placeholder="Belle Cosméticos"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Categoria</label><select class="fi" id="pCat">'+catOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Tag</label><input class="fi" id="pTag" value="'+(p?p.tag_tipo:'')+'" placeholder="Loja Online"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Cor badge</label><select class="fi" id="pTagCor">'+tagOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Ícone FA</label><input class="fi" id="pIcone" value="'+(p?p.icone||'':'fa-globe')+'" placeholder="fa-globe"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><textarea class="fi" id="pDesc">'+(p?p.descricao:'')+'</textarea></div>'+
+    '<div class="fg"><label class="fl">Resultado</label><input class="fi" id="pResult" value="'+(p?p.resultado:'')+'" placeholder="+200 encomendas no 1º mês"></div>'+
+    '<div class="fg"><label class="fl">URL ao vivo (opcional)</label><input class="fi" id="pUrl" value="'+(p?p.url_ao_vivo||'':'')+'" placeholder="https://..."></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Tipo orçamento</label><input class="fi" id="pOTipo" value="'+(p?p.orcamento_tipo||'':'')+'" placeholder="loja"></div>'+
+      '<div class="fg"><label class="fl">Ordem</label><input class="fi" type="number" id="pOrdem" value="'+(p?p.ordem:_portList.length+1)+'"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Imagem</label>'+
+      '<div class="iup"><input type="file" id="pImgF" accept="image/*" onchange="prevImg(this,\'pImgPrev\')">'+
+        '<i class="fa-solid fa-cloud-arrow-up"></i>'+
+        '<div class="iup-t">Clique para seleccionar<br><strong>JPG, PNG, WEBP</strong></div>'+
+        '<img class="ipr" id="pImgPrev"'+(p&&p.imagem?' src="'+p.imagem+'" style="display:block"':'')+'>'+
+      '</div>'+
+      (p&&p.imagem?'<button type="button" class="btn bdng bsm" style="margin-top:.4rem;margin-bottom:.4rem" onclick="removeMainPhoto(\'p\')"><i class="fa-solid fa-trash"></i> Remover imagem</button>':'')+
+      '<div class="iupg" id="pUpgW"><div class="iupgt" id="pUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="pUpgF" style="width:0%"></div></div></div>'+
+      '<input type="hidden" id="pImgUrl" value="'+(p?p.imagem||'':'')+'">'+
+    '</div>'+
+    '<div class="fg" id="portGalSection" style="display:none"><label class="fl"><i class="fa-solid fa-images"></i> Galeria do Projecto</label><div id="inModalGalPort" style="margin-top:.4rem"></div></div>'+
+    '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
+      '<label class="tog"><input type="checkbox" id="pActivo"'+((!p||p.activo)?' checked':'')+'>'+
+      '<span class="tsl"></span></label>'+
+      '<span style="font-size:.85rem">Visível no site</span>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="savePort(\''+( p?p.id:'')+'\')"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+function editPort(id){
+  openPortModal(id);
+  setTimeout(function(){
+    var sec = document.getElementById('portGalSection');
+    if(sec) sec.style.display = 'block';
+    var c = document.getElementById('inModalGalPort');
+    if(c){ c.innerHTML='<div class="load" style="padding:.4rem"><div class="spin"></div></div>'; loadGaleria(id,'portfolio','inModalGalPort'); }
+  }, 200);
+}
+async function savePort(eid) {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var file=document.getElementById('pImgF').files[0];
+  var imgUrl=document.getElementById('pImgUrl').value;
+  if(file){
+    try{ imgUrl=await doUpload('pImgF','portfolio','pImgUrl','pUpgW','pUpgF','pUpgT'); }
+    catch(e){ toast('Erro upload: '+e.message,'error'); btnReset(saveBtn); return; }
+  }
+  var id=eid||document.getElementById('pId').value.trim().toLowerCase().replace(/\s+/g,'-');
+  var data={
+    id:id, nome:document.getElementById('pNome').value.trim(),
+    categoria:document.getElementById('pCat').value,
+    tag_tipo:document.getElementById('pTag').value.trim(),
+    tag_cor:document.getElementById('pTagCor').value,
+    icone:document.getElementById('pIcone').value.trim()||'fa-globe',
+    descricao:document.getElementById('pDesc').value.trim(),
+    resultado:document.getElementById('pResult').value.trim(),
+    url_ao_vivo:document.getElementById('pUrl').value.trim()||null,
+    orcamento_tipo:document.getElementById('pOTipo').value.trim(),
+    ordem:parseInt(document.getElementById('pOrdem').value)||0,
+    imagem:imgUrl||null, activo:document.getElementById('pActivo').checked?1:0
+  };
+  if(!data.id||!data.nome){toast('ID e nome são obrigatórios','error');return;}
+  try{
+    await wPost('/api/admin/portfolio',data);
+    btnOk(saveBtn, 'Guardado!');
+    toast('Projecto guardado!'); notify('Sucesso','Projecto guardado no portfólio!','success');
+    setTimeout(function(){ closeModal(); rPortfolio(); }, 500);
+  }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delPort(id) {
+  if(!confirm('Apagar projecto?')) return;
+  toast('A apagar...','info');
+  try{ await wDel('/api/admin/portfolio/'+id); toast('Projecto apagado!'); rPortfolio(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* EQUIPA */
+var _equipaList = [];
+
+// Extend equipa modal with galeria
+function openEquipaGaleriaSection(id) {
+  var el = document.getElementById('eqGal_'+id);
+}
+
+async function rEquipa() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Equi<span class="r">pa</span></div><div class="ps">Membros da equipa IMPERSILVA</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rEquipa()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openEquipaModal()"><i class="fa-solid fa-plus"></i> Novo Membro</button>'+
+    '</div>'+
+    '<div id="eqL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    _equipaList = await wGet('/api/equipa');
+    var el=document.getElementById('eqL');
+    if(!el) return;
+    if(!_equipaList.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-users"></i><p>Sem membros</p></div>';return;}
+    var html='';
+    _equipaList.forEach(function(m){
+      html+='<div class="li2">'+
+        '<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--card2);flex-shrink:0;display:flex;align-items:center;justify-content:center">'+
+          (m.foto?'<img src="'+m.foto+'" style="width:100%;height:100%;object-fit:cover">':'<i class="fa-solid fa-user" style="color:var(--gr)"></i>')+
+        '</div>'+
+        '<div class="lib">'+
+          '<div class="liname">'+m.nome+'</div>'+
+          '<div class="lidesc">'+m.cargo+'</div>'+
+          '<div class="limeta"><span class="badge '+(m.activo?'bg':'bgr')+'">'+(m.activo?'Activo':'Inactivo')+'</span></div>'+
+        '</div>'+
+        '<div class="lact">'+
+          '<button class="btn bgh bsm" onclick="editEquipa(\''+m.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
+          '<button class="btn bdng bsm" onclick="delEquipa(\''+m.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('eqL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openEquipaModal(id) {
+  var m=id?_equipaList.find(function(x){return x.id===id;}):null;
+  var esp='';
+  if(m&&m.especialidades){try{esp=JSON.parse(m.especialidades).join(', ');}catch(e){esp=m.especialidades;}}
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(m?'Editar':'Novo')+' <span class="r">Membro</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">ID (slug)</label><input class="fi" id="eId" value="'+(m?m.id:'')+'" placeholder="pedro-silva"'+(m?' readonly':'')+'></div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="eNome" value="'+(m?m.nome:'')+'" placeholder="Pedro Silva"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Cargo</label><input class="fi" id="eCargo" value="'+(m?m.cargo:'')+'" placeholder="Dev Full Stack"></div>'+
+      '<div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="eEmail" value="'+(m?m.email||'':'')+'" placeholder="nome@impersilva.ao"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Bio</label><textarea class="fi" id="eBio">'+(m?m.bio||'':'')+'</textarea></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">LinkedIn</label><input class="fi" id="eLI" value="'+(m?m.linkedin||'':'')+'" placeholder="https://linkedin.com/..."></div>'+
+      '<div class="fg"><label class="fl">GitHub</label><input class="fi" id="eGH" value="'+(m?m.github||'':'')+'" placeholder="https://github.com/..."></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Especialidades (vírgula)</label><input class="fi" id="eEsp" value="'+esp+'" placeholder="HTML, CSS, JavaScript"></div>'+
+    '<div class="fg"><label class="fl">Foto</label>'+
+      '<div class="iup"><input type="file" id="eImgF" accept="image/*" onchange="prevImg(this,\'eImgPrev\')">'+
+        '<i class="fa-solid fa-user-circle"></i>'+
+        '<div class="iup-t">Foto do membro<br><strong>JPG, PNG</strong></div>'+
+        '<img class="ipr" id="eImgPrev"'+(m&&m.foto?' src="'+m.foto+'" style="display:block"':'')+'>'+
+      '</div>'+
+      (m&&m.foto?'<button type="button" class="btn bdng bsm" style="margin-top:.4rem;margin-bottom:.4rem" onclick="removeMainPhoto(\'e\')"><i class="fa-solid fa-trash"></i> Remover foto</button>':'')+
+      '<div class="iupg" id="eUpgW"><div class="iupgt" id="eUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="eUpgF" style="width:0%"></div></div></div>'+
+      '<input type="hidden" id="eImgUrl" value="'+(m?m.foto||'':'')+'">'+
+    '</div>'+
+    '<div class="fg" id="eqGalSection" style="display:none"><label class="fl"><i class="fa-solid fa-images"></i> Galeria de Fotos</label><div id="inModalGal" style="margin-top:.4rem"></div></div>'+
+    '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
+      '<label class="tog"><input type="checkbox" id="eActivo"'+((!m||m.activo)?' checked':'')+'>'+
+      '<span class="tsl"></span></label>'+
+      '<span style="font-size:.85rem">Visível no site</span>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveEquipa(\''+( m?m.id:'')+'\')"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+function editEquipa(id){
+  openEquipaModal(id);
+  setTimeout(function(){
+    var sec = document.getElementById('eqGalSection');
+    if(sec) sec.style.display = 'block';
+    var c = document.getElementById('inModalGal');
+    if(c){ c.innerHTML='<div class="load" style="padding:.4rem"><div class="spin"></div></div>'; loadGaleria(id,'equipa','inModalGal'); }
+  }, 200);
+}
+async function saveEquipa(eid) {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var file=document.getElementById('eImgF').files[0];
+  var imgUrl=document.getElementById('eImgUrl').value;
+  if(file){
+    try{ imgUrl=await doUpload('eImgF','equipa','eImgUrl','eUpgW','eUpgF','eUpgT'); }
+    catch(e){ toast('Erro upload: '+e.message,'error'); return; }
+  }
+  var esp=document.getElementById('eEsp').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var id=eid||document.getElementById('eId').value.trim().toLowerCase().replace(/\s+/g,'-');
+  var data={
+    id:id, nome:document.getElementById('eNome').value.trim(),
+    cargo:document.getElementById('eCargo').value.trim(),
+    email:document.getElementById('eEmail').value.trim(),
+    bio:document.getElementById('eBio').value.trim(),
+    linkedin:document.getElementById('eLI').value.trim(),
+    github:document.getElementById('eGH').value.trim(),
+    especialidades:esp, foto:imgUrl||null,
+    activo:document.getElementById('eActivo').checked?1:0
+  };
+  if(!data.id||!data.nome){toast('ID e nome são obrigatórios','error');return;}
+  try{
+    await wPost('/api/admin/equipa',data);
+    btnOk(saveBtn, 'Guardado!');
+    toast('Membro guardado!'); notify('Sucesso','Membro da equipa guardado!','success');
+    setTimeout(function(){ closeModal(); rEquipa(); }, 500);
+  }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delEquipa(id) {
+  if(!confirm('Apagar membro?')) return;
+  toast('A apagar...','info');
+  try{ await wDel('/api/admin/equipa/'+id); toast('Membro apagado!'); rEquipa(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* CLIENTES */
+var _cliList = [];
+async function rClientes() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Sites de <span class="r">Clien</span><span class="b">tes</span></div><div class="ps">Cada cliente tem um código único de acesso ao portal</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rClientes()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openCliModal()"><i class="fa-solid fa-plus"></i> Novo Cliente</button>'+
+      '<a class="btn bgh bsm" href="verificar-site.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Portal</a>'+
+    '</div>'+
+    '<div id="cliL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    _cliList = await wGet('/api/admin/clientes');
+    var el=document.getElementById('cliL');
+    if(!el) return;
+    if(!_cliList.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-globe"></i><p>Sem clientes ainda</p></div>';return;}
+    var html='';
+    _cliList.forEach(function(c){
+      html+='<div class="cc">'+
+        '<div onclick="copyTxt(\''+c.id+'\',\'Código copiado!\')" title="Clique para copiar" class="ccid">'+c.id+'</div>'+
+        '<div class="ccn">'+c.nome+'</div>'+
+        (c.negocio?'<div style="font-size:.75rem;color:var(--gr);margin-bottom:.35rem">'+c.negocio+'</div>':'')+
+        '<div style="display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;margin-bottom:.5rem">'+
+          estadoBadge(c.estado)+
+          '<span style="font-size:.63rem;color:var(--gr)">'+(c.progresso||0)+'%</span>'+
+          (c.previsao?'<span style="font-size:.63rem;color:var(--gr)">'+c.previsao+'</span>':'')+
+        '</div>'+
+        '<div class="pg"><div class="pgf" style="width:'+(c.progresso||0)+'%"></div></div>'+
+        '<div style="display:flex;gap:.45rem;margin-top:.65rem">'+
+          '<button class="btn bgh bsm" style="flex:1" onclick="editCli(\''+c.id+'\')"><i class="fa-solid fa-pen"></i> Editar</button>'+
+          '<button class="btn bgh bsm" style="flex:1;color:var(--blu2)" onclick="shareCli(\''+c.id+'\')"><i class="fa-solid fa-share-nodes"></i> Partilhar</button>'+
+          '<button class="btn bdng bsm" onclick="delCli(\''+c.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('cliL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openCliModal(id) {
+  var c=id?_cliList.find(function(x){return x.id===id;}):null;
+  var nid=genId();
+  var estats=['em_progresso','revisao','concluido','pausado'];
+  var eOpts='';
+  estats.forEach(function(s){eOpts+='<option value="'+s+'"'+(c&&c.estado===s?' selected':'')+'>'+s.replace('_',' ')+'</option>';});
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(c?'Editar':'Novo')+' <span class="r">Cliente</span></div>'+
+    '<div class="fg"><label class="fl">Código de Acesso</label>'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" id="cId" value="'+(c?c.id:nid)+'" style="font-family:monospace;letter-spacing:.1em;flex:1"'+(c?' readonly':'')+'>'+
+        (!c?'<button class="btn bgh bsm" onclick="document.getElementById(\'cId\').value=genId()"><i class="fa-solid fa-arrows-rotate"></i></button>':'')+
+      '</div>'+
+      '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">O cliente usa este código no portal verificar-site</div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="cNome" value="'+(c?c.nome:'')+'" placeholder="João Silva"></div>'+
+      '<div class="fg"><label class="fl">Negócio</label><input class="fi" id="cNeg" value="'+(c?c.negocio||'':'')+'" placeholder="Loja X"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Telefone</label><input class="fi" id="cTel" value="'+(c?c.telefone||'':'')+'" placeholder="+244 900 000 000"></div>'+
+      '<div class="fg"><label class="fl">URL do Site</label><input class="fi" id="cUrl" value="'+(c?c.url_site||'':'')+'" placeholder="https://..."></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Estado</label><select class="fi" id="cEstado">'+eOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Progresso (%)</label><input class="fi" type="number" id="cProg" min="0" max="100" value="'+(c?c.progresso||0:0)+'"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Etapa Actual</label><input class="fi" id="cEtapa" value="'+(c?c.etapa_actual||'':'')+'" placeholder="Design"></div>'+
+      '<div class="fg"><label class="fl">Previsão</label><input class="fi" id="cPrevisao" value="'+(c?c.previsao||'':'')+'" placeholder="Maio 2025"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Notas Internas</label><textarea class="fi" id="cNotas">'+(c?c.notas||'':'')+'</textarea></div>'+
+    '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
+      '<label class="tog"><input type="checkbox" id="cActivo"'+((!c||c.activo)?' checked':'')+'>'+
+      '<span class="tsl"></span></label>'+
+      '<span style="font-size:.85rem">Conta activa</span>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveCli(\''+( c?c.id:'')+'\')"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+function editCli(id){ openCliModal(id); }
+async function saveCli(eid) {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var id=eid||document.getElementById('cId').value.trim().toUpperCase();
+  var data={
+    id:id, nome:document.getElementById('cNome').value.trim(),
+    negocio:document.getElementById('cNeg').value.trim(),
+    telefone:document.getElementById('cTel').value.trim(),
+    url_site:document.getElementById('cUrl').value.trim(),
+    estado:document.getElementById('cEstado').value,
+    progresso:parseInt(document.getElementById('cProg').value)||0,
+    etapa_actual:document.getElementById('cEtapa').value.trim(),
+    previsao:document.getElementById('cPrevisao').value.trim(),
+    notas:document.getElementById('cNotas').value.trim(),
+    activo:document.getElementById('cActivo').checked?1:0
+  };
+  if(!data.id||!data.nome){toast('Código e nome são obrigatórios','error');return;}
+  try{
+    await wPost('/api/admin/clientes',data);
+    btnOk(saveBtn, 'Guardado!');
+    toast('Cliente guardado!'); notify('Sucesso','Cliente guardado com sucesso!','success');
+    setTimeout(function(){ closeModal(); rClientes(); }, 500);
+  }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delCli(id) {
+  if(!confirm('Apagar cliente '+id+'?')) return;
+  toast('A apagar...','info');
+  try{ await wDel('/api/admin/clientes/'+id); toast('Cliente apagado!'); rClientes(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+function shareCli(id) {
+  var c=_cliList.find(function(x){return x.id===id;});
+  if(!c) return;
+  var link=SITEURL+'/verificar-site.html?id='+c.id;
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Partilhar <span class="r">'+c.nome+'</span></div>'+
+    '<div class="fg"><label class="fl">Código de Acesso</label>'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" value="'+c.id+'" readonly style="font-family:monospace;letter-spacing:.15em;font-size:1.1rem;flex:1">'+
+        '<button class="btn bred bsm" onclick="copyTxt(\''+c.id+'\',\'Código copiado!\')"><i class="fa-solid fa-copy"></i></button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Link Directo</label>'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" value="'+link+'" readonly style="font-size:.7rem;flex:1">'+
+        '<button class="btn bblue bsm" onclick="copyTxt(\''+link+'\',\'Link copiado!\')"><i class="fa-solid fa-copy"></i></button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Fechar</button>'+
+      '<a class="btn bblue" href="'+link+'" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Pré-ver</a>'+
+    '</div>'
+  );
+}
+
+/* PROJECTOS */
+async function rProjetos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Proj<span class="r">ectos</span></div><div class="ps">Projectos associados a clientes</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rProjetos()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openProjModal()"><i class="fa-solid fa-plus"></i> Novo</button>'+
+    '</div>'+
+    '<div id="prjL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/projetos');
+    var el=document.getElementById('prjL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-diagram-project"></i><p>Sem projectos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(p){
+      html+='<div class="cc">'+
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem">'+
+          '<span class="ccid" style="cursor:default">'+p.cliente_id+'</span>'+
+          estadoBadge(p.estado)+
+        '</div>'+
+        '<div class="ccn">'+p.nome+'</div>'+
+        (p.previsao?'<div style="font-size:.63rem;color:var(--gr);margin-bottom:.3rem">'+p.previsao+'</div>':'')+
+        '<div class="pg"><div class="pgf" style="width:'+(p.progresso||0)+'%"></div></div>'+
+        '<div style="font-size:.72rem;color:var(--gr)">'+(p.progresso||0)+'% • '+(p.etapa_actual||'—')+'</div>'+
+        '<div style="margin-top:.65rem">'+
+          '<button class="btn bdng bsm" onclick="delProj('+p.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('prjL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openProjModal() {
+  var estats=['em_progresso','revisao','concluido','pausado'];
+  var eOpts='';
+  estats.forEach(function(s){eOpts+='<option value="'+s+'">'+s.replace('_',' ')+'</option>';});
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Projecto</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Código Cliente</label><input class="fi" id="prCli" placeholder="IMP-XXXXXXXX"></div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="prNome" placeholder="Site Loja X"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><textarea class="fi" id="prDesc"></textarea></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Estado</label><select class="fi" id="prEstado">'+eOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Progresso (%)</label><input class="fi" type="number" id="prProg" min="0" max="100" value="0"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Etapa Actual</label><input class="fi" id="prEtapa" placeholder="Design"></div>'+
+      '<div class="fg"><label class="fl">Previsão</label><input class="fi" id="prPrev" placeholder="Maio 2025"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">URL do Site</label><input class="fi" id="prUrl" placeholder="https://..."></div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveProj()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+async function saveProj() {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var data={
+    cliente_id:document.getElementById('prCli').value.trim().toUpperCase(),
+    nome:document.getElementById('prNome').value.trim(),
+    descricao:document.getElementById('prDesc').value.trim(),
+    estado:document.getElementById('prEstado').value,
+    progresso:parseInt(document.getElementById('prProg').value)||0,
+    etapa_actual:document.getElementById('prEtapa').value.trim(),
+    previsao:document.getElementById('prPrev').value.trim(),
+    url_site:document.getElementById('prUrl').value.trim()
+  };
+  if(!data.cliente_id||!data.nome){toast('Cliente e nome são obrigatórios','error');return;}
+  try{ await wPost('/api/admin/projetos',data); btnOk(saveBtn,'Guardado!'); toast('Projecto guardado!'); notify('Sucesso','Projecto de cliente guardado!','success'); setTimeout(function(){ closeModal(); rProjetos(); },500); }
+  catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delProj(id) {
+  if(!confirm('Apagar projecto?')) return;
+  try{ await wDel('/api/admin/projetos/'+id); toast('Apagado'); rProjetos(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* DOCUMENTOS */
+async function rDocs() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Docu<span class="r">mentos</span></div><div class="ps">Ficheiros e entregas para clientes</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rDocs()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openDocModal()"><i class="fa-solid fa-plus"></i> Novo</button>'+
+    '</div>'+
+    '<div id="docL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/documentos');
+    var el=document.getElementById('docL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-file-arrow-up"></i><p>Sem documentos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(d){
+      html+='<div class="li2">'+
+        '<div class="lib">'+
+          '<div class="liname"><a href="'+d.url+'" target="_blank" style="color:var(--wh)">'+d.nome+'</a></div>'+
+          (d.descricao?'<div class="lidesc">'+d.descricao+'</div>':'')+
+          '<div class="limeta">'+
+            '<span class="ccid" style="cursor:default">'+d.cliente_id+'</span>'+
+            '<span class="badge bb">'+d.tipo+'</span>'+
+            '<span style="font-size:.6rem;color:var(--gr)">'+timeAgo(d.criado_em)+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="lact">'+
+          '<button class="btn bdng bsm" onclick="delDoc('+d.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('docL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openDocModal() {
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Documento</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Código Cliente</label><input class="fi" id="dCli" placeholder="IMP-XXXXXXXX"></div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="dNome" placeholder="Proposta Final v2"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><input class="fi" id="dDesc" placeholder="Proposta com revisões"></div>'+
+    '<div class="fg"><label class="fl">URL do Ficheiro</label><input class="fi" id="dUrl" placeholder="https://drive.google.com/..."></div>'+
+    '<div class="fg"><label class="fl">Tipo</label><select class="fi" id="dTipo">'+
+      '<option value="proposta">Proposta</option><option value="contrato">Contrato</option>'+
+      '<option value="entrega">Entrega</option><option value="factura">Factura</option><option value="outro">Outro</option>'+
+    '</select></div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveDoc()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+async function saveDoc() {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var data={
+    cliente_id:document.getElementById('dCli').value.trim().toUpperCase(),
+    nome:document.getElementById('dNome').value.trim(),
+    descricao:document.getElementById('dDesc').value.trim(),
+    url:document.getElementById('dUrl').value.trim(),
+    tipo:document.getElementById('dTipo').value
+  };
+  if(!data.cliente_id||!data.nome||!data.url){toast('Cliente, nome e URL são obrigatórios','error');return;}
+  try{ await wPost('/api/admin/documentos',data); btnOk(saveBtn,'Guardado!'); toast('Documento guardado!'); notify('Sucesso','Documento adicionado!','success'); setTimeout(function(){ closeModal(); rDocs(); },500); }
+  catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delDoc(id) {
+  if(!confirm('Apagar documento?')) return;
+  try{ await wDel('/api/admin/documentos/'+id); toast('Apagado'); rDocs(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* TICKETS */
+async function rTickets() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Su<span class="r">porte</span></div><div class="ps">Pedidos de suporte dos clientes</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rTickets()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="tkL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/tickets');
+    setBadge('sb-tk', data.filter(function(t){return t.estado==='aberto';}).length);
+    var el=document.getElementById('tkL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-ticket"></i><p>Sem tickets de suporte</p></div>';return;}
+    var html='';
+    data.forEach(function(t){
+      html+='<div class="inb '+(t.estado==='aberto'?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="ccid" style="cursor:default">'+t.cliente_id+'</span>'+
+          estadoBadge(t.estado)+
+          '<span class="badge '+(t.prioridade==='urgente'?'br':t.prioridade==='alta'?'ba':'bgr')+'">'+(t.prioridade||'normal')+'</span>'+
+          '<span class="inb-date">'+timeAgo(t.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="inb-prev">'+t.assunto+'</div>'+
+        '<div class="inb-body">'+
+          '<p style="margin-bottom:.6rem"><strong>Mensagem:</strong><br>'+t.mensagem+'</p>'+
+          (t.resposta?'<p><strong>Resposta:</strong><br>'+t.resposta+'</p>':'')+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('tkL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* MENSAGENS */
+async function rMensagens() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Men<span class="r">sagens</span></div><div class="ps">Mensagens trocadas com clientes</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rMensagens()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="msL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/mensagens');
+    setBadge('sb-ms', data.filter(function(m){return !m.lido;}).length);
+    var el=document.getElementById('msL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-comments"></i><p>Sem mensagens ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(m){
+      html+='<div class="inb '+(!m.lido?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="ccid" style="cursor:default">'+m.cliente_id+'</span>'+
+          '<span class="badge '+(m.remetente==='cliente'?'bb':'bg')+'">'+m.remetente+'</span>'+
+          '<span class="inb-date">'+timeAgo(m.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="inb-prev">'+m.mensagem+'</div>'+
+        '<div class="inb-body"><p>'+m.mensagem+'</p></div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('msL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* CONTACTOS */
+async function rContactos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Con<span class="r">tactos</span></div><div class="ps">Mensagens recebidas via formulário de contacto</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rContactos()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="ctL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/contactos');
+    setBadge('sb-ct', data.filter(function(c){return !c.lido;}).length);
+    var el=document.getElementById('ctL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-envelope"></i><p>Sem contactos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(c){
+      var wpp=c.telefone.replace(/\D/g,'');
+      html+='<div class="inb '+(!c.lido?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="inb-nome">'+c.nome+'</span>'+
+          '<span class="inb-tel">'+c.telefone+'</span>'+
+          (!c.lido?'<span class="badge br">Novo</span>':'')+
+          '<span class="inb-date">'+timeAgo(c.criado_em)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0">'+
+          (c.servico?'<span class="badge bb">'+c.servico+'</span>':'')+
+          (c.provincia?'<span class="badge bgr">'+c.provincia+'</span>':'')+
+        '</div>'+
+        '<div class="inb-prev">'+c.mensagem+'</div>'+
+        '<div class="inb-body">'+
+          '<p style="margin-bottom:.75rem">'+c.mensagem+'</p>'+
+          '<a href="https://wa.me/'+wpp+'" target="_blank" class="btn bred bsm"><i class="fa-brands fa-whatsapp"></i> Responder WhatsApp</a>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('ctL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* ORÇAMENTOS */
+async function rOrcamentos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Orça<span class="r">mentos</span></div><div class="ps">Pedidos de orçamento recebidos</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rOrcamentos()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="ocL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/orcamentos');
+    setBadge('sb-oc', data.filter(function(o){return !o.lido;}).length);
+    var el=document.getElementById('ocL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-file-invoice"></i><p>Sem orçamentos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(o){
+      var wpp=o.telefone.replace(/\D/g,'');
+      html+='<div class="inb '+(!o.lido?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="inb-nome">'+o.nome+'</span>'+
+          '<span class="inb-tel">'+o.telefone+'</span>'+
+          (!o.lido?'<span class="badge br">Novo</span>':'')+
+          '<span class="inb-date">'+timeAgo(o.criado_em)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0">'+
+          (o.tipo_site?'<span class="badge bb">'+o.tipo_site+'</span>':'')+
+          (o.orcamento?'<span class="badge ba">'+o.orcamento+'</span>':'')+
+          (o.prazo?'<span class="badge bgr">'+o.prazo+'</span>':'')+
+        '</div>'+
+        '<div class="inb-prev">'+(o.negocio||'Sem negócio especificado')+'</div>'+
+        '<div class="inb-body">'+
+          (o.funcionalidades?'<p><strong>Funcionalidades:</strong> '+o.funcionalidades+'</p>':'')+
+          (o.estimativa?'<p><strong>Estimativa:</strong> '+o.estimativa+'</p>':'')+
+          (o.notas?'<p><strong>Notas:</strong> '+o.notas+'</p>':'')+
+          '<div style="margin-top:.75rem">'+
+            '<a href="https://wa.me/'+wpp+'" target="_blank" class="btn bred bsm"><i class="fa-brands fa-whatsapp"></i> Responder WhatsApp</a>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('ocL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* LEADS */
+function rLeads() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt"><span class="r">Leads</span></div><div class="ps">Contactos e orçamentos recebidos</div></div>'+
+    '<div class="grid2">'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.4rem;padding:1.2rem" onclick="go(\'contactos\')"><i class="fa-solid fa-envelope" style="font-size:1.5rem"></i><span>Contactos</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.4rem;padding:1.2rem" onclick="go(\'orcamentos\')"><i class="fa-solid fa-file-invoice" style="font-size:1.5rem"></i><span>Orçamentos</span></button>'+
+    '</div>';
+}
+
+/* CONFIGURAÇÕES */
+function rConfig() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Configu<span class="r">rações</span></div></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-brands fa-github"></i> GitHub — Upload de Imagens</div>'+
+      '<div class="fg"><label class="fl">Personal Access Token</label>'+
+        '<input class="fi" type="password" id="cfGhTok" value="'+_ghtok+'" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">'+
+        '<div style="background:rgba(29,78,216,.08);border:1px solid rgba(29,78,216,.2);border-radius:8px;padding:.75rem;margin-top:.5rem;font-size:.73rem;color:rgba(255,255,255,.55);line-height:1.6">'+
+          '<i class="fa-solid fa-circle-info" style="color:var(--blu2)"></i> GitHub &rarr; Settings &rarr; Developer settings &rarr; Tokens (classic) &rarr; New token &rarr; scope: <strong>repo</strong>'+
+        '</div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Repositório</label><input class="fi" value="'+REPO+'" readonly></div>'+
+      '<div style="display:flex;gap:.6rem">'+
+        '<button class="btn bred" style="flex:1" onclick="saveGhConfig()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+        '<button class="btn bgh" onclick="testGhConfig()"><i class="fa-solid fa-plug"></i> Testar</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-link"></i> URLs</div>'+
+      '<div class="fg"><label class="fl">Cloudflare Worker</label><input class="fi" value="'+API+'" readonly></div>'+
+      '<div class="fg"><label class="fl">GitHub Pages</label><input class="fi" value="'+SITEURL+'" readonly></div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-shield-halved"></i> Sessão</div>'+
+      '<p style="font-size:.84rem;color:var(--gr);margin-bottom:1rem">O token é guardado localmente neste browser.</p>'+
+      '<button class="btn bdng bfull" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Terminar Sessão</button>'+
+    '</div>';
+}
+function saveGhConfig() {
+  var btn = document.querySelector('#mc .btn.bred');
+  btnLoad(btn, 'A guardar...');
+  var tk=document.getElementById('cfGhTok').value.trim();
+  if(!tk){ toast('Token em branco','error'); btnReset(btn); return; }
+  _ghtok=tk; localStorage.setItem('imp_ghtok',tk);
+  btnOk(btn,'Guardado!'); toast('Token GitHub guardado!');
+}
+async function testGhConfig() {
+  if(!_ghtok){ toast('Guarda o token primeiro','error'); return; }
+  var btn = document.querySelector('#mc .btn.bgh');
+  btnLoad(btn, 'A testar...');
+  try {
+    var r=await fetch('https://api.github.com/repos/'+REPO, {headers:{'Authorization':'token '+_ghtok}});
+    if(r.ok){ btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
+    else{ btnReset(btn); toast('Token inválido ou repo não encontrado','error'); }
+  }catch(e){ btnReset(btn); toast('Erro de ligação: '+e.message,'error'); }
+}
+
+/* RIPPLE */
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.btn');
+  if (!btn) return;
+  var r = document.createElement('span');
+  r.className = 'ripple';
+  var rect = btn.getBoundingClientRect();
+  var size = Math.max(rect.width, rect.height);
+  r.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px';
+  btn.appendChild(r);
+  setTimeout(function(){ r.remove(); }, 600);
+});
+
+/* NOTIFICATION TOASTS */
+var _nqueue = [];
+var _nshowing = false;
+function notify(title, msg, type) {
+  if (!type) type = 'success';
+  _nqueue.push({title:title, msg:msg, type:type});
+  if (!_nshowing) processNQueue();
+}
+function processNQueue() {
+  if (!_nqueue.length) { _nshowing = false; return; }
+  _nshowing = true;
+  var n = _nqueue.shift();
+  var icons = {success:'fa-circle-check', error:'fa-circle-exclamation', info:'fa-circle-info', warn:'fa-triangle-exclamation'};
+  var el = document.createElement('div');
+  el.className = 'ntoast ' + n.type;
+  el.innerHTML = '<i class="fa-solid '+icons[n.type]+' ntoast-ic"></i><div><div class="ntoast-t">'+n.title+'</div><div class="ntoast-m">'+n.msg+'</div></div>';
+  document.body.appendChild(el);
+  setTimeout(function(){ el.classList.add('show'); }, 10);
+  setTimeout(function(){
+    el.classList.remove('show');
+    setTimeout(function(){ el.remove(); processNQueue(); }, 350);
+  }, 3500);
+}
+// toast() defined in main script block
+
+/* BTN LOADING STATE */
+function btnLoad(el, txt) {
+  if (!el) return;
+  el.disabled = true;
+  el._origHTML = el.innerHTML;
+  el.innerHTML = '<span class="spin" style="width:14px;height:14px;border-width:2px;margin-right:.35rem"></span>' + (txt||'A processar...');
+}
+function btnReset(el) {
+  if (!el) return;
+  el.disabled = false;
+  if (el._origHTML) el.innerHTML = el._origHTML;
+}
+function btnOk(el, txt) {
+  if (!el) return;
+  el.disabled = false;
+  el.innerHTML = '<i class="fa-solid fa-check"></i> ' + (txt||'Concluído');
+  setTimeout(function() { if (el._origHTML) el.innerHTML = el._origHTML; }, 2000);
+}
+
+/* GALERIA HELPERS */
+async function loadGaleria(refId, tipo, containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  try {
+    var data = await wGet('/api/galeria/'+tipo+'/'+refId);
+    renderGaleria(data, refId, tipo, containerId);
+  } catch(e) {
+    if (el) el.innerHTML = '<div style="font-size:.75rem;color:var(--gr)">Sem fotos na galeria</div>';
+  }
+}
+function renderGaleria(items, refId, tipo, containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var html = '<div class="gal-grid">';
+  items.forEach(function(item) {
+    var delCall = 'delGaleriaItem(' + item.id + ',\'' + refId + '\',\'' + tipo + '\',\'' + containerId + '\')';
+    html += '<div class="gal-item">'+
+      '<img src="'+item.url+'" alt="'+(item.legenda||'')+'" loading="lazy">'+
+      '<button class="gal-del" onclick="'+delCall+'"><i class="fa-solid fa-xmark"></i></button>'+
+    '</div>';
+  });
+  var addCall = 'addGaleriaItem(this,\'' + refId + '\',\'' + tipo + '\',\'' + containerId + '\')';
+  html += '<div class="gal-add"><input type="file" accept="image/*" onchange="'+addCall+'">'+
+          '<i class="fa-solid fa-plus"></i><span>Adicionar</span></div>';
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+async function addGaleriaItem(input, refId, tipo, containerId) {
+  var file = input.files[0];
+  if (!file) return;
+  if (!_ghtok) { toast('Configure o GitHub Token nas Configurações', 'error'); return; }
+  toast('A enviar imagem...', 'info');
+  try {
+    var url = await ghUpload(file, tipo+'-gal');
+    await wPost('/api/admin/galeria', { referencia_id: refId, tipo: tipo, url: url, legenda: '', ordem: 0 });
+    toast('Foto adicionada!');
+    loadGaleria(refId, tipo, containerId);
+  } catch(e) { toast('Erro: '+e.message, 'error'); }
+}
+async function delGaleriaItem(id, refId, tipo, containerId) {
+  toast('A remover foto...','info');
+  try {
+    var r = await fetch(API+'/api/admin/galeria/'+id, {
+      method:'DELETE',
+      headers:{'Authorization':_tok}
+    });
+    if(!r.ok){ var e=await r.json(); throw new Error(e.erro||r.status); }
+    notify('Sucesso','Foto removida da galeria','success');
+    toast('Foto removida');
+    setTimeout(function(){ loadGaleria(refId, tipo, containerId); }, 300);
+  } catch(e) {
+    toast('Erro ao remover: '+e.message, 'error');
+  }
+}
+
+
+function removeMainPhoto(prefix) {
+  var urlEl = document.getElementById(prefix+'ImgUrl');
+  var prevEl = document.getElementById(prefix==='e'?'ePrev':'pImgPrev');
+  if(urlEl) urlEl.value = '';
+  if(prevEl){ prevEl.src=''; prevEl.style.display='none'; }
+  // Hide the remove button itself
+  var btn = document.querySelector('[onclick*="removeMainPhoto(\''+prefix+'\'"]');
+  if(btn) btn.style.display='none';
+  toast('Foto removida. Clica Guardar para confirmar.','info');
+}
+
+</script>
+<script>
+/* ══════════════════════════════════════════════════════════
+   FINANÇAS
+══════════════════════════════════════════════════════════ */
+async function rFinancas() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Finan<span class="r">ças</span></div><div class="ps">Vendas, mensalidades e custos dos clientes</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rFinancas()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openFinModal()"><i class="fa-solid fa-plus"></i> Novo Registo</button>'+
+    '</div>'+
+    '<div id="finStats" style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem"></div>'+
+    '<div id="finL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data = await wGet('/api/admin/financas');
+    var total = data.reduce(function(s,f){ return s + (f.valor||0); }, 0);
+    var pago = data.filter(function(f){ return f.estado==='pago'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
+    var pend = data.filter(function(f){ return f.estado==='pendente'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
+    document.getElementById('finStats').innerHTML =
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--grn)">'+formatKz(pago)+'</div><div class="sl">Recebido ('+data.filter(function(f){return f.estado==="pago";}).length+')</div></div>'+
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--amb)">'+formatKz(pend)+'</div><div class="sl">Pendente ('+data.filter(function(f){return f.estado==="pendente";}).length+')</div></div>';
+    var el = document.getElementById('finL');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-chart-line"></i><p>Sem registos financeiros ainda</p></div>'; return; }
+    var html = '';
+    data.forEach(function(f) {
+      var eCls = f.estado==='pago'?'bg':f.estado==='cancelado'?'br':'ba';
+      var tCls = f.tipo==='venda'?'bb':f.tipo==='mensalidade'?'bg':'ba';
+      html += '<div class="fin-card">'+
+        '<div class="fin-top">'+
+          '<div>'+
+            '<div class="fin-desc">'+f.descricao+'</div>'+
+            '<div style="font-size:.72rem;color:var(--gr);margin-top:.15rem">'+(f.cliente_nome||f.cliente_id)+(f.data_venc?' • Vence: '+f.data_venc:'')+'</div>'+
+          '</div>'+
+          '<div class="fin-val">'+formatKz(f.valor)+'</div>'+
+        '</div>'+
+        '<div class="fin-meta">'+
+          '<span class="badge '+tCls+'">'+f.tipo+'</span>'+
+          '<span class="badge '+eCls+'">'+f.estado+'</span>'+
+          (f.moeda!=='AOA'?'<span class="badge bgr">'+f.moeda+'</span>':'')+
+          '<span style="font-size:.6rem;color:var(--gr);margin-left:auto">'+timeAgo(f.criado_em)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:.4rem;margin-top:.65rem;flex-wrap:wrap">'+
+          (f.estado==='pendente'?'<button class="btn bgh bsm" onclick="pagarFinanca('+f.id+')"><i class="fa-solid fa-check"></i> Marcar pago</button>':'')+
+          '<button class="btn bgh bsm" onclick="enviarNotifFinanca(\''+f.cliente_id+'\',\''+f.descricao+'\','+f.valor+')"><i class="fa-brands fa-whatsapp"></i> Notificar</button>'+
+          '<button class="btn bdng bsm" onclick="delFinanca('+f.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) {
+    document.getElementById('finL').innerHTML = '<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function formatKz(v) {
+  if (!v && v !== 0) return '—';
+  return new Intl.NumberFormat('pt-AO').format(v) + ' Kz';
+}
+function openFinModal() {
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Registo</span> Financeiro</div>'+
+    '<div class="fg"><label class="fl">Código do Cliente</label><input class="fi" id="fnCli" placeholder="IMP-XXXXXXXX"></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Tipo</label><select class="fi" id="fnTipo"><option value="venda">Venda de Site</option><option value="mensalidade">Mensalidade</option><option value="adicional">Custo Adicional</option><option value="outro">Outro</option></select></div>'+
+      '<div class="fg"><label class="fl">Moeda</label><select class="fi" id="fnMoeda"><option value="AOA">AOA (Kwanza)</option><option value="USD">USD</option></select></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><input class="fi" id="fnDesc" placeholder="Ex: Criação de site loja online"></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Valor</label><input class="fi" type="number" id="fnVal" placeholder="0" min="0"></div>'+
+      '<div class="fg"><label class="fl">Data de Vencimento</label><input class="fi" type="date" id="fnVenc"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Estado</label><select class="fi" id="fnEstado"><option value="pendente">Pendente</option><option value="pago">Pago</option><option value="cancelado">Cancelado</option></select></div>'+
+    '<div class="fg"><label class="fl">Notas</label><textarea class="fi" id="fnNotas" style="min-height:60px" placeholder="Observações..."></textarea></div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveFinanca()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+async function saveFinanca() {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var data = {
+    cliente_id: document.getElementById('fnCli').value.trim().toUpperCase(),
+    tipo: document.getElementById('fnTipo').value,
+    descricao: document.getElementById('fnDesc').value.trim(),
+    valor: parseFloat(document.getElementById('fnVal').value)||0,
+    moeda: document.getElementById('fnMoeda').value,
+    estado: document.getElementById('fnEstado').value,
+    data_venc: document.getElementById('fnVenc').value||null,
+    notas: document.getElementById('fnNotas').value.trim()
+  };
+  if (!data.cliente_id || !data.descricao || !data.valor) { toast('Preenche todos os campos obrigatórios','error'); btnReset(saveBtn); return; }
+  try { await wPost('/api/admin/financas', data); btnOk(saveBtn,'Guardado!'); toast('Registo guardado!'); notify('Sucesso','Registo financeiro criado!','success'); setTimeout(function(){ closeModal(); rFinancas(); },500); }
+  catch(e) { toast('Erro: '+e.message,'error'); }
+}
+async function pagarFinanca(id) {
+  toast('A processar...','info');
+  try {
+    var r = await fetch(API+'/api/admin/financas/'+id+'/estado', {
+      method:'POST', headers:{'Content-Type':'application/json','Authorization':_tok},
+      body:JSON.stringify({estado:'pago'})
+    });
+    if(!r.ok){ var e=await r.json(); throw new Error(e.erro||r.status); }
+    toast('Marcado como pago!');
+    rFinancas();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+async function delFinanca(id) {
+  if (!confirm('Apagar este registo?')) return;
+  try { await wDel('/api/admin/financas/'+id); toast('Apagado'); rFinancas(); }
+  catch(e) { toast('Erro: '+e.message,'error'); }
+}
+function enviarNotifFinanca(cliId, desc, valor) {
+  var msg = 'Olá! Tem um pagamento pendente referente a "'+desc+'". Valor: '+formatKz(valor)+'. Por favor contacte-nos para mais informações.';
+  var wpp = '244954288128';
+  window.open('https://wa.me/'+wpp+'?text='+encodeURIComponent('Para cliente '+cliId+': '+msg), '_blank');
+}
+
+/* ══════════════════════════════════════════════════════════
+   NOTIFICAÇÕES
+══════════════════════════════════════════════════════════ */
+async function rNotificacoes() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Notifi<span class="r">cações</span></div><div class="ps">Enviar notificações directamente para a área do cliente</div></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-paper-plane"></i> Enviar Notificação</div>'+
+      '<div class="fg"><label class="fl">Destinatário</label>'+
+        '<select class="fi" id="ntDest">'+
+          '<option value="todos">Todos os clientes activos</option>'+
+        '</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Tipo</label>'+
+        '<select class="fi" id="ntTipo">'+
+          '<option value="info">Informação</option>'+
+          '<option value="sucesso">Sucesso / Boas notícias</option>'+
+          '<option value="aviso">Aviso</option>'+
+          '<option value="pagamento">Pagamento</option>'+
+        '</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Título</label><input class="fi" id="ntTitulo" placeholder="Ex: Actualização do teu site"></div>'+
+      '<div class="fg"><label class="fl">Mensagem</label><textarea class="fi" id="ntMsg" placeholder="Escreve a mensagem para o cliente..."></textarea></div>'+
+      '<div style="display:flex;gap:.6rem">'+
+        '<button class="btn bred" style="flex:1" onclick="enviarNotif()"><i class="fa-solid fa-paper-plane"></i> Enviar no Painel</button>'+
+        '<button class="btn bgh" onclick="enviarWppNotif()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>'+
+      '</div>'+
+    '</div>';
+  // Load clientes for select
+  try {
+    var clis = await wGet('/api/admin/clientes');
+    var sel = document.getElementById('ntDest');
+    if (sel) {
+      clis.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.nome + ' (' + c.id + ')';
+        sel.appendChild(opt);
+      });
+    }
+  } catch(e) {}
+}
+async function enviarNotif() {
+  var sendBtn = document.querySelector('#mc .btn.bred');
+  btnLoad(sendBtn, 'A enviar...');
+  var dest = document.getElementById('ntDest').value;
+  var titulo = document.getElementById('ntTitulo').value.trim();
+  var msg = document.getElementById('ntMsg').value.trim();
+  var tipo = document.getElementById('ntTipo').value;
+  if (!titulo || !msg) { toast('Título e mensagem são obrigatórios','error'); return; }
+  try {
+    var r = await wPost('/api/admin/notificacoes', { cliente_id: dest, titulo: titulo, mensagem: msg, tipo: tipo });
+    var txt = dest==='todos' ? 'Enviado para '+r.enviadas+' clientes!' : 'Notificação enviada!';
+    btnOk(sendBtn, 'Enviado!');
+    toast(txt);
+    document.getElementById('ntTitulo').value = '';
+    document.getElementById('ntMsg').value = '';
+  } catch(e) { toast('Erro: '+e.message,'error'); btnReset(sendBtn); }
+}
+function enviarWppNotif() {
+  var titulo = document.getElementById('ntTitulo').value.trim();
+  var msg = document.getElementById('ntMsg').value.trim();
+  if (!titulo || !msg) { toast('Preenche título e mensagem primeiro','error'); return; }
+  var texto = '*'+titulo+'*\n\n'+msg+'\n\n— IMPERSILVA';
+  window.open('https://wa.me/244954288128?text='+encodeURIComponent(texto), '_blank');
+}
+
+/* ══════════════════════════════════════════════════════════
+   UTILIZADORES
+══════════════════════════════════════════════════════════ */
+async function rUsuarios() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Utiliza<span class="r">dores</span></div><div class="ps">Contas registadas na área de cliente</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rUsuarios()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="usrL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data = await wGet('/api/admin/usuarios');
+    var el = document.getElementById('usrL');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-user-shield"></i><p>Sem utilizadores registados</p></div>'; return; }
+    var html = '<div class="card"><div class="ct"><i class="fa-solid fa-users"></i> '+data.length+' utilizador'+(data.length!==1?'es':'')+'</div>';
+    data.forEach(function(u) {
+      html += '<div class="usr-item">'+
+        '<div class="usr-av">'+(u.nome?u.nome[0].toUpperCase():'?')+'</div>'+
+        '<div style="flex:1;min-width:0">'+
+          '<div style="font-weight:600;font-size:.85rem">'+u.nome+'</div>'+
+          '<div style="font-size:.7rem;color:var(--gr)">'+
+            (u.email||u.telefone||'—')+
+            (u.cliente_id?' • <span style="color:var(--blu2)">'+u.cliente_id+'</span>':' • <span style="color:var(--gr)">Sem projecto</span>')+
+          '</div>'+
+          '<div style="font-size:.65rem;color:rgba(255,255,255,.25);margin-top:.1rem">'+timeAgo(u.criado_em)+'</div>'+
+        '</div>'+
+        '<div style="display:flex;gap:.35rem;align-items:center">'+
+          '<span class="badge '+(u.activo?'bg':'br')+'">'+(u.activo?'Activo':'Inactivo')+'</span>'+
+          (u.activo?'<button class="btn bdng bsm" onclick="desactivarUsr('+u.id+')"><i class="fa-solid fa-ban"></i></button>':'')+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) {
+    document.getElementById('usrL').innerHTML = '<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+async function desactivarUsr(id) {
+  if (!confirm('Desactivar este utilizador?')) return;
+  try { await wDel('/api/admin/usuarios/'+id); toast('Utilizador desactivado'); rUsuarios(); }
+  catch(e) { toast('Erro: '+e.message,'error'); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   LIMPEZA DE IMAGENS (GitHub)
+══════════════════════════════════════════════════════════ */
+var _ghFiles = [];
+async function rLimpeza() {
+  var body = '<div class="ph"><div class="pt">Lim<span class="r">peza</span></div><div class="ps">Gerir imagens no repositório GitHub</div></div>';
+  if (!_ghtok) {
+    body += '<div class="card" style="border-color:rgba(214,40,40,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);margin-right:.4rem"></i>GitHub Token não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
+  } else {
+    body += '<div class="brow"><button class="btn bred" onclick="carregarImgsGH()"><i class="fa-solid fa-rotate"></i> Listar imagens</button></div>';
+    body += '<div id="ghImgL"><div class="empty"><i class="fa-brands fa-github"></i><p>Clica em Listar imagens para ver os ficheiros</p></div></div>';
+  }
+  document.getElementById('mc').innerHTML = body;
+}
+
+async function carregarImgsGH() {
+  var el = document.getElementById('ghImgL');
+  if (!el) return;
+  el.innerHTML = '<div class="load"><div class="spin"></div> A carregar do GitHub e verificar utilizações...</div>';
+  try {
+    // 1. Get all images from GitHub
+    var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens', {
+      headers: {'Authorization':'token '+_ghtok, 'Accept':'application/vnd.github.v3+json'}
+    });
+    if (r.status === 404) { el.innerHTML='<div class="empty"><p>Pasta "imagens" não existe ainda</p></div>'; return; }
+    var files = await r.json();
+    _ghFiles = Array.isArray(files) ? files.filter(function(f){ return f.type==='file'; }) : [];
+    if (!_ghFiles.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-images"></i><p>Sem imagens na pasta /imagens</p></div>'; return; }
+
+    // 2. Get all used image URLs from D1 (portfolio + equipa + galeria)
+    var usedUrls = new Set();
+    try {
+      var port = await wGet('/api/portfolio');
+      port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/imagens/').pop()); });
+    } catch(e2){}
+    try {
+      var eq = await wGet('/api/equipa');
+      eq.forEach(function(m){
+        if(m.foto) usedUrls.add(m.foto.split('/imagens/').pop());
+        if(m.galeria) m.galeria.forEach(function(g){ usedUrls.add((g.url||g).split('/imagens/').pop()); });
+      });
+    } catch(e2){}
+
+    var used = _ghFiles.filter(function(f){ return usedUrls.has(f.name); });
+    var unused = _ghFiles.filter(function(f){ return !usedUrls.has(f.name); });
+
+    var html = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
+      '<span class="badge bg"><i class="fa-solid fa-link"></i> '+used.length+' em uso</span>'+
+      '<span class="badge br"><i class="fa-solid fa-unlink"></i> '+unused.length+' não usadas</span>'+
+      '<span class="badge bgr">Total: '+_ghFiles.length+'</span>'+
+    '</div>';
+
+    if (unused.length) {
+      html += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem">'+
+        '<div class="ct" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i> Imagens não usadas ('+unused.length+')</div>';
+      unused.forEach(function(f, i) {
+        var idx = _ghFiles.indexOf(f);
+        var sizeKb = Math.round((f.size||0)/1024);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
+        html += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy">' :
+            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<button class="btn bdng bsm" onclick="removerImgGH('+idx+')" title="Remover"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (used.length) {
+      html += '<div class="card">'+
+        '<div class="ct" style="color:var(--grn)"><i class="fa-solid fa-link"></i> Em uso ('+used.length+')</div>';
+      used.forEach(function(f) {
+        var idx = _ghFiles.indexOf(f);
+        var sizeKb = Math.round((f.size||0)/1024);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
+        html += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy">' :
+            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<span class="badge bg bsm">em uso</span>'+
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    el.innerHTML = html;
+  } catch(e) {
+    el.innerHTML = '<div class="empty"><p>Erro ao carregar: '+e.message+'</p></div>';
+  }
+}
+async function removerImgGH(idx) {
+  var f = _ghFiles[idx];
+  if (!f) return;
+  if (!confirm('Remover "'+f.name+'" do GitHub? Esta acção não pode ser desfeita.')) return;
+  try {
+    var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens/'+f.name, {
+      method: 'DELETE',
+      headers: {'Authorization':'token '+_ghtok,'Content-Type':'application/json'},
+      body: JSON.stringify({ message: 'Admin: remover '+f.name, sha: f.sha, branch: 'main' })
+    });
+    if (!r.ok) { var e=await r.json(); throw new Error(e.message||'Erro'); }
+    toast('"'+f.name+'" removido do GitHub');
+    _ghFiles.splice(idx, 1);
+    carregarImgsGH();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+</script>
+</body>
+</html>
+
