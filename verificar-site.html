@@ -21,7 +21,6 @@ button,input,select,textarea{font-family:inherit}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:var(--div)}
 
-/* AUTH */
 #authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;
   background:var(--bg);background-image:radial-gradient(ellipse at 20% 40%,rgba(214,40,40,.07) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(29,78,216,.05) 0%,transparent 50%);}
 .auth-box{background:var(--card);border:1px solid var(--div);border-radius:16px;width:100%;max-width:360px;overflow:hidden}
@@ -46,7 +45,6 @@ button,input,select,textarea{font-family:inherit}
 .or-div{display:flex;align-items:center;gap:.75rem;margin:.8rem 0;color:var(--gr);font-size:.72rem}
 .or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--div)}
 
-/* APP */
 #app{display:none;min-height:100vh;padding-bottom:calc(var(--bot)+.5rem)}
 .hdr{position:sticky;top:0;background:rgba(14,14,15,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--div);z-index:100;padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between}
 .hlogo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.15rem;text-transform:uppercase;letter-spacing:.04em;line-height:1}
@@ -56,25 +54,21 @@ button,input,select,textarea{font-family:inherit}
 .hnotif{position:relative;background:none;border:none;color:var(--gr);font-size:1rem;cursor:pointer;padding:.3rem}
 .hnotif-dot{position:absolute;top:2px;right:2px;width:7px;height:7px;background:var(--red);border-radius:50%;display:none}
 
-/* BOTTOM NAV */
 .bn{position:fixed;bottom:0;left:0;right:0;height:var(--bot);background:rgba(14,14,15,.97);border-top:1px solid var(--div);display:flex;z-index:100}
 .bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border:none;background:none;color:var(--gr);font-size:.45rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:2px solid transparent;-webkit-tap-highlight-color:transparent;position:relative;transition:color .15s}
 .bni.on{color:var(--wh);border-top-color:var(--red)}
 .bni i{font-size:1.1rem}
 .bni-dot{position:absolute;top:6px;right:calc(50% - 16px);width:7px;height:7px;background:var(--red);border-radius:50%;display:none}
 
-/* MAIN */
 .mc{padding:1rem}
 .ph{padding:.7rem 0 1rem;border-bottom:1px solid var(--div);margin-bottom:1rem}
 .pt{font-family:'Barlow Condensed',sans-serif;font-size:1.35rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
 .pt .r{color:var(--red)}.pt .b{color:var(--blu2)}
 .ps{font-size:.73rem;color:var(--gr);margin-top:.15rem}
 
-/* CARDS */
 .card{background:var(--card);border:1px solid var(--div);border-radius:12px;padding:1rem;margin-bottom:1rem}
 .ct{font-size:.58rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gr);margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1px solid var(--div);display:flex;align-items:center;gap:.5rem}
 
-/* HERO PROGRESS */
 .hero-prog{background:var(--card);border:1px solid var(--div);border-radius:14px;padding:1.2rem;margin-bottom:1rem;position:relative;overflow:hidden}
 .hero-prog::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--red),var(--blu2))}
 .hp-nome{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.1rem}
@@ -89,7 +83,6 @@ button,input,select,textarea{font-family:inherit}
 .e-ok{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
 .e-pau{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
 
-/* ETAPAS */
 .etapa{display:flex;align-items:center;gap:.7rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .etapa:last-child{border-bottom:none}
 .etapa-ic{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem}
@@ -101,7 +94,6 @@ button,input,select,textarea{font-family:inherit}
 .etapa-nome.cur{color:var(--wh);font-weight:700}
 .etapa-data{font-size:.63rem;color:var(--gr)}
 
-/* NOTIFS */
 .notif{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem;cursor:pointer;transition:border-color .2s}
 .notif.nao-lida{border-left:3px solid var(--red)}
 .notif-top{display:flex;align-items:center;gap:.6rem}
@@ -110,47 +102,41 @@ button,input,select,textarea{font-family:inherit}
 .notif-msg{font-size:.78rem;color:var(--gr);margin-top:.35rem;line-height:1.5}
 .nt-info{color:var(--blu2)}.nt-sucesso{color:var(--grn)}.nt-aviso{color:var(--amb)}.nt-pagamento{color:var(--amb)}
 
-/* FINANÇAS */
 .fin-item{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem}
 .fin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
 .fin-desc{font-weight:600;font-size:.85rem}
 .fin-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1rem;white-space:nowrap}
 .fin-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem;align-items:center}
 
-/* MSGS */
 .msg-wrap{display:flex;flex-direction:column;gap:.6rem}
 .msg{padding:.7rem .9rem;border-radius:10px;max-width:85%;font-size:.82rem;line-height:1.5}
 .msg.cli{background:rgba(29,78,216,.15);border:1px solid rgba(29,78,216,.2);align-self:flex-end;margin-left:auto}
 .msg.emp{background:rgba(255,255,255,.05);border:1px solid var(--div)}
 .msg-meta{font-size:.6rem;color:var(--gr);margin-top:.25rem}
 
-/* TICKETS */
 .ticket{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem;cursor:pointer}
 .ticket.aberto{border-left:3px solid var(--red)}
 .ticket-sub{font-weight:600;font-size:.85rem;flex:1}
 .ticket-body{display:none;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--div);font-size:.8rem;line-height:1.6;color:var(--gr2)}
 .ticket.open .ticket-body{display:block}
 
-/* DOCS */
 .doc-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .doc-item:last-child{border-bottom:none}
 .doc-ic{width:36px;height:36px;border-radius:8px;background:rgba(29,78,216,.12);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--blu2);flex-shrink:0}
 
-/* PERFIL AVATAR */
 .pf-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:.75rem}
 
-/* BTNS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.1rem;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;text-decoration:none;position:relative;overflow:hidden;transition:opacity .15s}
 .btn:active{opacity:.85}
 .bfull{width:100%}
 .bred{background:var(--red);color:#fff}
 .bblue{background:var(--blue);color:#fff}
 .bgh{background:rgba(255,255,255,.05);color:var(--gr2);border:1px solid rgba(255,255,255,.1)}
+.bgrn{background:rgba(34,197,94,.15);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
 .bsm{padding:.5rem .9rem;font-size:.72rem}
 .ripple{position:absolute;border-radius:50%;transform:scale(0);animation:rip .5s linear;background:rgba(255,255,255,.25);pointer-events:none}
 @keyframes rip{to{transform:scale(4);opacity:0}}
 
-/* MISC */
 .badge{display:inline-flex;align-items:center;font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .4rem;border-radius:50px}
 .bg{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
 .bb{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
@@ -164,8 +150,8 @@ button,input,select,textarea{font-family:inherit}
 @keyframes sp{to{transform:rotate(360deg)}}
 .load{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:2rem;color:var(--gr);font-size:.82rem}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.grid1{display:grid;grid-template-columns:1fr;gap:.75rem}
 
-/* TOAST */
 #toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:.82rem}
 #toast.show{opacity:1;transform:translateY(0)}
 .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -174,7 +160,6 @@ button,input,select,textarea{font-family:inherit}
 </head>
 <body>
 
-<!-- AUTH -->
 <div id="authScreen">
   <div class="auth-box">
     <div class="auth-head">
@@ -186,8 +171,6 @@ button,input,select,textarea{font-family:inherit}
       <div class="auth-tab" onclick="switchTab('registar')">Criar Conta</div>
     </div>
     <div class="auth-body">
-
-      <!-- LOGIN -->
       <div class="auth-form on" id="formLogin">
         <label class="fi-label">Email ou Telefone</label>
         <input class="fi" type="text" id="lContact" placeholder="email@exemplo.com ou +244...">
@@ -203,8 +186,6 @@ button,input,select,textarea{font-family:inherit}
           Tens um código de projecto? <a onclick="switchTab('registar')">Regista-te e liga-o</a>
         </div>
       </div>
-
-      <!-- REGISTAR -->
       <div class="auth-form" id="formRegistar">
         <label class="fi-label">Nome Completo</label>
         <input class="fi" type="text" id="rNome" placeholder="O teu nome">
@@ -224,12 +205,10 @@ button,input,select,textarea{font-family:inherit}
         <button class="auth-btn" id="registarBtn" onclick="doRegistar()"><i class="fa-solid fa-user-plus"></i> CRIAR CONTA</button>
         <div class="auth-help">Já tens conta? <a onclick="switchTab('login')">Entra aqui</a></div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="hdr">
     <div>
@@ -250,8 +229,8 @@ button,input,select,textarea{font-family:inherit}
   <nav class="bn">
     <button class="bni on" onclick="goB(this,'inicio')"><i class="fa-solid fa-house"></i><span>Início</span></button>
     <button class="bni" onclick="goB(this,'projecto')"><i class="fa-solid fa-diagram-project"></i><span>Projecto</span></button>
-    <button class="bni" onclick="goB(this,'documentos')"><i class="fa-solid fa-folder-open"></i><span>Ficheiros</span></button>
     <button class="bni" onclick="goB(this,'suporte')"><i class="fa-solid fa-headset"></i><span>Suporte</span><span class="bni-dot" id="bniDotSup"></span></button>
+    <button class="bni" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i><span>Gerir Loja</span></button>
     <button class="bni" onclick="goB(this,'mais')"><i class="fa-solid fa-ellipsis"></i><span>Mais</span></button>
   </nav>
 </div>
@@ -265,7 +244,6 @@ var _user = null;
 var _cli = null;
 var _ttimer;
 
-/* RIPPLE */
 document.addEventListener('click', function(e) {
   var btn = e.target.closest('.btn, .auth-btn');
   if (!btn) return;
@@ -278,7 +256,6 @@ document.addEventListener('click', function(e) {
   setTimeout(function(){ r.remove(); }, 600);
 });
 
-/* TOAST */
 function toast(msg, type) {
   if (!type) type = 'success';
   var el=document.getElementById('toast'), dot=document.getElementById('td');
@@ -289,7 +266,6 @@ function toast(msg, type) {
   _ttimer = setTimeout(function(){ el.className=''; }, 3200);
 }
 
-/* HELPERS */
 function timeAgo(d) {
   if (!d) return '';
   var diff = Date.now()-new Date(d).getTime();
@@ -321,7 +297,6 @@ function togglePass(id) {
   else { inp.type='password'; if(ico) ico.className='fa-solid fa-eye'; }
 }
 
-/* AUTH TABS */
 function switchTab(tab) {
   document.querySelectorAll('.auth-tab').forEach(function(t,i){ t.classList.toggle('on', (i===0&&tab==='login')||(i===1&&tab==='registar')); });
   document.querySelectorAll('.auth-form').forEach(function(f){ f.classList.remove('on'); });
@@ -397,6 +372,8 @@ function saveSession(data) {
 
 function doLogout() {
   localStorage.removeItem('imp_cli_tok');
+  sessionStorage.removeItem('admin_loja_token');
+  sessionStorage.removeItem('admin_loja_id');
   _token=''; _user=null; _cli=null;
   location.reload();
 }
@@ -409,7 +386,6 @@ function startApp() {
   loadNotifBadge();
 }
 
-/* AUTO-LOGIN */
 var savedTok = localStorage.getItem('imp_cli_tok');
 if (savedTok) {
   _token = savedTok;
@@ -418,10 +394,9 @@ if (savedTok) {
     .then(function(data) {
       if (data && data.user) { _user=data.user; _cli=data.cliente; startApp(); }
       else { localStorage.removeItem('imp_cli_tok'); }
-    }).catch(function(){ /* ignore, show login */ });
+    }).catch(function(){});
 }
 
-/* API */
 async function cliGet(path) {
   var r = await fetch(API+path, { headers:{'X-Cliente-Token':_token} });
   if (!r.ok) throw new Error(r.status);
@@ -437,7 +412,6 @@ async function cliPost(path, data) {
   return j;
 }
 
-/* NAV */
 function goB(el, s) {
   document.querySelectorAll('.bni').forEach(function(i){ i.classList.remove('on'); });
   el.classList.add('on');
@@ -449,7 +423,6 @@ function go(s) {
   if (fns[s]) fns[s]();
 }
 
-/* NOTIF BADGE */
 async function loadNotifBadge() {
   if (!_cli) return;
   try {
@@ -458,6 +431,32 @@ async function loadNotifBadge() {
     var dot = document.getElementById('hNotifDot');
     if (dot) dot.style.display = unread>0 ? 'block' : 'none';
   } catch(e){}
+}
+
+/* ── ABRIR ADMIN DA LOJA ── */
+async function abrirAdminLoja() {
+  if (!_cli || !_cli.id) {
+    document.getElementById('mc').innerHTML = 
+      '<div class="ph"><div class="pt">Gerir <span class="r">Loja</span></div></div>'+
+      '<div class="card" style="text-align:center;padding:2rem 1rem">'+
+        '<i class="fa-solid fa-store-slash" style="font-size:3.5rem;color:var(--gr);opacity:.4;display:block;margin-bottom:1.2rem"></i>'+
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;margin-bottom:.5rem">Ainda não tens loja</div>'+
+        '<p style="color:var(--gr);font-size:.85rem;line-height:1.6;margin-bottom:1.5rem">'+
+          'O painel de gestão só fica disponível após a criação da tua loja.<br>'+
+          'Assim que o teu projecto for aprovado, poderás gerir produtos, encomendas e muito mais.'+
+        '</p>'+
+        '<div style="display:flex;flex-direction:column;gap:.6rem;max-width:280px;margin:0 auto">'+
+          '<a href="orcamento.html" class="btn bred bfull"><i class="fa-solid fa-file-invoice"></i> Pedir Orçamento</a>'+
+          '<a href="https://wa.me/244954288128" target="_blank" class="btn bgh bfull"><i class="fa-brands fa-whatsapp"></i> Falar connosco</a>'+
+          '<button class="btn bgh bfull" onclick="go(\'inicio\')"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</button>'+
+        '</div>'+
+      '</div>';
+    return;
+  }
+
+  sessionStorage.setItem('admin_loja_token', _token);
+  sessionStorage.setItem('admin_loja_id', _cli.loja_id || _cli.id);
+  window.location.href = 'admin-loja.html';
 }
 
 /* ══════════════════════════════════════════════════════
@@ -518,6 +517,7 @@ function rInicio() {
       '<button class="btn bgh bfull bsm" onclick="go(\'suporte\')"><i class="fa-solid fa-headset"></i> Suporte</button>'+
       '<button class="btn bgh bfull bsm" onclick="go(\'mensagens\')"><i class="fa-solid fa-comments"></i> Mensagens</button>'+
       '<button class="btn bgh bfull bsm" onclick="go(\'financas\')"><i class="fa-solid fa-receipt"></i> Financeiro</button>'+
+      '<button class="btn bgrn bfull bsm" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i> Gerir Loja</button>'+
       (c.url_site?'<a class="btn bred bfull bsm" href="'+c.url_site+'" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site</a>':'')+
       '<a class="btn bgh bfull bsm" href="https://wa.me/244954288128" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>'+
     '</div></div>';
@@ -547,6 +547,10 @@ function rProjecto() {
     '</div>';
 
   if (c.url_site) html += '<a href="'+c.url_site+'" target="_blank" class="btn bred bfull" style="margin-bottom:1rem"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site ao Vivo</a>';
+
+  html += '<div class="grid1" style="margin-bottom:1rem">'+
+    '<button class="btn bgrn bfull" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i> Gerir a Minha Loja</button>'+
+  '</div>';
 
   if (etapas.length) {
     html += '<div class="card"><div class="ct"><i class="fa-solid fa-list-check"></i> Todas as Fases</div>';
@@ -762,6 +766,22 @@ document.addEventListener('keydown', function(e){
   if (inp && document.activeElement===inp && e.key==='Enter') enviarMsg();
 });
 
+function rMais() {
+  var c = _cli||{};
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt"><span class="r">Mais</span></div></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'notificacoes\')"><i class="fa-solid fa-bell" style="font-size:1.5rem"></i><span>Notificações</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'documentos\')"><i class="fa-solid fa-folder-open" style="font-size:1.5rem"></i><span>Ficheiros</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'financas\')"><i class="fa-solid fa-receipt" style="font-size:1.5rem"></i><span>Financeiro</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'mensagens\')"><i class="fa-solid fa-comments" style="font-size:1.5rem"></i><span>Mensagens</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'perfil\')"><i class="fa-solid fa-user" style="font-size:1.5rem"></i><span>Perfil</span></button>'+
+      '<button class="btn bgrn bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear" style="font-size:1.5rem"></i><span>Gerir Loja</span></button>'+
+      '<a class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" href="orcamento.html"><i class="fa-solid fa-file-invoice" style="font-size:1.5rem"></i><span>Orçamento</span></a>'+
+      '<a class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" href="index.html"><i class="fa-solid fa-globe" style="font-size:1.5rem"></i><span>Site</span></a>'+
+    '</div>';
+}
+
 function rPerfil() {
   var u = _user||{}, c = _cli||{};
   document.getElementById('mc').innerHTML =
@@ -770,8 +790,8 @@ function rPerfil() {
       '<div class="pf-av">'+(u.nome?u.nome[0].toUpperCase():'?')+'</div>'+
       '<div style="margin-bottom:1rem">'+
         '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase">'+u.nome+'</div>'+
-        (u.email?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0"><i class="fa-solid fa-envelope" style="width:14px;margin-right:.25rem"></i>'+u.email+'</div>':'')+
-        (u.telefone?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0"><i class="fa-solid fa-phone" style="width:14px;margin-right:.25rem"></i>'+u.telefone+'</div>':'')+
+        (u.email?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0"><i class="fa-solid fa-envelope"></i> '+u.email+'</div>':'')+
+        (u.telefone?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0"><i class="fa-solid fa-phone"></i> '+u.telefone+'</div>':'')+
         (c.id?'<div style="font-family:monospace;font-size:.82rem;letter-spacing:.1em;background:rgba(255,255,255,.07);padding:.2rem .6rem;border-radius:4px;display:inline-block;margin-top:.5rem;cursor:pointer" onclick="copyCode(\''+c.id+'\')" title="Copiar">'+c.id+' <i class="fa-regular fa-copy" style="font-size:.7rem"></i></div>':'')+
       '</div>'+
     '</div>'+
@@ -781,26 +801,14 @@ function rPerfil() {
       '<input class="fi" id="linkCode" placeholder="IMP-XXXXXXXX" style="text-transform:uppercase;font-family:monospace;letter-spacing:.1em">'+
       '<button class="btn bred bfull" onclick="ligarProjecto()"><i class="fa-solid fa-link"></i> Ligar ao Projecto</button>'+
     '</div>')+
+    '<div class="grid1" style="margin-bottom:1rem"><button class="btn bgrn bfull" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i> Gerir a Minha Loja</button></div>'+
     '<div class="card">'+
       '<div class="ct"><i class="fa-solid fa-headset"></i> Apoio</div>'+
       '<a href="https://wa.me/244954288128" target="_blank" class="btn bred bfull" style="margin-bottom:.6rem"><i class="fa-brands fa-whatsapp"></i> Contactar via WhatsApp</a>'+
       '<a href="contacto.html" class="btn bgh bfull"><i class="fa-solid fa-envelope"></i> Formulário de Contacto</a>'+
     '</div>'+
     '<div class="card">'+
-      '<button class="btn bdng bfull" onclick="doLogout()" style="background:rgba(214,40,40,.08);border:1px solid rgba(214,40,40,.2)"><i class="fa-solid fa-right-from-bracket"></i> Terminar Sessão</button>'+
-    '</div>';
-}
-
-function rMais() {
-  document.getElementById('mc').innerHTML =
-    '<div class="ph"><div class="pt"><span class="r">Mais</span></div></div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">'+
-      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'notificacoes\')"><i class="fa-solid fa-bell" style="font-size:1.5rem"></i><span>Notificações</span></button>'+
-      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'financas\')"><i class="fa-solid fa-receipt" style="font-size:1.5rem"></i><span>Financeiro</span></button>'+
-      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'mensagens\')"><i class="fa-solid fa-comments" style="font-size:1.5rem"></i><span>Mensagens</span></button>'+
-      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'perfil\')"><i class="fa-solid fa-user" style="font-size:1.5rem"></i><span>Perfil</span></button>'+
-      '<a class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" href="orcamento.html"><i class="fa-solid fa-file-invoice" style="font-size:1.5rem"></i><span>Orçamento</span></a>'+
-      '<a class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" href="index.html"><i class="fa-solid fa-globe" style="font-size:1.5rem"></i><span>Site</span></a>'+
+      '<button class="btn bfull" onclick="doLogout()" style="background:rgba(214,40,40,.08);border:1px solid rgba(214,40,40,.2);color:var(--red)"><i class="fa-solid fa-right-from-bracket"></i> Terminar Sessão</button>'+
     '</div>';
 }
 
@@ -814,8 +822,6 @@ async function ligarProjecto() {
   try {
     var r = await fetch(API+'/api/clientes/'+codigo);
     if (!r.ok) { toast('Código não encontrado','error'); return; }
-    var cli = await r.json();
-    // Re-login to update session with cliente_id
     toast('Projecto ligado! A actualizar...','info');
     setTimeout(function(){ location.reload(); }, 1500);
   } catch(e) { toast('Erro: '+e.message,'error'); }
