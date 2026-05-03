@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Área de Cliente — IMPERSILVA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0e0f;--card:#1a1a1c;--card2:#242428;
+  --red:#d62828;--blue:#1d4ed8;--blu2:#3b6ef0;
+  --grn:#22c55e;--amb:#f59e0b;
+  --wh:#fff;--gr:#888896;--gr2:#c0c0cc;
+  --div:rgba(255,255,255,.07);--bot:60px;--top:52px;
+}
+html,body{height:100%;font-family:'Barlow',sans-serif;background:var(--bg);color:var(--wh)}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--div)}
+
+#authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;
+  background:var(--bg);background-image:radial-gradient(ellipse at 20% 40%,rgba(214,40,40,.07) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(29,78,216,.05) 0%,transparent 50%);}
+.auth-box{background:var(--card);border:1px solid var(--div);border-radius:16px;width:100%;max-width:360px;overflow:hidden}
+.auth-head{padding:1.8rem 1.5rem 1.2rem;text-align:center;border-bottom:1px solid var(--div)}
+.auth-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:.06em;line-height:1}
+.auth-logo .r{color:var(--red)}.auth-logo .b{color:var(--blu2)}
+.auth-sub{font-size:.55rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase;margin-top:.3rem}
+.auth-tabs{display:flex;border-bottom:1px solid var(--div)}
+.auth-tab{flex:1;padding:.85rem;text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gr);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.auth-tab.on{color:var(--wh);border-bottom-color:var(--red)}
+.auth-body{padding:1.4rem 1.5rem 1.8rem}
+.auth-form{display:none}.auth-form.on{display:block}
+.fi{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.85rem 1rem;color:var(--wh);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none;display:block;margin-bottom:.75rem}
+.fi:focus{border-color:var(--red)}
+.fi::placeholder{color:rgba(255,255,255,.2)}
+.fi-label{display:block;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gr2);margin-bottom:.35rem}
+.auth-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;position:relative;overflow:hidden;transition:background .15s}
+.auth-btn:active{background:#b91c1c}
+.auth-err{color:var(--red);font-size:.76rem;margin-top:.5rem;text-align:center;min-height:1.2rem}
+.auth-help{font-size:.72rem;color:var(--gr);text-align:center;margin-top:.9rem;line-height:1.6}
+.auth-help a{color:var(--blu2)}
+.or-div{display:flex;align-items:center;gap:.75rem;margin:.8rem 0;color:var(--gr);font-size:.72rem}
+.or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--div)}
+
+#app{display:none;min-height:100vh;padding-bottom:calc(var(--bot)+.5rem)}
+.hdr{position:sticky;top:0;background:rgba(14,14,15,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--div);z-index:100;padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.hlogo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.15rem;text-transform:uppercase;letter-spacing:.04em;line-height:1}
+.hlogo .r{color:var(--red)}.hlogo .b{color:var(--blu2)}
+.hlogo-s{font-size:.38rem;letter-spacing:.18em;color:var(--gr);text-transform:uppercase;display:block}
+.hname{font-size:.72rem;color:var(--gr2);font-weight:600;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hnotif{position:relative;background:none;border:none;color:var(--gr);font-size:1rem;cursor:pointer;padding:.3rem}
+.hnotif-dot{position:absolute;top:2px;right:2px;width:7px;height:7px;background:var(--red);border-radius:50%;display:none}
+
+.bn{position:fixed;bottom:0;left:0;right:0;height:var(--bot);background:rgba(14,14,15,.97);border-top:1px solid var(--div);display:flex;z-index:100}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border:none;background:none;color:var(--gr);font-size:.45rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:2px solid transparent;-webkit-tap-highlight-color:transparent;position:relative;transition:color .15s}
+.bni.on{color:var(--wh);border-top-color:var(--red)}
+.bni i{font-size:1.1rem}
+.bni-dot{position:absolute;top:6px;right:calc(50% - 16px);width:7px;height:7px;background:var(--red);border-radius:50%;display:none}
+
+.mc{padding:1rem}
+.ph{padding:.7rem 0 1rem;border-bottom:1px solid var(--div);margin-bottom:1rem}
+.pt{font-family:'Barlow Condensed',sans-serif;font-size:1.35rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+.pt .r{color:var(--red)}.pt .b{color:var(--blu2)}
+.ps{font-size:.73rem;color:var(--gr);margin-top:.15rem}
+
+.card{background:var(--card);border:1px solid var(--div);border-radius:12px;padding:1rem;margin-bottom:1rem}
+.ct{font-size:.58rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gr);margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1px solid var(--div);display:flex;align-items:center;gap:.5rem}
+
+.hero-prog{background:var(--card);border:1px solid var(--div);border-radius:14px;padding:1.2rem;margin-bottom:1rem;position:relative;overflow:hidden}
+.hero-prog::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--red),var(--blu2))}
+.hp-nome{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.1rem}
+.hp-neg{font-size:.73rem;color:var(--gr);margin-bottom:.8rem}
+.prog-bar{background:var(--div);border-radius:4px;height:7px;overflow:hidden;margin:.5rem 0}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--red),var(--blu2));border-radius:4px;transition:width 1.2s ease}
+.prog-meta{display:flex;align-items:center;justify-content:space-between;font-size:.7rem;color:var(--gr)}
+.prog-pct{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;line-height:1}
+.e-badge{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border-radius:50px}
+.e-prog{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
+.e-rev{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.3)}
+.e-ok{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.e-pau{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+
+.etapa{display:flex;align-items:center;gap:.7rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.etapa:last-child{border-bottom:none}
+.etapa-ic{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+.ok-ic{background:rgba(34,197,94,.15);color:var(--grn)}
+.cur-ic{background:rgba(29,78,216,.15);color:var(--blu2)}
+.pend-ic{background:rgba(255,255,255,.05);color:var(--gr)}
+.etapa-nome{font-size:.82rem;font-weight:500;flex:1}
+.etapa-nome.ok{color:var(--gr);text-decoration:line-through}
+.etapa-nome.cur{color:var(--wh);font-weight:700}
+.etapa-data{font-size:.63rem;color:var(--gr)}
+
+.notif{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem;cursor:pointer;transition:border-color .2s}
+.notif.nao-lida{border-left:3px solid var(--red)}
+.notif-top{display:flex;align-items:center;gap:.6rem}
+.notif-titulo{font-weight:600;font-size:.85rem;flex:1}
+.notif-date{font-size:.65rem;color:rgba(255,255,255,.3)}
+.notif-msg{font-size:.78rem;color:var(--gr);margin-top:.35rem;line-height:1.5}
+.nt-info{color:var(--blu2)}.nt-sucesso{color:var(--grn)}.nt-aviso{color:var(--amb)}.nt-pagamento{color:var(--amb)}
+
+.fin-item{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem}
+.fin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+.fin-desc{font-weight:600;font-size:.85rem}
+.fin-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1rem;white-space:nowrap}
+.fin-meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem;align-items:center}
+
+.msg-wrap{display:flex;flex-direction:column;gap:.6rem}
+.msg{padding:.7rem .9rem;border-radius:10px;max-width:85%;font-size:.82rem;line-height:1.5}
+.msg.cli{background:rgba(29,78,216,.15);border:1px solid rgba(29,78,216,.2);align-self:flex-end;margin-left:auto}
+.msg.emp{background:rgba(255,255,255,.05);border:1px solid var(--div)}
+.msg-meta{font-size:.6rem;color:var(--gr);margin-top:.25rem}
+
+.ticket{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;margin-bottom:.6rem;cursor:pointer}
+.ticket.aberto{border-left:3px solid var(--red)}
+.ticket-sub{font-weight:600;font-size:.85rem;flex:1}
+.ticket-body{display:none;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--div);font-size:.8rem;line-height:1.6;color:var(--gr2)}
+.ticket.open .ticket-body{display:block}
+
+.doc-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.doc-item:last-child{border-bottom:none}
+.doc-ic{width:36px;height:36px;border-radius:8px;background:rgba(29,78,216,.12);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--blu2);flex-shrink:0}
+
+.pf-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:.75rem}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.1rem;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;text-decoration:none;position:relative;overflow:hidden;transition:opacity .15s}
+.btn:active{opacity:.85}
+.bfull{width:100%}
+.bred{background:var(--red);color:#fff}
+.bblue{background:var(--blue);color:#fff}
+.bgh{background:rgba(255,255,255,.05);color:var(--gr2);border:1px solid rgba(255,255,255,.1)}
+.bgrn{background:rgba(34,197,94,.15);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.bsm{padding:.5rem .9rem;font-size:.72rem}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:rip .5s linear;background:rgba(255,255,255,.25);pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+
+.badge{display:inline-flex;align-items:center;font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .4rem;border-radius:50px}
+.bg{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.bb{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
+.br{background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.bgr{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+.ba{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.3)}
+.empty{text-align:center;padding:2rem 1rem;color:var(--gr)}
+.empty i{font-size:2rem;opacity:.3;margin-bottom:.6rem;display:block}
+.empty p{font-size:.82rem}
+.spin{width:18px;height:18px;border:2px solid var(--div);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:2rem;color:var(--gr);font-size:.82rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.grid1{display:grid;grid-template-columns:1fr;gap:.75rem}
+
+#toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:.82rem}
+#toast.show{opacity:1;transform:translateY(0)}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.g{background:var(--grn)}.r{background:var(--red)}.b{background:var(--blu2)}
+</style>
+</head>
+<body>
+
+<div id="authScreen">
+  <div class="auth-box">
+    <div class="auth-head">
+      <div class="auth-logo">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+      <div class="auth-sub">Área de Cliente</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab on" onclick="switchTab('login')">Entrar</div>
+      <div class="auth-tab" onclick="switchTab('registar')">Criar Conta</div>
+    </div>
+    <div class="auth-body">
+      <div class="auth-form on" id="formLogin">
+        <label class="fi-label">Email ou Telefone</label>
+        <input class="fi" type="text" id="lContact" placeholder="email@exemplo.com ou +244...">
+        <label class="fi-label">Senha</label>
+        <div style="position:relative">
+          <input class="fi" type="password" id="lSenha" placeholder="A tua senha" style="padding-right:2.8rem">
+          <button onclick="togglePass('lSenha')" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gr);cursor:pointer;font-size:.85rem"><i class="fa-solid fa-eye" id="lSenhaEye"></i></button>
+        </div>
+        <div class="auth-err" id="loginErr"></div>
+        <button class="auth-btn" id="loginBtn" onclick="doLogin()"><i class="fa-solid fa-unlock-keyhole"></i> ENTRAR</button>
+        <div class="auth-help">
+          Ainda não tens conta? <a onclick="switchTab('registar')">Cria uma agora</a><br>
+          Tens um código de projecto? <a onclick="switchTab('registar')">Regista-te e liga-o</a>
+        </div>
+      </div>
+      <div class="auth-form" id="formRegistar">
+        <label class="fi-label">Nome Completo</label>
+        <input class="fi" type="text" id="rNome" placeholder="O teu nome">
+        <label class="fi-label">Email</label>
+        <input class="fi" type="email" id="rEmail" placeholder="email@exemplo.com">
+        <div class="or-div">ou</div>
+        <label class="fi-label">Telefone / WhatsApp</label>
+        <input class="fi" type="tel" id="rTel" placeholder="+244 900 000 000">
+        <label class="fi-label">Senha</label>
+        <div style="position:relative">
+          <input class="fi" type="password" id="rSenha" placeholder="Mín. 6 caracteres" style="padding-right:2.8rem">
+          <button onclick="togglePass('rSenha')" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gr);cursor:pointer;font-size:.85rem"><i class="fa-solid fa-eye" id="rSenhaEye"></i></button>
+        </div>
+        <label class="fi-label">Código de Projecto (opcional)</label>
+        <input class="fi" type="text" id="rCodigo" placeholder="IMP-XXXXXXXX — se já és cliente" style="text-transform:uppercase;font-family:monospace;letter-spacing:.1em">
+        <div class="auth-err" id="registarErr"></div>
+        <button class="auth-btn" id="registarBtn" onclick="doRegistar()"><i class="fa-solid fa-user-plus"></i> CRIAR CONTA</button>
+        <div class="auth-help">Já tens conta? <a onclick="switchTab('login')">Entra aqui</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="hdr">
+    <div>
+      <div class="hlogo">IMPERSIL<span class="r">V</span><span class="b">A</span><span class="hlogo-s">Área de Cliente</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem">
+      <span class="hname" id="hNome">—</span>
+      <button class="hnotif" id="hNotifBtn" onclick="go('notificacoes')">
+        <i class="fa-solid fa-bell"></i>
+        <span class="hnotif-dot" id="hNotifDot"></span>
+      </button>
+      <button style="background:none;border:none;color:var(--gr);font-size:.9rem;cursor:pointer" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+
+  <div class="mc" id="mc"></div>
+
+  <nav class="bn">
+    <button class="bni on" onclick="goB(this,'inicio')"><i class="fa-solid fa-house"></i><span>Início</span></button>
+    <button class="bni" onclick="goB(this,'projecto')"><i class="fa-solid fa-diagram-project"></i><span>Projecto</span></button>
+    <button class="bni" onclick="goB(this,'suporte')"><i class="fa-solid fa-headset"></i><span>Suporte</span><span class="bni-dot" id="bniDotSup"></span></button>
+    <button class="bni" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i><span>Gerir Loja</span></button>
+    <button class="bni" onclick="goB(this,'mais')"><i class="fa-solid fa-ellipsis"></i><span>Mais</span></button>
+  </nav>
+</div>
+
+<div id="toast"><div class="tdot" id="td"></div><span id="tm"></span></div>
+
+<script>
+var API = 'https://impersilva-ao.3miliosilva.workers.dev';
+var _token = '';
+var _user = null;
+var _cli = null;
+var _ttimer;
+
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.btn, .auth-btn');
+  if (!btn) return;
+  var r = document.createElement('span');
+  r.className = 'ripple';
+  var rect = btn.getBoundingClientRect();
+  var size = Math.max(rect.width, rect.height);
+  r.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px';
+  btn.appendChild(r);
+  setTimeout(function(){ r.remove(); }, 600);
+});
+
+function toast(msg, type) {
+  if (!type) type = 'success';
+  var el=document.getElementById('toast'), dot=document.getElementById('td');
+  document.getElementById('tm').textContent = msg;
+  dot.className = 'tdot '+(type==='success'?'g':type==='error'?'r':'b');
+  el.className = 'show';
+  clearTimeout(_ttimer);
+  _ttimer = setTimeout(function(){ el.className=''; }, 3200);
+}
+
+function timeAgo(d) {
+  if (!d) return '';
+  var diff = Date.now()-new Date(d).getTime();
+  var m = Math.floor(diff/60000);
+  if (m<1) return 'agora'; if (m<60) return m+'m';
+  var h = Math.floor(m/60);
+  if (h<24) return h+'h'; return Math.floor(h/24)+'d';
+}
+function formatKz(v) {
+  if (!v && v!==0) return '—';
+  return new Intl.NumberFormat('pt-AO').format(v) + ' Kz';
+}
+function parseEtapas(raw) {
+  if (!raw) return [];
+  if (typeof raw==='object') return raw;
+  try { return JSON.parse(raw); } catch(e) { return []; }
+}
+function estadoCls(e) {
+  return e==='concluido'?'e-ok':e==='revisao'?'e-rev':e==='pausado'?'e-pau':'e-prog';
+}
+function estadoLabel(e) {
+  var m={em_progresso:'Em Progresso',revisao:'Em Revisão',concluido:'Concluído',pausado:'Pausado'};
+  return m[e]||e;
+}
+function togglePass(id) {
+  var inp = document.getElementById(id);
+  var ico = document.getElementById(id+'Eye');
+  if (inp.type==='password') { inp.type='text'; if(ico) ico.className='fa-solid fa-eye-slash'; }
+  else { inp.type='password'; if(ico) ico.className='fa-solid fa-eye'; }
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(function(t,i){ t.classList.toggle('on', (i===0&&tab==='login')||(i===1&&tab==='registar')); });
+  document.querySelectorAll('.auth-form').forEach(function(f){ f.classList.remove('on'); });
+  document.getElementById(tab==='login'?'formLogin':'formRegistar').classList.add('on');
+  document.getElementById('loginErr').textContent='';
+  document.getElementById('registarErr').textContent='';
+}
+document.getElementById('lSenha').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('rSenha').addEventListener('keydown', function(e){ if(e.key==='Enter') doRegistar(); });
+document.getElementById('rCodigo').addEventListener('input', function(){ this.value=this.value.toUpperCase(); });
+
+async function doLogin() {
+  var contact = document.getElementById('lContact').value.trim();
+  var senha = document.getElementById('lSenha').value;
+  if (!contact || !senha) { document.getElementById('loginErr').textContent='Preenche todos os campos'; return; }
+  var btn = document.getElementById('loginBtn');
+  btn.disabled=true; btn.innerHTML='<div class="spin"></div> A entrar...';
+  document.getElementById('loginErr').textContent='';
+  try {
+    var body = { senha: senha };
+    if (contact.includes('@')) body.email = contact;
+    else body.telefone = contact;
+    var r = await fetch(API+'/api/auth/login', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+    });
+    var data = await r.json();
+    if (!r.ok) { document.getElementById('loginErr').textContent=data.erro||'Erro ao entrar'; btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-unlock-keyhole"></i> ENTRAR'; return; }
+    saveSession(data);
+    startApp();
+  } catch(e) {
+    document.getElementById('loginErr').textContent='Erro de ligação. Tenta novamente.';
+    btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-unlock-keyhole"></i> ENTRAR';
+  }
+}
+
+async function doRegistar() {
+  var nome = document.getElementById('rNome').value.trim();
+  var email = document.getElementById('rEmail').value.trim();
+  var tel = document.getElementById('rTel').value.trim();
+  var senha = document.getElementById('rSenha').value;
+  var codigo = document.getElementById('rCodigo').value.trim().toUpperCase();
+  if (!nome) { document.getElementById('registarErr').textContent='O nome é obrigatório'; return; }
+  if (!email && !tel) { document.getElementById('registarErr').textContent='Indica email ou telefone'; return; }
+  if (!senha || senha.length < 6) { document.getElementById('registarErr').textContent='A senha deve ter pelo menos 6 caracteres'; return; }
+  var btn = document.getElementById('registarBtn');
+  btn.disabled=true; btn.innerHTML='<div class="spin"></div> A criar conta...';
+  document.getElementById('registarErr').textContent='';
+  try {
+    var body = { nome:nome, senha:senha };
+    if (email) body.email = email;
+    if (tel) body.telefone = tel;
+    if (codigo) body.cliente_id = codigo;
+    var r = await fetch(API+'/api/auth/registar', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+    });
+    var data = await r.json();
+    if (!r.ok) { document.getElementById('registarErr').textContent=data.erro||'Erro ao registar'; btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-user-plus"></i> CRIAR CONTA'; return; }
+    saveSession(data);
+    startApp();
+    toast('Conta criada com sucesso!');
+  } catch(e) {
+    document.getElementById('registarErr').textContent='Erro de ligação. Tenta novamente.';
+    btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-user-plus"></i> CRIAR CONTA';
+  }
+}
+
+function saveSession(data) {
+  _token = data.token;
+  _user = data.user;
+  _cli = data.cliente;
+  localStorage.setItem('imp_cli_tok', data.token);
+}
+
+function doLogout() {
+  localStorage.removeItem('imp_cli_tok');
+  sessionStorage.removeItem('admin_loja_token');
+  sessionStorage.removeItem('admin_loja_id');
+  _token=''; _user=null; _cli=null;
+  location.reload();
+}
+
+function startApp() {
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('hNome').textContent = (_user&&_user.nome?_user.nome.split(' ')[0]:'');
+  go('inicio');
+  loadNotifBadge();
+}
+
+var savedTok = localStorage.getItem('imp_cli_tok');
+if (savedTok) {
+  _token = savedTok;
+  fetch(API+'/api/auth/verificar', { headers:{'X-Cliente-Token':savedTok} })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (data && data.user) { _user=data.user; _cli=data.cliente; startApp(); }
+      else { localStorage.removeItem('imp_cli_tok'); }
+    }).catch(function(){});
+}
+
+async function cliGet(path) {
+  var r = await fetch(API+path, { headers:{'X-Cliente-Token':_token} });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function cliPost(path, data) {
+  var r = await fetch(API+path, {
+    method:'POST', headers:{'Content-Type':'application/json','X-Cliente-Token':_token},
+    body:JSON.stringify(data)
+  });
+  var j = await r.json();
+  if (!r.ok) throw new Error(j.erro||r.status);
+  return j;
+}
+
+function goB(el, s) {
+  document.querySelectorAll('.bni').forEach(function(i){ i.classList.remove('on'); });
+  el.classList.add('on');
+  go(s);
+}
+function go(s) {
+  window.scrollTo(0,0);
+  var fns = {inicio:rInicio, projecto:rProjecto, documentos:rDocs, suporte:rSuporte, notificacoes:rNotifs, financas:rFinancas, mensagens:rMensagens, perfil:rPerfil, mais:rMais};
+  if (fns[s]) fns[s]();
+}
+
+async function loadNotifBadge() {
+  if (!_cli) return;
+  try {
+    var data = await cliGet('/api/minha-area/notificacoes');
+    var unread = data.filter(function(n){ return !n.lida; }).length;
+    var dot = document.getElementById('hNotifDot');
+    if (dot) dot.style.display = unread>0 ? 'block' : 'none';
+  } catch(e){}
+}
+
+/* ── ABRIR ADMIN DA LOJA ── */
+async function abrirAdminLoja() {
+  if (!_cli || !_cli.id) {
+    document.getElementById('mc').innerHTML = 
+      '<div class="ph"><div class="pt">Gerir <span class="r">Loja</span></div></div>'+
+      '<div class="card" style="text-align:center;padding:2rem 1rem">'+
+        '<i class="fa-solid fa-store-slash" style="font-size:3.5rem;color:var(--gr);opacity:.4;display:block;margin-bottom:1.2rem"></i>'+
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;margin-bottom:.5rem">Ainda não tens loja</div>'+
+        '<p style="color:var(--gr);font-size:.85rem;line-height:1.6;margin-bottom:1.5rem">'+
+          'O painel de gestão só fica disponível após a criação da tua loja.<br>'+
+          'Assim que o teu projecto for aprovado, poderás gerir produtos, encomendas e muito mais.'+
+        '</p>'+
+        '<div style="display:flex;flex-direction:column;gap:.6rem;max-width:280px;margin:0 auto">'+
+          '<a href="orcamento.html" class="btn bred bfull"><i class="fa-solid fa-file-invoice"></i> Pedir Orçamento</a>'+
+          '<a href="https://wa.me/244954288128" target="_blank" class="btn bgh bfull"><i class="fa-brands fa-whatsapp"></i> Falar connosco</a>'+
+          '<button class="btn bgh bfull" onclick="go(\'inicio\')"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</button>'+
+        '</div>'+
+      '</div>';
+    return;
+  }
+
+  sessionStorage.setItem('admin_loja_token', _token);
+  sessionStorage.setItem('admin_loja_id', _cli.loja_id || _cli.id);
+  window.location.href = 'admin-loja.html';
+}
+
+/* ══════════════════════════════════════════════════════
+   SECÇÕES
+══════════════════════════════════════════════════════ */
+
+function rInicio() {
+  var u = _user||{};
+  var c = _cli||{};
+  var etapas = parseEtapas(c.etapas);
+  var html = '<div class="ph"><div class="pt">Olá, <span class="r">'+(u.nome||'').split(' ')[0]+'</span>!</div>'+
+    '<div class="ps">Bem-vindo à tua área IMPERSILVA</div></div>';
+
+  if (c.id) {
+    html += '<div class="hero-prog">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.2rem">'+
+        '<div><div class="hp-nome">'+(c.negocio||'O teu site')+'</div><div class="hp-neg">Projecto em desenvolvimento</div></div>'+
+        '<span class="e-badge '+estadoCls(c.estado)+'">'+estadoLabel(c.estado)+'</span>'+
+      '</div>'+
+      '<div style="display:flex;align-items:flex-end;gap:.9rem">'+
+        '<div class="prog-pct">'+(c.progresso||0)+'%</div>'+
+        '<div style="flex:1">'+
+          '<div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>'+
+          '<div class="prog-meta"><span>'+(c.etapa_actual||'Em andamento')+'</span>'+(c.previsao?'<span>'+c.previsao+'</span>':'')+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+    if (etapas.length) {
+      html += '<div class="card"><div class="ct"><i class="fa-solid fa-list-check"></i> Fases</div>';
+      etapas.slice(0,4).forEach(function(et){
+        var st=et.estado||'pendente';
+        var ic=st==='concluida'?'fa-check':st==='em_curso'?'fa-circle-half-stroke':'fa-circle';
+        var cl=st==='concluida'?'ok-ic':st==='em_curso'?'cur-ic':'pend-ic';
+        var nc=st==='concluida'?'ok':st==='em_curso'?'cur':'';
+        html+='<div class="etapa"><div class="etapa-ic '+cl+'"><i class="fa-solid '+ic+'"></i></div>'+
+          '<div class="etapa-nome '+nc+'">'+et.nome+'</div>'+(et.data?'<div class="etapa-data">'+et.data+'</div>':'')+
+        '</div>';
+      });
+      if (etapas.length>4) html += '<div style="font-size:.72rem;color:var(--gr);text-align:center;padding:.5rem">+ '+(etapas.length-4)+' fases...</div>';
+      html += '</div>';
+    }
+  } else {
+    html += '<div class="card" style="border-color:rgba(29,78,216,.2);background:rgba(29,78,216,.05)">'+
+      '<div style="text-align:center;padding:.5rem 0">'+
+        '<i class="fa-solid fa-diagram-project" style="font-size:2rem;color:var(--blu2);margin-bottom:.75rem;display:block"></i>'+
+        '<div style="font-weight:700;margin-bottom:.4rem">Ainda não tens projecto ligado</div>'+
+        '<div style="font-size:.78rem;color:var(--gr);margin-bottom:1rem">Pede um orçamento e recebe o teu código de projecto</div>'+
+        '<a href="orcamento.html" class="btn bred bfull"><i class="fa-solid fa-file-invoice"></i> Pedir Orçamento</a>'+
+      '</div>'+
+    '</div>';
+  }
+
+  html += '<div class="card"><div class="ct"><i class="fa-solid fa-bolt"></i> Acesso Rápido</div>'+
+    '<div class="grid2">'+
+      '<button class="btn bgh bfull bsm" onclick="go(\'documentos\')"><i class="fa-solid fa-folder-open"></i> Ficheiros</button>'+
+      '<button class="btn bgh bfull bsm" onclick="go(\'suporte\')"><i class="fa-solid fa-headset"></i> Suporte</button>'+
+      '<button class="btn bgh bfull bsm" onclick="go(\'mensagens\')"><i class="fa-solid fa-comments"></i> Mensagens</button>'+
+      '<button class="btn bgh bfull bsm" onclick="go(\'financas\')"><i class="fa-solid fa-receipt"></i> Financeiro</button>'+
+      '<button class="btn bgrn bfull bsm" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i> Gerir Loja</button>'+
+      (c.url_site?'<a class="btn bred bfull bsm" href="'+c.url_site+'" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site</a>':'')+
+      '<a class="btn bgh bfull bsm" href="https://wa.me/244954288128" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>'+
+    '</div></div>';
+
+  document.getElementById('mc').innerHTML = html;
+  setTimeout(function(){ var pf=document.getElementById('pf'); if(pf) pf.style.width=(c.progresso||0)+'%'; }, 100);
+}
+
+function rProjecto() {
+  var c = _cli||{};
+  if (!c.id) { document.getElementById('mc').innerHTML='<div class="ph"><div class="pt">Meu <span class="r">Projecto</span></div></div><div class="empty"><i class="fa-solid fa-diagram-project"></i><p>Sem projecto ligado à tua conta</p></div>'; return; }
+  var etapas = parseEtapas(c.etapas);
+  var html = '<div class="ph"><div class="pt">Meu <span class="r">Projecto</span></div></div>'+
+    '<div class="hero-prog">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.5rem">'+
+        '<div><div class="hp-nome">'+(c.negocio||'Projecto')+'</div></div>'+
+        '<span class="e-badge '+estadoCls(c.estado)+'">'+estadoLabel(c.estado)+'</span>'+
+      '</div>'+
+      '<div style="display:flex;align-items:flex-end;gap:.9rem">'+
+        '<div class="prog-pct">'+(c.progresso||0)+'%</div>'+
+        '<div style="flex:1">'+
+          '<div class="prog-bar"><div class="prog-fill" id="pf2" style="width:0%"></div></div>'+
+          '<div class="prog-meta"><span>'+(c.etapa_actual||'—')+'</span>'+(c.previsao?'<span>'+c.previsao+'</span>':'')+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  if (c.url_site) html += '<a href="'+c.url_site+'" target="_blank" class="btn bred bfull" style="margin-bottom:1rem"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site ao Vivo</a>';
+
+  html += '<div class="grid1" style="margin-bottom:1rem">'+
+    '<button class="btn bgrn bfull" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i> Gerir a Minha Loja</button>'+
+  '</div>';
+
+  if (etapas.length) {
+    html += '<div class="card"><div class="ct"><i class="fa-solid fa-list-check"></i> Todas as Fases</div>';
+    etapas.forEach(function(et){
+      var st=et.estado||'pendente';
+      var ic=st==='concluida'?'fa-check':st==='em_curso'?'fa-circle-half-stroke':'fa-circle';
+      var cl=st==='concluida'?'ok-ic':st==='em_curso'?'cur-ic':'pend-ic';
+      var nc=st==='concluida'?'ok':st==='em_curso'?'cur':'';
+      html+='<div class="etapa"><div class="etapa-ic '+cl+'"><i class="fa-solid '+ic+'"></i></div>'+
+        '<div class="etapa-nome '+nc+'">'+et.nome+'</div>'+(et.data?'<div class="etapa-data">'+et.data+'</div>':'')+
+      '</div>';
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('mc').innerHTML = html;
+  setTimeout(function(){ var pf=document.getElementById('pf2'); if(pf) pf.style.width=(_cli.progresso||0)+'%'; }, 100);
+}
+
+async function rDocs() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Meus <span class="r">Ficheiros</span></div><div class="ps">Propostas, contratos e entregas</div></div>'+
+    '<div id="docsC"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  if (!_cli||!_cli.id) { document.getElementById('docsC').innerHTML='<div class="empty"><i class="fa-solid fa-folder-open"></i><p>Sem projecto ligado</p></div>'; return; }
+  try {
+    var data = await cliGet('/api/minha-area/documentos');
+    var el = document.getElementById('docsC');
+    if (!data||!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-folder-open"></i><p>Sem ficheiros disponíveis ainda</p><p style="font-size:.72rem;margin-top:.4rem">Os documentos aparecerão aqui assim que forem partilhados.</p></div>'; return; }
+    var icons = {proposta:'fa-file-contract',contrato:'fa-file-signature',entrega:'fa-file-check',factura:'fa-file-invoice',outro:'fa-file'};
+    var html = '<div class="card"><div class="ct"><i class="fa-solid fa-folder-open"></i> '+data.length+' ficheiro'+(data.length!==1?'s':'')+'</div>';
+    data.forEach(function(d){
+      html+='<div class="doc-item">'+
+        '<div class="doc-ic"><i class="fa-solid '+(icons[d.tipo]||'fa-file')+'"></i></div>'+
+        '<div style="flex:1;min-width:0">'+
+          '<div style="font-weight:600;font-size:.85rem">'+d.nome+'</div>'+
+          (d.descricao?'<div style="font-size:.7rem;color:var(--gr)">'+d.descricao+'</div>':'')+
+          '<div style="font-size:.65rem;color:rgba(255,255,255,.25);margin-top:.1rem">'+d.tipo+' • '+timeAgo(d.criado_em)+'</div>'+
+        '</div>'+
+        '<a href="'+d.url+'" target="_blank" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:var(--gr2);font-size:.7rem;padding:.35rem .7rem;display:flex;align-items:center;gap:.3rem;text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) { document.getElementById('docsC').innerHTML='<div class="empty"><p>Erro ao carregar</p></div>'; }
+}
+
+async function rSuporte() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Su<span class="r">porte</span></div><div class="ps">Envia dúvidas ou pedidos de apoio</div></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-paper-plane"></i> Novo Pedido</div>'+
+      '<label class="fi-label">Assunto</label><input class="fi" id="tkA" placeholder="Ex: Alterar cor do botão">'+
+      '<label class="fi-label">Prioridade</label><select class="fi" id="tkP"><option value="normal">Normal</option><option value="alta">Alta</option><option value="urgente">Urgente</option></select>'+
+      '<label class="fi-label">Mensagem</label><textarea class="fi" id="tkM" placeholder="Descreve o teu pedido..." style="min-height:90px"></textarea>'+
+      '<button class="btn bred bfull" onclick="enviarTicket()"><i class="fa-solid fa-paper-plane"></i> Enviar Pedido</button>'+
+    '</div>'+
+    '<div id="tkL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  carregarTickets();
+}
+async function carregarTickets() {
+  if (!_cli||!_cli.id) { document.getElementById('tkL').innerHTML='<div class="empty"><i class="fa-solid fa-ticket"></i><p>Sem projecto ligado</p></div>'; return; }
+  try {
+    var data = await cliGet('/api/minha-area/tickets');
+    var abertos = data.filter(function(t){ return t.estado==='aberto'; }).length;
+    var dot = document.getElementById('bniDotSup');
+    if (dot) dot.style.display = abertos>0?'block':'none';
+    var el = document.getElementById('tkL');
+    if (!el) return;
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-ticket"></i><p>Sem pedidos ainda</p></div>'; return; }
+    var html = '';
+    data.forEach(function(t){
+      html+='<div class="ticket '+(t.estado==='aberto'?'aberto':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">'+
+          '<span class="badge '+(t.estado==='aberto'?'br':'bg')+'">'+t.estado+'</span>'+
+          '<span class="badge '+(t.prioridade==='urgente'?'br':t.prioridade==='alta'?'ba':'bgr')+'">'+t.prioridade+'</span>'+
+          '<span class="ticket-sub">'+t.assunto+'</span>'+
+          '<span style="font-size:.65rem;color:rgba(255,255,255,.3);margin-left:auto">'+timeAgo(t.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="ticket-body">'+
+          '<p>'+t.mensagem+'</p>'+
+          (t.resposta?'<div style="margin-top:.6rem;padding:.6rem;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px"><div style="font-size:.6rem;font-weight:700;color:var(--grn);margin-bottom:.3rem">RESPOSTA DA IMPERSILVA</div>'+t.resposta+'</div>':'')+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) { var el2=document.getElementById('tkL'); if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>'; }
+}
+async function enviarTicket() {
+  var a=document.getElementById('tkA').value.trim(), m=document.getElementById('tkM').value.trim(), p=document.getElementById('tkP').value;
+  if (!a||!m) { toast('Preenche o assunto e a mensagem','error'); return; }
+  if (!_cli||!_cli.id) { toast('Sem projecto ligado','error'); return; }
+  try {
+    await cliPost('/api/minha-area/tickets', {assunto:a, mensagem:m, prioridade:p});
+    toast('Pedido enviado!');
+    document.getElementById('tkA').value=''; document.getElementById('tkM').value='';
+    carregarTickets();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+
+async function rNotifs() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Notifi<span class="r">cações</span></div></div>'+
+    '<div id="notifL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  if (!_cli||!_cli.id) { document.getElementById('notifL').innerHTML='<div class="empty"><i class="fa-solid fa-bell"></i><p>Sem projecto ligado</p></div>'; return; }
+  try {
+    var data = await cliGet('/api/minha-area/notificacoes');
+    var dot = document.getElementById('hNotifDot');
+    var unread = data.filter(function(n){ return !n.lida; }).length;
+    if (dot) dot.style.display = unread>0?'block':'none';
+    var el = document.getElementById('notifL');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-bell"></i><p>Sem notificações ainda</p></div>'; return; }
+    var icons = {info:'fa-circle-info',sucesso:'fa-circle-check',aviso:'fa-triangle-exclamation',pagamento:'fa-receipt'};
+    var html='';
+    data.forEach(function(n){
+      var icCls='nt-'+(n.tipo||'info');
+      html+='<div class="notif '+(n.lida?'':'nao-lida')+'" onclick="lerNotif('+n.id+',this)">'+
+        '<div class="notif-top">'+
+          '<i class="fa-solid '+(icons[n.tipo]||'fa-bell')+' '+icCls+'" style="font-size:.9rem;flex-shrink:0"></i>'+
+          '<span class="notif-titulo">'+n.titulo+'</span>'+
+          '<span class="notif-date">'+timeAgo(n.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="notif-msg">'+n.mensagem+'</div>'+
+      '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) { document.getElementById('notifL').innerHTML='<div class="empty"><p>Erro ao carregar</p></div>'; }
+}
+async function lerNotif(id, el) {
+  if (!_cli||!_cli.id) return;
+  el.classList.remove('nao-lida');
+  try { await cliPost('/api/minha-area/notificacoes/'+id+'/ler', {}); loadNotifBadge(); }
+  catch(e) {}
+}
+
+async function rFinancas() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Finan<span class="r">ceiro</span></div><div class="ps">Os teus pagamentos e facturas</div></div>'+
+    '<div id="finC"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  if (!_cli||!_cli.id) { document.getElementById('finC').innerHTML='<div class="empty"><i class="fa-solid fa-receipt"></i><p>Sem projecto ligado</p></div>'; return; }
+  try {
+    var data = await cliGet('/api/minha-area/financas');
+    var el = document.getElementById('finC');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-receipt"></i><p>Sem registos financeiros ainda</p></div>'; return; }
+    var pend = data.filter(function(f){ return f.estado==='pendente'; });
+    var html='';
+    if (pend.length) {
+      html+='<div class="card" style="border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.04)">'+
+        '<div class="ct" style="color:var(--amb)"><i class="fa-solid fa-clock"></i> '+pend.length+' pagamento'+(pend.length!==1?'s':'')+' pendente'+(pend.length!==1?'s':'')+'</div>';
+      pend.forEach(function(f){
+        html+='<div class="fin-item">'+
+          '<div class="fin-top"><div class="fin-desc">'+f.descricao+'</div><div class="fin-val" style="color:var(--amb)">'+formatKz(f.valor)+'</div></div>'+
+          '<div class="fin-meta"><span class="badge ba">pendente</span>'+(f.data_venc?'<span style="font-size:.65rem;color:var(--gr)">Vence: '+f.data_venc+'</span>':'')+
+          '<a href="https://wa.me/244954288128?text=Olá!+Quero+regularizar+o+pagamento+de+'+encodeURIComponent(f.descricao)+'" target="_blank" class="btn bgh bsm" style="margin-left:auto"><i class="fa-brands fa-whatsapp"></i></a>'+
+          '</div>'+
+        '</div>';
+      });
+      html+='</div>';
+    }
+    var pagos = data.filter(function(f){ return f.estado==='pago'; });
+    if (pagos.length) {
+      html+='<div class="card"><div class="ct"><i class="fa-solid fa-circle-check" style="color:var(--grn)"></i> Pagamentos realizados</div>';
+      pagos.forEach(function(f){
+        html+='<div class="fin-item">'+
+          '<div class="fin-top"><div class="fin-desc">'+f.descricao+'</div><div class="fin-val">'+formatKz(f.valor)+'</div></div>'+
+          '<div class="fin-meta"><span class="badge bg">pago</span>'+(f.data_pago?'<span style="font-size:.65rem;color:var(--gr)">'+f.data_pago+'</span>':'')+
+          '</div>'+
+        '</div>';
+      });
+      html+='</div>';
+    }
+    el.innerHTML = html;
+  } catch(e) { document.getElementById('finC').innerHTML='<div class="empty"><p>Erro ao carregar</p></div>'; }
+}
+
+async function rMensagens() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Men<span class="r">sagens</span></div></div>'+
+    '<div id="msgsC" class="msg-wrap" style="margin-bottom:1rem"><div class="load"><div class="spin"></div> A carregar...</div></div>'+
+    '<div class="card" style="position:sticky;bottom:calc(var(--bot)+.5rem)">'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" type="text" id="msgTxt" placeholder="Escreve uma mensagem..." style="margin:0;flex:1">'+
+        '<button class="btn bred" onclick="enviarMsg()"><i class="fa-solid fa-paper-plane"></i></button>'+
+      '</div>'+
+    '</div>';
+  if (!_cli||!_cli.id) { document.getElementById('msgsC').innerHTML='<div class="empty"><i class="fa-solid fa-comments"></i><p>Sem projecto ligado</p></div>'; return; }
+  try {
+    var data = await cliGet('/api/minha-area/mensagens');
+    var el = document.getElementById('msgsC');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-comments"></i><p>Sem mensagens ainda. Escreve a primeira!</p></div>'; return; }
+    var html='';
+    data.slice().reverse().forEach(function(m){
+      html+='<div class="msg '+(m.remetente==='cliente'?'cli':'emp')+'">'+
+        m.mensagem+
+        '<div class="msg-meta">'+(m.remetente==='cliente'?'Tu':'IMPERSILVA')+' • '+timeAgo(m.criado_em)+'</div>'+
+      '</div>';
+    });
+    el.innerHTML = html;
+    el.scrollTop = el.scrollHeight;
+  } catch(e) { document.getElementById('msgsC').innerHTML='<div class="empty"><p>Erro ao carregar</p></div>'; }
+}
+async function enviarMsg() {
+  var txt = document.getElementById('msgTxt').value.trim();
+  if (!txt) return;
+  if (!_cli||!_cli.id) { toast('Sem projecto ligado','error'); return; }
+  try {
+    await cliPost('/api/minha-area/mensagens', {mensagem:txt});
+    document.getElementById('msgTxt').value='';
+    rMensagens();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+document.addEventListener('keydown', function(e){
+  var inp = document.getElementById('msgTxt');
+  if (inp && document.activeElement===inp && e.key==='Enter') enviarMsg();
+});
+
+function rMais() {
+  var c = _cli||{};
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt"><span class="r">Mais</span></div></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'notificacoes\')"><i class="fa-solid fa-bell" style="font-size:1.5rem"></i><span>Notificações</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'documentos\')"><i class="fa-solid fa-folder-open" style="font-size:1.5rem"></i><span>Ficheiros</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'financas\')"><i class="fa-solid fa-receipt" style="font-size:1.5rem"></i><span>Financeiro</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'mensagens\')"><i class="fa-solid fa-comments" style="font-size:1.5rem"></i><span>Mensagens</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="go(\'perfil\')"><i class="fa-solid fa-user" style="font-size:1.5rem"></i><span>Perfil</span></button>'+
+      '<button class="btn bgrn bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear" style="font-size:1.5rem"></i><span>Gerir Loja</span></button>'+
+      '<a class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" href="orcamento.html"><i class="fa-solid fa-file-invoice" style="font-size:1.5rem"></i><span>Orçamento</span></a>'+
+      '<a class="btn bgh bfull" style="flex-direction:column;gap:.5rem;padding:1.2rem;height:auto" href="index.html"><i class="fa-solid fa-globe" style="font-size:1.5rem"></i><span>Site</span></a>'+
+    '</div>';
+}
+
+function rPerfil() {
+  var u = _user||{}, c = _cli||{};
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Meu <span class="r">Perfil</span></div></div>'+
+    '<div class="card">'+
+      '<div class="pf-av">'+(u.nome?u.nome[0].toUpperCase():'?')+'</div>'+
+      '<div style="margin-bottom:1rem">'+
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase">'+u.nome+'</div>'+
+        (u.email?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0"><i class="fa-solid fa-envelope"></i> '+u.email+'</div>':'')+
+        (u.telefone?'<div style="font-size:.78rem;color:var(--gr);margin:.2rem 0"><i class="fa-solid fa-phone"></i> '+u.telefone+'</div>':'')+
+        (c.id?'<div style="font-family:monospace;font-size:.82rem;letter-spacing:.1em;background:rgba(255,255,255,.07);padding:.2rem .6rem;border-radius:4px;display:inline-block;margin-top:.5rem;cursor:pointer" onclick="copyCode(\''+c.id+'\')" title="Copiar">'+c.id+' <i class="fa-regular fa-copy" style="font-size:.7rem"></i></div>':'')+
+      '</div>'+
+    '</div>'+
+    (c.id?'':'<div class="card" style="border-color:rgba(29,78,216,.2)">'+
+      '<div class="ct"><i class="fa-solid fa-link"></i> Ligar Projecto</div>'+
+      '<label class="fi-label">Código de Projecto</label>'+
+      '<input class="fi" id="linkCode" placeholder="IMP-XXXXXXXX" style="text-transform:uppercase;font-family:monospace;letter-spacing:.1em">'+
+      '<button class="btn bred bfull" onclick="ligarProjecto()"><i class="fa-solid fa-link"></i> Ligar ao Projecto</button>'+
+    '</div>')+
+    '<div class="grid1" style="margin-bottom:1rem"><button class="btn bgrn bfull" onclick="abrirAdminLoja()"><i class="fa-solid fa-gear"></i> Gerir a Minha Loja</button></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-headset"></i> Apoio</div>'+
+      '<a href="https://wa.me/244954288128" target="_blank" class="btn bred bfull" style="margin-bottom:.6rem"><i class="fa-brands fa-whatsapp"></i> Contactar via WhatsApp</a>'+
+      '<a href="contacto.html" class="btn bgh bfull"><i class="fa-solid fa-envelope"></i> Formulário de Contacto</a>'+
+    '</div>'+
+    '<div class="card">'+
+      '<button class="btn bfull" onclick="doLogout()" style="background:rgba(214,40,40,.08);border:1px solid rgba(214,40,40,.2);color:var(--red)"><i class="fa-solid fa-right-from-bracket"></i> Terminar Sessão</button>'+
+    '</div>';
+}
+
+function copyCode(txt) {
+  navigator.clipboard.writeText(txt).then(function(){ toast('Código copiado!'); });
+}
+
+async function ligarProjecto() {
+  var codigo = document.getElementById('linkCode').value.trim().toUpperCase();
+  if (!codigo) { toast('Insere o código','error'); return; }
+  try {
+    var r = await fetch(API+'/api/clientes/'+codigo);
+    if (!r.ok) { toast('Código não encontrado','error'); return; }
+    toast('Projecto ligado! A actualizar...','info');
+    setTimeout(function(){ location.reload(); }, 1500);
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+</script>
+</body>
+</html>
