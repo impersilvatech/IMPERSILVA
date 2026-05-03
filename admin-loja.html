@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Gerir Loja — IMPERSILVA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0e0e0f;--card:#1a1a1c;--red:#d62828;--blu2:#3b6ef0;--grn:#22c55e;--wh:#fff;--gr:#888896;--div:rgba(255,255,255,.07)}
+html,body{min-height:100vh;font-family:'Barlow',sans-serif;background:var(--bg);color:var(--wh);display:flex;align-items:center;justify-content:center;padding:1rem}
+.box{background:var(--card);border:1px solid var(--div);border-radius:16px;width:100%;max-width:360px;padding:2rem 1.5rem;text-align:center}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem}
+.logo .r{color:var(--red)}.logo .b{color:var(--blu2)}
+.sub{font-size:.55rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase;margin-bottom:2rem}
+.icon-wrap{width:72px;height:72px;border-radius:50%;background:rgba(214,40,40,.1);border:2px solid rgba(214,40,40,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.8rem;color:var(--red)}
+.icon-wrap.ok{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--grn)}
+.msg-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;margin-bottom:.5rem}
+.msg-sub{font-size:.82rem;color:var(--gr);line-height:1.6;margin-bottom:1.5rem}
+.spin{width:32px;height:32px;border:3px solid var(--div);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 1rem}
+@keyframes sp{to{transform:rotate(360deg)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.85rem 1.2rem;border:none;border-radius:8px;cursor:pointer;width:100%;text-decoration:none;margin-bottom:.5rem}
+.bred{background:var(--red);color:#fff}
+.bgh{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+.prog-bar{background:var(--div);border-radius:4px;height:4px;overflow:hidden;margin-bottom:1.5rem}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--red),var(--blu2));border-radius:4px;transition:width .4s ease}
+</style>
+</head>
+<body>
+
+<div class="box" id="box">
+  <div class="logo">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+  <div class="sub">Acesso ao Painel</div>
+  <div class="spin" id="spin"></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog" style="width:10%"></div></div>
+  <div class="msg-title" id="msgTitle">A verificar acesso...</div>
+  <div class="msg-sub" id="msgSub">Aguarda enquanto validamos as tuas credenciais.</div>
+  <div id="actions" style="display:none"></div>
+</div>
+
+<script>
+var API = 'https://impersilva-ao.3miliosilva.workers.dev';
+
+function setProgress(pct) {
+  var el = document.getElementById('prog');
+  if(el) el.style.width = pct + '%';
+}
+function setMsg(title, sub) {
+  var t = document.getElementById('msgTitle');
+  var s = document.getElementById('msgSub');
+  if(t) t.textContent = title;
+  if(s) s.innerHTML = sub;
+}
+function showError(title, sub) {
+  document.getElementById('spin').style.display = 'none';
+  document.getElementById('prog').closest('.prog-bar').style.display = 'none';
+  var ic = document.createElement('div');
+  ic.className = 'icon-wrap';
+  ic.innerHTML = '<i class="fa-solid fa-lock"></i>';
+  document.getElementById('spin').parentNode.insertBefore(ic, document.getElementById('spin').nextSibling);
+  setMsg(title, sub);
+  document.getElementById('actions').style.display = 'block';
+  document.getElementById('actions').innerHTML =
+    '<a href="verificar-site.html" class="btn bgh"><i class="fa-solid fa-arrow-left"></i> Voltar à Área de Cliente</a>';
+}
+function showSuccess(nome, url) {
+  document.getElementById('spin').style.display = 'none';
+  document.getElementById('prog').closest('.prog-bar').style.display = 'none';
+  var ic = document.createElement('div');
+  ic.className = 'icon-wrap ok';
+  ic.innerHTML = '<i class="fa-solid fa-check"></i>';
+  document.getElementById('spin').parentNode.insertBefore(ic, document.getElementById('spin').nextSibling);
+  setMsg('Acesso Confirmado', 'Bem-vindo, <strong>' + nome + '</strong>!<br>A redirecionar para o teu painel...');
+  document.getElementById('actions').style.display = 'block';
+  document.getElementById('actions').innerHTML =
+    '<div style="font-size:.75rem;color:var(--gr);margin-bottom:.5rem"><i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:.3rem"></i>' + url + '</div>' +
+    '<div class="prog-bar" style="margin-bottom:0"><div class="prog-fill" id="redirProg" style="width:0%;transition:width 2s linear"></div></div>';
+  // Animate redirect bar
+  setTimeout(function(){ document.getElementById('redirProg').style.width='100%'; }, 50);
+}
+
+async function verificar() {
+  // 1. Get token from sessionStorage
+  var token = sessionStorage.getItem('admin_loja_token');
+  var cliId = sessionStorage.getItem('admin_loja_id');
+
+  setProgress(20);
+
+  if (!token) {
+    showError('Sem Autenticação', 'Não foi possível verificar a tua identidade.<br>Por favor entra na área de cliente primeiro.');
+    return;
+  }
+
+  setProgress(40);
+  setMsg('A validar token...', 'A comunicar com o servidor...');
+
+  // 2. Validate token with Worker
+  try {
+    var r = await fetch(API + '/api/auth/verificar', {
+      headers: {'X-Cliente-Token': token}
+    });
+
+    setProgress(65);
+
+    if (!r.ok) {
+      sessionStorage.removeItem('admin_loja_token');
+      sessionStorage.removeItem('admin_loja_id');
+      showError('Sessão Expirada', 'A tua sessão expirou ou é inválida.<br>Por favor faz login novamente.');
+      return;
+    }
+
+    var data = await r.json();
+    var user = data.user;
+    var cli = data.cliente;
+
+    setProgress(85);
+    setMsg('A preparar painel...', 'Verificando acesso ao painel da loja...');
+
+    // 3. Check if client has a site URL
+    if (!cli || !cli.url_site) {
+      showError(
+        'Painel Não Disponível',
+        'O painel da tua loja ainda não está disponível.<br>' +
+        'Será activado assim que o teu site estiver concluído.<br><br>' +
+        '<small style="color:var(--gr)">Se acreditas que isto é um erro, contacta a IMPERSILVA.</small>'
+      );
+      return;
+    }
+
+    setProgress(100);
+
+    // 4. Build redirect URL with token
+    var adminUrl = cli.url_site.replace(/\/$/, '') + '/admin.html';
+    var redirectUrl = adminUrl + '?tok=' + encodeURIComponent(token) + '&cli=' + encodeURIComponent(cli.id);
+
+    showSuccess(user.nome.split(' ')[0], adminUrl);
+
+    // 5. Redirect after 2 seconds
+    setTimeout(function() {
+      window.location.href = redirectUrl;
+    }, 2100);
+
+  } catch(e) {
+    showError('Erro de Ligação', 'Não foi possível contactar o servidor.<br>Verifica a tua ligação e tenta novamente.<br><br><small>' + e.message + '</small>');
+  }
+}
+
+// Start verification
+verificar();
+</script>
+</body>
+</html>
