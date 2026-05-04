@@ -993,6 +993,15 @@ function openCliModal(id) {
       '<div class="fg"><label class="fl">Previsão</label><input class="fi" id="cPrevisao" value="'+(c?c.previsao||'':'')+'" placeholder="Maio 2025"></div>'+
     '</div>'+
     '<div class="fg"><label class="fl">Notas Internas</label><textarea class="fi" id="cNotas">'+(c?c.notas||'':'')+'</textarea></div>'+
+    '<div style="background:rgba(29,78,216,.06);border:1px solid rgba(29,78,216,.15);border-radius:10px;padding:.85rem;margin-bottom:.85rem">'+
+      '<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blu2);margin-bottom:.75rem"><i class="fa-brands fa-github"></i> GitHub — Admin do Site do Cliente</div>'+
+      '<div class="fg"><label class="fl">GitHub Token (PAT)</label><input class="fi" type="password" id="cGhToken" value="'+(c?c.gh_token||'':'')+'" placeholder="ghp_xxxxxxxxxxxx"></div>'+
+      '<div class="grid2">'+
+        '<div class="fg"><label class="fl">Utilizador</label><input class="fi" id="cGhUser" value="'+(c?c.gh_user||'':'')+'" placeholder="username"></div>'+
+        '<div class="fg"><label class="fl">Repositório</label><input class="fi" id="cGhRepo" value="'+(c?c.gh_repo||'':'')+'" placeholder="nome-repo"></div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Branch</label><input class="fi" id="cGhBranch" value="'+(c?c.gh_branch||'main':'main')+'" placeholder="main"></div>'+
+    '</div>'+
     '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
       '<label class="tog"><input type="checkbox" id="cActivo"'+((!c||c.activo)?' checked':'')+'>'+
       '<span class="tsl"></span></label>'+
@@ -1019,7 +1028,11 @@ async function saveCli(eid) {
     etapa_actual:document.getElementById('cEtapa').value.trim(),
     previsao:document.getElementById('cPrevisao').value.trim(),
     notas:document.getElementById('cNotas').value.trim(),
-    activo:document.getElementById('cActivo').checked?1:0
+    activo:document.getElementById('cActivo').checked?1:0,
+    gh_token:document.getElementById('cGhToken').value.trim()||null,
+    gh_user:document.getElementById('cGhUser').value.trim()||null,
+    gh_repo:document.getElementById('cGhRepo').value.trim()||null,
+    gh_branch:document.getElementById('cGhBranch').value.trim()||'main'
   };
   if(!data.id||!data.nome){toast('Código e nome são obrigatórios','error');return;}
   try{
@@ -1557,6 +1570,23 @@ function removeMainPhoto(prefix) {
   var btn = document.querySelector('[onclick*="removeMainPhoto(\''+prefix+'\'"]');
   if(btn) btn.style.display='none';
   toast('Foto removida. Clica Guardar para confirmar.','info');
+}
+
+
+async function testarGhCliente() {
+  var user = document.getElementById('cGhUser').value.trim();
+  var repo = document.getElementById('cGhRepo').value.trim();
+  var token = document.getElementById('cGhToken').value.trim();
+  if(!user||!repo){ toast('Preenche utilizador e repositório','error'); return; }
+  var btn = document.querySelector('#mb .btn.bgh[onclick*="testarGh"]');
+  if(btn) btnLoad(btn, 'A testar...');
+  try {
+    var r = await fetch('https://api.github.com/repos/'+user+'/'+repo, {
+      headers: token ? {'Authorization':'token '+token} : {}
+    });
+    if(r.ok){ if(btn) btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
+    else { if(btn) btnReset(btn); toast('Repositório não encontrado ou token inválido','error'); }
+  } catch(e) { if(btn) btnReset(btn); toast('Erro: '+e.message,'error'); }
 }
 
 </script>
