@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
   <rect width="192" height="192" rx="24" fill="#0e0e0e"/>
-  <text x="96" y="106" font-family="'Arial Black', sans-serif" font-size="64" font-weight="900" text-anchor="middle" fill="white" letter-spacing="1">IMPERSIL</text>
-  <text x="96" y="106" font-family="'Arial Black', sans-serif" font-size="64" font-weight="900" text-anchor="middle" fill="none" letter-spacing="1">
-    <tspan fill="#d62828" dx="195">V</tspan>
+  <text x="96" y="100" font-family="'Arial Black', sans-serif" font-size="52" font-weight="900" text-anchor="middle" fill="white" letter-spacing="0.5">IMPERSIL</text>
+  <text x="96" y="135" font-family="'Arial Black', sans-serif" font-size="52" font-weight="900" text-anchor="middle" fill="none" letter-spacing="0.5">
+    <tspan fill="#d62828" dx="160">V</tspan>
     <tspan fill="#3b6ef0" dx="0">Λ</tspan>
   </text>
 </svg>
