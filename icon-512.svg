@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="64" fill="#0e0e0e"/>
-  <text x="256" y="288" font-family="'Arial Black', sans-serif" font-size="172" font-weight="900" text-anchor="middle" fill="white" letter-spacing="3">IMPERSIL</text>
-  <text x="256" y="288" font-family="'Arial Black', sans-serif" font-size="172" font-weight="900" text-anchor="middle" fill="none" letter-spacing="3">
-    <tspan fill="#d62828" dx="520">V</tspan>
-    <tspan fill="#3b6ef0" dx="0">Λ</tspan>
-  </text>
-</svg>
