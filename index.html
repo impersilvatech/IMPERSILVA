@@ -7,6 +7,12 @@
   <meta name="keywords" content="IMPERSILVA, holding, consultoria, tecnologia, angola, empresas, digital"/>
   <meta property="og:title" content="IMPERSILVA HOLDING SGPS"/>
   <meta property="og:description" content="Entre nós, fluem oportunidades."/>
+  
+  <!-- PWA: Manifest e Theme Color -->
+  <link rel="manifest" href="https://impersilvatech.github.io/IMPERSILVA/manifest.json">
+  <meta name="theme-color" content="#d62828">
+  <link rel="apple-touch-icon" href="https://impersilvatech.github.io/IMPERSILVA/icon-192.svg">
+  
   <title>IMPERSILVA HOLDING SGPS</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,14 +46,10 @@
       background: var(--dark);
       color: var(--white);
       overflow-x: hidden;
-    
-  padding-top: 68px;}
+      padding-top: 68px;
+    }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-
-    /* ══════════════════════════════════════
-       TOPBAR
-    ══════════════════════════════════════ */
 
     /* ══════════════════════════════════════
        NAVBAR
@@ -64,7 +66,6 @@
       height: 68px;
     }
 
-    /* ── LOGO ── */
     .logo-link {
       display: flex; flex-direction: column;
       align-items: flex-start; gap: 1px;
@@ -113,10 +114,6 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    
-    
-    
-    
     .mobile-menu a {
       color: var(--gray-lt); text-decoration: none;
       font-size: 0.95rem; padding: 0.75rem 0;
@@ -139,7 +136,6 @@
       position: absolute; inset: 0; z-index: 0;
       background: var(--dark);
     }
-    /* Grade sutil */
     .hero-bg::before {
       content: '';
       position: absolute; inset: 0;
@@ -148,7 +144,6 @@
         linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
       background-size: 72px 72px;
     }
-    /* Brilho vermelho esquerda */
     .hero-bg::after {
       content: '';
       position: absolute;
@@ -156,7 +151,6 @@
       width: 700px; height: 700px; border-radius: 50%;
       background: radial-gradient(circle, rgba(214,40,40,0.12) 0%, transparent 65%);
     }
-    /* Brilho azul direita */
     .hero-glow-blue {
       position: absolute;
       right: -150px; top: -150px;
@@ -165,7 +159,6 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* Linha decorativa diagonal */
     .hero-stripe {
       position: absolute;
       top: 0; right: 25%;
@@ -261,7 +254,6 @@
     }
     .btn-ghost:hover { border-color: var(--blue-lt); color: var(--blue-lt); transform: translateY(-2px); }
 
-    /* Cards hero lado direito */
     .hero-visual { display: flex; flex-direction: column; gap: 1.1rem; }
 
     .hero-card {
@@ -284,8 +276,7 @@
     .accent-b { background: var(--blue); }
     .accent-mix { background: linear-gradient(to bottom, var(--red), var(--blue)); }
 
-    .hero-card-body {
-  padding-top: 68px;}
+    .hero-card-body { padding-top: 68px; }
     .hero-card-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1rem; font-weight: 700;
@@ -799,11 +790,10 @@
       background:rgba(255,255,255,.04);
       padding-left:1.5rem;
     }
-
-    </style>
+  </style>
 </head>
 <body>
-<!-- NAVBAR -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="navbar-inner">
       <a class="logo-link" href="index.html">
@@ -839,15 +829,15 @@
           <div class="hero-label-bar"><span></span><span></span></div>
           Angola · Grupo Empresarial
         </div>
-        <h1 class="hero-title reveal reveal-delay-1"><!-- ADMIN:index:hero-title:START -->
+        <h1 class="hero-title reveal reveal-delay-1">
           Entre nós,<br>fluem<br><span class="accent-red">opor</span><span class="accent-blue">tuni</span>dades
-        <!-- ADMIN:index:hero-title:END --></h1>
-        <p class="hero-slogan reveal reveal-delay-2"><!-- ADMIN:index:hero-slogan:START -->
+        </h1>
+        <p class="hero-slogan reveal reveal-delay-2">
           " Entre nós, fluem oportunidades "
-        <!-- ADMIN:index:hero-slogan:END --></p>
-        <p class="hero-desc reveal reveal-delay-3"><!-- ADMIN:index:hero-desc:START -->
+        </p>
+        <p class="hero-desc reveal reveal-delay-3">
           Somos um grupo empresarial angolano que apoia negócios com consultoria estratégica e inovação digital. Do primeiro passo à expansão — estamos consigo em cada etapa.
-        <!-- ADMIN:index:hero-desc:END --></p>
+        </p>
         <div class="hero-btns reveal reveal-delay-4">
           <a href="sobre.html" class="btn-red">Conheça-nos →</a>
           <a href="contacto.html" class="btn-ghost">Falar Connosco</a>
@@ -860,21 +850,21 @@
           <div class="hero-card-accent accent-r"></div>
           <div class="hero-card-body">
             <div class="hero-card-title">IMPERSILVA Consultoria</div>
-            <div class="hero-card-desc"><!-- ADMIN:index:card-desc-0:START -->Apoio completo na criação e crescimento do seu negócio. Do zero ao topo com o Plano Escalador.<!-- ADMIN:index:card-desc-0:END --></div>
+            <div class="hero-card-desc">Apoio completo na criação e crescimento do seu negócio. Do zero ao topo com o Plano Escalador.</div>
           </div>
         </div>
         <div class="hero-card">
           <div class="hero-card-accent accent-b"></div>
           <div class="hero-card-body">
             <div class="hero-card-title">IMPERSILVA TECH</div>
-            <div class="hero-card-desc"><!-- ADMIN:index:card-desc-1:START -->Sites de vendas, gestão de redes e presença digital para o seu negócio crescer online.<!-- ADMIN:index:card-desc-1:END --></div>
+            <div class="hero-card-desc">Sites de vendas, gestão de redes e presença digital para o seu negócio crescer online.</div>
           </div>
         </div>
         <div class="hero-card">
           <div class="hero-card-accent accent-mix"></div>
           <div class="hero-card-body">
             <div class="hero-card-title">Plano Escalador</div>
-            <div class="hero-card-desc"><!-- ADMIN:index:card-desc-2:START -->Método comprovado para levar o seu negócio ao próximo nível, passo a passo.<!-- ADMIN:index:card-desc-2:END --></div>
+            <div class="hero-card-desc">Método comprovado para levar o seu negócio ao próximo nível, passo a passo.</div>
           </div>
         </div>
       </div>
@@ -912,14 +902,14 @@
         <div class="tag-bars"><span></span><span></span></div>
         Quem Somos
       </div>
-      <h2 class="section-title reveal reveal-delay-1"><!-- ADMIN:index:section-title-0:START -->
+      <h2 class="section-title reveal reveal-delay-1">
         Um grupo feito<br>para <span class="red">servir</span> e <span class="blue">transformar</span>
-      <!-- ADMIN:index:section-title-0:END --></h2>
+      </h2>
       <div class="sobre-grid">
         <div class="sobre-text reveal">
-          <p><!-- ADMIN:index:companies-desc:START -->A <strong>IMPERSILVA HOLDING SGPS</strong> é um grupo empresarial angolano fundado com a missão de democratizar o acesso ao empreendedorismo e à tecnologia em Angola.<!-- ADMIN:index:companies-desc:END --></p>
-          <p><!-- ADMIN:index:mission-desc:START -->Reunimos dois pilares estratégicos: a <strong class="red">IMPERSILVA Consultoria</strong>, focada em guiar empresas desde a concepção até à consolidação, e a <strong class="blue">IMPERSILVA TECH</strong>, dedicada a digitalizar e amplificar a presença de negócios no mundo online.<!-- ADMIN:index:mission-desc:END --></p>
-          <p><!-- ADMIN:index:process-desc:START -->O nosso compromisso é claro: tratamos cada cliente como parceiro. O crescimento do seu negócio é a nossa maior conquista.<!-- ADMIN:index:process-desc:END --></p>
+          <p>A <strong>IMPERSILVA HOLDING SGPS</strong> é um grupo empresarial angolano fundado com a missão de democratizar o acesso ao empreendedorismo e à tecnologia em Angola.</p>
+          <p>Reunimos dois pilares estratégicos: a <strong class="red">IMPERSILVA Consultoria</strong>, focada em guiar empresas desde a concepção até à consolidação, e a <strong class="blue">IMPERSILVA TECH</strong>, dedicada a digitalizar e amplificar a presença de negócios no mundo online.</p>
+          <p>O nosso compromisso é claro: tratamos cada cliente como parceiro. O crescimento do seu negócio é a nossa maior conquista.</p>
           <div style="margin-top:1.5rem;">
             <a href="sobre.html" class="btn-ghost" style="font-size:0.82rem;">Ver a nossa história →</a>
           </div>
@@ -928,22 +918,22 @@
           <div class="valor-card">
             <div class="valor-icon"> <span class="valor-bar r"></span></div>
             <div class="valor-title">Missão</div>
-            <div class="valor-desc"><!-- ADMIN:index:valor-desc-0:START -->Impulsionar negócios angolanos com estratégia, tecnologia e acompanhamento próximo.<!-- ADMIN:index:valor-desc-0:END --></div>
+            <div class="valor-desc">Impulsionar negócios angolanos com estratégia, tecnologia e acompanhamento próximo.</div>
           </div>
           <div class="valor-card">
             <div class="valor-icon"> <span class="valor-bar b"></span></div>
             <div class="valor-title">Visão</div>
-            <div class="valor-desc"><!-- ADMIN:index:valor-desc-1:START -->Ser o grupo de referência em soluções empresariais e digitais em Angola.<!-- ADMIN:index:valor-desc-1:END --></div>
+            <div class="valor-desc">Ser o grupo de referência em soluções empresariais e digitais em Angola.</div>
           </div>
           <div class="valor-card">
             <div class="valor-icon"> <span class="valor-bar r"></span></div>
             <div class="valor-title">Compromisso</div>
-            <div class="valor-desc"><!-- ADMIN:index:valor-desc-2:START -->O seu sucesso é o nosso sucesso. Acompanhamos cada etapa da sua jornada.<!-- ADMIN:index:valor-desc-2:END --></div>
+            <div class="valor-desc">O seu sucesso é o nosso sucesso. Acompanhamos cada etapa da sua jornada.</div>
           </div>
           <div class="valor-card">
             <div class="valor-icon"> <span class="valor-bar b"></span></div>
             <div class="valor-title">Inovação</div>
-            <div class="valor-desc"><!-- ADMIN:index:valor-desc-3:START -->Soluções modernas e adaptadas à realidade do mercado angolano.<!-- ADMIN:index:valor-desc-3:END --></div>
+            <div class="valor-desc">Soluções modernas e adaptadas à realidade do mercado angolano.</div>
           </div>
         </div>
       </div>
@@ -957,9 +947,9 @@
         <div class="tag-bars"><span></span><span></span></div>
         Os Nossos Projectos
       </div>
-      <h2 class="section-title reveal reveal-delay-1"><!-- ADMIN:index:section-title-1:START -->
+      <h2 class="section-title reveal reveal-delay-1">
         Dois pilares,<br>uma só <span class="red">vis</span><span class="blue">ão</span>
-      <!-- ADMIN:index:section-title-1:END --></h2>
+      </h2>
       <div class="empresas-grid">
 
         <div class="empresa-card card-red reveal reveal-delay-2">
@@ -967,7 +957,7 @@
           <div class="empresa-badge badge-red">Consultoria Empresarial</div>
           <div class="empresa-nome">IMPERSILVA</div>
           <div class="empresa-subtitulo">Consultoria & Administração de Empresa</div>
-          <p class="empresa-desc"><!-- ADMIN:index:cta-desc:START -->Apoiamos quem quer começar e quem já começou. Desde a abertura da sua empresa até à consolidação no mercado, estamos em cada etapa do percurso.<!-- ADMIN:index:cta-desc:END --></p>
+          <p class="empresa-desc">Apoiamos quem quer começar e quem já começou. Desde a abertura da sua empresa até à consolidação no mercado, estamos em cada etapa do percurso.</p>
           <ul class="empresa-features">
             <li><span class="bullet bullet-r"></span>Suporte completo na criação e registo de empresas</li>
             <li><span class="bullet bullet-r"></span>Plano <strong>"Escalador de Empresa"</strong> — para negócios que querem crescer</li>
@@ -982,7 +972,7 @@
           <div class="empresa-badge badge-blue">Tecnologia & Digital</div>
           <div class="empresa-nome">IMPERSILVA <span style="color:var(--blue-lt)">|</span> TECH</div>
           <div class="empresa-subtitulo">Soluções Tecnológicas & Customização Digital</div>
-          <p class="empresa-desc"><!-- ADMIN:index:para-4:START -->Levamos pequenas empresas para o mundo digital. Criamos sites de vendas, gerimos redes sociais e facilitamos o contacto entre vendedor e cliente.<!-- ADMIN:index:para-4:END --></p>
+          <p class="empresa-desc">Levamos pequenas empresas para o mundo digital. Criamos sites de vendas, gerimos redes sociais e facilitamos o contacto entre vendedor e cliente.</p>
           <ul class="empresa-features">
             <li><span class="bullet bullet-b"></span>Criação de sites de vendas e pedidos online</li>
             <li><span class="bullet bullet-b"></span>Gestão e crescimento de redes sociais</li>
@@ -1003,27 +993,27 @@
         <div class="tag-bars"><span></span><span></span></div>
         O Nosso Processo
       </div>
-      <h2 class="section-title reveal reveal-delay-1"><!-- ADMIN:index:section-title-2:START -->Como trabalhamos<br>consigo<!-- ADMIN:index:section-title-2:END --></h2>
+      <h2 class="section-title reveal reveal-delay-1">Como trabalhamos<br>consigo</h2>
       <div class="processo-steps reveal reveal-delay-2">
         <div class="passo">
           <div class="passo-num">01</div>
-          <div class="passo-title"><!-- ADMIN:index:passo-title-0:START -->Consulta Inicial<!-- ADMIN:index:passo-title-0:END --></div>
-          <div class="passo-desc"><!-- ADMIN:index:passo-desc-0:START -->Ouvimos o seu projecto, necessidades e objectivos. Sem compromisso, sem custos.<!-- ADMIN:index:passo-desc-0:END --></div>
+          <div class="passo-title">Consulta Inicial</div>
+          <div class="passo-desc">Ouvimos o seu projecto, necessidades e objectivos. Sem compromisso, sem custos.</div>
         </div>
         <div class="passo">
           <div class="passo-num">02</div>
-          <div class="passo-title"><!-- ADMIN:index:passo-title-1:START -->Diagnóstico<!-- ADMIN:index:passo-title-1:END --></div>
-          <div class="passo-desc"><!-- ADMIN:index:passo-desc-1:START -->Analisamos a sua situação e identificamos o caminho certo para crescer.<!-- ADMIN:index:passo-desc-1:END --></div>
+          <div class="passo-title">Diagnóstico</div>
+          <div class="passo-desc">Analisamos a sua situação e identificamos o caminho certo para crescer.</div>
         </div>
         <div class="passo">
           <div class="passo-num">03</div>
-          <div class="passo-title"><!-- ADMIN:index:passo-title-2:START -->Plano de Acção<!-- ADMIN:index:passo-title-2:END --></div>
-          <div class="passo-desc"><!-- ADMIN:index:passo-desc-2:START -->Desenvolvemos uma estratégia personalizada com metas claras e alcançáveis.<!-- ADMIN:index:passo-desc-2:END --></div>
+          <div class="passo-title">Plano de Acção</div>
+          <div class="passo-desc">Desenvolvemos uma estratégia personalizada com metas claras e alcançáveis.</div>
         </div>
         <div class="passo">
           <div class="passo-num">04</div>
-          <div class="passo-title"><!-- ADMIN:index:passo-title-3:START -->Execução<!-- ADMIN:index:passo-title-3:END --></div>
-          <div class="passo-desc"><!-- ADMIN:index:passo-desc-3:START -->Implementamos e acompanhamos cada passo para garantir resultados reais.<!-- ADMIN:index:passo-desc-3:END --></div>
+          <div class="passo-title">Execução</div>
+          <div class="passo-desc">Implementamos e acompanhamos cada passo para garantir resultados reais.</div>
         </div>
       </div>
     </div>
@@ -1041,9 +1031,9 @@
           <div class="visao-quote">
             Queremos ser<br>o maior grupo<br>de suporte<br><span class="red">empre</span><span class="blue">sarial</span><br>de Angola.
           </div>
-          <p class="visao-sub"><!-- ADMIN:index:para-5:START -->
+          <p class="visao-sub">
             Temos uma visão ambiciosa: expandir as nossas soluções, alcançar mais empreendedores e digitalizar mais negócios angolanos em cada canto do país.
-          <!-- ADMIN:index:para-5:END --></p>
+          </p>
         </div>
         <div class="visao-items reveal reveal-delay-2">
           <div class="visao-item">
@@ -1086,14 +1076,13 @@
         <div class="tag-bars"><span></span><span></span></div>
         Depoimentos
       </div>
-      <h2 class="section-title reveal reveal-delay-1"><!-- ADMIN:index:section-title-3:START -->
+      <h2 class="section-title reveal reveal-delay-1">
         O que dizem os nossos <span class="red">cli</span><span class="blue">entes</span>
-      <!-- ADMIN:index:section-title-3:END --></h2>
-      <!-- ADMIN:DEPOIMENTOS:START -->
+      </h2>
       <div class="depoimentos-grid">
         <div class="depo-card reveal reveal-delay-1">
           <div class="depo-mark">"</div>
-          <p class="depo-text"><!-- ADMIN:index:para-6:START -->A IMPERSILVA ajudou-me a formalizar o meu negócio e a criar uma estratégia real. Em poucos meses as minhas vendas duplicaram.<!-- ADMIN:index:para-6:END --></p>
+          <p class="depo-text">A IMPERSILVA ajudou-me a formalizar o meu negócio e a criar uma estratégia real. Em poucos meses as minhas vendas duplicaram.</p>
           <div class="depo-author">
             <div class="depo-avatar"></div>
             <div>
@@ -1104,7 +1093,7 @@
         </div>
         <div class="depo-card reveal reveal-delay-2">
           <div class="depo-mark">"</div>
-          <p class="depo-text"><!-- ADMIN:index:para-7:START -->A IMPERSILVA TECH criou o meu site de pedidos e agora os meus clientes encomendam sem precisar de se deslocar. Revolucionou o meu negócio.<!-- ADMIN:index:para-7:END --></p>
+          <p class="depo-text">A IMPERSILVA TECH criou o meu site de pedidos e agora os meus clientes encomendam sem precisar de se deslocar. Revolucionou o meu negócio.</p>
           <div class="depo-author">
             <div class="depo-avatar"></div>
             <div>
@@ -1115,7 +1104,7 @@
         </div>
         <div class="depo-card reveal reveal-delay-3">
           <div class="depo-mark">"</div>
-          <p class="depo-text"><!-- ADMIN:index:para-8:START -->Com o Plano Escalador percebi onde estava a errar e o que precisava mudar. O suporte da equipa é próximo e muito profissional.<!-- ADMIN:index:para-8:END --></p>
+          <p class="depo-text">Com o Plano Escalador percebi onde estava a errar e o que precisava mudar. O suporte da equipa é próximo e muito profissional.</p>
           <div class="depo-author">
             <div class="depo-avatar"></div>
             <div>
@@ -1125,15 +1114,14 @@
           </div>
         </div>
       </div>
-      <!-- ADMIN:DEPOIMENTOS:END -->
     </div>
   </section>
 
   <!-- CTA FINAL -->
   <section class="cta-section">
     <div class="container">
-      <h2 class="cta-title"><!-- ADMIN:index:section-title-0:START -->Pronto para <span class="red">cres</span><span class="blue">cer</span>?<!-- ADMIN:index:section-title-0:END --></h2>
-      <p class="cta-sub"><!-- ADMIN:index:para-9:START -->A primeira consulta é gratuita e sem compromisso. Fale connosco hoje.<!-- ADMIN:index:para-9:END --></p>
+      <h2 class="cta-title">Pronto para <span class="red">cres</span><span class="blue">cer</span>?</h2>
+      <p class="cta-sub">A primeira consulta é gratuita e sem compromisso. Fale connosco hoje.</p>
       <div class="cta-btns">
         <a href="contacto.html" class="btn-blue"> Solicitar Consulta</a>
       </div>
@@ -1144,8 +1132,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-top">
-          <div style="font-size:0.55rem;letter-spacing:0.25em;color:var(--gray);text-transform:uppercase;margin-bottom:0.5rem;">Holding SGPS</div>
-</div>
+        <div style="font-size:0.55rem;letter-spacing:0.25em;color:var(--gray);text-transform:uppercase;margin-bottom:0.5rem;">Holding SGPS</div>
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
@@ -1156,27 +1143,38 @@
   </footer>
 
   <!-- BOTÃO FLUTUANTE WPP -->
-  <a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços." target="_blank" class="wpp-float" title="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg></a>
+  <a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços." target="_blank" class="wpp-float" title="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
+    </svg>
+  </a>
 
   <!-- MENU MOBILE -->
-<div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
-<div class="mm-drawer" id="mmDrawer">
-  <div class="mm-header">
-    <span class="mm-title">Menu</span>
-    <button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button>
+  <div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
+  <div class="mm-drawer" id="mmDrawer">
+    <div class="mm-header">
+      <span class="mm-title">Menu</span>
+      <button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button>
+    </div>
+    <nav class="mm-nav">
+      <a href="index.html">Início</a>
+      <a href="sobre.html">Sobre Nós</a>
+      <a href="projetos.html">Projectos</a>
+      <a href="consultoria.html">Consultoria</a>
+      <a href="tech.html">IMPERSILVA TECH</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="verificar-site.html">Portal de Clientes</a>
+    </nav>
   </div>
-  <nav class="mm-nav">
-    <a href="index.html">Início</a>
-    <a href="sobre.html">Sobre Nós</a>
-    <a href="projetos.html">Projectos</a>
-    <a href="consultoria.html">Consultoria</a>
-    <a href="tech.html">IMPERSILVA TECH</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="verificar-site.html">Portal de Clientes</a>
-  </nav>
-</div>
 
-<script>
+  <script>
+    // PWA: Registo do Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('https://impersilvatech.github.io/IMPERSILVA/service-worker.js')
+        .then(() => console.log('PWA registado com sucesso'))
+        .catch(() => console.log('PWA não suportado'));
+    }
 
     // REVEAL AO SCROLL
     const observer = new IntersectionObserver((entries) => {
@@ -1219,6 +1217,6 @@
         : 'rgba(255,255,255,0.07)';
     });
     document.getElementById("yr").textContent = new Date().getFullYear();
-
-  </script></body>
+  </script>
+</body>
 </html>
