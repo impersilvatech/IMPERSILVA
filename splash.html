@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IMPERSILVA HOLDING SGPS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0e0e0e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: 'Arial Black', sans-serif;
+    }
+
+    .splash-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 2rem;
+    }
+
+    .logo {
+      font-size: clamp(2rem, 10vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .logo .v {
+      color: #d62828;
+    }
+
+    .logo .a {
+      color: #3b6ef0;
+    }
+
+    .subtitle {
+      font-size: clamp(0.6rem, 2vw, 0.9rem);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.1rem;
+    }
+
+    .slogan {
+      font-family: 'Barlow', 'Arial', sans-serif;
+      font-size: clamp(0.7rem, 2.5vw, 1.1rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      margin-top: 0.5rem;
+      padding: 0 1rem;
+      line-height: 1.4;
+    }
+
+    .loader {
+      margin-top: 2rem;
+      display: flex;
+      gap: 6px;
+    }
+
+    .loader span {
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .loader span:nth-child(1) { animation-delay: 0s; }
+    .loader span:nth-child(2) { animation-delay: 0.2s; }
+    .loader span:nth-child(3) { animation-delay: 0.4s; }
+
+    .loader span.active {
+      background: #d62828;
+    }
+
+    .loader span:nth-child(2).active {
+      background: #3b6ef0;
+    }
+
+    @keyframes pulse {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .bar-decoration {
+      display: flex;
+      gap: 4px;
+      margin-top: 1rem;
+    }
+
+    .bar-decoration span {
+      display: block;
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .bar-decoration .bar-red {
+      background: #d62828;
+    }
+
+    .bar-decoration .bar-blue {
+      background: #3b6ef0;
+    }
+
+    .redirect {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.1);
+      letter-spacing: 0.15em;
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 2.6rem;
+      }
+      .subtitle {
+        font-size: 0.5rem;
+      }
+      .slogan {
+        font-size: 0.65rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-container">
+    <div class="logo">
+      IMPERSIL<span class="v">V</span><span class="a">Λ</span>
+    </div>
+    <div class="subtitle">Holding SGPS</div>
+
+    <div class="bar-decoration">
+      <span class="bar-red"></span>
+      <span class="bar-blue"></span>
+    </div>
+
+    <div class="slogan">"Entre nós, fluem oportunidades"</div>
+
+    <div class="loader">
+      <span class="active"></span>
+      <span class="active"></span>
+      <span class="active"></span>
+    </div>
+
+    <div class="redirect">Carregando...</div>
+  </div>
+
+  <script>
+    // Após 2,5 segundos, redireciona para o index
+    setTimeout(() => {
+      window.location.href = "https://impersilvatech.github.io/IMPERSILVA/index.html";
+    }, 2500);
+  </script>
+</body>
+</html>
