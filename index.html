@@ -10,6 +10,8 @@
   <title>IMPERSILVA HOLDING SGPS</title>
 
   <!-- ═══════ PWA ═══════ -->
+  <!-- IMPORTANTE: este script deve ser o PRIMEIRO — captura beforeinstallprompt cedo -->
+  <script src="js/pwa-install.js"></script>
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#0e0e0e"/>
   <meta name="msapplication-TileColor" content="#0e0e0e"/>
@@ -1025,7 +1027,7 @@
   document.getElementById("yr").textContent = new Date().getFullYear();
 </script>
 
-<!-- ═══════ PWA: SERVICE WORKER + INSTALL PROMPT ═══════ -->
+<!-- ═══════ PWA: SERVICE WORKER ═══════ -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -1037,7 +1039,12 @@ if ('serviceWorker' in navigator) {
           const newWorker = reg.installing;
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              showUpdateBanner();
+              /* Banner de actualização disponível */
+              const b = document.createElement('div');
+              b.style.cssText = 'position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#242428;border:1px solid rgba(255,255,255,0.12);border-left:3px solid #d62828;color:#fff;font-family:Barlow,sans-serif;font-size:0.82rem;padding:0.75rem 1.2rem;border-radius:8px;display:flex;align-items:center;gap:1rem;z-index:99998;box-shadow:0 8px 32px rgba(0,0,0,0.4);white-space:nowrap;';
+              b.innerHTML = '<span>🔄 Nova versão disponível</span><button onclick="location.reload()" style="background:#d62828;color:#fff;border:none;border-radius:4px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:600;cursor:pointer;">Actualizar</button><button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:1rem;">✕</button>';
+              document.body.appendChild(b);
+              setTimeout(() => b.remove(), 12000);
             }
           });
         });
@@ -1045,42 +1052,6 @@ if ('serviceWorker' in navigator) {
       .catch((err) => console.warn('[PWA] SW falhou:', err));
   });
 }
-
-function showUpdateBanner() {
-  const banner = document.createElement('div');
-  banner.style.cssText = `
-    position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);
-    background:#242428;border:1px solid rgba(255,255,255,0.12);
-    border-left:3px solid #d62828;color:#fff;
-    font-family:'Barlow',sans-serif;font-size:0.82rem;
-    padding:0.75rem 1.2rem;border-radius:8px;
-    display:flex;align-items:center;gap:1rem;
-    z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4);white-space:nowrap;
-  `;
-  banner.innerHTML = `
-    <span>🔄 Nova versão disponível</span>
-    <button onclick="window.location.reload()" style="background:#d62828;color:#fff;border:none;border-radius:4px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:600;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;">Actualizar</button>
-    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:1rem;padding:0;">✕</button>
-  `;
-  document.body.appendChild(banner);
-  setTimeout(() => banner.remove(), 10000);
-}
-
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const btn = document.getElementById('pwa-install-btn');
-  if (btn) btn.style.display = 'inline-flex';
-});
-window.addEventListener('appinstalled', () => {
-  deferredPrompt = null;
-});
-window.installPWA = function () {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-};
 </script>
 <!-- ═══════ /PWA ═══════ -->
 
