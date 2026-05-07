@@ -7,13 +7,20 @@
   <meta name="keywords" content="IMPERSILVA, holding, consultoria, tecnologia, angola, empresas, digital"/>
   <meta property="og:title" content="IMPERSILVA HOLDING SGPS"/>
   <meta property="og:description" content="Entre nós, fluem oportunidades."/>
-  
-  <!-- PWA: Manifest e Theme Color -->
-  <link rel="manifest" href="https://impersilvatech.github.io/IMPERSILVA/manifest.json">
-  <meta name="theme-color" content="#d62828">
-  <link rel="apple-touch-icon" href="https://impersilvatech.github.io/IMPERSILVA/icon-192.svg">
-  
   <title>IMPERSILVA HOLDING SGPS</title>
+
+  <!-- ═══════ PWA ═══════ -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#0e0e0e"/>
+  <meta name="msapplication-TileColor" content="#0e0e0e"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="IMPERSILVA"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <!-- ═══════ /PWA ═══════ -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -131,7 +138,6 @@
       display: flex; align-items: center;
       overflow: hidden;
     }
-
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
       background: var(--dark);
@@ -158,7 +164,6 @@
       background: radial-gradient(circle, rgba(29,78,216,0.10) 0%, transparent 65%);
       pointer-events: none; z-index: 0;
     }
-
     .hero-stripe {
       position: absolute;
       top: 0; right: 25%;
@@ -166,7 +171,6 @@
       background: linear-gradient(to bottom, transparent, rgba(214,40,40,0.3), transparent);
       pointer-events: none; z-index: 0;
     }
-
     .hero-content {
       position: relative; z-index: 1;
       max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
@@ -174,65 +178,45 @@
       display: grid; grid-template-columns: 1.1fr 0.9fr;
       gap: 4rem; align-items: center;
     }
-
     .hero-label {
       display: inline-flex; align-items: center; gap: 0.6rem;
       font-size: 0.7rem; font-weight: 600;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--gray); margin-bottom: 1.6rem;
     }
-    .hero-label-bar {
-      display: flex; gap: 3px;
-    }
-    .hero-label-bar span {
-      display: block; width: 18px; height: 3px; border-radius: 2px;
-    }
+    .hero-label-bar { display: flex; gap: 3px; }
+    .hero-label-bar span { display: block; width: 18px; height: 3px; border-radius: 2px; }
     .hero-label-bar span:first-child { background: var(--red); }
     .hero-label-bar span:last-child  { background: var(--blue); }
-
     .hero-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(2rem, 9.5vw, 5.5rem);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 1.2rem;
-      word-break: break-word;
-      overflow-wrap: break-word;
+      font-weight: 900; line-height: 0.95;
+      letter-spacing: -0.01em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 1.2rem;
+      word-break: break-word; overflow-wrap: break-word;
     }
     .hero-title .accent-red  { color: var(--red); }
     .hero-title .accent-blue { color: var(--blue-lt); }
-
     .hero-slogan {
       font-family: 'Barlow', sans-serif;
-      font-size: 1.05rem; font-weight: 300;
-      font-style: italic;
-      color: var(--gray-lt);
-      margin-bottom: 1.6rem;
-      padding-left: 1rem;
-      border-left: 3px solid var(--red);
+      font-size: 1.05rem; font-weight: 300; font-style: italic;
+      color: var(--gray-lt); margin-bottom: 1.6rem;
+      padding-left: 1rem; border-left: 3px solid var(--red);
     }
-
     .hero-desc {
       font-size: 0.97rem; font-weight: 300;
-      color: var(--gray);
-      line-height: 1.85;
-      margin-bottom: 2.5rem;
-      max-width: 500px;
+      color: var(--gray); line-height: 1.85;
+      margin-bottom: 2.5rem; max-width: 500px;
     }
-
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 
     .btn-red {
-      background: var(--red);
-      color: var(--white);
+      background: var(--red); color: var(--white);
       font-family: 'Barlow', sans-serif;
       font-size: 0.88rem; font-weight: 600;
       letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.85rem 2rem;
-      border: none; border-radius: 4px;
+      padding: 0.85rem 2rem; border: none; border-radius: 4px;
       cursor: pointer; text-decoration: none;
       display: inline-flex; align-items: center; gap: 0.5rem;
       transition: all 0.22s;
@@ -240,14 +224,12 @@
     .btn-red:hover { background: var(--red-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(214,40,40,0.3); }
 
     .btn-ghost {
-      background: transparent;
-      color: var(--white);
+      background: transparent; color: var(--white);
       font-family: 'Barlow', sans-serif;
       font-size: 0.88rem; font-weight: 500;
       letter-spacing: 0.06em; text-transform: uppercase;
       padding: 0.85rem 2rem;
-      border: 1.5px solid rgba(255,255,255,0.2);
-      border-radius: 4px;
+      border: 1.5px solid rgba(255,255,255,0.2); border-radius: 4px;
       cursor: pointer; text-decoration: none;
       display: inline-flex; align-items: center; gap: 0.5rem;
       transition: all 0.22s;
@@ -255,11 +237,9 @@
     .btn-ghost:hover { border-color: var(--blue-lt); color: var(--blue-lt); transform: translateY(-2px); }
 
     .hero-visual { display: flex; flex-direction: column; gap: 1.1rem; }
-
     .hero-card {
       background: var(--charcoal);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 10px;
       padding: 1.4rem 1.6rem;
       display: flex; gap: 1.1rem; align-items: flex-start;
       transition: border-color 0.25s, transform 0.25s;
@@ -268,15 +248,11 @@
     .hero-card:hover { border-color: rgba(255,255,255,0.18); transform: translateX(-4px); }
     .hero-card:nth-child(2) { animation-delay: 0.15s; }
     .hero-card:nth-child(3) { animation-delay: 0.3s; }
-
-    .hero-card-accent {
-      width: 4px; border-radius: 4px; align-self: stretch; flex-shrink: 0;
-    }
+    .hero-card-accent { width: 4px; border-radius: 4px; align-self: stretch; flex-shrink: 0; }
     .accent-r { background: var(--red); }
     .accent-b { background: var(--blue); }
     .accent-mix { background: linear-gradient(to bottom, var(--red), var(--blue)); }
-
-    .hero-card-body { padding-top: 68px; }
+    .hero-card-body { padding-top: 0; }
     .hero-card-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1rem; font-weight: 700;
@@ -298,8 +274,7 @@
       animation: bounce 2.5s ease-in-out infinite;
     }
     .scroll-hint::after {
-      content: '';
-      display: block; width: 1px; height: 44px;
+      content: ''; display: block; width: 1px; height: 44px;
       background: linear-gradient(to bottom, var(--red), transparent);
     }
     @keyframes bounce {
@@ -321,14 +296,9 @@
       display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 1rem; align-items: center;
     }
-    .stat-item {
-      text-align: center;
-      padding: 0 1rem;
-      position: relative;
-    }
+    .stat-item { text-align: center; padding: 0 1rem; position: relative; }
     .stat-item:not(:last-child)::after {
-      content: '';
-      position: absolute; right: 0; top: 20%; bottom: 20%;
+      content: ''; position: absolute; right: 0; top: 20%; bottom: 20%;
       width: 1px; background: var(--divider);
     }
     .stat-number {
@@ -350,7 +320,6 @@
     ══════════════════════════════════════ */
     .section { padding: 6rem 1.5rem; }
     .section-inner { max-width: 1200px; margin: 0 auto; }
-
     .section-tag {
       display: inline-flex; align-items: center; gap: 0.6rem;
       font-size: 0.68rem; font-weight: 600;
@@ -361,49 +330,35 @@
     .section-tag .tag-bars span { display: block; width: 14px; height: 2px; border-radius: 1px; }
     .section-tag .tag-bars span:first-child { background: var(--red); }
     .section-tag .tag-bars span:last-child  { background: var(--blue); }
-
     .section-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(2rem, 5vw, 3.2rem);
       font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.02em; line-height: 1.05;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em; line-height: 1.05; margin-bottom: 0.5rem;
     }
     .section-title .red  { color: var(--red); }
     .section-title .blue { color: var(--blue-lt); }
 
-    /* ══════════════════════════════════════
-       QUEM SOMOS
-    ══════════════════════════════════════ */
+    /* ══ QUEM SOMOS ══ */
     .sobre-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 5rem; align-items: start; margin-top: 3.5rem;
     }
     .sobre-text p {
       font-size: 0.97rem; font-weight: 300;
-      color: rgba(255,255,255,0.7); line-height: 1.9;
-      margin-bottom: 1.2rem;
+      color: rgba(255,255,255,0.7); line-height: 1.9; margin-bottom: 1.2rem;
     }
     .sobre-text p strong { color: var(--white); font-weight: 600; }
     .sobre-text p .red  { color: var(--red); }
     .sobre-text p .blue { color: var(--blue-lt); }
-
     .valores-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-      background: var(--divider);
-      border: 1px solid var(--divider);
+      background: var(--divider); border: 1px solid var(--divider);
       border-radius: 10px; overflow: hidden;
     }
-    .valor-card {
-      background: var(--charcoal);
-      padding: 1.5rem;
-      transition: background 0.25s;
-    }
+    .valor-card { background: var(--charcoal); padding: 1.5rem; transition: background 0.25s; }
     .valor-card:hover { background: var(--charcoal-lt); }
-    .valor-icon {
-      font-size: 1.4rem; margin-bottom: 0.7rem;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
+    .valor-icon { font-size: 1.4rem; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
     .valor-bar { width: 24px; height: 3px; border-radius: 2px; display: inline-block; }
     .valor-bar.r { background: var(--red); }
     .valor-bar.b { background: var(--blue); }
@@ -415,60 +370,40 @@
     }
     .valor-desc { font-size: 0.8rem; color: var(--gray); font-weight: 300; line-height: 1.6; }
 
-    /* ══════════════════════════════════════
-       EMPRESAS
-    ══════════════════════════════════════ */
+    /* ══ EMPRESAS ══ */
     .empresas { background: var(--black); padding: 6rem 1.5rem; }
-    .empresas-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.5rem; margin-top: 3.5rem;
-    }
+    .empresas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3.5rem; }
     .empresa-card {
-      background: var(--charcoal);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--charcoal); border: 1px solid rgba(255,255,255,0.06);
       border-radius: 12px; padding: 2.5rem 2rem;
-      position: relative; overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s;
     }
     .empresa-card:hover { transform: translateY(-5px); }
     .empresa-card.card-red { border-top: 3px solid var(--red); }
     .empresa-card.card-red:hover { border-color: var(--red); }
     .empresa-card.card-blue { border-top: 3px solid var(--blue); }
     .empresa-card.card-blue:hover { border-color: var(--blue); }
-
     .empresa-num {
       position: absolute; right: 1.5rem; top: 1.2rem;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 5rem; font-weight: 900;
-      color: rgba(255,255,255,0.03); line-height: 1;
-      pointer-events: none;
+      color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none;
     }
     .empresa-badge {
-      display: inline-block;
-      font-size: 0.65rem; font-weight: 700;
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
       letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 0.25rem 0.7rem; border-radius: 3px;
-      margin-bottom: 1.2rem;
+      padding: 0.25rem 0.7rem; border-radius: 3px; margin-bottom: 1.2rem;
     }
     .badge-red  { background: var(--red-dim);  color: var(--red);     border: 1px solid rgba(214,40,40,0.3); }
     .badge-blue { background: var(--blue-dim); color: var(--blue-lt); border: 1px solid rgba(29,78,216,0.3); }
-
     .empresa-nome {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.7rem; font-weight: 800;
       letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--white); margin-bottom: 0.2rem; line-height: 1;
     }
-    .empresa-subtitulo {
-      font-size: 0.78rem; color: var(--gray);
-      letter-spacing: 0.06em; margin-bottom: 1.3rem;
-      font-weight: 300;
-    }
-    .empresa-desc {
-      font-size: 0.9rem; font-weight: 300;
-      color: rgba(255,255,255,0.6); line-height: 1.85;
-      margin-bottom: 1.8rem;
-    }
+    .empresa-subtitulo { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.06em; margin-bottom: 1.3rem; font-weight: 300; }
+    .empresa-desc { font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.85; margin-bottom: 1.8rem; }
     .empresa-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 2rem; }
     .empresa-features li {
       font-size: 0.85rem; color: rgba(255,255,255,0.7);
@@ -478,7 +413,6 @@
     .empresa-features li .bullet { flex-shrink: 0; margin-top: 0.4rem; width: 6px; height: 6px; border-radius: 1px; }
     .bullet-r { background: var(--red); }
     .bullet-b { background: var(--blue-lt); }
-
     .empresa-link {
       display: inline-flex; align-items: center; gap: 0.5rem;
       font-size: 0.8rem; font-weight: 700;
@@ -489,26 +423,18 @@
     .link-blue { color: var(--blue-lt); }
     .empresa-link:hover { gap: 0.9rem; }
 
-    /* ══════════════════════════════════════
-       PROCESSO
-    ══════════════════════════════════════ */
+    /* ══ PROCESSO ══ */
     .processo { padding: 6rem 1.5rem; }
     .processo-steps {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; margin-top: 3.5rem;
-      background: var(--divider);
-      border: 1px solid var(--divider);
-      border-radius: 10px; overflow: hidden;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      margin-top: 3.5rem; background: var(--divider);
+      border: 1px solid var(--divider); border-radius: 10px; overflow: hidden;
     }
-    .passo {
-      background: var(--charcoal); padding: 2rem 1.5rem;
-      transition: background 0.25s;
-    }
+    .passo { background: var(--charcoal); padding: 2rem 1.5rem; transition: background 0.25s; }
     .passo:hover { background: var(--charcoal-lt); }
     .passo-num {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 2.5rem; font-weight: 900;
-      line-height: 1; margin-bottom: 0.8rem;
+      font-size: 2.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.8rem;
     }
     .passo:nth-child(odd) .passo-num  { color: var(--red); }
     .passo:nth-child(even) .passo-num { color: var(--blue-lt); }
@@ -520,19 +446,13 @@
     }
     .passo-desc { font-size: 0.82rem; color: var(--gray); font-weight: 300; line-height: 1.65; }
 
-    /* ══════════════════════════════════════
-       VISÃO FUTURA
-    ══════════════════════════════════════ */
+    /* ══ VISÃO ══ */
     .visao { background: var(--black); padding: 6rem 1.5rem; position: relative; overflow: hidden; }
     .visao::before {
-      content: '';
-      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
       background: linear-gradient(to bottom, var(--red), var(--blue));
     }
-    .visao-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 5rem; align-items: center;
-    }
+    .visao-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .visao-quote {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -541,17 +461,11 @@
     }
     .visao-quote .red  { color: var(--red); }
     .visao-quote .blue { color: var(--blue-lt); }
-    .visao-sub {
-      margin-top: 1.5rem;
-      font-size: 0.93rem; font-weight: 300;
-      color: var(--gray); line-height: 1.85;
-    }
-
+    .visao-sub { margin-top: 1.5rem; font-size: 0.93rem; font-weight: 300; color: var(--gray); line-height: 1.85; }
     .visao-items { display: flex; flex-direction: column; gap: 1px; background: var(--divider); border: 1px solid var(--divider); border-radius: 10px; overflow: hidden; }
     .visao-item {
       background: var(--charcoal); padding: 1.3rem 1.5rem;
-      display: flex; gap: 1rem; align-items: flex-start;
-      transition: background 0.2s;
+      display: flex; gap: 1rem; align-items: flex-start; transition: background 0.2s;
     }
     .visao-item:hover { background: var(--charcoal-lt); }
     .visao-item-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
@@ -563,58 +477,37 @@
     }
     .visao-item-desc { font-size: 0.78rem; color: var(--gray); font-weight: 300; line-height: 1.5; }
 
-    /* ══════════════════════════════════════
-       DEPOIMENTOS
-    ══════════════════════════════════════ */
+    /* ══ DEPOIMENTOS ══ */
     .depoimentos { padding: 6rem 1.5rem; }
-    .depoimentos-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem; margin-top: 3.5rem;
-    }
+    .depoimentos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
     .depo-card {
-      background: var(--charcoal);
-      border: 1px solid var(--divider); border-radius: 10px;
-      padding: 1.8rem; position: relative;
-      transition: transform 0.25s, border-color 0.25s;
+      background: var(--charcoal); border: 1px solid var(--divider); border-radius: 10px;
+      padding: 1.8rem; position: relative; transition: transform 0.25s, border-color 0.25s;
     }
     .depo-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.14); }
-    .depo-mark {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 3.5rem; font-weight: 900; line-height: 1;
-      margin-bottom: 0.6rem;
-    }
+    .depo-mark { font-family: 'Barlow Condensed', sans-serif; font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.6rem; }
     .depo-card:nth-child(1) .depo-mark { color: var(--red); }
     .depo-card:nth-child(2) .depo-mark { color: var(--blue-lt); }
     .depo-card:nth-child(3) .depo-mark { color: var(--red); }
-    .depo-text {
-      font-size: 0.88rem; font-weight: 300;
-      color: rgba(255,255,255,0.7); line-height: 1.85;
-      margin-bottom: 1.5rem; font-style: italic;
-    }
+    .depo-text { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 1.5rem; font-style: italic; }
     .depo-author { display: flex; align-items: center; gap: 0.8rem; }
     .depo-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--charcoal-lt);
+      width: 40px; height: 40px; border-radius: 50%; background: var(--charcoal-lt);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0;
-      border: 2px solid var(--divider);
+      font-size: 1rem; flex-shrink: 0; border: 2px solid var(--divider);
     }
     .depo-name { font-size: 0.85rem; font-weight: 600; color: var(--white); letter-spacing: 0.03em; }
     .depo-role { font-size: 0.72rem; color: var(--gray); font-weight: 300; }
 
-    /* ══════════════════════════════════════
-       CTA FINAL
-    ══════════════════════════════════════ */
+    /* ══ CTA ══ */
     .cta-section {
       background: var(--charcoal);
-      border-top: 1px solid var(--divider);
-      border-bottom: 1px solid var(--divider);
+      border-top: 1px solid var(--divider); border-bottom: 1px solid var(--divider);
       padding: 5.5rem 1.5rem; text-align: center;
       position: relative; overflow: hidden;
     }
     .cta-section::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background:
         radial-gradient(ellipse 60% 80% at 20% 50%, rgba(214,40,40,0.07) 0%, transparent 60%),
         radial-gradient(ellipse 60% 80% at 80% 50%, rgba(29,78,216,0.07) 0%, transparent 60%);
@@ -624,78 +517,37 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 900; text-transform: uppercase;
-      letter-spacing: 0.02em; color: var(--white);
-      margin-bottom: 0.8rem;
+      letter-spacing: 0.02em; color: var(--white); margin-bottom: 0.8rem;
     }
     .cta-title .red  { color: var(--red); }
     .cta-title .blue { color: var(--blue-lt); }
-    .cta-sub {
-      font-size: 1rem; color: var(--gray);
-      font-weight: 300; margin-bottom: 2.5rem;
-    }
+    .cta-sub { font-size: 1rem; color: var(--gray); font-weight: 300; margin-bottom: 2.5rem; }
     .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
     .btn-blue {
-      background: var(--blue);
-      color: var(--white);
+      background: var(--blue); color: var(--white);
       font-family: 'Barlow', sans-serif;
       font-size: 0.88rem; font-weight: 600;
       letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.9rem 2.2rem;
-      border: none; border-radius: 4px;
+      padding: 0.9rem 2.2rem; border: none; border-radius: 4px;
       cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      transition: all 0.22s;
+      display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.22s;
     }
     .btn-blue:hover { background: var(--blue-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(29,78,216,0.35); }
 
-    .btn-wpp {
-      background: #25D366; color: white;
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.88rem; font-weight: 600;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.9rem 2.2rem;
-      border: none; border-radius: 4px;
-      cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      transition: all 0.22s;
-    }
-    .btn-wpp:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
-
-    /* ══════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════ */
-    footer {
-      background: var(--black);
-      border-top: 1px solid var(--divider);
-      padding: 4rem 1.5rem 2rem;
-    }
+    /* ══ FOOTER ══ */
+    footer { background: var(--black); border-top: 1px solid var(--divider); padding: 4rem 1.5rem 2rem; }
     .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-logo-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.5rem; font-weight: 800;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 0.3rem;
-    }
-    .footer-logo-name .dot-r { color: var(--red); }
-    .footer-logo-name .dot-b { color: var(--blue-lt); }
-    .footer-contact-item span:first-child { font-size: 0.85rem; flex-shrink: 0; }
-
     .footer-divider { height: 1px; background: var(--divider); margin: 2.5rem 0 1.5rem; }
     .footer-bottom {
       display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.73rem; color: rgba(255,255,255,0.2);
-      flex-wrap: wrap; gap: 0.5rem;
+      font-size: 0.73rem; color: rgba(255,255,255,0.2); flex-wrap: wrap; gap: 0.5rem;
     }
     .footer-bottom a { color: var(--red); text-decoration: none; }
 
-    /* ══════════════════════════════════════
-       WPP FLOAT
-    ══════════════════════════════════════ */
+    /* ══ WPP FLOAT ══ */
     .wpp-float {
       position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 999;
-      width: 54px; height: 54px; border-radius: 50%;
-      background: #25D366;
+      width: 54px; height: 54px; border-radius: 50%; background: #25D366;
       display: flex; align-items: center; justify-content: center;
       text-decoration: none; font-size: 1.5rem;
       box-shadow: 0 6px 20px rgba(37,211,102,0.38);
@@ -708,9 +560,7 @@
       50%       { box-shadow: 0 6px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.07); }
     }
 
-    /* ══════════════════════════════════════
-       REVEAL ANIMATIONS
-    ══════════════════════════════════════ */
+    /* ══ REVEAL ══ */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
@@ -718,9 +568,33 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* ══════════════════════════════════════
-       RESPONSIVO
-    ══════════════════════════════════════ */
+    /* ══ DRAWER MENU ══ */
+    .mm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:8000; }
+    .mm-overlay.active { display:block; }
+    .mm-drawer {
+      position:fixed; top:0; right:0; width:55%; max-width:280px;
+      background:var(--black); border-left:1px solid rgba(255,255,255,.08);
+      z-index:8001; transform:translateX(100%); transition:transform .3s ease;
+      display:flex; flex-direction:column; padding:0; overflow:hidden; height:auto; max-height:100dvh;
+    }
+    .mm-drawer.active { transform:translateX(0); }
+    .mm-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.9rem 1.2rem; border-bottom:1px solid rgba(255,255,255,.07); flex-shrink:0;
+    }
+    .mm-title { font-size:.6rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+    .mm-close { background:none; border:none; color:rgba(255,255,255,.5); font-size:1.2rem; cursor:pointer; line-height:1; padding:.3rem; transition:color .2s; }
+    .mm-close:hover { color:#fff; }
+    .mm-nav { flex:1; overflow-y:auto; padding:.5rem 0; }
+    .mm-nav a {
+      display:block; color:rgba(255,255,255,.75); text-decoration:none;
+      font-size:.95rem; font-weight:400; padding:.85rem 1.2rem;
+      border-bottom:1px solid rgba(255,255,255,.05); transition:all .15s;
+    }
+    .mm-nav a:last-child { border-bottom:none; }
+    .mm-nav a:hover { color:#fff; background:rgba(255,255,255,.04); padding-left:1.5rem; }
+
+    /* ══ RESPONSIVO ══ */
     @media (max-width: 1024px) {
       .hero-content { grid-template-columns: 1fr; gap: 3rem; }
       .sobre-grid, .visao-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -742,481 +616,473 @@
       .stats-inner { grid-template-columns: 1fr 1fr; }
       .cta-btns { flex-direction: column; align-items: stretch; }
     }
-  
-    /* ── DRAWER MENU ── */
-    .mm-overlay{
-      display:none;position:fixed;inset:0;
-      background:rgba(0,0,0,.6);z-index:8000;
-    }
-    .mm-overlay.active{display:block;}
-    .mm-drawer{position:fixed;top:0;right:0;width:55%;max-width:280px;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:0;overflow:hidden;height:auto;max-height:100dvh}
-    .mm-drawer.active{transform:translateX(0);}
-    .mm-header{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:.9rem 1.2rem;
-      border-bottom:1px solid rgba(255,255,255,.07);
-      flex-shrink:0;
-    }
-    .mm-title{
-      font-size:.6rem;font-weight:700;
-      letter-spacing:.2em;text-transform:uppercase;
-      color:rgba(255,255,255,.3);
-    }
-    .mm-close{
-      background:none;border:none;
-      color:rgba(255,255,255,.5);
-      font-size:1.2rem;cursor:pointer;
-      line-height:1;padding:.3rem;
-      transition:color .2s;
-    }
-    .mm-close:hover{color:#fff;}
-    .mm-nav{
-      flex:1;overflow-y:auto;
-      padding:.5rem 0;
-    }
-    .mm-nav a{
-      display:block;
-      color:rgba(255,255,255,.75);
-      text-decoration:none;
-      font-size:.95rem;
-      font-weight:400;
-      padding:.85rem 1.2rem;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      transition:all .15s;
-    }
-    .mm-nav a:last-child{border-bottom:none;}
-    .mm-nav a:hover{
-      color:#fff;
-      background:rgba(255,255,255,.04);
-      padding-left:1.5rem;
-    }
   </style>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a class="logo-link" href="index.html">
-        <div class="logo-wordmark">
-          <span class="logo-letters">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span></span>
-        </div>
-        <span class="logo-sub">Holding SGPS</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Início</a></li>
-        <li><a href="sobre.html">Sobre Nós</a></li>
-        <li><a href="projetos.html">Projectos</a></li>
-        <li><a href="consultoria.html">Consultoria</a></li>
-        <li><a href="tech.html">Tech</a></li>
-        <li><a href="contacto.html" class="nav-cta">Falar Connosco</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Menu" onclick="var d=document.getElementById('mmDrawer'),o=document.getElementById('mmOverlay');d.classList.toggle('active');o.classList.toggle('active');document.body.style.overflow=d.classList.contains('active')?'hidden':'';">
-        <span></span><span></span><span></span>
-      </button>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="logo-link" href="index.html">
+      <div class="logo-wordmark">
+        IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span>
+      </div>
+      <span class="logo-sub">Holding SGPS</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Início</a></li>
+      <li><a href="sobre.html">Sobre Nós</a></li>
+      <li><a href="projetos.html">Projectos</a></li>
+      <li><a href="consultoria.html">Consultoria</a></li>
+      <li><a href="tech.html">Tech</a></li>
+      <li><a href="contacto.html" class="nav-cta">Falar Connosco</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="var d=document.getElementById('mmDrawer'),o=document.getElementById('mmOverlay');d.classList.toggle('active');o.classList.toggle('active');document.body.style.overflow=d.classList.contains('active')?'hidden':'';">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow-blue"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-label reveal">
+        <div class="hero-label-bar"><span></span><span></span></div>
+        Angola · Grupo Empresarial
+      </div>
+      <h1 class="hero-title reveal reveal-delay-1">
+        Entre nós,<br>fluem<br><span class="accent-red">opor</span><span class="accent-blue">tuni</span>dades
+      </h1>
+      <p class="hero-slogan reveal reveal-delay-2">" Entre nós, fluem oportunidades "</p>
+      <p class="hero-desc reveal reveal-delay-3">
+        Somos um grupo empresarial angolano que apoia negócios com consultoria estratégica e inovação digital. Do primeiro passo à expansão — estamos consigo em cada etapa.
+      </p>
+      <div class="hero-btns reveal reveal-delay-4">
+        <a href="sobre.html" class="btn-red">Conheça-nos →</a>
+        <a href="contacto.html" class="btn-ghost">Falar Connosco</a>
+      </div>
     </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-accent accent-r"></div>
+        <div class="hero-card-body">
+          <div class="hero-card-title">IMPERSILVA Consultoria</div>
+          <div class="hero-card-desc">Apoio completo na criação e crescimento do seu negócio. Do zero ao topo com o Plano Escalador.</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-accent accent-b"></div>
+        <div class="hero-card-body">
+          <div class="hero-card-title">IMPERSILVA TECH</div>
+          <div class="hero-card-desc">Sites de vendas, gestão de redes e presença digital para o seu negócio crescer online.</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-accent accent-mix"></div>
+        <div class="hero-card-body">
+          <div class="hero-card-title">Plano Escalador</div>
+          <div class="hero-card-desc">Método comprovado para levar o seu negócio ao próximo nível, passo a passo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Explorar</div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number" data-target="120"><span class="red">0</span></span>
+      <span class="stat-label">Clientes Apoiados</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="2"><span class="blue">0</span></span>
+      <span class="stat-label">Empresas do Grupo</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="98"><span class="red">0</span></span>
+      <span class="stat-label">% Satisfação</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="50"><span class="blue">0</span></span>
+      <span class="stat-label">Projectos Digitais</span>
+    </div>
+  </div>
+</div>
+
+<!-- QUEM SOMOS -->
+<section class="section" id="sobre">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="tag-bars"><span></span><span></span></div>
+      Quem Somos
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Um grupo feito<br>para <span class="red">servir</span> e <span class="blue">transformar</span>
+    </h2>
+    <div class="sobre-grid">
+      <div class="sobre-text reveal">
+        <p>A <strong>IMPERSILVA HOLDING SGPS</strong> é um grupo empresarial angolano fundado com a missão de democratizar o acesso ao empreendedorismo e à tecnologia em Angola.</p>
+        <p>Reunimos dois pilares estratégicos: a <strong class="red">IMPERSILVA Consultoria</strong>, focada em guiar empresas desde a concepção até à consolidação, e a <strong class="blue">IMPERSILVA TECH</strong>, dedicada a digitalizar e amplificar a presença de negócios no mundo online.</p>
+        <p>O nosso compromisso é claro: tratamos cada cliente como parceiro. O crescimento do seu negócio é a nossa maior conquista.</p>
+        <div style="margin-top:1.5rem;">
+          <a href="sobre.html" class="btn-ghost" style="font-size:0.82rem;">Ver a nossa história →</a>
+        </div>
+      </div>
+      <div class="valores-grid reveal reveal-delay-2">
+        <div class="valor-card">
+          <div class="valor-icon"><span class="valor-bar r"></span></div>
+          <div class="valor-title">Missão</div>
+          <div class="valor-desc">Impulsionar negócios angolanos com estratégia, tecnologia e acompanhamento próximo.</div>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icon"><span class="valor-bar b"></span></div>
+          <div class="valor-title">Visão</div>
+          <div class="valor-desc">Ser o grupo de referência em soluções empresariais e digitais em Angola.</div>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icon"><span class="valor-bar r"></span></div>
+          <div class="valor-title">Compromisso</div>
+          <div class="valor-desc">O seu sucesso é o nosso sucesso. Acompanhamos cada etapa da sua jornada.</div>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icon"><span class="valor-bar b"></span></div>
+          <div class="valor-title">Inovação</div>
+          <div class="valor-desc">Soluções modernas e adaptadas à realidade do mercado angolano.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMPRESAS -->
+<section class="empresas">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="tag-bars"><span></span><span></span></div>
+      Os Nossos Projectos
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Dois pilares,<br>uma só <span class="red">vis</span><span class="blue">ão</span>
+    </h2>
+    <div class="empresas-grid">
+      <div class="empresa-card card-red reveal reveal-delay-2">
+        <span class="empresa-num">01</span>
+        <div class="empresa-badge badge-red">Consultoria Empresarial</div>
+        <div class="empresa-nome">IMPERSILVA</div>
+        <div class="empresa-subtitulo">Consultoria & Administração de Empresa</div>
+        <p class="empresa-desc">Apoiamos quem quer começar e quem já começou. Desde a abertura da sua empresa até à consolidação no mercado, estamos em cada etapa do percurso.</p>
+        <ul class="empresa-features">
+          <li><span class="bullet bullet-r"></span>Suporte completo na criação e registo de empresas</li>
+          <li><span class="bullet bullet-r"></span>Plano <strong>"Escalador de Empresa"</strong> — para negócios que querem crescer</li>
+          <li><span class="bullet bullet-r"></span>Consultoria estratégica e administrativa</li>
+          <li><span class="bullet bullet-r"></span>Acompanhamento contínuo para pequenos negócios</li>
+        </ul>
+        <a href="consultoria.html" class="empresa-link link-red">Saber mais ›</a>
+      </div>
+      <div class="empresa-card card-blue reveal reveal-delay-3">
+        <span class="empresa-num">02</span>
+        <div class="empresa-badge badge-blue">Tecnologia & Digital</div>
+        <div class="empresa-nome">IMPERSILVA <span style="color:var(--blue-lt)">|</span> TECH</div>
+        <div class="empresa-subtitulo">Soluções Tecnológicas & Customização Digital</div>
+        <p class="empresa-desc">Levamos pequenas empresas para o mundo digital. Criamos sites de vendas, gerimos redes sociais e facilitamos o contacto entre vendedor e cliente.</p>
+        <ul class="empresa-features">
+          <li><span class="bullet bullet-b"></span>Criação de sites de vendas e pedidos online</li>
+          <li><span class="bullet bullet-b"></span>Gestão e crescimento de redes sociais</li>
+          <li><span class="bullet bullet-b"></span>Visibilidade digital para negócios locais</li>
+          <li><span class="bullet bullet-b"></span>Centralização da presença online da sua empresa</li>
+        </ul>
+        <a href="tech.html" class="empresa-link link-blue">Saber mais ›</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section class="processo">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="tag-bars"><span></span><span></span></div>
+      O Nosso Processo
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Como trabalhamos<br>consigo</h2>
+    <div class="processo-steps reveal reveal-delay-2">
+      <div class="passo">
+        <div class="passo-num">01</div>
+        <div class="passo-title">Consulta Inicial</div>
+        <div class="passo-desc">Ouvimos o seu projecto, necessidades e objectivos. Sem compromisso, sem custos.</div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">02</div>
+        <div class="passo-title">Diagnóstico</div>
+        <div class="passo-desc">Analisamos a sua situação e identificamos o caminho certo para crescer.</div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">03</div>
+        <div class="passo-title">Plano de Acção</div>
+        <div class="passo-desc">Desenvolvemos uma estratégia personalizada com metas claras e alcançáveis.</div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">04</div>
+        <div class="passo-title">Execução</div>
+        <div class="passo-desc">Implementamos e acompanhamos cada passo para garantir resultados reais.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISÃO FUTURA -->
+<section class="visao">
+  <div class="section-inner">
+    <div class="visao-grid">
+      <div class="reveal">
+        <div class="section-tag">
+          <div class="tag-bars"><span></span><span></span></div>
+          O Futuro que Construímos
+        </div>
+        <div class="visao-quote">
+          Queremos ser<br>o maior grupo<br>de suporte<br><span class="red">empre</span><span class="blue">sarial</span><br>de Angola.
+        </div>
+        <p class="visao-sub">Temos uma visão ambiciosa: expandir as nossas soluções, alcançar mais empreendedores e digitalizar mais negócios angolanos em cada canto do país.</p>
+      </div>
+      <div class="visao-items reveal reveal-delay-2">
+        <div class="visao-item">
+          <div class="visao-item-icon">🌍</div>
+          <div>
+            <div class="visao-item-title">Expansão Nacional</div>
+            <div class="visao-item-desc">Levar as nossas soluções a todas as províncias de Angola.</div>
+          </div>
+        </div>
+        <div class="visao-item">
+          <div class="visao-item-icon">📱</div>
+          <div>
+            <div class="visao-item-title">Plataforma Digital Própria</div>
+            <div class="visao-item-desc">Aplicação para gestão de pedidos e negócios dos nossos clientes.</div>
+          </div>
+        </div>
+        <div class="visao-item">
+          <div class="visao-item-icon">🎓</div>
+          <div>
+            <div class="visao-item-title">Academia IMPERSILVA</div>
+            <div class="visao-item-desc">Formação de empreendedores angolanos com conteúdos práticos e acessíveis.</div>
+          </div>
+        </div>
+        <div class="visao-item">
+          <div class="visao-item-icon">🤝</div>
+          <div>
+            <div class="visao-item-title">Rede de Parceiros</div>
+            <div class="visao-item-desc">Ecossistema de empresas parceiras para fortalecer o mercado nacional.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos">
+  <div class="section-inner">
+    <div class="section-tag reveal">
+      <div class="tag-bars"><span></span><span></span></div>
+      Depoimentos
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">
+      O que dizem os nossos <span class="red">cli</span><span class="blue">entes</span>
+    </h2>
+    <div class="depoimentos-grid">
+      <div class="depo-card reveal reveal-delay-1">
+        <div class="depo-mark">"</div>
+        <p class="depo-text">A IMPERSILVA ajudou-me a formalizar o meu negócio e a criar uma estratégia real. Em poucos meses as minhas vendas duplicaram.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">👩</div>
+          <div>
+            <div class="depo-name">Maria Fernandes</div>
+            <div class="depo-role">Loja de Moda — Huambo</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card reveal reveal-delay-2">
+        <div class="depo-mark">"</div>
+        <p class="depo-text">A IMPERSILVA TECH criou o meu site de pedidos e agora os meus clientes encomendam sem precisar de se deslocar. Revolucionou o meu negócio.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">👨</div>
+          <div>
+            <div class="depo-name">Carlos Mendes</div>
+            <div class="depo-role">Restaurante — Benguela</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card reveal reveal-delay-3">
+        <div class="depo-mark">"</div>
+        <p class="depo-text">Com o Plano Escalador percebi onde estava a errar e o que precisava mudar. O suporte da equipa é próximo e muito profissional.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">👩</div>
+          <div>
+            <div class="depo-name">Ana Lopes</div>
+            <div class="depo-role">Serviços — Huíla</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-title">Pronto para <span class="red">cres</span><span class="blue">cer</span>?</h2>
+    <p class="cta-sub">A primeira consulta é gratuita e sem compromisso. Fale connosco hoje.</p>
+    <div class="cta-btns">
+      <a href="contacto.html" class="btn-blue">Solicitar Consulta</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div style="font-size:0.55rem;letter-spacing:0.25em;color:var(--gray);text-transform:uppercase;margin-bottom:0.5rem;">Holding SGPS</div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© <span id="yr"></span> IMPERSILVA HOLDING SGPS. Todos os direitos reservados.</span>
+      <span>Desenvolvido por <a href="tech.html">IMPERSILVA TECH</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- WPP FLOAT -->
+<a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços." target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
+  </svg>
+</a>
+
+<!-- MENU MOBILE -->
+<div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
+<div class="mm-drawer" id="mmDrawer">
+  <div class="mm-header">
+    <span class="mm-title">Menu</span>
+    <button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button>
+  </div>
+  <nav class="mm-nav">
+    <a href="index.html">Início</a>
+    <a href="sobre.html">Sobre Nós</a>
+    <a href="projetos.html">Projectos</a>
+    <a href="consultoria.html">Consultoria</a>
+    <a href="tech.html">IMPERSILVA TECH</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="verificar-site.html">Portal de Clientes</a>
   </nav>
+</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-glow-blue"></div>
-    <div class="hero-stripe"></div>
-
-    <div class="hero-content">
-      <!-- ESQUERDA -->
-      <div>
-        <div class="hero-label reveal">
-          <div class="hero-label-bar"><span></span><span></span></div>
-          Angola · Grupo Empresarial
-        </div>
-        <h1 class="hero-title reveal reveal-delay-1">
-          Entre nós,<br>fluem<br><span class="accent-red">opor</span><span class="accent-blue">tuni</span>dades
-        </h1>
-        <p class="hero-slogan reveal reveal-delay-2">
-          " Entre nós, fluem oportunidades "
-        </p>
-        <p class="hero-desc reveal reveal-delay-3">
-          Somos um grupo empresarial angolano que apoia negócios com consultoria estratégica e inovação digital. Do primeiro passo à expansão — estamos consigo em cada etapa.
-        </p>
-        <div class="hero-btns reveal reveal-delay-4">
-          <a href="sobre.html" class="btn-red">Conheça-nos →</a>
-          <a href="contacto.html" class="btn-ghost">Falar Connosco</a>
-        </div>
-      </div>
-
-      <!-- DIREITA: cards -->
-      <div class="hero-visual">
-        <div class="hero-card">
-          <div class="hero-card-accent accent-r"></div>
-          <div class="hero-card-body">
-            <div class="hero-card-title">IMPERSILVA Consultoria</div>
-            <div class="hero-card-desc">Apoio completo na criação e crescimento do seu negócio. Do zero ao topo com o Plano Escalador.</div>
-          </div>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-accent accent-b"></div>
-          <div class="hero-card-body">
-            <div class="hero-card-title">IMPERSILVA TECH</div>
-            <div class="hero-card-desc">Sites de vendas, gestão de redes e presença digital para o seu negócio crescer online.</div>
-          </div>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-accent accent-mix"></div>
-          <div class="hero-card-body">
-            <div class="hero-card-title">Plano Escalador</div>
-            <div class="hero-card-desc">Método comprovado para levar o seu negócio ao próximo nível, passo a passo.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="scroll-hint">Explorar</div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stats-inner">
-      <div class="stat-item">
-        <span class="stat-number" data-target="120"><span class="red">0</span></span>
-        <span class="stat-label">Clientes Apoiados</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="2"><span class="blue">0</span></span>
-        <span class="stat-label">Empresas do Grupo</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="98"><span class="red">0</span></span>
-        <span class="stat-label">% Satisfação</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="50"><span class="blue">0</span></span>
-        <span class="stat-label">Projectos Digitais</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- QUEM SOMOS -->
-  <section class="section" id="sobre">
-    <div class="section-inner">
-      <div class="section-tag reveal">
-        <div class="tag-bars"><span></span><span></span></div>
-        Quem Somos
-      </div>
-      <h2 class="section-title reveal reveal-delay-1">
-        Um grupo feito<br>para <span class="red">servir</span> e <span class="blue">transformar</span>
-      </h2>
-      <div class="sobre-grid">
-        <div class="sobre-text reveal">
-          <p>A <strong>IMPERSILVA HOLDING SGPS</strong> é um grupo empresarial angolano fundado com a missão de democratizar o acesso ao empreendedorismo e à tecnologia em Angola.</p>
-          <p>Reunimos dois pilares estratégicos: a <strong class="red">IMPERSILVA Consultoria</strong>, focada em guiar empresas desde a concepção até à consolidação, e a <strong class="blue">IMPERSILVA TECH</strong>, dedicada a digitalizar e amplificar a presença de negócios no mundo online.</p>
-          <p>O nosso compromisso é claro: tratamos cada cliente como parceiro. O crescimento do seu negócio é a nossa maior conquista.</p>
-          <div style="margin-top:1.5rem;">
-            <a href="sobre.html" class="btn-ghost" style="font-size:0.82rem;">Ver a nossa história →</a>
-          </div>
-        </div>
-        <div class="valores-grid reveal reveal-delay-2">
-          <div class="valor-card">
-            <div class="valor-icon"> <span class="valor-bar r"></span></div>
-            <div class="valor-title">Missão</div>
-            <div class="valor-desc">Impulsionar negócios angolanos com estratégia, tecnologia e acompanhamento próximo.</div>
-          </div>
-          <div class="valor-card">
-            <div class="valor-icon"> <span class="valor-bar b"></span></div>
-            <div class="valor-title">Visão</div>
-            <div class="valor-desc">Ser o grupo de referência em soluções empresariais e digitais em Angola.</div>
-          </div>
-          <div class="valor-card">
-            <div class="valor-icon"> <span class="valor-bar r"></span></div>
-            <div class="valor-title">Compromisso</div>
-            <div class="valor-desc">O seu sucesso é o nosso sucesso. Acompanhamos cada etapa da sua jornada.</div>
-          </div>
-          <div class="valor-card">
-            <div class="valor-icon"> <span class="valor-bar b"></span></div>
-            <div class="valor-title">Inovação</div>
-            <div class="valor-desc">Soluções modernas e adaptadas à realidade do mercado angolano.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EMPRESAS -->
-  <section class="empresas">
-    <div class="section-inner">
-      <div class="section-tag reveal">
-        <div class="tag-bars"><span></span><span></span></div>
-        Os Nossos Projectos
-      </div>
-      <h2 class="section-title reveal reveal-delay-1">
-        Dois pilares,<br>uma só <span class="red">vis</span><span class="blue">ão</span>
-      </h2>
-      <div class="empresas-grid">
-
-        <div class="empresa-card card-red reveal reveal-delay-2">
-          <span class="empresa-num">01</span>
-          <div class="empresa-badge badge-red">Consultoria Empresarial</div>
-          <div class="empresa-nome">IMPERSILVA</div>
-          <div class="empresa-subtitulo">Consultoria & Administração de Empresa</div>
-          <p class="empresa-desc">Apoiamos quem quer começar e quem já começou. Desde a abertura da sua empresa até à consolidação no mercado, estamos em cada etapa do percurso.</p>
-          <ul class="empresa-features">
-            <li><span class="bullet bullet-r"></span>Suporte completo na criação e registo de empresas</li>
-            <li><span class="bullet bullet-r"></span>Plano <strong>"Escalador de Empresa"</strong> — para negócios que querem crescer</li>
-            <li><span class="bullet bullet-r"></span>Consultoria estratégica e administrativa</li>
-            <li><span class="bullet bullet-r"></span>Acompanhamento contínuo para pequenos negócios</li>
-          </ul>
-          <a href="consultoria.html" class="empresa-link link-red">Saber mais ›</a>
-        </div>
-
-        <div class="empresa-card card-blue reveal reveal-delay-3">
-          <span class="empresa-num">02</span>
-          <div class="empresa-badge badge-blue">Tecnologia & Digital</div>
-          <div class="empresa-nome">IMPERSILVA <span style="color:var(--blue-lt)">|</span> TECH</div>
-          <div class="empresa-subtitulo">Soluções Tecnológicas & Customização Digital</div>
-          <p class="empresa-desc">Levamos pequenas empresas para o mundo digital. Criamos sites de vendas, gerimos redes sociais e facilitamos o contacto entre vendedor e cliente.</p>
-          <ul class="empresa-features">
-            <li><span class="bullet bullet-b"></span>Criação de sites de vendas e pedidos online</li>
-            <li><span class="bullet bullet-b"></span>Gestão e crescimento de redes sociais</li>
-            <li><span class="bullet bullet-b"></span>Visibilidade digital para negócios locais</li>
-            <li><span class="bullet bullet-b"></span>Centralização da presença online da sua empresa</li>
-          </ul>
-          <a href="tech.html" class="empresa-link link-blue">Saber mais ›</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESSO -->
-  <section class="processo">
-    <div class="section-inner">
-      <div class="section-tag reveal">
-        <div class="tag-bars"><span></span><span></span></div>
-        O Nosso Processo
-      </div>
-      <h2 class="section-title reveal reveal-delay-1">Como trabalhamos<br>consigo</h2>
-      <div class="processo-steps reveal reveal-delay-2">
-        <div class="passo">
-          <div class="passo-num">01</div>
-          <div class="passo-title">Consulta Inicial</div>
-          <div class="passo-desc">Ouvimos o seu projecto, necessidades e objectivos. Sem compromisso, sem custos.</div>
-        </div>
-        <div class="passo">
-          <div class="passo-num">02</div>
-          <div class="passo-title">Diagnóstico</div>
-          <div class="passo-desc">Analisamos a sua situação e identificamos o caminho certo para crescer.</div>
-        </div>
-        <div class="passo">
-          <div class="passo-num">03</div>
-          <div class="passo-title">Plano de Acção</div>
-          <div class="passo-desc">Desenvolvemos uma estratégia personalizada com metas claras e alcançáveis.</div>
-        </div>
-        <div class="passo">
-          <div class="passo-num">04</div>
-          <div class="passo-title">Execução</div>
-          <div class="passo-desc">Implementamos e acompanhamos cada passo para garantir resultados reais.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- VISÃO FUTURA -->
-  <section class="visao">
-    <div class="section-inner">
-      <div class="visao-grid">
-        <div class="reveal">
-          <div class="section-tag">
-            <div class="tag-bars"><span></span><span></span></div>
-            O Futuro que Construímos
-          </div>
-          <div class="visao-quote">
-            Queremos ser<br>o maior grupo<br>de suporte<br><span class="red">empre</span><span class="blue">sarial</span><br>de Angola.
-          </div>
-          <p class="visao-sub">
-            Temos uma visão ambiciosa: expandir as nossas soluções, alcançar mais empreendedores e digitalizar mais negócios angolanos em cada canto do país.
-          </p>
-        </div>
-        <div class="visao-items reveal reveal-delay-2">
-          <div class="visao-item">
-            <div class="visao-item-icon"></div>
-            <div>
-              <div class="visao-item-title">Expansão Nacional</div>
-              <div class="visao-item-desc">Levar as nossas soluções a todas as províncias de Angola.</div>
-            </div>
-          </div>
-          <div class="visao-item">
-            <div class="visao-item-icon"></div>
-            <div>
-              <div class="visao-item-title">Plataforma Digital Própria</div>
-              <div class="visao-item-desc">Aplicação para gestão de pedidos e negócios dos nossos clientes.</div>
-            </div>
-          </div>
-          <div class="visao-item">
-            <div class="visao-item-icon"></div>
-            <div>
-              <div class="visao-item-title">Academia IMPERSILVA</div>
-              <div class="visao-item-desc">Formação de empreendedores angolanos com conteúdos práticos e acessíveis.</div>
-            </div>
-          </div>
-          <div class="visao-item">
-            <div class="visao-item-icon"></div>
-            <div>
-              <div class="visao-item-title">Rede de Parceiros</div>
-              <div class="visao-item-desc">Ecossistema de empresas parceiras para fortalecer o mercado nacional.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section class="depoimentos">
-    <div class="section-inner">
-      <div class="section-tag reveal">
-        <div class="tag-bars"><span></span><span></span></div>
-        Depoimentos
-      </div>
-      <h2 class="section-title reveal reveal-delay-1">
-        O que dizem os nossos <span class="red">cli</span><span class="blue">entes</span>
-      </h2>
-      <div class="depoimentos-grid">
-        <div class="depo-card reveal reveal-delay-1">
-          <div class="depo-mark">"</div>
-          <p class="depo-text">A IMPERSILVA ajudou-me a formalizar o meu negócio e a criar uma estratégia real. Em poucos meses as minhas vendas duplicaram.</p>
-          <div class="depo-author">
-            <div class="depo-avatar"></div>
-            <div>
-              <div class="depo-name">Maria Fernandes</div>
-              <div class="depo-role">Loja de Moda — Huambo</div>
-            </div>
-          </div>
-        </div>
-        <div class="depo-card reveal reveal-delay-2">
-          <div class="depo-mark">"</div>
-          <p class="depo-text">A IMPERSILVA TECH criou o meu site de pedidos e agora os meus clientes encomendam sem precisar de se deslocar. Revolucionou o meu negócio.</p>
-          <div class="depo-author">
-            <div class="depo-avatar"></div>
-            <div>
-              <div class="depo-name">Carlos Mendes</div>
-              <div class="depo-role">Restaurante — Benguela</div>
-            </div>
-          </div>
-        </div>
-        <div class="depo-card reveal reveal-delay-3">
-          <div class="depo-mark">"</div>
-          <p class="depo-text">Com o Plano Escalador percebi onde estava a errar e o que precisava mudar. O suporte da equipa é próximo e muito profissional.</p>
-          <div class="depo-author">
-            <div class="depo-avatar"></div>
-            <div>
-              <div class="depo-name">Ana Lopes</div>
-              <div class="depo-role">Serviços — Huíla</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="cta-section">
-    <div class="container">
-      <h2 class="cta-title">Pronto para <span class="red">cres</span><span class="blue">cer</span>?</h2>
-      <p class="cta-sub">A primeira consulta é gratuita e sem compromisso. Fale connosco hoje.</p>
-      <div class="cta-btns">
-        <a href="contacto.html" class="btn-blue"> Solicitar Consulta</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div style="font-size:0.55rem;letter-spacing:0.25em;color:var(--gray);text-transform:uppercase;margin-bottom:0.5rem;">Holding SGPS</div>
-      </div>
-      <div class="footer-divider"></div>
-      <div class="footer-bottom">
-        <span>© <span id="yr"></span> IMPERSILVA HOLDING SGPS. Todos os direitos reservados.</span>
-        <span>Desenvolvido por <a href="tech.html">IMPERSILVA TECH</a></span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- BOTÃO FLUTUANTE WPP -->
-  <a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços." target="_blank" class="wpp-float" title="WhatsApp">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
-    </svg>
-  </a>
-
-  <!-- MENU MOBILE -->
-  <div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
-  <div class="mm-drawer" id="mmDrawer">
-    <div class="mm-header">
-      <span class="mm-title">Menu</span>
-      <button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button>
-    </div>
-    <nav class="mm-nav">
-      <a href="index.html">Início</a>
-      <a href="sobre.html">Sobre Nós</a>
-      <a href="projetos.html">Projectos</a>
-      <a href="consultoria.html">Consultoria</a>
-      <a href="tech.html">IMPERSILVA TECH</a>
-      <a href="contacto.html">Contacto</a>
-      <a href="verificar-site.html">Portal de Clientes</a>
-    </nav>
-  </div>
-
-  <script>
-    // PWA: Registo do Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('https://impersilvatech.github.io/IMPERSILVA/service-worker.js')
-        .then(() => console.log('PWA registado com sucesso'))
-        .catch(() => console.log('PWA não suportado'));
-    }
-
-    // REVEAL AO SCROLL
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Hero revela imediatamente
-    document.querySelectorAll('.hero .reveal').forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), 150 + i * 130);
+<script>
+  // REVEAL AO SCROLL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // CONTADORES ANIMADOS
-    const counterObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { animateCount(e.target); counterObs.unobserve(e.target); }
-      });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObs.observe(el));
+  // Hero revela imediatamente
+  document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 150 + i * 130);
+  });
 
-    function animateCount(el) {
-      const target = +el.dataset.target;
-      const suffix = el.dataset.target >= 98 ? '%' : '+';
-      let n = 0;
-      const step = target / (1600 / 16);
-      const t = setInterval(() => {
-        n += step;
-        if (n >= target) { el.textContent = target + suffix; clearInterval(t); }
-        else { el.textContent = Math.floor(n) + suffix; }
-      }, 16);
-    }
-
-    // NAVBAR SCROLL
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-      navbar.style.borderBottomColor = window.scrollY > 60
-        ? 'rgba(214,40,40,0.2)'
-        : 'rgba(255,255,255,0.07)';
+  // CONTADORES ANIMADOS
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animateCount(e.target); counterObs.unobserve(e.target); }
     });
-    document.getElementById("yr").textContent = new Date().getFullYear();
-  </script>
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObs.observe(el));
+
+  function animateCount(el) {
+    const target = +el.dataset.target;
+    const suffix = el.dataset.target >= 98 ? '%' : '+';
+    let n = 0;
+    const step = target / (1600 / 16);
+    const t = setInterval(() => {
+      n += step;
+      if (n >= target) { el.textContent = target + suffix; clearInterval(t); }
+      else { el.textContent = Math.floor(n) + suffix; }
+    }, 16);
+  }
+
+  // NAVBAR SCROLL
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.borderBottomColor = window.scrollY > 60
+      ? 'rgba(214,40,40,0.2)'
+      : 'rgba(255,255,255,0.07)';
+  });
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+
+<!-- ═══════ PWA: SERVICE WORKER + INSTALL PROMPT ═══════ -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })
+      .then((reg) => {
+        console.log('[PWA] Service Worker registado:', reg.scope);
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              showUpdateBanner();
+            }
+          });
+        });
+      })
+      .catch((err) => console.warn('[PWA] SW falhou:', err));
+  });
+}
+
+function showUpdateBanner() {
+  const banner = document.createElement('div');
+  banner.style.cssText = `
+    position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);
+    background:#242428;border:1px solid rgba(255,255,255,0.12);
+    border-left:3px solid #d62828;color:#fff;
+    font-family:'Barlow',sans-serif;font-size:0.82rem;
+    padding:0.75rem 1.2rem;border-radius:8px;
+    display:flex;align-items:center;gap:1rem;
+    z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4);white-space:nowrap;
+  `;
+  banner.innerHTML = `
+    <span>🔄 Nova versão disponível</span>
+    <button onclick="window.location.reload()" style="background:#d62828;color:#fff;border:none;border-radius:4px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:600;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;">Actualizar</button>
+    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:1rem;padding:0;">✕</button>
+  `;
+  document.body.appendChild(banner);
+  setTimeout(() => banner.remove(), 10000);
+}
+
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'inline-flex';
+});
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+});
+window.installPWA = function () {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+};
+</script>
+<!-- ═══════ /PWA ═══════ -->
+
 </body>
 </html>
