@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <title>Admin — IMPERSILVA</title>
@@ -984,6 +987,10 @@ function openCliModal(id) {
       '<div class="fg"><label class="fl">Telefone</label><input class="fi" id="cTel" value="'+(c?c.telefone||'':'')+'" placeholder="+244 900 000 000"></div>'+
       '<div class="fg"><label class="fl">URL do Site</label><input class="fi" id="cUrl" value="'+(c?c.url_site||'':'')+'" placeholder="https://..."></div>'+
     '</div>'+
+    '<div class="fg"><label class="fl"><i class="fa-solid fa-shield-halved" style="color:var(--blu2)"></i> URL do Admin (Cloudflare Pages)</label>'+
+      '<input class="fi" id="cUrlAdmin" value="'+(c?c.url_admin||'':'')+'" placeholder="https://nome-admin.pages.dev">'+
+      '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">URL privado do painel admin do cliente — não publicar</div>'+
+    '</div>'+
     '<div class="grid2">'+
       '<div class="fg"><label class="fl">Estado</label><select class="fi" id="cEstado">'+eOpts+'</select></div>'+
       '<div class="fg"><label class="fl">Progresso (%)</label><input class="fi" type="number" id="cProg" min="0" max="100" value="'+(c?c.progresso||0:0)+'"></div>'+
@@ -1001,6 +1008,13 @@ function openCliModal(id) {
         '<div class="fg"><label class="fl">Repositório</label><input class="fi" id="cGhRepo" value="'+(c?c.gh_repo||'':'')+'" placeholder="nome-repo"></div>'+
       '</div>'+
       '<div class="fg"><label class="fl">Branch</label><input class="fi" id="cGhBranch" value="'+(c?c.gh_branch||'main':'main')+'" placeholder="main"></div>'+
+    '</div>'+
+    '<div style="background:rgba(214,40,40,.07);border:1px solid rgba(214,40,40,.2);border-radius:10px;padding:.9rem;margin-bottom:.85rem">'+
+      '<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem"><i class="fa-solid fa-key"></i> Token do Admin da Loja</div>'+
+      '<div class="fg"><label class="fl">Loja Token</label>'+
+        '<input class="fi" id="cLojaToken" type="password" value="'+(c?c.loja_token||'':'')+'">'+
+        '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">Token do admin do site do cliente — preenchido automaticamente ao entrar pelo portal</div>'+
+      '</div>'+
     '</div>'+
     '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
       '<label class="tog"><input type="checkbox" id="cActivo"'+((!c||c.activo)?' checked':'')+'>'+
@@ -1023,6 +1037,7 @@ async function saveCli(eid) {
     negocio:document.getElementById('cNeg').value.trim(),
     telefone:document.getElementById('cTel').value.trim(),
     url_site:document.getElementById('cUrl').value.trim(),
+    url_admin:document.getElementById('cUrlAdmin')?document.getElementById('cUrlAdmin').value.trim()||null:null,
     estado:document.getElementById('cEstado').value,
     progresso:parseInt(document.getElementById('cProg').value)||0,
     etapa_actual:document.getElementById('cEtapa').value.trim(),
@@ -1032,7 +1047,8 @@ async function saveCli(eid) {
     gh_token:document.getElementById('cGhToken').value.trim()||null,
     gh_user:document.getElementById('cGhUser').value.trim()||null,
     gh_repo:document.getElementById('cGhRepo').value.trim()||null,
-    gh_branch:document.getElementById('cGhBranch').value.trim()||'main'
+    gh_branch:document.getElementById('cGhBranch').value.trim()||'main',
+    loja_token:document.getElementById('cLojaToken')?document.getElementById('cLojaToken').value.trim()||null:null
   };
   if(!data.id||!data.nome){toast('Código e nome são obrigatórios','error');return;}
   try{
