@@ -76,7 +76,6 @@ function showSuccess(nome, url) {
   document.getElementById('actions').innerHTML =
     '<div style="font-size:.75rem;color:var(--gr);margin-bottom:.5rem"><i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:.3rem"></i>' + url + '</div>' +
     '<div class="prog-bar" style="margin-bottom:0"><div class="prog-fill" id="redirProg" style="width:0%;transition:width 2s linear"></div></div>';
-  // Animate redirect bar
   setTimeout(function(){ document.getElementById('redirProg').style.width='100%'; }, 50);
 }
 
@@ -95,7 +94,7 @@ async function verificar() {
   setProgress(40);
   setMsg('A validar token...', 'A comunicar com o servidor...');
 
-  // 2. Validate token with Worker
+  // 2. Validate token with Worker do Portal
   try {
     var r = await fetch(API + '/api/auth/verificar', {
       headers: {'X-Cliente-Token': token}
@@ -114,29 +113,38 @@ async function verificar() {
     var user = data.user;
     var cli = data.cliente;
 
-    setProgress(85);
+    setProgress(80);
     setMsg('A preparar painel...', 'Verificando acesso ao painel da loja...');
 
-    // 3. Check if client has a site URL
-    if (!cli || !cli.url_site) {
+    // 3. Check if client has an admin URL (Cloudflare Pages)
+    var adminBase = cli.url_admin || null;
+
+    if (!adminBase) {
       showError(
         'Painel Não Disponível',
-        'O painel da tua loja ainda não está disponível.<br>' +
-        'Será activado assim que o teu site estiver concluído.<br><br>' +
-        '<small style="color:var(--gr)">Se acreditas que isto é um erro, contacta a IMPERSILVA.</small>'
+        'O painel de gestão da tua loja ainda não está disponível.<br>' +
+        'Será activado em breve pela equipa IMPERSILVA.<br><br>' +
+        '<small style="color:rgba(255,255,255,.4)">Código: ' + (cli.id||'—') + '</small>'
       );
       return;
     }
 
+    setProgress(90);
+
+    // 4. ⚠️ USAR O loja_token SE EXISTIR, SENÃO USAR O TOKEN DO PORTAL
+    var lojaToken = cli.loja_token || token;
+    
+    // Guardar o token da loja para o admin.html usar
+    sessionStorage.setItem('loja_admin_tok', lojaToken);
+
+    // 5. Build redirect URL com o token CORRETO
+    var adminUrl = adminBase.replace(/\/$/, '') + '/admin.html';
+    var redirectUrl = adminUrl + '?tok=' + encodeURIComponent(lojaToken);
+
     setProgress(100);
-
-    // 4. Build redirect URL with token
-    var adminUrl = cli.url_site.replace(/\/$/, '') + '/admin.html';
-    var redirectUrl = adminUrl + '?tok=' + encodeURIComponent(token) + '&cli=' + encodeURIComponent(cli.id);
-
     showSuccess(user.nome.split(' ')[0], adminUrl);
 
-    // 5. Redirect after 2 seconds
+    // 6. Redirect after 2 seconds
     setTimeout(function() {
       window.location.href = redirectUrl;
     }, 2100);
