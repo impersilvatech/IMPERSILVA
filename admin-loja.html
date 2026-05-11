@@ -116,7 +116,7 @@ async function verificar() {
     setProgress(80);
     setMsg('A preparar painel...', 'Verificando acesso ao painel da loja...');
 
-    // 3. Check if client has an admin URL (Cloudflare Pages)
+    // 3. Check if client has an admin URL
     var adminBase = cli.url_admin || null;
 
     if (!adminBase) {
@@ -131,20 +131,27 @@ async function verificar() {
 
     setProgress(90);
 
-    // 4. ⚠️ USAR O loja_token SE EXISTIR, SENÃO USAR O TOKEN DO PORTAL
+    // 4. ⚠️ Usar loja_token se existir, senão usar o token do portal
     var lojaToken = cli.loja_token || token;
     
     // Guardar o token da loja para o admin.html usar
     sessionStorage.setItem('loja_admin_tok', lojaToken);
 
-    // 5. Build redirect URL com o token CORRETO
+    // 5. ⚠️ Guardar dados GitHub do cliente no sessionStorage
+    //    O admin.html da loja vai lê-los e guardar no localStorage
+    if (cli.gh_token) sessionStorage.setItem('gh_token', cli.gh_token);
+    if (cli.gh_user) sessionStorage.setItem('gh_user', cli.gh_user);
+    if (cli.gh_repo) sessionStorage.setItem('gh_repo', cli.gh_repo);
+    if (cli.gh_branch) sessionStorage.setItem('gh_branch', cli.gh_branch);
+
+    // 6. Build redirect URL com o token CORRETO
     var adminUrl = adminBase.replace(/\/$/, '') + '/admin.html';
     var redirectUrl = adminUrl + '?tok=' + encodeURIComponent(lojaToken);
 
     setProgress(100);
     showSuccess(user.nome.split(' ')[0], adminUrl);
 
-    // 6. Redirect after 2 seconds
+    // 7. Redirect after 2 seconds
     setTimeout(function() {
       window.location.href = redirectUrl;
     }, 2100);
