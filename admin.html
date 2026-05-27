@@ -318,7 +318,7 @@ input:checked+.tsl::before{transform:translateX(16px)}
   <nav id="bn">
     <button class="bni on" onclick="goB(this,'painel')"><i class="fa-solid fa-gauge"></i><span>Painel</span></button>
     <button class="bni" onclick="goB(this,'clientes')"><i class="fa-solid fa-globe"></i><span>Clientes</span></button>
-    <button class="bni" onclick="goB(this,'portfolio')"><i class="fa-solid fa-briefcase"></i><span>Portfólio</span></button>
+    <button class="bni" onclick="goB(this,'sites')"><i class="fa-solid fa-rocket"></i><span>Sites</span></button>
     <button class="bni" onclick="goB(this,'leads')"><i class="fa-solid fa-envelope"></i><span>Leads</span><span class="bnb" id="bn-leads">0</span></button>
     <button class="bni" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i><span>Mais</span></button>
   </nav>
@@ -329,6 +329,9 @@ input:checked+.tsl::before{transform:translateX(16px)}
     <div class="mg">
       <div class="mi" onclick="closeMore();go('equipa')"><i class="fa-solid fa-users"></i>Equipa</div>
       <div class="mi" onclick="closeMore();go('projetos')"><i class="fa-solid fa-diagram-project"></i>Projectos</div>
+      <div class="mi" onclick="closeMore();go('sites')"><i class="fa-solid fa-rocket"></i>Sites</div>
+      <div class="mi" onclick="closeMore();go('templates')"><i class="fa-solid fa-layer-group"></i>Templates</div>
+      <div class="mi" onclick="closeMore();go('portfolio')"><i class="fa-solid fa-briefcase"></i>Portfólio</div>
       <div class="mi" onclick="closeMore();go('documentos')"><i class="fa-solid fa-file-arrow-up"></i>Documentos</div>
       <div class="mi" onclick="closeMore();go('tickets')"><i class="fa-solid fa-ticket"></i>Suporte</div>
       <div class="mi" onclick="closeMore();go('mensagens')"><i class="fa-solid fa-comments"></i>Mensagens</div>
@@ -482,7 +485,7 @@ function go(s, el) {
   document.querySelectorAll('.sbi').forEach(function(i){ i.classList.remove('on'); });
   if(el) el.classList.add('on');
   // Show immediate loading feedback for data sections
-  var dataSections = ['portfolio','equipa','clientes','projetos','documentos','tickets','mensagens','contactos','orcamentos','financas','usuarios'];
+  var dataSections = ['portfolio','equipa','clientes','projetos','documentos','tickets','mensagens','contactos','orcamentos','financas','usuarios','sites','templates'];
   if(dataSections.indexOf(s) >= 0 && s !== _lastSec) {
     document.getElementById('mc').innerHTML = '<div class="load" style="min-height:30vh;align-items:center"><div class="spin"></div> A carregar...</div>';
   }
@@ -494,7 +497,8 @@ function go(s, el) {
     contactos:rContactos, orcamentos:rOrcamentos,
     config:rConfig, leads:rLeads,
     financas:rFinancas, usuarios:rUsuarios,
-    notificacoes:rNotificacoes, limpeza:rLimpeza
+    notificacoes:rNotificacoes, limpeza:rLimpeza,
+    sites:rSites, templates:rTemplates
   };
   if(fns[s]) fns[s]();
 }
@@ -1088,6 +1092,417 @@ function shareCli(id) {
       '<a class="btn bblue" href="'+link+'" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Pré-ver</a>'+
     '</div>'
   );
+}
+
+/* ═══════════════════════════════════════════════════
+   SITES — gestão multi-site
+   ═══════════════════════════════════════════════════ */
+
+var _sitesList = [];
+
+async function rSites() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Sites <span class="r">Activos</span></div><div class="ps">Todos os sites criados pela IMPERSILVA</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rSites()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="abrirCriarSite()"><i class="fa-solid fa-plus"></i> Novo Site</button>'+
+    '</div>'+
+    '<div id="sitesL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+
+  try {
+    _cliList = await wGet('/api/admin/clientes');
+    _sitesList = _cliList.filter(function(c){ return c.url_site || c.gh_repo; });
+    var el = document.getElementById('sitesL');
+    if(!el) return;
+
+    if(!_sitesList.length){
+      el.innerHTML='<div class="empty"><i class="fa-solid fa-rocket"></i><p>Nenhum site criado ainda.<br>Clica em <b>+ Novo Site</b> para começar.</p></div>';
+      return;
+    }
+
+    var html = '<div style="display:flex;flex-direction:column;gap:10px">';
+    _sitesList.forEach(function(c){
+      var temSite = !!c.url_site;
+      var temAdmin = !!c.url_admin;
+      var temRepo  = !!c.gh_repo;
+      html += '<div class="cc" style="border-left:3px solid '+(temSite?'var(--gr)':'var(--yl)')+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">'+
+          '<div>'+
+            '<div class="ccn" style="margin-bottom:2px">'+c.nome+'</div>'+
+            (c.negocio?'<div style="font-size:.7rem;color:var(--gr)">'+c.negocio+'</div>':'')+
+          '</div>'+
+          '<div style="display:flex;gap:5px;align-items:center">'+
+            '<span style="font-size:.6rem;padding:2px 7px;border-radius:20px;background:'+(temSite?'#0d2a1a':'#2a1a0d')+';color:'+(temSite?'#4ade80':'#fbbf24')+'">'+
+              (temSite?'🟢 Online':'🟡 Setup')+
+            '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+
+          (temRepo?'<span style="font-size:.6rem;background:#1a1a2e;padding:2px 7px;border-radius:4px;color:#93c5fd"><i class="fa-brands fa-github"></i> '+c.gh_repo+'</span>':'')+
+          (c.estado?estadoBadge(c.estado):'')+
+        '</div>'+
+        '<div style="display:flex;gap:5px;flex-wrap:wrap">'+
+          (temSite?'<a class="btn bgh bsm" href="'+c.url_site+'" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-arrow-up-right-from-square"></i> Site</a>':'')+
+          (temAdmin?'<a class="btn bgh bsm" href="'+c.url_admin+'" target="_blank" style="flex:1;text-align:center;color:var(--blu2)"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a>':'')+
+          '<button class="btn bgh bsm" onclick="abrirDeploySite(\''+c.id+'\')" style="flex:1"><i class="fa-solid fa-upload"></i> Deploy</button>'+
+          '<button class="btn bgh bsm" onclick="editCli(\''+c.id+'\')" style="color:var(--gr)"><i class="fa-solid fa-pen"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) {
+    var el2 = document.getElementById('sitesL');
+    if(el2) el2.innerHTML = '<div class="empty"><p>Erro: '+e.message+'</p></div>';
+  }
+}
+
+/* ── Criar Novo Site ── */
+function abrirCriarSite() {
+  wGet('/api/admin/templates').then(function(templates){
+    var tOpts = '';
+    if(templates && templates.length){
+      templates.forEach(function(t){
+        tOpts += '<option value="'+t.id+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
+      });
+    } else {
+      tOpts = '<option value="">Nenhum template — adiciona em Templates primeiro</option>';
+    }
+
+    openModal(
+      '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+      '<div class="mtit">Novo <span class="r">Site</span></div>'+
+
+      '<div style="background:#1a1a2e;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.72rem;color:#93c5fd;line-height:1.6">'+
+        '<i class="fa-solid fa-circle-info"></i> O sistema vai criar um repositório GitHub e copiar os ficheiros do template automaticamente.'+
+      '</div>'+
+
+      '<div class="fg"><label class="fl">Template</label>'+
+        '<select class="fi" id="csTemplate">'+tOpts+'</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Nome do Site</label>'+
+        '<input class="fi" id="csNome" placeholder="Ex: Pastelaria Lisboa"/>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Slug (URL)</label>'+
+        '<div style="display:flex;gap:5px">'+
+          '<input class="fi" id="csSlug" placeholder="pastelaria-lisboa" style="flex:1" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,\'-\')"/>'+
+          '<button class="btn bgh bsm" onclick="autoSlug()"><i class="fa-solid fa-wand-magic-sparkles"></i></button>'+
+        '</div>'+
+        '<div style="font-size:.65rem;color:var(--gr);margin-top:3px">impersilvatech.github.io/<span id="slugPrev" style="color:#a78bfa">pastelaria-lisboa</span>/</div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Cliente</label>'+
+        '<select class="fi" id="csCliente">'+
+          '<option value="">— Seleccionar cliente —</option>'+
+          (_cliList||[]).map(function(c){ return '<option value="'+c.id+'">'+c.nome+(c.negocio?' ('+c.negocio+')':'')+'</option>'; }).join('')+
+        '</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">GitHub Token <span style="color:var(--gr);font-size:.65rem">(do cliente ou da org)</span></label>'+
+        '<input class="fi" type="password" id="csGhToken" placeholder="ghp_..."/>'+
+        '<div style="font-size:.65rem;color:var(--gr);margin-top:3px">Precisa de permissão: repo, workflow, pages</div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">GitHub User/Org</label>'+
+        '<input class="fi" id="csGhUser" value="impersilvatech" placeholder="impersilvatech"/>'+
+      '</div>'+
+
+      '<button class="btn bblue" style="width:100%;margin-top:8px" onclick="executarCriarSite()">'+
+        '<i class="fa-solid fa-rocket"></i> Criar Site Automaticamente'+
+      '</button>'
+    );
+
+    document.getElementById('csSlug').addEventListener('input', function(){
+      document.getElementById('slugPrev').textContent = this.value || 'slug';
+    });
+  }).catch(function(){
+    toast('Adiciona pelo menos um template primeiro em "Templates"','error');
+    go('templates');
+  });
+}
+
+function autoSlug(){
+  var nome = (document.getElementById('csNome')||{}).value||'';
+  var slug = nome.toLowerCase()
+    .replace(/[àáâãäå]/g,'a').replace(/[èéêë]/g,'e')
+    .replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o')
+    .replace(/[ùúûü]/g,'u').replace(/ç/g,'c')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  var el = document.getElementById('csSlug');
+  if(el){ el.value = slug; document.getElementById('slugPrev').textContent = slug; }
+}
+
+async function executarCriarSite(){
+  var templateVal = (document.getElementById('csTemplate')||{}).value||'';
+  var nome        = ((document.getElementById('csNome')||{}).value||'').trim();
+  var slug        = ((document.getElementById('csSlug')||{}).value||'').trim();
+  var clienteId   = (document.getElementById('csCliente')||{}).value||'';
+  var ghToken     = ((document.getElementById('csGhToken')||{}).value||'').trim();
+  var ghUser      = ((document.getElementById('csGhUser')||{}).value||'impersilvatech').trim();
+
+  if(!templateVal||templateVal.indexOf('|')<0){ toast('Selecciona um template','error'); return; }
+  if(!nome){ toast('Nome do site é obrigatório','error'); return; }
+  if(!slug){ toast('Slug é obrigatório','error'); return; }
+  if(!ghToken){ toast('GitHub Token é obrigatório','error'); return; }
+
+  var tParts = templateVal.split('|');
+  var tGhUser = tParts[1], tGhRepo = tParts[2], tGhBranch = tParts[3]||'main';
+
+  var btn = document.querySelector('#modal .btn.bblue');
+  if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar...'; btn.disabled=true; }
+
+  try {
+    var res = await wPost('/api/admin/sites/criar', {
+      nome, slug, gh_token: ghToken, gh_user: ghUser,
+      template_gh_user: tGhUser, template_gh_repo: tGhRepo, template_gh_branch: tGhBranch,
+      cliente_id: clienteId || null
+    });
+
+    if(res.erro) throw new Error(res.erro);
+
+    closeModal();
+    toast('Site criado com sucesso! 🎉','success');
+
+    setTimeout(function(){
+      openModal(
+        '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+        '<div class="mtit">Site <span class="r">Criado!</span> 🎉</div>'+
+        '<div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">'+
+
+          _stepOk('Repositório GitHub criado', ghUser+'/'+slug)+
+          _stepOk('Ficheiros do template copiados', res.ficheiros_copiados+' ficheiros')+
+          _stepOk('GitHub Pages activado', 'https://'+ghUser+'.github.io/'+slug+'/')+
+
+          '<div style="height:1px;background:var(--bd);margin:6px 0"></div>'+
+
+          _stepPend('Criar Worker Cloudflare', 'Nome sugerido: '+slug)+
+          _stepPend('Criar D1 Database', 'Nome sugerido: '+slug+'-db')+
+          _stepPend('Configurar VAPID Keys', 'Usar o Gerador VAPID')+
+          _stepPend('Actualizar URL do Worker no admin.html', 'var API = \'https://'+slug+'.workers.dev\'')+
+
+        '</div>'+
+        '<div style="font-size:.65rem;color:var(--gr);margin-top:12px;line-height:1.6">'+
+          'O site fica online em 1-2 minutos após activação do GitHub Pages. '+
+          'Actualiza o registo do cliente com a URL do Worker quando estiver criado.'+
+        '</div>'+
+        '<button class="btn bblue" style="width:100%;margin-top:12px" onclick="closeModal();rSites()">'+
+          '<i class="fa-solid fa-check"></i> Concluir'+
+        '</button>'
+      );
+    }, 300);
+
+    rSites();
+  } catch(e) {
+    toast('Erro: '+e.message,'error');
+    if(btn){ btn.innerHTML='<i class="fa-solid fa-rocket"></i> Criar Site Automaticamente'; btn.disabled=false; }
+  }
+}
+
+function _stepOk(titulo, sub){
+  return '<div style="display:flex;gap:10px;align-items:center;background:#0d2a1a;border-radius:8px;padding:10px 12px">'+
+    '<i class="fa-solid fa-circle-check" style="color:#4ade80;font-size:1.1rem"></i>'+
+    '<div><div style="font-size:.78rem;font-weight:600;color:#fff">'+titulo+'</div>'+
+    '<div style="font-size:.65rem;color:#4ade80">'+sub+'</div></div></div>';
+}
+function _stepPend(titulo, sub){
+  return '<div style="display:flex;gap:10px;align-items:center;background:#1a1a2e;border-radius:8px;padding:10px 12px">'+
+    '<i class="fa-solid fa-circle-dot" style="color:#fbbf24;font-size:1.1rem"></i>'+
+    '<div><div style="font-size:.78rem;font-weight:600;color:#fff">'+titulo+'</div>'+
+    '<div style="font-size:.65rem;color:#fbbf24">'+sub+'</div></div></div>';
+}
+
+/* ── Deploy / Actualizar Site ── */
+function abrirDeploySite(clienteId){
+  var c = (_cliList||[]).find(function(x){ return x.id===clienteId; });
+  if(!c){ toast('Cliente não encontrado','error'); return; }
+
+  wGet('/api/admin/templates').then(function(templates){
+    var tOpts = (templates||[]).map(function(t){
+      return '<option value="'+t.id+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
+    }).join('');
+
+    openModal(
+      '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+      '<div class="mtit">Deploy <span class="r">'+c.nome+'</span></div>'+
+
+      '<div style="background:#2a1a0d;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.72rem;color:#fbbf24;line-height:1.6">'+
+        '⚠️ Isto vai <b>sobrescrever</b> os ficheiros do template no repositório <b>'+(c.gh_repo||'—')+'</b>. '+
+        'Os dados da BD (produtos, encomendas) ficam intactos.'+
+      '</div>'+
+
+      '<div class="fg"><label class="fl">Template a usar</label>'+
+        '<select class="fi" id="dpTemplate">'+tOpts+'</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Ficheiros a actualizar</label>'+
+        '<div style="display:flex;flex-direction:column;gap:5px;margin-top:4px">'+
+          _checkDeploy('admin.html','admin.html',true)+
+          _checkDeploy('sw.js','sw.js',true)+
+          _checkDeploy('index.html','index.html',false)+
+          _checkDeploy('manifest.json','manifest.json',false)+
+        '</div>'+
+      '</div>'+
+
+      '<button class="btn bblue" style="width:100%;margin-top:10px" onclick="executarDeploy(\''+clienteId+'\')">'+
+        '<i class="fa-solid fa-upload"></i> Fazer Deploy'+
+      '</button>'
+    );
+  });
+}
+
+function _checkDeploy(label, valor, checked){
+  return '<label style="display:flex;gap:8px;align-items:center;cursor:pointer;font-size:.78rem;color:#ccc">'+
+    '<input type="checkbox" value="'+valor+'" class="dpFile"'+(checked?' checked':'')+'>'+label+'</label>';
+}
+
+async function executarDeploy(clienteId){
+  var c = (_cliList||[]).find(function(x){ return x.id===clienteId; });
+  if(!c){ toast('Cliente não encontrado','error'); return; }
+
+  var tVal = (document.getElementById('dpTemplate')||{}).value||'';
+  if(!tVal){ toast('Selecciona um template','error'); return; }
+
+  var ficheiros = Array.from(document.querySelectorAll('.dpFile:checked')).map(function(cb){ return cb.value; });
+  if(!ficheiros.length){ toast('Selecciona pelo menos um ficheiro','error'); return; }
+
+  var tParts = tVal.split('|');
+  var btn = document.querySelector('#modal .btn.bblue');
+  if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A fazer deploy...'; btn.disabled=true; }
+
+  try {
+    var res = await wPost('/api/admin/sites/deploy', {
+      cliente_id: clienteId,
+      gh_token: c.gh_token, gh_user: c.gh_user, gh_repo: c.gh_repo, gh_branch: c.gh_branch||'main',
+      template_gh_user: tParts[1], template_gh_repo: tParts[2], template_gh_branch: tParts[3]||'main',
+      ficheiros
+    });
+    if(res.erro) throw new Error(res.erro);
+    closeModal();
+    toast('Deploy concluído! '+res.ficheiros_actualizados+' ficheiro(s) actualizado(s) ✅','success');
+    rSites();
+  } catch(e){
+    toast('Erro no deploy: '+e.message,'error');
+    if(btn){ btn.innerHTML='<i class="fa-solid fa-upload"></i> Fazer Deploy'; btn.disabled=false; }
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   TEMPLATES — gestão de templates de sites
+   ═══════════════════════════════════════════════════ */
+
+var _templatesList = [];
+
+async function rTemplates(){
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Temp<span class="r">lates</span></div><div class="ps">Repositórios usados como base para novos sites</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rTemplates()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="abrirNovoTemplate()"><i class="fa-solid fa-plus"></i> Novo Template</button>'+
+    '</div>'+
+    '<div id="tplL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+
+  try {
+    _templatesList = await wGet('/api/admin/templates');
+    var el = document.getElementById('tplL');
+    if(!el) return;
+    if(!_templatesList.length){
+      el.innerHTML='<div class="empty"><i class="fa-solid fa-layer-group"></i><p>Nenhum template ainda.<br>Clica em <b>+ Novo Template</b> para adicionar.</p></div>';
+      return;
+    }
+    var html = '<div style="display:flex;flex-direction:column;gap:10px">';
+    _templatesList.forEach(function(t){
+      var cor = {loja:'#a78bfa',restaurante:'#f97316',portfolio:'#38bdf8',servicos:'#4ade80',pastelaria:'#fb923c'}[t.tipo||'loja']||'#a78bfa';
+      html += '<div class="cc" style="border-left:3px solid '+cor+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+          '<div>'+
+            '<div class="ccn">'+t.nome+'</div>'+
+            '<div style="font-size:.65rem;color:var(--gr);margin-top:1px">'+
+              '<i class="fa-brands fa-github"></i> '+t.gh_user+'/'+t.gh_repo+
+            '</div>'+
+          '</div>'+
+          '<span style="font-size:.6rem;padding:2px 8px;border-radius:20px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'44">'+
+            (t.tipo||'loja')+
+          '</span>'+
+        '</div>'+
+        '<div style="font-size:.7rem;color:var(--gr);margin-bottom:8px">'+(t.descricao||'')+'</div>'+
+        '<div style="display:flex;gap:5px">'+
+          '<a class="btn bgh bsm" href="https://github.com/'+t.gh_user+'/'+t.gh_repo+'" target="_blank" style="flex:1;text-align:center"><i class="fa-brands fa-github"></i> Ver no GitHub</a>'+
+          '<a class="btn bgh bsm" href="https://'+t.gh_user+'.github.io/'+t.gh_repo+'/" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>'+
+          '<button class="btn bdng bsm" onclick="delTemplate('+t.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e){
+    var el2 = document.getElementById('tplL');
+    if(el2) el2.innerHTML = '<div class="empty"><p>Erro: '+e.message+'</p></div>';
+  }
+}
+
+function abrirNovoTemplate(){
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Template</span></div>'+
+
+    '<div class="fg"><label class="fl">Nome</label>'+
+      '<input class="fi" id="tNome" placeholder="Ex: Loja Online, Pastelaria..."/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Tipo</label>'+
+      '<select class="fi" id="tTipo">'+
+        '<option value="loja">🛒 Loja Online</option>'+
+        '<option value="pastelaria">🥐 Pastelaria/Café</option>'+
+        '<option value="restaurante">🍽️ Restaurante</option>'+
+        '<option value="portfolio">💼 Portfólio</option>'+
+        '<option value="servicos">🔧 Serviços</option>'+
+        '<option value="barbearia">✂️ Barbearia/Salão</option>'+
+      '</select>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label>'+
+      '<input class="fi" id="tDesc" placeholder="Breve descrição do template..."/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">GitHub User/Org</label>'+
+      '<input class="fi" id="tGhUser" value="impersilvatech"/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Repositório (nome)</label>'+
+      '<input class="fi" id="tGhRepo" placeholder="Ex: Loja, Pastelaria..."/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Branch</label>'+
+      '<input class="fi" id="tGhBranch" value="main"/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Ficheiros a copiar <span style="color:var(--gr);font-size:.65rem">(um por linha)</span></label>'+
+      '<textarea class="fi" id="tFicheiros" rows="5" style="resize:vertical">index.html\nadmin.html\nsw.js\nmanifest.json\nfavicon.svg</textarea>'+
+    '</div>'+
+    '<button class="btn bblue" style="width:100%;margin-top:8px" onclick="salvarTemplate()">'+
+      '<i class="fa-solid fa-floppy-disk"></i> Guardar Template'+
+    '</button>'
+  );
+}
+
+async function salvarTemplate(){
+  var nome     = ((document.getElementById('tNome')||{}).value||'').trim();
+  var tipo     = (document.getElementById('tTipo')||{}).value||'loja';
+  var descricao= ((document.getElementById('tDesc')||{}).value||'').trim();
+  var ghUser   = ((document.getElementById('tGhUser')||{}).value||'impersilvatech').trim();
+  var ghRepo   = ((document.getElementById('tGhRepo')||{}).value||'').trim();
+  var ghBranch = ((document.getElementById('tGhBranch')||{}).value||'main').trim();
+  var ficheiros= ((document.getElementById('tFicheiros')||{}).value||'').split('\n').map(function(f){return f.trim();}).filter(Boolean);
+
+  if(!nome){ toast('Nome é obrigatório','error'); return; }
+  if(!ghRepo){ toast('Repositório é obrigatório','error'); return; }
+
+  try {
+    var res = await wPost('/api/admin/templates', { nome, tipo, descricao, gh_user: ghUser, gh_repo: ghRepo, gh_branch: ghBranch, ficheiros: JSON.stringify(ficheiros) });
+    if(res.erro) throw new Error(res.erro);
+    closeModal();
+    toast('Template guardado!','success');
+    rTemplates();
+  } catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+async function delTemplate(id){
+  if(!confirm('Eliminar este template?')) return;
+  try {
+    await wDel('/api/admin/templates/'+id);
+    toast('Template eliminado','success');
+    rTemplates();
+  } catch(e){ toast('Erro: '+e.message,'error'); }
 }
 
 /* PROJECTOS */
