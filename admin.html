@@ -1230,6 +1230,35 @@ function autoSlug(){
   if(el){ el.value = slug; document.getElementById('slugPrev').textContent = slug; }
 }
 
+// ── Commitar ficheiro no GitHub via API (browser-side) ──
+async function commitFileGH(token, user, repo, path, fileContent, message) {
+  var sha = null;
+  try {
+    var rGet = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/'+path, {
+      headers: {'Authorization': 'token '+token}
+    });
+    if (rGet.ok) { var ex = await rGet.json(); sha = ex.sha; }
+  } catch(e) {}
+
+  var body = {
+    message: message,
+    content: btoa(unescape(encodeURIComponent(fileContent))),
+    branch: 'main'
+  };
+  if (sha) body.sha = sha;
+
+  var rPut = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/'+path, {
+    method: 'PUT',
+    headers: {'Authorization': 'token '+token, 'Content-Type': 'application/json'},
+    body: JSON.stringify(body)
+  });
+  if (!rPut.ok) {
+    var err = await rPut.json();
+    throw new Error(err.message || 'Erro ao commitar ' + path);
+  }
+  return true;
+}
+
 function csErro(msg) {
   var d = document.getElementById('csErr');
   var s = document.getElementById('csErrMsg');
@@ -1260,13 +1289,51 @@ async function executarCriarSite(){
   if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar...'; btn.disabled=true; }
 
   try {
+    // ── 1. Criar repositório e copiar template via Worker ──
     var res = await wPost('/api/admin/sites/criar', {
       nome, slug, gh_token: ghToken, gh_user: ghUser,
       template_gh_user: tGhUser, template_gh_repo: tGhRepo, template_gh_branch: tGhBranch,
       cliente_id: clienteId || null
     });
-
     if(res.erro) throw new Error(res.erro);
+
+    // ── 2. Gerar e commitar config.js com dados reais do site ──
+    if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A configurar...';
+    var shortName = nome.split(' ').slice(0,2).join(' ');
+    var configContent =
+      '// config.js — Configuração automática gerada pelo admin\n'+
+      '// Editar apenas a api_url quando o Worker Cloudflare estiver criado.\n\n'+
+      'window.SITE_CONFIG = {\n'+
+      '  api_url:    "https://'+slug+'.workers.dev",\n'+
+      '  slug:       "'+slug+'",\n'+
+      '  gh_user:    "'+ghUser+'",\n'+
+      '  nome:       "'+nome+'",\n'+
+      '  short_name: "'+shortName+'",\n'+
+      '  descricao:  "Loja online — '+nome+'",\n'+
+      '  cor_fundo:  "#0d0d1a"\n'+
+      '};\n'+
+      'window.SITE_API = window.SITE_CONFIG.api_url;\n';
+
+    await commitFileGH(ghToken, ghUser, slug, 'config.js', configContent,
+      'config: definir API e slug para ' + slug);
+
+    // ── 3. Gerar e commitar manifest.json com nome e paths correctos ──
+    if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A finalizar...';
+    var manifestObj = {
+      name: nome, short_name: shortName,
+      description: 'Loja online — '+nome,
+      start_url: '/'+slug+'/', scope: '/'+slug+'/',
+      display: 'standalone', orientation: 'portrait',
+      background_color: '#0d0d1a', theme_color: '#0d0d1a',
+      icons: [
+        {src:'/'+slug+'/favicon.svg',sizes:'any',type:'image/svg+xml',purpose:'any maskable'},
+        {src:'/'+slug+'/favicon.svg',sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},
+        {src:'/'+slug+'/favicon.svg',sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}
+      ]
+    };
+    await commitFileGH(ghToken, ghUser, slug, 'manifest.json',
+      JSON.stringify(manifestObj, null, 2),
+      'manifest: definir nome "'+nome+'" e paths /'+slug+'/');
 
     closeModal();
     toast('Site criado com sucesso! 🎉','success');
@@ -1278,20 +1345,22 @@ async function executarCriarSite(){
         '<div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">'+
 
           _stepOk('Repositório GitHub criado', ghUser+'/'+slug)+
-          _stepOk('Ficheiros do template copiados', res.ficheiros_copiados+' ficheiros')+
+          _stepOk('Ficheiros do template copiados', (res.ficheiros_copiados||'')+'  ficheiros')+
           _stepOk('GitHub Pages activado', 'https://'+ghUser+'.github.io/'+slug+'/')+
+          _stepOk('config.js gerado', 'api_url = https://'+slug+'.workers.dev')+
+          _stepOk('manifest.json configurado', nome+' · /'+slug+'/')+
 
           '<div style="height:1px;background:var(--bd);margin:6px 0"></div>'+
 
           _stepPend('Criar Worker Cloudflare', 'Nome sugerido: '+slug)+
           _stepPend('Criar D1 Database', 'Nome sugerido: '+slug+'-db')+
           _stepPend('Configurar VAPID Keys', 'Usar o Gerador VAPID')+
-          _stepPend('Actualizar URL do Worker no admin.html', 'var API = \'https://'+slug+'.workers.dev\'')+
+          _stepPend('Actualizar URL real no config.js', 'Se o Worker tiver subdomain diferente')+
 
         '</div>'+
         '<div style="font-size:.65rem;color:var(--gr);margin-top:12px;line-height:1.6">'+
-          'O site fica online em 1-2 minutos após activação do GitHub Pages. '+
-          'Actualiza o registo do cliente com a URL do Worker quando estiver criado.'+
+          'O site fica online em 1-2 minutos. O config.js já aponta para https://'+slug+'.workers.dev — '+
+          'ajusta a api_url se o teu Worker tiver um subdomain diferente.'+
         '</div>'+
         '<button class="btn bblue" style="width:100%;margin-top:12px" onclick="closeModal();rSites()">'+
           '<i class="fa-solid fa-check"></i> Concluir'+
