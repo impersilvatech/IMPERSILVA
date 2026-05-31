@@ -155,7 +155,7 @@ button,input,select,textarea{font-family:inherit}
 #toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:.82rem}
 #toast.show{opacity:1;transform:translateY(0)}
 .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.g{background:var(--grn)}.r{background:var(--red)}.b{background:var(--blu2)}
+.tdot-g{background:var(--grn)}.tdot-r{background:var(--red)}.tdot-b{background:var(--blu2)}
 </style>
 </head>
 <body>
@@ -163,7 +163,7 @@ button,input,select,textarea{font-family:inherit}
 <div id="authScreen">
   <div class="auth-box">
     <div class="auth-head">
-      <div class="auth-logo">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+      <div class="auth-logo">IMPERSIL<span class="r">V</span><span class="b">Λ</span></div>
       <div class="auth-sub">Área de Cliente</div>
     </div>
     <div class="auth-tabs">
@@ -212,7 +212,7 @@ button,input,select,textarea{font-family:inherit}
 <div id="app">
   <div class="hdr">
     <div>
-      <div class="hlogo">IMPERSIL<span class="r">V</span><span class="b">A</span><span class="hlogo-s">Área de Cliente</span></div>
+      <div class="hlogo">IMPERSIL<span class="r">V</span><span class="b">Λ</span><span class="hlogo-s">Área de Cliente</span></div>
     </div>
     <div style="display:flex;align-items:center;gap:.5rem">
       <span class="hname" id="hNome">—</span>
@@ -260,7 +260,7 @@ function toast(msg, type) {
   if (!type) type = 'success';
   var el=document.getElementById('toast'), dot=document.getElementById('td');
   document.getElementById('tm').textContent = msg;
-  dot.className = 'tdot '+(type==='success'?'g':type==='error'?'r':'b');
+  dot.className = 'tdot '+(type==='success'?'tdot-g':type==='error'?'tdot-r':'tdot-b');
   el.className = 'show';
   clearTimeout(_ttimer);
   _ttimer = setTimeout(function(){ el.className=''; }, 3200);
