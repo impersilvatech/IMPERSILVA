@@ -2245,9 +2245,12 @@ async function deployWorker(idx, btn) {
     });
     var fd = new FormData();
     if(ct.includes('multipart')){
-      var boundary=(ct.match(/boundary=([^\s;]+)/)||[])[1]||'';
+      var _bm=ct.match(/boundary=(?:"([^"]+)"|([^\s;]+))/)||[];
+      var boundary=(_bm[1]||_bm[2]||'').replace(/"/g,'');
       var parts=parseMultipart(await scriptR.text(), boundary);
       var metaPart=parts.find(function(p){return p.name==='metadata';});
+      if(!metaPart||!parts.some(function(p){return p.name!=='metadata';}))
+        throw new Error('Não foi possível analisar o Worker template (multipart inválido). Boundary: "'+boundary+'"');
       var origMeta=metaPart?JSON.parse(metaPart.content):{};
       fd.append('metadata',new Blob([JSON.stringify(Object.assign({},origMeta,{bindings:bindings}))],{type:'application/json'}),'blob');
       parts.forEach(function(p){
@@ -2478,24 +2481,34 @@ async function cfRaw(cfPath, cfToken, method, bodyOrNull) {
 
 // ── Parse multipart response (module Workers) ──
 function parseMultipart(text, boundary) {
+  // Strip surrounding quotes if present (Cloudflare sometimes quotes the boundary)
+  boundary = boundary.replace(/^"|"$/g, '');
   var parts = [], sep = '--' + boundary;
   var sections = text.split(sep);
   for (var i = 1; i < sections.length - 1; i++) {
     var s = sections[i];
+    // Handle both \r\n\r\n and \n\n header separators
     var hEnd = s.indexOf('\r\n\r\n');
-    if (hEnd === -1) hEnd = s.indexOf('\n\n');
+    var hLen = 4;
+    if (hEnd === -1) { hEnd = s.indexOf('\n\n'); hLen = 2; }
+    if (hEnd === -1) continue;
     var hStr = s.substring(0, hEnd);
-    var body = s.substring(hEnd + (s[hEnd+2]==='\n' ? 2 : 4));
+    var body = s.substring(hEnd + hLen);
+    // Strip trailing \r\n from body
     if (body.endsWith('\r\n')) body = body.slice(0, -2);
+    else if (body.endsWith('\n')) body = body.slice(0, -1);
+    // Parse headers (case-insensitive)
     var headers = {};
     hStr.split(/\r?\n/).filter(Boolean).forEach(function(h) {
       var col = h.indexOf(':');
       if (col > 0) headers[h.slice(0,col).trim().toLowerCase()] = h.slice(col+1).trim();
     });
-    var cd = headers['content-disposition']||'';
-    var nm  = (cd.match(/name="([^"]+)"/)  ||[])[1]||'';
-    var fn  = (cd.match(/filename="([^"]+)"/)  ||[])[1]||'';
-    parts.push({ name:nm, filename:fn, contentType:headers['content-type']||'application/javascript+module', content:body });
+    var cd = headers['content-disposition'] || '';
+    var nm  = (cd.match(/name="([^"]+)"/)    || [])[1] || '';
+    var fn  = (cd.match(/filename="([^"]+)"/) || [])[1] || '';
+    var ctype = headers['content-type'] || 'application/javascript+module';
+    if (!nm) continue; // skip unnamed parts
+    parts.push({ name: nm, filename: fn, contentType: ctype, content: body });
   }
   return parts;
 }
@@ -2540,12 +2553,16 @@ async function clonarWorkerCF(slug, newDbId) {
 
   if (ct.includes('multipart')) {
     // ES Module Worker
-    var boundary = (ct.match(/boundary=([^\s;]+)/)||[])[1]||'';
+    var _bm = ct.match(/boundary=(?:"([^"]+)"|([^\s;]+))/)||[];
+    var boundary = (_bm[1]||_bm[2]||'').replace(/"/g,'');
     var text = await scriptR.text();
     var parts = parseMultipart(text, boundary);
 
-    // Find & update metadata part
+    // Validate parsing succeeded
     var metaPart = parts.find(function(p){ return p.name==='metadata'; });
+    if (!metaPart || !parts.some(function(p){ return p.name !== 'metadata'; })) {
+      throw new Error('Falhou ao analisar Worker template (multipart inválido). Boundary detectado: "'+boundary+'". Verifica se o template é um Worker ES Module válido.');
+    }
     var origMeta = metaPart ? JSON.parse(metaPart.content) : {};
     var newMeta = Object.assign({}, origMeta, { bindings: bindings });
     fd.append('metadata', new Blob([JSON.stringify(newMeta)], {type:'application/json'}), 'blob');
