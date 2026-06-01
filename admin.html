@@ -2229,44 +2229,21 @@ async function deployWorker(idx, btn) {
   if(!_cfTemplate.worker_name){ toast('Configura o Worker Template Central primeiro','error'); return; }
   if(btn) btnLoad(btn,'A fazer deploy...');
   try {
-    // Download template code via proxy
-    var scriptR = await cfRaw(
-      '/accounts/'+_cfTemplate.account_id+'/workers/scripts/'+_cfTemplate.worker_name,
-      _cfTemplate.api_token, 'GET', null
-    );
-    if(!scriptR.ok) throw new Error('Não foi possível obter o template ('+scriptR.status+')');
-    var ct = scriptR.headers.get('content-type')||'';
-    var settings = await cfProxy('GET',
-      '/accounts/'+_cfTemplate.account_id+'/workers/scripts/'+_cfTemplate.worker_name+'/settings',
-      _cfTemplate.api_token
-    );
-    var bindings = (settings&&settings.bindings||[]).map(function(b){
-      return b.type==='d1' ? Object.assign({},b,{database_id:b.database_id}) : b;
+    var r = await fetch(API + '/api/cf/clone-worker', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
+      body: JSON.stringify({
+        src_account_id:  _cfTemplate.account_id,
+        src_token:       _cfTemplate.api_token,
+        src_worker_name: _cfTemplate.worker_name,
+        dst_account_id:  w.cf_account_id,
+        dst_token:       w.cf_api_token,
+        dst_worker_name: w.worker_name
+        // sem db_id — mantém os bindings existentes do template
+      })
     });
-    var fd = new FormData();
-    if(ct.includes('multipart')){
-      var _bm=ct.match(/boundary=(?:"([^"]+)"|([^\s;]+))/)||[];
-      var boundary=(_bm[1]||_bm[2]||'').replace(/"/g,'');
-      var parts=parseMultipart(await scriptR.text(), boundary);
-      var metaPart=parts.find(function(p){return p.name==='metadata';});
-      if(!metaPart||!parts.some(function(p){return p.name!=='metadata';}))
-        throw new Error('Não foi possível analisar o Worker template (multipart inválido). Boundary: "'+boundary+'"');
-      var origMeta=metaPart?JSON.parse(metaPart.content):{};
-      fd.append('metadata',new Blob([JSON.stringify(Object.assign({},origMeta,{bindings:bindings}))],{type:'application/json'}),'blob');
-      parts.forEach(function(p){
-        if(p.name!=='metadata') fd.append(p.name,new Blob([p.content],{type:p.contentType}),p.filename||p.name);
-      });
-    } else {
-      var scriptText=await scriptR.text();
-      fd.append('metadata',new Blob([JSON.stringify({body_part:'script',bindings:bindings,compatibility_date:settings.result&&settings.result.compatibility_date||'2024-01-01'})],{type:'application/json'}),'blob');
-      fd.append('script',new Blob([scriptText],{type:'application/javascript'}),'script');
-    }
-    var upR = await cfRaw(
-      '/accounts/'+w.cf_account_id+'/workers/scripts/'+w.worker_name,
-      w.cf_api_token, 'PUT', fd
-    );
-    var upData = await upR.json();
-    if(!upData.success) throw new Error((upData.errors||[{message:'Deploy falhou'}])[0].message);
+    var data = await r.json();
+    if(!data.sucesso) throw new Error(data.erro || 'Deploy falhou');
     if(btn) btnOk(btn,'✅ OK');
     toast('"'+w.nome+'" actualizado com sucesso!');
   } catch(e){
@@ -2481,34 +2458,24 @@ async function cfRaw(cfPath, cfToken, method, bodyOrNull) {
 
 // ── Parse multipart response (module Workers) ──
 function parseMultipart(text, boundary) {
-  // Strip surrounding quotes if present (Cloudflare sometimes quotes the boundary)
-  boundary = boundary.replace(/^"|"$/g, '');
   var parts = [], sep = '--' + boundary;
   var sections = text.split(sep);
   for (var i = 1; i < sections.length - 1; i++) {
     var s = sections[i];
-    // Handle both \r\n\r\n and \n\n header separators
     var hEnd = s.indexOf('\r\n\r\n');
-    var hLen = 4;
-    if (hEnd === -1) { hEnd = s.indexOf('\n\n'); hLen = 2; }
-    if (hEnd === -1) continue;
+    if (hEnd === -1) hEnd = s.indexOf('\n\n');
     var hStr = s.substring(0, hEnd);
-    var body = s.substring(hEnd + hLen);
-    // Strip trailing \r\n from body
+    var body = s.substring(hEnd + (s[hEnd+2]==='\n' ? 2 : 4));
     if (body.endsWith('\r\n')) body = body.slice(0, -2);
-    else if (body.endsWith('\n')) body = body.slice(0, -1);
-    // Parse headers (case-insensitive)
     var headers = {};
     hStr.split(/\r?\n/).filter(Boolean).forEach(function(h) {
       var col = h.indexOf(':');
       if (col > 0) headers[h.slice(0,col).trim().toLowerCase()] = h.slice(col+1).trim();
     });
-    var cd = headers['content-disposition'] || '';
-    var nm  = (cd.match(/name="([^"]+)"/)    || [])[1] || '';
-    var fn  = (cd.match(/filename="([^"]+)"/) || [])[1] || '';
-    var ctype = headers['content-type'] || 'application/javascript+module';
-    if (!nm) continue; // skip unnamed parts
-    parts.push({ name: nm, filename: fn, contentType: ctype, content: body });
+    var cd = headers['content-disposition']||'';
+    var nm  = (cd.match(/name="([^"]+)"/)  ||[])[1]||'';
+    var fn  = (cd.match(/filename="([^"]+)"/)  ||[])[1]||'';
+    parts.push({ name:nm, filename:fn, contentType:headers['content-type']||'application/javascript+module', content:body });
   }
   return parts;
 }
@@ -2519,79 +2486,25 @@ async function criarD1CF(slug) {
   return { id: result.uuid, name: result.name };
 }
 
-// ── Clonar Worker a partir do template central ──
+// ── Clonar Worker a partir do template central (server-side) ──
 async function clonarWorkerCF(slug, newDbId) {
   if (!_cfTemplate.worker_name) throw new Error('Worker Template Central não configurado em Configurações');
   if (!_cfTemplate.account_id || !_cfTemplate.api_token) throw new Error('Credenciais do Template Central em falta');
-
-  // Get settings from TEMPLATE account (not the site account)
-  // Get template settings via proxy
-  var settings = await cfProxy('GET',
-    '/accounts/'+_cfTemplate.account_id+'/workers/scripts/'+_cfTemplate.worker_name+'/settings',
-    _cfTemplate.api_token
-  );
-
-  // Update D1 binding with new database id
-  var bindings = (settings.bindings||[]).map(function(b) {
-    if (b.type === 'd1') return Object.assign({}, b, { database_id: newDbId });
-    return b;
+  var r = await fetch(API + '/api/cf/clone-worker', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
+    body: JSON.stringify({
+      src_account_id:  _cfTemplate.account_id,
+      src_token:       _cfTemplate.api_token,
+      src_worker_name: _cfTemplate.worker_name,
+      dst_account_id:  _cfActiveAcc.account_id,
+      dst_token:       _cfActiveAcc.api_token,
+      dst_worker_name: slug,
+      db_id:           newDbId || null
+    })
   });
-  // If no D1 binding existed, add one
-  if (!bindings.find(function(b){ return b.type==='d1'; })) {
-    bindings.push({ type:'d1', name:'DB', database_id: newDbId });
-  }
-
-  // Download script from TEMPLATE via proxy (resolve CORS)
-  var scriptR = await cfRaw(
-    '/accounts/'+_cfTemplate.account_id+'/workers/scripts/'+_cfTemplate.worker_name,
-    _cfTemplate.api_token, 'GET', null
-  );
-  if (!scriptR.ok) throw new Error('Não foi possível obter o Worker template ('+scriptR.status+')');
-
-  var ct = scriptR.headers.get('content-type')||'';
-  var fd = new FormData();
-
-  if (ct.includes('multipart')) {
-    // ES Module Worker
-    var _bm = ct.match(/boundary=(?:"([^"]+)"|([^\s;]+))/)||[];
-    var boundary = (_bm[1]||_bm[2]||'').replace(/"/g,'');
-    var text = await scriptR.text();
-    var parts = parseMultipart(text, boundary);
-
-    // Validate parsing succeeded
-    var metaPart = parts.find(function(p){ return p.name==='metadata'; });
-    if (!metaPart || !parts.some(function(p){ return p.name !== 'metadata'; })) {
-      throw new Error('Falhou ao analisar Worker template (multipart inválido). Boundary detectado: "'+boundary+'". Verifica se o template é um Worker ES Module válido.');
-    }
-    var origMeta = metaPart ? JSON.parse(metaPart.content) : {};
-    var newMeta = Object.assign({}, origMeta, { bindings: bindings });
-    fd.append('metadata', new Blob([JSON.stringify(newMeta)], {type:'application/json'}), 'blob');
-
-    // Append all script files
-    parts.forEach(function(p) {
-      if (p.name !== 'metadata') {
-        fd.append(p.name, new Blob([p.content], {type:p.contentType}), p.filename||p.name);
-      }
-    });
-  } else {
-    // Service Worker (classic)
-    var scriptText = await scriptR.text();
-    var newMeta = {
-      body_part: 'script',
-      bindings: bindings,
-      compatibility_date: settings.compatibility_date||'2024-01-01'
-    };
-    fd.append('metadata', new Blob([JSON.stringify(newMeta)], {type:'application/json'}), 'blob');
-    fd.append('script', new Blob([scriptText], {type:'application/javascript'}), 'script');
-  }
-
-  // Upload to new name via proxy
-  var uploadR = await cfRaw(
-    '/accounts/'+_cfActiveAcc.account_id+'/workers/scripts/'+slug,
-    _cfActiveAcc.api_token, 'PUT', fd
-  );
-  var uploadData = await uploadR.json();
-  if (!uploadData.success) throw new Error((uploadData.errors||[{message:'Upload falhou'}])[0].message);
+  var data = await r.json();
+  if (!data.sucesso) throw new Error(data.erro || 'Clone do Worker falhou');
   return true;
 }
 
