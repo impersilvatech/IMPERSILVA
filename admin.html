@@ -2229,21 +2229,16 @@ async function deployWorker(idx, btn) {
   if(!_cfTemplate.worker_name){ toast('Configura o Worker Template Central primeiro','error'); return; }
   if(btn) btnLoad(btn,'A fazer deploy...');
   try {
-    var r = await fetch(API + '/api/cf/clone-worker', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
-      body: JSON.stringify({
-        src_account_id:  _cfTemplate.account_id,
-        src_token:       _cfTemplate.api_token,
-        src_worker_name: _cfTemplate.worker_name,
-        dst_account_id:  w.cf_account_id,
-        dst_token:       w.cf_api_token,
-        dst_worker_name: w.worker_name
-        // sem db_id — mantém os bindings existentes do template
-      })
+    var res = await wPost('/api/admin/cf/clone-worker', {
+      template_account_id:  _cfTemplate.account_id,
+      template_api_token:   _cfTemplate.api_token,
+      template_worker_name: _cfTemplate.worker_name,
+      target_account_id:    w.cf_account_id,
+      target_api_token:     w.cf_api_token,
+      target_worker_name:   w.worker_name,
+      d1_database_id:       w.d1_id || ''
     });
-    var data = await r.json();
-    if(!data.sucesso) throw new Error(data.erro || 'Deploy falhou');
+    if (res.erro) throw new Error(res.erro);
     if(btn) btnOk(btn,'✅ OK');
     toast('"'+w.nome+'" actualizado com sucesso!');
   } catch(e){
@@ -2251,6 +2246,7 @@ async function deployWorker(idx, btn) {
     toast('Erro em "'+w.nome+'": '+e.message,'error');
   }
 }
+
 
 async function deployTodos() {
   if(!_workerReg.length){ toast('Nenhum Worker registado','error'); return; }
@@ -2486,31 +2482,26 @@ async function criarD1CF(slug) {
   return { id: result.uuid, name: result.name };
 }
 
-// ── Clonar Worker a partir do template central (server-side) ──
+// ── Clonar Worker via Worker admin server-side (resolve multipart) ──
 async function clonarWorkerCF(slug, newDbId) {
   if (!_cfTemplate.worker_name) throw new Error('Worker Template Central não configurado em Configurações');
-  if (!_cfTemplate.account_id || !_cfTemplate.api_token) throw new Error('Credenciais do Template Central em falta');
-  var r = await fetch(API + '/api/cf/clone-worker', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
-    body: JSON.stringify({
-      src_account_id:  _cfTemplate.account_id,
-      src_token:       _cfTemplate.api_token,
-      src_worker_name: _cfTemplate.worker_name,
-      dst_account_id:  _cfActiveAcc.account_id,
-      dst_token:       _cfActiveAcc.api_token,
-      dst_worker_name: slug,
-      db_id:           newDbId || null
-    })
+  var res = await wPost('/api/admin/cf/clone-worker', {
+    template_account_id:  _cfTemplate.account_id,
+    template_api_token:   _cfTemplate.api_token,
+    template_worker_name: _cfTemplate.worker_name,
+    target_account_id:    _cfActiveAcc.account_id,
+    target_api_token:     _cfActiveAcc.api_token,
+    target_worker_name:   slug,
+    d1_database_id:       newDbId || ''
   });
-  var data = await r.json();
-  if (!data.sucesso) throw new Error(data.erro || 'Clone do Worker falhou');
-  return true;
+  if (res.erro) throw new Error(res.erro);
+  return res;
 }
 
-// ── Activar workers.dev subdomain ──
+
+// ── activarWorkersDevCF — subdomain already enabled by clone-worker endpoint ──
 async function activarWorkersDevCF(slug) {
-  await cfApi('POST', '/accounts/'+_cfActiveAcc.account_id+'/workers/scripts/'+slug+'/subdomain', { enabled: true });
+  // Subdomain is enabled server-side in cfCloneWorker — just return the URL
   return 'https://'+slug+'.workers.dev';
 }
 
