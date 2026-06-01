@@ -1370,31 +1370,37 @@ async function executarCriarSite(){
     var cfOk = false, cfDbId = '', cfDbName = '', cfWorkerUrl = '';
     var cfErr = '';
 
-    if (_cfActiveAcc && _cfActiveAcc.account_id && _cfActiveAcc.api_token && _cfTemplate.worker_name) {
+    if (_cfActiveAcc && _cfActiveAcc.account_id && _cfActiveAcc.api_token) {
+      // ── A: Criar D1 ──
       try {
         if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar base de dados D1...';
         var d1 = await criarD1CF(slug);
         cfDbId = d1.id; cfDbName = d1.name;
+      } catch(e) { cfErr = 'D1: '+e.message; }
 
-        if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A clonar Worker...';
-        await clonarWorkerCF(slug, cfDbId);
-
-        if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A activar workers.dev...';
-        cfWorkerUrl = await activarWorkersDevCF(slug);
-
-        if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A executar migrações...';
-        var migResult = await executarMigracoesCF(cfDbId, slug, nome);
-
-        cfOk = true;
-        // Track site count + register Worker
+      // ── B: Migrações (independente do Worker) ──
+      if (cfDbId) {
         try {
-          var cfMap = JSON.parse(localStorage.getItem('imp_sites_cf_map')||'{}');
-          cfMap[_cfActiveAcc.id] = (cfMap[_cfActiveAcc.id]||0) + 1;
-          localStorage.setItem('imp_sites_cf_map', JSON.stringify(cfMap));
-        } catch(e) {}
-        registarWorkerAuto(slug, nome, _cfActiveAcc, ghUser);
-      } catch(cfE) {
-        cfErr = cfE.message;
+          if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar tabelas...';
+          var migResult = await executarMigracoesCF(cfDbId, slug, nome);
+        } catch(e) { cfErr = (cfErr?cfErr+' | ':'')+'Migrações: '+e.message; }
+      }
+
+      // ── C: Clonar Worker (requer template central) ──
+      if (_cfTemplate.worker_name) {
+        try {
+          if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A clonar Worker...';
+          await clonarWorkerCF(slug, cfDbId);
+          if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A activar workers.dev...';
+          cfWorkerUrl = await activarWorkersDevCF(slug);
+          cfOk = true;
+          try {
+            var cfMap = JSON.parse(localStorage.getItem('imp_sites_cf_map')||'{}');
+            cfMap[_cfActiveAcc.id] = (cfMap[_cfActiveAcc.id]||0) + 1;
+            localStorage.setItem('imp_sites_cf_map', JSON.stringify(cfMap));
+          } catch(e) {}
+          registarWorkerAuto(slug, nome, _cfActiveAcc, ghUser);
+        } catch(e) { cfErr = (cfErr?cfErr+' | ':'')+'Worker: '+e.message; }
       }
     }
 
