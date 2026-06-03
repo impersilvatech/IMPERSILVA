@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Admin — IMPERSILVA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0e0f;--card:#1a1a1c;--card2:#242428;
+  --red:#d62828;--blue:#1d4ed8;--blu2:#3b6ef0;
+  --grn:#22c55e;--amb:#f59e0b;
+  --wh:#fff;--gr:#888896;--gr2:#c0c0cc;
+  --div:rgba(255,255,255,.07);
+  --top:52px;--bot:60px;
+}
+html,body{height:100%;font-family:'Barlow',sans-serif;background:var(--bg);color:var(--wh)}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--div);border-radius:2px}
+
+/* LOGIN */
+#ls{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;background:var(--bg)}
+.lb{background:var(--card);border:1px solid var(--div);border-radius:14px;padding:2rem 1.5rem;width:100%;max-width:340px;text-align:center}
+.ll{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:.06em}
+.ll .r{color:var(--red)}.ll .b{color:var(--blu2)}
+.ls{font-size:.58rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase;margin:.2rem 0 1.8rem}
+.li{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem;color:var(--wh);font-size:1rem;outline:none;margin-bottom:1rem;transition:border-color .2s;-webkit-appearance:none}
+.li:focus{border-color:var(--red)}
+.lb-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:1rem;font-size:.9rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.le{color:var(--red);font-size:.78rem;margin-top:.6rem;display:none}
+
+/* APP */
+#app{display:none;min-height:100vh}
+
+/* TOPBAR */
+#tb{position:fixed;top:0;left:0;right:0;height:var(--top);background:var(--bg);border-bottom:1px solid var(--div);display:flex;align-items:center;justify-content:space-between;padding:0 1rem;z-index:100}
+.tl{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em}
+.tl .r{color:var(--red)}.tl .b{color:var(--blu2)}
+.tl-s{font-size:.42rem;letter-spacing:.2em;color:var(--gr);text-transform:uppercase;display:block}
+.tbadge{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.2rem .45rem;border-radius:4px}
+
+/* MAIN */
+#mn{margin-top:var(--top);padding-bottom:calc(var(--bot)+.5rem)}
+#mc{padding:1rem}
+.ph{padding:.8rem 0 1.1rem;border-bottom:1px solid var(--div);margin-bottom:1.1rem}
+.pt{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+.pt .r{color:var(--red)}.pt .b{color:var(--blu2)}
+.ps{font-size:.78rem;color:var(--gr);margin-top:.2rem}
+
+/* BOTTOM NAV */
+#bn{position:fixed;bottom:0;left:0;right:0;height:var(--bot);background:var(--bg);border-top:1px solid var(--div);display:flex;z-index:100}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border:none;background:none;color:var(--gr);font-size:.48rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:2px solid transparent;-webkit-tap-highlight-color:transparent;position:relative}
+.bni.on{color:var(--wh);border-top-color:var(--red)}
+.bni i{font-size:1.1rem}
+.bnb{position:absolute;top:4px;right:calc(50% - 16px);background:var(--red);color:#fff;font-size:.45rem;font-weight:700;padding:.1rem .3rem;border-radius:8px;min-width:14px;text-align:center;display:none}
+
+/* MORE */
+#mov{display:none;position:fixed;inset:0;z-index:98;background:rgba(0,0,0,.5)}
+#mov.o{display:block}
+#mm{position:fixed;bottom:var(--bot);left:0;right:0;background:var(--bg);border-top:1px solid var(--div);z-index:99;transform:translateY(100%);transition:transform .25s;border-radius:14px 14px 0 0;padding:1rem 1rem .5rem}
+#mm.o{transform:translateY(0)}
+.mh{width:36px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto .8rem}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+.mi{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;padding:.7rem .3rem;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.04);border:1px solid var(--div);color:var(--gr);font-size:.52rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center;-webkit-tap-highlight-color:transparent}
+.mi:active{background:rgba(214,40,40,.12);color:var(--wh);border-color:rgba(214,40,40,.3)}
+.mi i{font-size:1.2rem}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--div);border-radius:12px;padding:1rem;margin-bottom:1rem}
+.ct{font-size:.63rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gr);margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1px solid var(--div);display:flex;align-items:center;gap:.5rem}
+
+/* STATS */
+.sr{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+.sc{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;text-align:center}
+.sn{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:900;line-height:1}
+.sl{font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);margin-top:.25rem}
+
+/* LIST */
+.li2{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem;display:flex;align-items:flex-start;gap:.75rem}
+.lin{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:900;color:var(--gr);min-width:20px;padding-top:1px}
+.lib{flex:1;min-width:0}
+.liname{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lidesc{font-size:.73rem;color:var(--gr);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:.15rem 0 .35rem}
+.limeta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.lact{display:flex;flex-direction:column;gap:.35rem;flex-shrink:0}
+
+/* CLIENT CARD */
+.cc{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem}
+.ccid{font-family:monospace;font-size:.88rem;font-weight:700;letter-spacing:.12em;background:rgba(255,255,255,.07);padding:.2rem .55rem;border-radius:4px;cursor:pointer;display:inline-block;margin-bottom:.35rem}
+.ccn{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.pg{background:var(--div);border-radius:4px;height:5px;overflow:hidden;margin:.5rem 0}
+.pgf{height:100%;background:linear-gradient(to right,var(--red),var(--blu2));border-radius:4px}
+
+/* INBOX */
+.inb{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem;cursor:pointer}
+.inb.u{border-left:3px solid var(--red)}
+.inb-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.35rem}
+.inb-nome{font-weight:600;font-size:.9rem}
+.inb-tel{font-size:.75rem;color:var(--gr)}
+.inb-date{font-size:.68rem;color:rgba(255,255,255,.3);margin-left:auto}
+.inb-prev{font-size:.78rem;color:var(--gr);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inb-body{display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--div);font-size:.82rem;line-height:1.6}
+.inb.open .inb-body{display:block}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:.25rem;font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .45rem;border-radius:50px;white-space:nowrap}
+.bg{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.3)}
+.bb{background:rgba(29,78,216,.12);color:var(--blu2);border:1px solid rgba(29,78,216,.3)}
+.br{background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.3)}
+.bgr{background:rgba(255,255,255,.05);color:var(--gr);border:1px solid var(--div)}
+.ba{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.3)}
+
+/* FORM */
+.fg{margin-bottom:.85rem}
+.fl{display:block;font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gr2);margin-bottom:.35rem}
+.fi{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.85rem 1rem;color:var(--wh);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.fi:focus{border-color:var(--red)}
+.fi::placeholder{color:rgba(255,255,255,.2)}
+.fi option{background:var(--card2)}
+textarea.fi{resize:vertical;min-height:85px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.1rem;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;text-decoration:none}
+.bfull{width:100%}
+.bred{background:var(--red);color:#fff}
+.bblue{background:var(--blue);color:#fff}
+.bgh{background:rgba(255,255,255,.05);color:var(--gr2);border:1px solid rgba(255,255,255,.1)}
+.bdng{background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.25)}
+.bsm{padding:.5rem .9rem;font-size:.72rem}
+.brow{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+
+/* TOGGLE */
+.tog{position:relative;display:inline-block;width:36px;height:20px}
+.tog input{opacity:0;width:0;height:0}
+.tsl{position:absolute;inset:0;background:rgba(255,255,255,.15);border-radius:20px;cursor:pointer;transition:.2s}
+.tsl::before{content:'';position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+input:checked+.tsl{background:var(--grn)}
+input:checked+.tsl::before{transform:translateX(16px)}
+
+/* MODAL */
+#mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0}
+#mo.o{display:flex}
+#mb{background:var(--card);border:1px solid var(--div);border-radius:14px 14px 0 0;padding:1.2rem 1.2rem 2rem;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.mh2{width:36px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto .9rem}
+.mtit{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;margin-bottom:1rem}
+.mtit .r{color:var(--red)}.mtit .b{color:var(--blu2)}
+.mcl{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--gr);font-size:1.2rem;cursor:pointer;padding:.3rem}
+.mact{display:flex;gap:.7rem;margin-top:1rem}
+.mact .btn{flex:1}
+
+/* UPLOAD */
+.iup{border:2px dashed rgba(255,255,255,.15);border-radius:10px;padding:1.5rem 1rem;text-align:center;cursor:pointer;position:relative;margin-bottom:.8rem}
+.iup input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.iup i{font-size:1.8rem;color:var(--gr);margin-bottom:.5rem;display:block}
+.iup-t{font-size:.82rem;color:var(--gr2)}
+.iup-t strong{color:var(--red)}
+.ipr{width:100%;max-height:130px;object-fit:cover;border-radius:8px;display:none;margin-top:.75rem}
+.iupg{display:none;margin-top:.6rem}
+.iupgb{height:3px;background:var(--div);border-radius:2px;overflow:hidden;margin-top:.4rem}
+.iupgf{height:100%;background:var(--red);border-radius:2px;transition:width .3s}
+.iupgt{font-size:.7rem;color:var(--gr)}
+
+/* MISC */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--gr)}
+.empty i{font-size:2.5rem;opacity:.3;margin-bottom:.8rem;display:block}
+.empty p{font-size:.85rem}
+.spin{width:18px;height:18px;border:2px solid var(--div);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:2rem;color:var(--gr);font-size:.85rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+
+.btn .spin{vertical-align:middle;margin-right:.3rem;border-color:rgba(255,255,255,.3);border-top-color:#fff}
+
+/* TOAST */
+#toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+#toast.show{opacity:1;transform:translateY(0)}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tdot.g{background:var(--grn)}.tdot.r{background:var(--red)}.tdot.b{background:var(--blu2)}
+
+@media(min-width:700px){
+  #tb,#bn,#mm,#mov{display:none!important}
+  #sb{display:flex!important}
+  #mn{margin-top:0;margin-left:220px;padding-bottom:1.5rem}
+  #mc{padding:1.5rem}
+  .sr{grid-template-columns:repeat(3,1fr)}
+  #mo{align-items:center;padding:1rem}
+  #mb{border-radius:14px;max-width:520px;margin:auto}
+}
+
+/* SIDEBAR */
+#sb{display:none;position:fixed;top:0;left:0;bottom:0;width:220px;flex-direction:column;background:var(--bg);border-right:1px solid var(--div);z-index:100;overflow-y:auto}
+.sbl{padding:1.2rem 1rem .8rem;border-bottom:1px solid var(--div)}
+.sblt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:.05em}
+.sblt .r{color:var(--red)}.sblt .b{color:var(--blu2)}
+.sbls{font-size:.47rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase}
+.sbb{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.25);padding:.15rem .4rem;border-radius:3px;margin-top:.4rem;display:inline-block}
+.sbn{flex:1;padding:.5rem 0}
+.sbsec{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:.7rem 1rem .3rem}
+.sbi{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;font-size:.8rem;font-weight:500;color:var(--gr);cursor:pointer;border-left:2px solid transparent;transition:all .18s;position:relative}
+.sbi:hover{color:var(--wh);background:rgba(255,255,255,.03)}
+.sbi.on{color:var(--wh);border-left-color:var(--red);background:rgba(214,40,40,.08)}
+.sbi i{font-size:.9rem;width:18px;text-align:center}
+.sbib{margin-left:auto;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;padding:.1rem .4rem;border-radius:8px;min-width:16px;text-align:center;display:none}
+.sbf{padding:.8rem 1rem;border-top:1px solid var(--div)}
+.sbfu{font-size:.7rem;color:var(--gr);margin-bottom:.4rem}
+.sbfl{font-size:.7rem;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Barlow',sans-serif;padding:0}
+
+/* RIPPLE */
+.btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:rip .5s linear;background:rgba(255,255,255,.25);pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+
+/* NOTIF TOAST */
+.ntoast{position:fixed;top:calc(var(--top,52px)+.7rem);right:1rem;z-index:9998;max-width:300px;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:flex-start;gap:.6rem;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:translateX(120%);transition:transform .3s;font-size:.82rem}
+.ntoast.show{transform:translateX(0)}
+.ntoast-ic{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.ntoast.success .ntoast-ic{color:var(--grn)}.ntoast.error .ntoast-ic{color:var(--red)}.ntoast.info .ntoast-ic{color:var(--blu2)}.ntoast.warn .ntoast-ic{color:var(--amb)}
+.ntoast-t{font-weight:700;font-size:.78rem;margin-bottom:.2rem}
+.ntoast-m{color:var(--gr2);font-size:.75rem;line-height:1.4}
+
+/* GALERIA */
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem}
+.gal-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--card2)}
+.gal-item img{width:100%;height:100%;object-fit:cover}
+.gal-del{position:absolute;top:.25rem;right:.25rem;background:rgba(214,40,40,.85);color:#fff;border:none;border-radius:50%;width:26px;height:26px;z-index:10;cursor:pointer;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-add{border:2px dashed rgba(255,255,255,.15);border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--gr);font-size:.65rem;gap:.3rem;transition:all .2s;position:relative}
+.gal-add:hover{border-color:var(--red);background:rgba(214,40,40,.05);color:var(--red)}
+.gal-add input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.gal-add i{font-size:1.3rem}
+
+/* FINANÇA */
+.fin-card{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem}
+.fin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.fin-desc{font-weight:600;font-size:.88rem;flex:1}
+.fin-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;color:var(--wh);white-space:nowrap}
+.fin-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+
+/* USUARIOS */
+.usr-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.usr-item:last-child{border-bottom:none}
+.usr-av{width:36px;height:36px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--gr);font-size:1rem;flex-shrink:0}
+
+/* LIMPEZA */
+.img-file{display:flex;align-items:center;gap:.6rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.img-file:last-child{border-bottom:none}
+.img-file-thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--card2);flex-shrink:0}
+.img-file-name{font-size:.75rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.img-file-size{font-size:.65rem;color:var(--gr);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div id="ls">
+  <div class="lb">
+    <div class="ll">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+    <div class="ls">Admin Panel</div>
+    <input class="li" type="password" id="lp" placeholder="Token de acesso" autocomplete="current-password">
+    <div class="le" id="le">Token incorrecto. Tente novamente.</div>
+    <button class="lb-btn" id="lbtn" onclick="doLogin()"><i class="fa-solid fa-lock-open"></i> ENTRAR</button>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sb">
+    <div class="sbl">
+      <div class="sblt">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+      <div class="sbls">Holding SGPS</div>
+      <div class="sbb">Admin</div>
+    </div>
+    <nav class="sbn">
+      <div class="sbsec">Geral</div>
+      <div class="sbi on" onclick="go('painel',this)"><i class="fa-solid fa-gauge"></i> Painel</div>
+      <div class="sbsec">Conteúdo</div>
+      <div class="sbi" onclick="go('portfolio',this)"><i class="fa-solid fa-briefcase"></i> Portfólio</div>
+      <div class="sbi" onclick="go('equipa',this)"><i class="fa-solid fa-users"></i> Equipa</div>
+      <div class="sbsec">Clientes</div>
+      <div class="sbi" onclick="go('clientes',this)"><i class="fa-solid fa-globe"></i> Clientes</div>
+      <div class="sbi" onclick="go('projetos',this)"><i class="fa-solid fa-diagram-project"></i> Projectos</div>
+      <div class="sbi" onclick="go('documentos',this)"><i class="fa-solid fa-file-arrow-up"></i> Documentos</div>
+      <div class="sbi" onclick="go('tickets',this)"><i class="fa-solid fa-ticket"></i> Suporte <span class="sbib" id="sb-tk">0</span></div>
+      <div class="sbi" onclick="go('mensagens',this)"><i class="fa-solid fa-comments"></i> Mensagens <span class="sbib" id="sb-ms">0</span></div>
+      <div class="sbsec">Leads</div>
+      <div class="sbi" onclick="go('contactos',this)"><i class="fa-solid fa-envelope"></i> Contactos <span class="sbib" id="sb-ct">0</span></div>
+      <div class="sbi" onclick="go('orcamentos',this)"><i class="fa-solid fa-file-invoice"></i> Orçamentos <span class="sbib" id="sb-oc">0</span></div>
+      <div class="sbsec">Sistema</div>
+      <div class="sbi" onclick="go('config',this)"><i class="fa-solid fa-gear"></i> Configurações</div>
+      <div class="sbsec">Negócio</div>
+      <div class="sbi" onclick="go('financas',this)"><i class="fa-solid fa-chart-line"></i> Finanças</div>
+      <div class="sbi" onclick="go('usuarios',this)"><i class="fa-solid fa-user-shield"></i> Utilizadores</div>
+      <div class="sbi" onclick="go('notificacoes',this)"><i class="fa-solid fa-bell"></i> Notificações</div>
+      <div class="sbi" onclick="go('limpeza',this)"><i class="fa-brands fa-github"></i> Limpeza</div>
+    </nav>
+    <div class="sbf">
+      <div class="sbfu">Administrador</div>
+      <button class="sbfl" onclick="doLogout()">Terminar sessão</button>
+    </div>
+  </aside>
+
+  <div id="tb">
+    <div>
+      <div class="tl">IMPERSIL<span class="r">V</span><span class="b">A</span><span class="tl-s">Holding SGPS</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.7rem">
+      <span class="tbadge">Admin</span>
+      <button style="background:none;border:none;color:var(--gr);font-size:1rem;cursor:pointer" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+
+  <div id="mn"><div id="mc"></div></div>
+
+  <nav id="bn">
+    <button class="bni on" onclick="goB(this,'painel')"><i class="fa-solid fa-gauge"></i><span>Painel</span></button>
+    <button class="bni" onclick="goB(this,'clientes')"><i class="fa-solid fa-globe"></i><span>Clientes</span></button>
+    <button class="bni" onclick="goB(this,'sites')"><i class="fa-solid fa-rocket"></i><span>Sites</span></button>
+    <button class="bni" onclick="goB(this,'leads')"><i class="fa-solid fa-envelope"></i><span>Leads</span><span class="bnb" id="bn-leads">0</span></button>
+    <button class="bni" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i><span>Mais</span></button>
+  </nav>
+
+  <div id="mov" onclick="closeMore()"></div>
+  <div id="mm">
+    <div class="mh"></div>
+    <div class="mg">
+      <div class="mi" onclick="closeMore();go('equipa')"><i class="fa-solid fa-users"></i>Equipa</div>
+      <div class="mi" onclick="closeMore();go('projetos')"><i class="fa-solid fa-diagram-project"></i>Projectos</div>
+      <div class="mi" onclick="closeMore();go('sites')"><i class="fa-solid fa-rocket"></i>Sites</div>
+      <div class="mi" onclick="closeMore();go('templates')"><i class="fa-solid fa-layer-group"></i>Templates</div>
+      <div class="mi" onclick="closeMore();go('portfolio')"><i class="fa-solid fa-briefcase"></i>Portfólio</div>
+      <div class="mi" onclick="closeMore();go('documentos')"><i class="fa-solid fa-file-arrow-up"></i>Documentos</div>
+      <div class="mi" onclick="closeMore();go('tickets')"><i class="fa-solid fa-ticket"></i>Suporte</div>
+      <div class="mi" onclick="closeMore();go('mensagens')"><i class="fa-solid fa-comments"></i>Mensagens</div>
+      <div class="mi" onclick="closeMore();go('config')"><i class="fa-solid fa-gear"></i>Config</div>
+      <div class="mi" onclick="closeMore();go('financas')"><i class="fa-solid fa-chart-line"></i>Finanças</div>
+      <div class="mi" onclick="closeMore();go('notificacoes')"><i class="fa-solid fa-bell"></i>Notifs</div>
+      <div class="mi" onclick="closeMore();go('limpeza')"><i class="fa-brands fa-github"></i>Limpeza</div>
+      <a class="mi" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Site</a>
+      <a class="mi" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i>Portal</a>
+    </div>
+  </div>
+</div>
+
+<div id="mo" onclick="if(event.target===this)closeModal()"><div id="mb"></div></div>
+<div id="toast"><div class="tdot" id="td"></div><span id="tm"></span></div>
+
+<script>
+var API = 'https://impersilva-ao.3miliosilva.workers.dev';
+var REPO = 'impersilvatech/IMPERSILVA';
+var SITEURL = 'https://impersilvatech.github.io/IMPERSILVA';
+var _tok = '';
+var _ghtok = '';
+var _cfAccounts = [];      // [{id,nome,email,account_id,api_token}]
+var _cfActiveAcc = null;   // account in use during site creation
+var _cfTemplate = {};      // {account_id,api_token,worker_name} — template central
+var _workerReg = [];       // [{id,nome,slug,worker_name,cf_account_id,cf_account_nome,gh_user,gh_repo}]
+var _ttimer;
+
+/* AUTH */
+document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+async function doLogin() {
+  var p = document.getElementById('lp').value.trim();
+  if(!p) return;
+  document.getElementById('lbtn').textContent = 'A verificar...';
+  try {
+    var r = await fetch(API+'/api/admin/contactos', {headers:{'Authorization':p}});
+    if(r.status===401) { showLoginErr(); return; }
+    _tok = p;
+    localStorage.setItem('imp_tok', p);
+    startApp();
+  } catch(e) {
+    _tok = p;
+    localStorage.setItem('imp_tok', p);
+    startApp();
+  }
+}
+
+function showLoginErr() {
+  document.getElementById('le').style.display='block';
+  document.getElementById('lp').value='';
+  document.getElementById('lbtn').textContent='ENTRAR';
+}
+
+function startApp() {
+  document.getElementById('ls').style.display='none';
+  document.getElementById('app').style.display='block';
+  if(window.innerWidth>=700) document.getElementById('sb').style.display='flex';
+  _ghtok = localStorage.getItem('imp_ghtok')||'';
+  try{ _cfAccounts = JSON.parse(localStorage.getItem('imp_cf_accounts')||'[]'); }catch(e){ _cfAccounts=[]; }
+  try{ _cfTemplate = JSON.parse(localStorage.getItem('imp_cf_template')||'{}'); }catch(e){ _cfTemplate={}; }
+  try{ _workerReg = JSON.parse(localStorage.getItem('imp_worker_reg')||'[]'); }catch(e){ _workerReg=[]; }
+  // Show loading state immediately
+  document.getElementById('mc').innerHTML = '<div class="load" style="height:50vh;align-items:center"><div class="spin"></div> A carregar painel...</div>';
+  setTimeout(function() {
+    go('painel');
+    loadBadges();
+  }, 100);
+}
+
+function doLogout() {
+  localStorage.removeItem('imp_tok');
+  localStorage.removeItem('imp_session');
+  location.reload();
+}
+
+var saved = localStorage.getItem('imp_tok');
+if(saved) { _tok=saved; startApp(); }
+
+/* API HELPERS */
+async function wGet(path) {
+  var r = await fetch(API+path, {headers:{'Authorization':_tok}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function wPost(path, data) {
+  var r = await fetch(API+path, {method:'POST', headers:{'Content-Type':'application/json','Authorization':_tok}, body:JSON.stringify(data)});
+  var j = await r.json();
+  if(!r.ok) throw new Error(j.erro||r.status);
+  return j;
+}
+async function wDel(path) {
+  var r = await fetch(API+path, {method:'DELETE', headers:{'Authorization':_tok}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+/* GITHUB */
+async function ghUpload(file, folder) {
+  if(!_ghtok) throw new Error('GitHub Token não configurado. Vai a Configurações.');
+  var ext = file.name.split('.').pop().toLowerCase();
+  var fname = folder+'-'+Date.now()+'.'+ext;
+  var path = 'imagens/'+fname;
+  var b64 = await new Promise(function(res,rej){
+    var fr = new FileReader();
+    fr.onload = function(){ res(fr.result.split(',')[1]); };
+    fr.onerror = rej;
+    fr.readAsDataURL(file);
+  });
+  var resp = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path, {
+    method:'PUT',
+    headers:{'Authorization':'token '+_ghtok,'Content-Type':'application/json'},
+    body:JSON.stringify({message:'Admin: upload '+fname, content:b64, branch:'main'})
+  });
+  if(!resp.ok) { var e=await resp.json(); throw new Error(e.message||'Erro GitHub'); }
+  return SITEURL+'/'+path;
+}
+
+/* TOAST */
+function toast(msg, type) {
+  if(!type) type='success';
+  var el=document.getElementById('toast'), dot=document.getElementById('td');
+  document.getElementById('tm').textContent=msg;
+  dot.className='tdot '+(type==='success'?'g':type==='error'?'r':'b');
+  el.className='show';
+  clearTimeout(_ttimer);
+  _ttimer=setTimeout(function(){ el.className=''; }, 3200);
+}
+
+/* MODAL */
+function openModal(html) {
+  document.getElementById('mb').innerHTML='<div class="mh2"></div>'+html;
+  document.getElementById('mo').className='o';
+  document.body.style.overflow='hidden';
+}
+function closeModal() {
+  document.getElementById('mo').className='';
+  document.body.style.overflow='';
+}
+
+/* MORE MENU */
+function toggleMore() {
+  document.getElementById('mm').classList.toggle('o');
+  document.getElementById('mov').classList.toggle('o');
+}
+function closeMore() {
+  document.getElementById('mm').classList.remove('o');
+  document.getElementById('mov').classList.remove('o');
+}
+
+/* NAV */
+var _sec = 'painel';
+var _lastSec = '';
+
+function go(s, el) {
+  window.scrollTo(0,0);
+  _sec = s;
+  document.querySelectorAll('.sbi').forEach(function(i){ i.classList.remove('on'); });
+  if(el) el.classList.add('on');
+  // Show immediate loading feedback for data sections
+  var dataSections = ['portfolio','equipa','clientes','projetos','documentos','tickets','mensagens','contactos','orcamentos','financas','usuarios','sites','templates'];
+  if(dataSections.indexOf(s) >= 0 && s !== _lastSec) {
+    document.getElementById('mc').innerHTML = '<div class="load" style="min-height:30vh;align-items:center"><div class="spin"></div> A carregar...</div>';
+  }
+  _lastSec = s;
+  var fns = {
+    painel:rPainel, portfolio:rPortfolio, equipa:rEquipa,
+    clientes:rClientes, projetos:rProjetos, documentos:rDocs,
+    tickets:rTickets, mensagens:rMensagens,
+    contactos:rContactos, orcamentos:rOrcamentos,
+    config:rConfig, leads:rLeads,
+    financas:rFinancas, usuarios:rUsuarios,
+    notificacoes:rNotificacoes, limpeza:rLimpeza,
+    sites:rSites, templates:rTemplates
+  };
+  if(fns[s]) fns[s]();
+}
+function goB(el, s) {
+  document.querySelectorAll('.bni').forEach(function(i){ i.classList.remove('on'); });
+  el.classList.add('on');
+  go(s);
+}
+
+/* BADGES */
+async function loadBadges() {
+  try {
+    var results = await Promise.allSettled([
+      wGet('/api/admin/contactos'),
+      wGet('/api/admin/orcamentos'),
+      wGet('/api/admin/tickets'),
+      wGet('/api/admin/mensagens')
+    ]);
+    var ct = (results[0].value||[]).filter(function(x){return !x.lido;}).length;
+    var oc = (results[1].value||[]).filter(function(x){return !x.lido;}).length;
+    var tk = (results[2].value||[]).filter(function(x){return x.estado==='aberto';}).length;
+    var ms = (results[3].value||[]).filter(function(x){return !x.lido;}).length;
+    setBadge('sb-ct', ct); setBadge('sb-oc', oc);
+    setBadge('sb-tk', tk); setBadge('sb-ms', ms);
+    var leads = ct+oc;
+    var bnl = document.getElementById('bn-leads');
+    if(bnl){ if(leads>0){bnl.textContent=leads;bnl.style.display='block';}else bnl.style.display='none'; }
+  } catch(e){}
+}
+function setBadge(id, n) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  if(n>0){el.textContent=n;el.style.display='inline-flex';}else el.style.display='none';
+}
+
+/* HELPERS */
+function timeAgo(d) {
+  if(!d) return '';
+  var diff = Date.now()-new Date(d).getTime();
+  var m = Math.floor(diff/60000);
+  if(m<1) return 'agora';
+  if(m<60) return m+'m';
+  var h = Math.floor(m/60);
+  if(h<24) return h+'h';
+  return Math.floor(h/24)+'d';
+}
+function estadoBadge(e) {
+  var map = {
+    em_progresso:'<span class="badge bb">Em Progresso</span>',
+    revisao:'<span class="badge ba">Em Revisão</span>',
+    concluido:'<span class="badge bg">Concluído</span>',
+    pausado:'<span class="badge bgr">Pausado</span>',
+    novo:'<span class="badge bb">Novo</span>',
+    em_analise:'<span class="badge ba">Em Análise</span>',
+    proposta_enviada:'<span class="badge bg">Proposta Enviada</span>',
+    fechado:'<span class="badge bgr">Fechado</span>',
+    aberto:'<span class="badge br">Aberto</span>',
+    respondido:'<span class="badge bg">Respondido</span>'
+  };
+  return map[e]||('<span class="badge bgr">'+e+'</span>');
+}
+function genId() {
+  var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var r='IMP-';
+  for(var i=0;i<8;i++) r+=c[Math.floor(Math.random()*c.length)];
+  return r;
+}
+function copyTxt(txt, msg) {
+  navigator.clipboard.writeText(txt).then(function(){ toast(msg||'Copiado!'); });
+}
+function prevImg(input, id) {
+  var f=input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var el=document.getElementById(id);
+    if(el){el.src=e.target.result;el.style.display='block';}
+  };
+  r.readAsDataURL(f);
+}
+async function doUpload(fileInputId, folder, urlInputId, progWrapId, progFillId, progTxtId) {
+  var file = document.getElementById(fileInputId).files[0];
+  if(!file) return null;
+  var pg=document.getElementById(progWrapId), fill=document.getElementById(progFillId), txt=document.getElementById(progTxtId);
+  if(pg) pg.style.display='block';
+  if(fill) fill.style.width='40%';
+  if(txt) txt.textContent='A enviar para GitHub...';
+  try {
+    var url = await ghUpload(file, folder);
+    if(fill) fill.style.width='100%';
+    if(txt) txt.textContent='Concluído!';
+    if(urlInputId) document.getElementById(urlInputId).value=url;
+    return url;
+  } catch(e) {
+    if(txt) txt.textContent='Erro: '+e.message;
+    throw e;
+  }
+}
+
+/* ========================================================
+   SECÇÕES
+   ======================================================== */
+
+/* PAINEL */
+async function rPainel() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Bem-vindo ao <span class="r">Admin</span></div><div class="ps">IMPERSILVA HOLDING SGPS</div></div>'+
+    '<div class="sr">'+
+      '<div class="sc"><div class="sn" id="sp1">—</div><div class="sl">Portfólio</div></div>'+
+      '<div class="sc"><div class="sn" id="sp2">—</div><div class="sl">Clientes</div></div>'+
+      '<div class="sc"><div class="sn" id="sp3">—</div><div class="sl">Orçamentos</div></div>'+
+    '</div>'+
+    '<div class="card"><div class="ct"><i class="fa-solid fa-bolt"></i> Acesso Rápido</div>'+
+      '<div class="grid2">'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'clientes\')"><i class="fa-solid fa-globe"></i> Clientes</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'portfolio\')"><i class="fa-solid fa-briefcase"></i> Portfólio</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'contactos\')"><i class="fa-solid fa-envelope"></i> Contactos</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'orcamentos\')"><i class="fa-solid fa-file-invoice"></i> Orçamentos</button>'+
+        '<a class="btn bgh bsm bfull" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Site</a>'+
+        '<a class="btn bgh bsm bfull" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i> Portal</a>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card"><div class="ct"><i class="fa-solid fa-clock-rotate-left"></i> Actividade Recente</div><div id="paf"><div class="load"><div class="spin"></div> A carregar...</div></div></div>';
+  try {
+    var r1=await wGet('/api/portfolio');
+    document.getElementById('sp1').textContent=r1.length;
+  } catch(e){}
+  try {
+    var r2=await wGet('/api/admin/clientes');
+    document.getElementById('sp2').textContent=r2.length;
+  } catch(e){}
+  try {
+    var r3=await wGet('/api/admin/orcamentos');
+    document.getElementById('sp3').textContent=r3.length;
+    var feed=document.getElementById('paf');
+    if(!feed) return;
+    if(!r3.length){feed.innerHTML='<div class="empty"><i class="fa-solid fa-inbox"></i><p>Sem actividade ainda</p></div>';return;}
+    var html='';
+    r3.slice(0,5).forEach(function(o){
+      html+='<div style="display:flex;align-items:center;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--div)">'+
+        '<span class="badge ba">Orçamento</span>'+
+        '<span style="font-size:.85rem;font-weight:600;flex:1">'+o.nome+'</span>'+
+        '<span style="font-size:.68rem;color:rgba(255,255,255,.3)">'+timeAgo(o.criado_em)+'</span>'+
+      '</div>';
+    });
+    feed.innerHTML=html;
+  } catch(e){
+    var feed2=document.getElementById('paf');
+    if(feed2) feed2.innerHTML='<div class="empty"><p>Sem actividade ainda</p></div>';
+  }
+}
+
+/* PORTFÓLIO */
+var _portList = [];
+async function rPortfolio() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt"><span class="r">Port</span><span class="b">fólio</span></div><div class="ps">Projectos que aparecem no site</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rPortfolio()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openPortModal()"><i class="fa-solid fa-plus"></i> Novo</button>'+
+    '</div>'+
+    '<div id="portL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    _portList = await wGet('/api/portfolio');
+    renderPortList();
+  } catch(e) {
+    var el=document.getElementById('portL');
+    if(el) el.innerHTML='<div class="empty"><i class="fa-solid fa-triangle-exclamation"></i><p>Erro ao carregar</p></div>';
+  }
+}
+function renderPortList() {
+  var el=document.getElementById('portL');
+  if(!el) return;
+  if(!_portList.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-briefcase"></i><p>Sem projectos. Adicione o primeiro!</p></div>';return;}
+  var html='';
+  _portList.forEach(function(p,i){
+    var tc=p.tag_cor==='t-red'?'br':p.tag_cor==='t-green'?'bg':p.tag_cor==='t-amber'?'ba':'bb';
+    html+='<div class="li2">'+
+      '<div class="lin">'+(i+1)+'</div>'+
+      '<div class="lib">'+
+        '<div class="liname">'+p.nome+'</div>'+
+        '<div class="lidesc">'+p.descricao+'</div>'+
+        '<div class="limeta">'+
+          '<span class="badge '+tc+'">'+p.tag_tipo+'</span>'+
+          '<span style="font-size:.6rem;color:var(--gr)">'+p.categoria+'</span>'+
+          '<span class="badge '+(p.activo?'bg':'bgr')+'">'+(p.activo?'Visível':'Oculto')+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="lact">'+
+        '<button class="btn bgh bsm" onclick="editPort(\''+p.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
+        '<button class="btn bdng bsm" onclick="delPort(\''+p.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
+      '</div>'+
+    '</div>';
+  });
+  el.innerHTML=html;
+}
+function openPortModal(id) {
+  var p=id?_portList.find(function(x){return x.id===id;}):null;
+  var cats=['loja','food','eventos','servicos'];
+  var catOpts='';
+  cats.forEach(function(c){catOpts+='<option value="'+c+'"'+(p&&p.categoria===c?' selected':'')+'>'+c+'</option>';});
+  var tagColors=['t-blue','t-red','t-green','t-amber'];
+  var tagOpts='';
+  tagColors.forEach(function(c){tagOpts+='<option value="'+c+'"'+(p&&p.tag_cor===c?' selected':'')+'>'+c+'</option>';});
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(p?'Editar':'Novo')+' <span class="r">Projecto</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">ID (slug)</label><input class="fi" id="pId" value="'+(p?p.id:'')+'" placeholder="belle-cosmeticos"'+(p?' readonly':'')+'>'+
+      (p?'':'<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">Só letras minúsculas e hífens</div>')+'</div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="pNome" value="'+(p?p.nome:'')+'" placeholder="Belle Cosméticos"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Categoria</label><select class="fi" id="pCat">'+catOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Tag</label><input class="fi" id="pTag" value="'+(p?p.tag_tipo:'')+'" placeholder="Loja Online"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Cor badge</label><select class="fi" id="pTagCor">'+tagOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Ícone FA</label><input class="fi" id="pIcone" value="'+(p?p.icone||'':'fa-globe')+'" placeholder="fa-globe"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><textarea class="fi" id="pDesc">'+(p?p.descricao:'')+'</textarea></div>'+
+    '<div class="fg"><label class="fl">Resultado</label><input class="fi" id="pResult" value="'+(p?p.resultado:'')+'" placeholder="+200 encomendas no 1º mês"></div>'+
+    '<div class="fg"><label class="fl">URL ao vivo (opcional)</label><input class="fi" id="pUrl" value="'+(p?p.url_ao_vivo||'':'')+'" placeholder="https://..."></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Tipo orçamento</label><input class="fi" id="pOTipo" value="'+(p?p.orcamento_tipo||'':'')+'" placeholder="loja"></div>'+
+      '<div class="fg"><label class="fl">Ordem</label><input class="fi" type="number" id="pOrdem" value="'+(p?p.ordem:_portList.length+1)+'"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Imagem</label>'+
+      '<div class="iup"><input type="file" id="pImgF" accept="image/*" onchange="prevImg(this,\'pImgPrev\')">'+
+        '<i class="fa-solid fa-cloud-arrow-up"></i>'+
+        '<div class="iup-t">Clique para seleccionar<br><strong>JPG, PNG, WEBP</strong></div>'+
+        '<img class="ipr" id="pImgPrev"'+(p&&p.imagem?' src="'+p.imagem+'" style="display:block"':'')+'>'+
+      '</div>'+
+      (p&&p.imagem?'<button type="button" class="btn bdng bsm" style="margin-top:.4rem;margin-bottom:.4rem" onclick="removeMainPhoto(\'p\')"><i class="fa-solid fa-trash"></i> Remover imagem</button>':'')+
+      '<div class="iupg" id="pUpgW"><div class="iupgt" id="pUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="pUpgF" style="width:0%"></div></div></div>'+
+      '<input type="hidden" id="pImgUrl" value="'+(p?p.imagem||'':'')+'">'+
+    '</div>'+
+    '<div class="fg" id="portGalSection" style="display:none"><label class="fl"><i class="fa-solid fa-images"></i> Galeria do Projecto</label><div id="inModalGalPort" style="margin-top:.4rem"></div></div>'+
+    '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
+      '<label class="tog"><input type="checkbox" id="pActivo"'+((!p||p.activo)?' checked':'')+'>'+
+      '<span class="tsl"></span></label>'+
+      '<span style="font-size:.85rem">Visível no site</span>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="savePort(\''+( p?p.id:'')+'\')"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+function editPort(id){
+  openPortModal(id);
+  setTimeout(function(){
+    var sec = document.getElementById('portGalSection');
+    if(sec) sec.style.display = 'block';
+    var c = document.getElementById('inModalGalPort');
+    if(c){ c.innerHTML='<div class="load" style="padding:.4rem"><div class="spin"></div></div>'; loadGaleria(id,'portfolio','inModalGalPort'); }
+  }, 200);
+}
+async function savePort(eid) {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var file=document.getElementById('pImgF').files[0];
+  var imgUrl=document.getElementById('pImgUrl').value;
+  if(file){
+    try{ imgUrl=await doUpload('pImgF','portfolio','pImgUrl','pUpgW','pUpgF','pUpgT'); }
+    catch(e){ toast('Erro upload: '+e.message,'error'); btnReset(saveBtn); return; }
+  }
+  var id=eid||document.getElementById('pId').value.trim().toLowerCase().replace(/\s+/g,'-');
+  var data={
+    id:id, nome:document.getElementById('pNome').value.trim(),
+    categoria:document.getElementById('pCat').value,
+    tag_tipo:document.getElementById('pTag').value.trim(),
+    tag_cor:document.getElementById('pTagCor').value,
+    icone:document.getElementById('pIcone').value.trim()||'fa-globe',
+    descricao:document.getElementById('pDesc').value.trim(),
+    resultado:document.getElementById('pResult').value.trim(),
+    url_ao_vivo:document.getElementById('pUrl').value.trim()||null,
+    orcamento_tipo:document.getElementById('pOTipo').value.trim(),
+    ordem:parseInt(document.getElementById('pOrdem').value)||0,
+    imagem:imgUrl||null, activo:document.getElementById('pActivo').checked?1:0
+  };
+  if(!data.id||!data.nome){toast('ID e nome são obrigatórios','error');return;}
+  try{
+    await wPost('/api/admin/portfolio',data);
+    btnOk(saveBtn, 'Guardado!');
+    toast('Projecto guardado!'); notify('Sucesso','Projecto guardado no portfólio!','success');
+    setTimeout(function(){ closeModal(); rPortfolio(); }, 500);
+  }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delPort(id) {
+  if(!confirm('Apagar projecto?')) return;
+  toast('A apagar...','info');
+  try{ await wDel('/api/admin/portfolio/'+id); toast('Projecto apagado!'); rPortfolio(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* EQUIPA */
+var _equipaList = [];
+
+// Extend equipa modal with galeria
+function openEquipaGaleriaSection(id) {
+  var el = document.getElementById('eqGal_'+id);
+}
+
+async function rEquipa() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Equi<span class="r">pa</span></div><div class="ps">Membros da equipa IMPERSILVA</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rEquipa()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openEquipaModal()"><i class="fa-solid fa-plus"></i> Novo Membro</button>'+
+    '</div>'+
+    '<div id="eqL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    _equipaList = await wGet('/api/equipa');
+    var el=document.getElementById('eqL');
+    if(!el) return;
+    if(!_equipaList.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-users"></i><p>Sem membros</p></div>';return;}
+    var html='';
+    _equipaList.forEach(function(m){
+      html+='<div class="li2">'+
+        '<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--card2);flex-shrink:0;display:flex;align-items:center;justify-content:center">'+
+          (m.foto?'<img src="'+m.foto+'" style="width:100%;height:100%;object-fit:cover">':'<i class="fa-solid fa-user" style="color:var(--gr)"></i>')+
+        '</div>'+
+        '<div class="lib">'+
+          '<div class="liname">'+m.nome+'</div>'+
+          '<div class="lidesc">'+m.cargo+'</div>'+
+          '<div class="limeta"><span class="badge '+(m.activo?'bg':'bgr')+'">'+(m.activo?'Activo':'Inactivo')+'</span></div>'+
+        '</div>'+
+        '<div class="lact">'+
+          '<button class="btn bgh bsm" onclick="editEquipa(\''+m.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
+          '<button class="btn bdng bsm" onclick="delEquipa(\''+m.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('eqL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openEquipaModal(id) {
+  var m=id?_equipaList.find(function(x){return x.id===id;}):null;
+  var esp='';
+  if(m&&m.especialidades){try{esp=JSON.parse(m.especialidades).join(', ');}catch(e){esp=m.especialidades;}}
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(m?'Editar':'Novo')+' <span class="r">Membro</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">ID (slug)</label><input class="fi" id="eId" value="'+(m?m.id:'')+'" placeholder="pedro-silva"'+(m?' readonly':'')+'></div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="eNome" value="'+(m?m.nome:'')+'" placeholder="Pedro Silva"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Cargo</label><input class="fi" id="eCargo" value="'+(m?m.cargo:'')+'" placeholder="Dev Full Stack"></div>'+
+      '<div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="eEmail" value="'+(m?m.email||'':'')+'" placeholder="nome@impersilva.ao"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Bio</label><textarea class="fi" id="eBio">'+(m?m.bio||'':'')+'</textarea></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">LinkedIn</label><input class="fi" id="eLI" value="'+(m?m.linkedin||'':'')+'" placeholder="https://linkedin.com/..."></div>'+
+      '<div class="fg"><label class="fl">GitHub</label><input class="fi" id="eGH" value="'+(m?m.github||'':'')+'" placeholder="https://github.com/..."></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Especialidades (vírgula)</label><input class="fi" id="eEsp" value="'+esp+'" placeholder="HTML, CSS, JavaScript"></div>'+
+    '<div class="fg"><label class="fl">Foto</label>'+
+      '<div class="iup"><input type="file" id="eImgF" accept="image/*" onchange="prevImg(this,\'eImgPrev\')">'+
+        '<i class="fa-solid fa-user-circle"></i>'+
+        '<div class="iup-t">Foto do membro<br><strong>JPG, PNG</strong></div>'+
+        '<img class="ipr" id="eImgPrev"'+(m&&m.foto?' src="'+m.foto+'" style="display:block"':'')+'>'+
+      '</div>'+
+      (m&&m.foto?'<button type="button" class="btn bdng bsm" style="margin-top:.4rem;margin-bottom:.4rem" onclick="removeMainPhoto(\'e\')"><i class="fa-solid fa-trash"></i> Remover foto</button>':'')+
+      '<div class="iupg" id="eUpgW"><div class="iupgt" id="eUpgT">A enviar...</div><div class="iupgb"><div class="iupgf" id="eUpgF" style="width:0%"></div></div></div>'+
+      '<input type="hidden" id="eImgUrl" value="'+(m?m.foto||'':'')+'">'+
+    '</div>'+
+    '<div class="fg" id="eqGalSection" style="display:none"><label class="fl"><i class="fa-solid fa-images"></i> Galeria de Fotos</label><div id="inModalGal" style="margin-top:.4rem"></div></div>'+
+    '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
+      '<label class="tog"><input type="checkbox" id="eActivo"'+((!m||m.activo)?' checked':'')+'>'+
+      '<span class="tsl"></span></label>'+
+      '<span style="font-size:.85rem">Visível no site</span>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveEquipa(\''+( m?m.id:'')+'\')"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+function editEquipa(id){
+  openEquipaModal(id);
+  setTimeout(function(){
+    var sec = document.getElementById('eqGalSection');
+    if(sec) sec.style.display = 'block';
+    var c = document.getElementById('inModalGal');
+    if(c){ c.innerHTML='<div class="load" style="padding:.4rem"><div class="spin"></div></div>'; loadGaleria(id,'equipa','inModalGal'); }
+  }, 200);
+}
+async function saveEquipa(eid) {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var file=document.getElementById('eImgF').files[0];
+  var imgUrl=document.getElementById('eImgUrl').value;
+  if(file){
+    try{ imgUrl=await doUpload('eImgF','equipa','eImgUrl','eUpgW','eUpgF','eUpgT'); }
+    catch(e){ toast('Erro upload: '+e.message,'error'); return; }
+  }
+  var esp=document.getElementById('eEsp').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var id=eid||document.getElementById('eId').value.trim().toLowerCase().replace(/\s+/g,'-');
+  var data={
+    id:id, nome:document.getElementById('eNome').value.trim(),
+    cargo:document.getElementById('eCargo').value.trim(),
+    email:document.getElementById('eEmail').value.trim(),
+    bio:document.getElementById('eBio').value.trim(),
+    linkedin:document.getElementById('eLI').value.trim(),
+    github:document.getElementById('eGH').value.trim(),
+    especialidades:esp, foto:imgUrl||null,
+    activo:document.getElementById('eActivo').checked?1:0
+  };
+  if(!data.id||!data.nome){toast('ID e nome são obrigatórios','error');return;}
+  try{
+    await wPost('/api/admin/equipa',data);
+    btnOk(saveBtn, 'Guardado!');
+    toast('Membro guardado!'); notify('Sucesso','Membro da equipa guardado!','success');
+    setTimeout(function(){ closeModal(); rEquipa(); }, 500);
+  }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delEquipa(id) {
+  if(!confirm('Apagar membro?')) return;
+  toast('A apagar...','info');
+  try{ await wDel('/api/admin/equipa/'+id); toast('Membro apagado!'); rEquipa(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* CLIENTES */
+var _cliList = [];
+async function rClientes() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Sites de <span class="r">Clien</span><span class="b">tes</span></div><div class="ps">Cada cliente tem um código único de acesso ao portal</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rClientes()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openCliModal()"><i class="fa-solid fa-plus"></i> Novo Cliente</button>'+
+      '<a class="btn bgh bsm" href="verificar-site.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Portal</a>'+
+    '</div>'+
+    '<div id="cliL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    _cliList = await wGet('/api/admin/clientes');
+    var el=document.getElementById('cliL');
+    if(!el) return;
+    if(!_cliList.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-globe"></i><p>Sem clientes ainda</p></div>';return;}
+    var html='';
+    _cliList.forEach(function(c){
+      html+='<div class="cc">'+
+        '<div onclick="copyTxt(\''+c.id+'\',\'Código copiado!\')" title="Clique para copiar" class="ccid">'+c.id+'</div>'+
+        '<div class="ccn">'+c.nome+'</div>'+
+        (c.negocio?'<div style="font-size:.75rem;color:var(--gr);margin-bottom:.35rem">'+c.negocio+'</div>':'')+
+        '<div style="display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;margin-bottom:.5rem">'+
+          estadoBadge(c.estado)+
+          '<span style="font-size:.63rem;color:var(--gr)">'+(c.progresso||0)+'%</span>'+
+          (c.previsao?'<span style="font-size:.63rem;color:var(--gr)">'+c.previsao+'</span>':'')+
+        '</div>'+
+        '<div class="pg"><div class="pgf" style="width:'+(c.progresso||0)+'%"></div></div>'+
+        '<div style="display:flex;gap:.45rem;margin-top:.65rem">'+
+          '<button class="btn bgh bsm" style="flex:1" onclick="editCli(\''+c.id+'\')"><i class="fa-solid fa-pen"></i> Editar</button>'+
+          '<button class="btn bgh bsm" style="flex:1;color:var(--blu2)" onclick="shareCli(\''+c.id+'\')"><i class="fa-solid fa-share-nodes"></i> Partilhar</button>'+
+          '<button class="btn bdng bsm" onclick="delCli(\''+c.id+'\')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('cliL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openCliModal(id) {
+  var c=id?_cliList.find(function(x){return x.id===id;}):null;
+  var nid=genId();
+  var estats=['em_progresso','revisao','concluido','pausado'];
+  var eOpts='';
+  estats.forEach(function(s){eOpts+='<option value="'+s+'"'+(c&&c.estado===s?' selected':'')+'>'+s.replace('_',' ')+'</option>';});
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(c?'Editar':'Novo')+' <span class="r">Cliente</span></div>'+
+    '<div class="fg"><label class="fl">Código de Acesso</label>'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" id="cId" value="'+(c?c.id:nid)+'" style="font-family:monospace;letter-spacing:.1em;flex:1"'+(c?' readonly':'')+'>'+
+        (!c?'<button class="btn bgh bsm" onclick="document.getElementById(\'cId\').value=genId()"><i class="fa-solid fa-arrows-rotate"></i></button>':'')+
+      '</div>'+
+      '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">O cliente usa este código no portal verificar-site</div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="cNome" value="'+(c?c.nome:'')+'" placeholder="João Silva"></div>'+
+      '<div class="fg"><label class="fl">Negócio</label><input class="fi" id="cNeg" value="'+(c?c.negocio||'':'')+'" placeholder="Loja X"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Telefone</label><input class="fi" id="cTel" value="'+(c?c.telefone||'':'')+'" placeholder="+244 900 000 000"></div>'+
+      '<div class="fg"><label class="fl">URL do Site</label><input class="fi" id="cUrl" value="'+(c?c.url_site||'':'')+'" placeholder="https://..."></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl"><i class="fa-solid fa-shield-halved" style="color:var(--blu2)"></i> URL do Admin (Cloudflare Pages)</label>'+
+      '<input class="fi" id="cUrlAdmin" value="'+(c?c.url_admin||'':'')+'" placeholder="https://nome-admin.pages.dev">'+
+      '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">URL privado do painel admin do cliente — não publicar</div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Estado</label><select class="fi" id="cEstado">'+eOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Progresso (%)</label><input class="fi" type="number" id="cProg" min="0" max="100" value="'+(c?c.progresso||0:0)+'"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Etapa Actual</label><input class="fi" id="cEtapa" value="'+(c?c.etapa_actual||'':'')+'" placeholder="Design"></div>'+
+      '<div class="fg"><label class="fl">Previsão</label><input class="fi" id="cPrevisao" value="'+(c?c.previsao||'':'')+'" placeholder="Maio 2025"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Notas Internas</label><textarea class="fi" id="cNotas">'+(c?c.notas||'':'')+'</textarea></div>'+
+    '<div style="background:rgba(29,78,216,.06);border:1px solid rgba(29,78,216,.15);border-radius:10px;padding:.85rem;margin-bottom:.85rem">'+
+      '<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blu2);margin-bottom:.75rem"><i class="fa-brands fa-github"></i> GitHub — Admin do Site do Cliente</div>'+
+      '<div class="fg"><label class="fl">GitHub Token (PAT)</label><input class="fi" type="password" id="cGhToken" value="'+(c?c.gh_token||'':'')+'" placeholder="ghp_xxxxxxxxxxxx"></div>'+
+      '<div class="grid2">'+
+        '<div class="fg"><label class="fl">Utilizador</label><input class="fi" id="cGhUser" value="'+(c?c.gh_user||'':'')+'" placeholder="username"></div>'+
+        '<div class="fg"><label class="fl">Repositório</label><input class="fi" id="cGhRepo" value="'+(c?c.gh_repo||'':'')+'" placeholder="nome-repo"></div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Branch</label><input class="fi" id="cGhBranch" value="'+(c?c.gh_branch||'main':'main')+'" placeholder="main"></div>'+
+    '</div>'+
+    '<div style="background:rgba(214,40,40,.07);border:1px solid rgba(214,40,40,.2);border-radius:10px;padding:.9rem;margin-bottom:.85rem">'+
+      '<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem"><i class="fa-solid fa-key"></i> Token do Admin da Loja</div>'+
+      '<div class="fg"><label class="fl">Loja Token</label>'+
+        '<input class="fi" id="cLojaToken" type="password" value="'+(c?c.loja_token||'':'')+'">'+
+        '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">Token do admin do site do cliente — preenchido automaticamente ao entrar pelo portal</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="fg" style="display:flex;align-items:center;gap:.75rem">'+
+      '<label class="tog"><input type="checkbox" id="cActivo"'+((!c||c.activo)?' checked':'')+'>'+
+      '<span class="tsl"></span></label>'+
+      '<span style="font-size:.85rem">Conta activa</span>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveCli(\''+( c?c.id:'')+'\')"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+function editCli(id){ openCliModal(id); }
+async function saveCli(eid) {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var id=eid||document.getElementById('cId').value.trim().toUpperCase();
+  var data={
+    id:id, nome:document.getElementById('cNome').value.trim(),
+    negocio:document.getElementById('cNeg').value.trim(),
+    telefone:document.getElementById('cTel').value.trim(),
+    url_site:document.getElementById('cUrl').value.trim(),
+    url_admin:document.getElementById('cUrlAdmin')?document.getElementById('cUrlAdmin').value.trim()||null:null,
+    estado:document.getElementById('cEstado').value,
+    progresso:parseInt(document.getElementById('cProg').value)||0,
+    etapa_actual:document.getElementById('cEtapa').value.trim(),
+    previsao:document.getElementById('cPrevisao').value.trim(),
+    notas:document.getElementById('cNotas').value.trim(),
+    activo:document.getElementById('cActivo').checked?1:0,
+    gh_token:document.getElementById('cGhToken').value.trim()||null,
+    gh_user:document.getElementById('cGhUser').value.trim()||null,
+    gh_repo:document.getElementById('cGhRepo').value.trim()||null,
+    gh_branch:document.getElementById('cGhBranch').value.trim()||'main',
+    loja_token:document.getElementById('cLojaToken')?document.getElementById('cLojaToken').value.trim()||null:null
+  };
+  if(!data.id||!data.nome){toast('Código e nome são obrigatórios','error');return;}
+  try{
+    await wPost('/api/admin/clientes',data);
+    btnOk(saveBtn, 'Guardado!');
+    toast('Cliente guardado!'); notify('Sucesso','Cliente guardado com sucesso!','success');
+    setTimeout(function(){ closeModal(); rClientes(); }, 500);
+  }catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delCli(id) {
+  if(!confirm('Apagar cliente '+id+'?')) return;
+  toast('A apagar...','info');
+  try{ await wDel('/api/admin/clientes/'+id); toast('Cliente apagado!'); rClientes(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+function shareCli(id) {
+  var c=_cliList.find(function(x){return x.id===id;});
+  if(!c) return;
+  var link=SITEURL+'/verificar-site.html?id='+c.id;
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Partilhar <span class="r">'+c.nome+'</span></div>'+
+    '<div class="fg"><label class="fl">Código de Acesso</label>'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" value="'+c.id+'" readonly style="font-family:monospace;letter-spacing:.15em;font-size:1.1rem;flex:1">'+
+        '<button class="btn bred bsm" onclick="copyTxt(\''+c.id+'\',\'Código copiado!\')"><i class="fa-solid fa-copy"></i></button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Link Directo</label>'+
+      '<div style="display:flex;gap:.5rem">'+
+        '<input class="fi" value="'+link+'" readonly style="font-size:.7rem;flex:1">'+
+        '<button class="btn bblue bsm" onclick="copyTxt(\''+link+'\',\'Link copiado!\')"><i class="fa-solid fa-copy"></i></button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Fechar</button>'+
+      '<a class="btn bblue" href="'+link+'" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Pré-ver</a>'+
+    '</div>'
+  );
+}
+
+/* ═══════════════════════════════════════════════════
+   SITES — gestão multi-site
+   ═══════════════════════════════════════════════════ */
+
+var _sitesList = [];
+
+async function rSites() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Sites <span class="r">Activos</span></div><div class="ps">Todos os sites criados pela IMPERSILVA</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rSites()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="abrirCriarSite()"><i class="fa-solid fa-plus"></i> Novo Site</button>'+
+    '</div>'+
+    '<div id="sitesL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+
+  try {
+    _cliList = await wGet('/api/admin/clientes');
+    _sitesList = _cliList.filter(function(c){ return c.url_site || c.gh_repo; });
+    var el = document.getElementById('sitesL');
+    if(!el) return;
+
+    if(!_sitesList.length){
+      el.innerHTML='<div class="empty"><i class="fa-solid fa-rocket"></i><p>Nenhum site criado ainda.<br>Clica em <b>+ Novo Site</b> para começar.</p></div>';
+      return;
+    }
+
+    var html = '<div style="display:flex;flex-direction:column;gap:10px">';
+    _sitesList.forEach(function(c){
+      var temSite = !!c.url_site;
+      var temAdmin = !!c.url_admin;
+      var temRepo  = !!c.gh_repo;
+      html += '<div class="cc" style="border-left:3px solid '+(temSite?'var(--gr)':'var(--yl)')+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">'+
+          '<div>'+
+            '<div class="ccn" style="margin-bottom:2px">'+c.nome+'</div>'+
+            (c.negocio?'<div style="font-size:.7rem;color:var(--gr)">'+c.negocio+'</div>':'')+
+          '</div>'+
+          '<div style="display:flex;gap:5px;align-items:center">'+
+            '<span style="font-size:.6rem;padding:2px 7px;border-radius:20px;background:'+(temSite?'#0d2a1a':'#2a1a0d')+';color:'+(temSite?'#4ade80':'#fbbf24')+'">'+
+              (temSite?'🟢 Online':'🟡 Setup')+
+            '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+
+          (temRepo?'<span style="font-size:.6rem;background:#1a1a2e;padding:2px 7px;border-radius:4px;color:#93c5fd"><i class="fa-brands fa-github"></i> '+c.gh_repo+'</span>':'')+
+          (c.estado?estadoBadge(c.estado):'')+
+        '</div>'+
+        '<div style="display:flex;gap:5px;flex-wrap:wrap">'+
+          (temSite?'<a class="btn bgh bsm" href="'+c.url_site+'" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-arrow-up-right-from-square"></i> Site</a>':'')+
+          (temAdmin?'<a class="btn bgh bsm" href="'+c.url_admin+'" target="_blank" style="flex:1;text-align:center;color:var(--blu2)"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a>':'')+
+          '<button class="btn bgh bsm" onclick="abrirDeploySite(\''+c.id+'\')" style="flex:1"><i class="fa-solid fa-upload"></i> Deploy</button>'+
+          '<button class="btn bgh bsm" onclick="editCli(\''+c.id+'\')" style="color:var(--gr)"><i class="fa-solid fa-pen"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) {
+    var el2 = document.getElementById('sitesL');
+    if(el2) el2.innerHTML = '<div class="empty"><p>Erro: '+e.message+'</p></div>';
+  }
+}
+
+/* ── Criar Novo Site ── */
+function buildCfSelector() {
+  if (!_cfAccounts.length) {
+    return '<div style="background:rgba(246,130,31,.07);border:1px solid rgba(246,130,31,.2);'+
+      'border-radius:8px;padding:.6rem .8rem;font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:8px">'+
+      '<i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> '+
+      'Sem contas Cloudflare — Workers e D1 criados manualmente após. '+
+      '<span onclick="closeModal();go(\'config\')" style="color:#f6821f;cursor:pointer;text-decoration:underline">Configurar</span>'+
+    '</div>';
+  }
+  var opts = _cfAccounts.map(function(a, i) {
+    return '<option value="'+i+'">'+escHtml(a.nome)+' · '+a.account_id.slice(0,8)+'...</option>';
+  }).join('');
+  return '<div class="fg"><label class="fl"><i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> Conta Cloudflare</label>'+
+    '<select class="fi" id="csCfAccount">'+
+      '<option value="">— Sem automação CF (manual) —</option>'+
+      opts+
+    '</select></div>';
+}
+
+function abrirCriarSite() {
+  wGet('/api/admin/templates').then(function(templates){
+    var tOpts = '';
+    if(templates && templates.length){
+      templates.forEach(function(t){
+        tOpts += '<option value="'+t.id+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
+      });
+    } else {
+      tOpts = '<option value="">Nenhum template — adiciona em Templates primeiro</option>';
+    }
+
+    openModal(
+      '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+      '<div class="mtit">Novo <span class="r">Site</span></div>'+
+
+      '<div style="background:#1a1a2e;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.72rem;color:#93c5fd;line-height:1.6">'+
+        '<i class="fa-solid fa-circle-info"></i> O sistema vai criar um repositório GitHub e copiar os ficheiros do template automaticamente.'+
+      '</div>'+
+
+      '<div class="fg"><label class="fl">Template</label>'+
+        '<select class="fi" id="csTemplate">'+tOpts+'</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Nome do Site</label>'+
+        '<input class="fi" id="csNome" placeholder="Ex: Pastelaria Lisboa"/>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Slug (URL)</label>'+
+        '<div style="display:flex;gap:5px">'+
+          '<input class="fi" id="csSlug" placeholder="pastelaria-lisboa" style="flex:1" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,\'-\')"/>'+
+          '<button class="btn bgh bsm" onclick="autoSlug()"><i class="fa-solid fa-wand-magic-sparkles"></i></button>'+
+        '</div>'+
+        '<div style="font-size:.65rem;color:var(--gr);margin-top:3px">impersilvatech.github.io/<span id="slugPrev" style="color:#a78bfa">pastelaria-lisboa</span>/</div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Cliente</label>'+
+        '<select class="fi" id="csCliente">'+
+          '<option value="">— Seleccionar cliente —</option>'+
+          (_cliList||[]).map(function(c){ return '<option value="'+c.id+'">'+c.nome+(c.negocio?' ('+c.negocio+')':'')+'</option>'; }).join('')+
+        '</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">GitHub Token <span style="color:var(--gr);font-size:.65rem">(do cliente ou da org)</span></label>'+
+        '<input class="fi" type="password" id="csGhToken" placeholder="ghp_..."/>'+
+        '<div style="font-size:.65rem;color:var(--gr);margin-top:3px">Precisa de permissão: repo, workflow, pages</div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">GitHub User/Org</label>'+
+        '<input class="fi" id="csGhUser" value="impersilvatech" placeholder="impersilvatech"/>'+
+      '</div>'+
+
+      buildCfSelector()+
+      '<div id="csErr" style="display:none;background:rgba(214,40,40,.12);border:1px solid rgba(214,40,40,.35);border-radius:8px;padding:.7rem 1rem;font-size:.8rem;color:#f87171;margin-bottom:.75rem"><i class="fa-solid fa-circle-exclamation" style="margin-right:.4rem"></i><span id="csErrMsg"></span></div>'+
+      '<button class="btn bblue" style="width:100%;margin-top:8px" onclick="executarCriarSite()">'+
+        '<i class="fa-solid fa-rocket"></i> Criar Site Automaticamente'+
+      '</button>'
+    );
+
+    document.getElementById('csSlug').addEventListener('input', function(){
+      document.getElementById('slugPrev').textContent = this.value || 'slug';
+    });
+  }).catch(function(){
+    toast('Nenhum template encontrado. Crie um em "Templates" primeiro.', 'error');
+    // Não redirecionar
+  });
+}
+
+function autoSlug(){
+  var nome = (document.getElementById('csNome')||{}).value||'';
+  var slug = nome.toLowerCase()
+    .replace(/[àáâãäå]/g,'a').replace(/[èéêë]/g,'e')
+    .replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o')
+    .replace(/[ùúûü]/g,'u').replace(/ç/g,'c')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  var el = document.getElementById('csSlug');
+  if(el){ el.value = slug; document.getElementById('slugPrev').textContent = slug; }
+}
+
+// ── Commitar ficheiro no GitHub via API (browser-side) ──
+async function commitFileGH(token, user, repo, path, fileContent, message) {
+  var sha = null;
+  try {
+    var rGet = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/'+path, {
+      headers: {'Authorization': 'token '+token}
+    });
+    if (rGet.ok) { var ex = await rGet.json(); sha = ex.sha; }
+  } catch(e) {}
+
+  var body = {
+    message: message,
+    content: btoa(unescape(encodeURIComponent(fileContent))),
+    branch: 'main'
+  };
+  if (sha) body.sha = sha;
+
+  var rPut = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/'+path, {
+    method: 'PUT',
+    headers: {'Authorization': 'token '+token, 'Content-Type': 'application/json'},
+    body: JSON.stringify(body)
+  });
+  if (!rPut.ok) {
+    var err = await rPut.json();
+    throw new Error(err.message || 'Erro ao commitar ' + path);
+  }
+  return true;
+}
+
+function csErro(msg) {
+  var d = document.getElementById('csErr');
+  var s = document.getElementById('csErrMsg');
+  if(d && s){ s.textContent = msg; d.style.display = 'block'; }
+  else { toast(msg, 'error'); }
+}
+
+async function executarCriarSite(){
+  var errD = document.getElementById('csErr');
+  if(errD) errD.style.display = 'none';
+
+  // ── Set active CF account from selector ──
+  var cfSelEl = document.getElementById('csCfAccount');
+  var cfSelIdx = cfSelEl ? parseInt(cfSelEl.value) : NaN;
+  _cfActiveAcc = (!isNaN(cfSelIdx) && _cfAccounts[cfSelIdx]) ? _cfAccounts[cfSelIdx] : null;
+
+  var templateVal = (document.getElementById('csTemplate')||{}).value||'';
+  var nome        = ((document.getElementById('csNome')||{}).value||'').trim();
+  var slug        = ((document.getElementById('csSlug')||{}).value||'').trim();
+  var clienteId   = (document.getElementById('csCliente')||{}).value||'';
+  var ghToken     = ((document.getElementById('csGhToken')||{}).value||'').trim();
+  var ghUser      = ((document.getElementById('csGhUser')||{}).value||'impersilvatech').trim();
+
+  if(!templateVal||templateVal.indexOf('|')<0){ csErro('Selecciona um template'); return; }
+  if(!nome){ csErro('Nome do site é obrigatório'); return; }
+  if(!slug){ csErro('Slug é obrigatório'); return; }
+  if(!ghToken){ csErro('GitHub Token é obrigatório — ver Configurações'); return; }
+
+  var tParts = templateVal.split('|');
+  var tGhUser = tParts[1], tGhRepo = tParts[2], tGhBranch = tParts[3]||'main';
+
+  var btn = document.querySelector('#mb .btn.bblue');
+  if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar...'; btn.disabled=true; }
+
+  try {
+    // ── 1. Criar repositório e copiar template via Worker ──
+    var res = await wPost('/api/admin/sites/criar', {
+      nome, slug, gh_token: ghToken, gh_user: ghUser,
+      template_gh_user: tGhUser, template_gh_repo: tGhRepo, template_gh_branch: tGhBranch,
+      cliente_id: clienteId || null
+    });
+    if(res.erro) throw new Error(res.erro);
+
+    // ── 2. Gerar e commitar config.js com dados reais do site ──
+    if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A configurar...';
+    var shortName = nome.split(' ').slice(0,2).join(' ');
+    var configContent =
+      '// config.js — Configuração automática gerada pelo admin\n'+
+      '// Editar api_url se o Worker tiver subdomain diferente.\n\n'+
+      'window.SITE_CONFIG = {\n'+
+      '  api_url:    "https://'+slug+'.workers.dev",\n'+
+      '  slug:       "'+slug+'",\n'+
+      '  gh_user:    "'+ghUser+'",\n'+
+      '  nome:       "'+nome+'",\n'+
+      '  short_name: "'+shortName+'",\n'+
+      '  descricao:  "Loja online — '+nome+'",\n'+
+      '  cor_fundo:  "#0d0d1a"\n'+
+      '};\n'+
+      'window.SITE_API = window.SITE_CONFIG.api_url;\n';
+
+    await commitFileGH(ghToken, ghUser, slug, 'config.js', configContent,
+      'config: definir API e slug para ' + slug);
+
+    // ── 3. Commitar manifest.json ──
+    var manifestObj = {
+      name: nome, short_name: shortName,
+      description: 'Loja online — '+nome,
+      start_url: '/'+slug+'/', scope: '/'+slug+'/',
+      display: 'standalone', orientation: 'portrait',
+      background_color: '#0d0d1a', theme_color: '#0d0d1a',
+      icons: [
+        {src:'/'+slug+'/favicon.svg',sizes:'any',type:'image/svg+xml',purpose:'any maskable'},
+        {src:'/'+slug+'/favicon.svg',sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},
+        {src:'/'+slug+'/favicon.svg',sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}
+      ]
+    };
+    await commitFileGH(ghToken, ghUser, slug, 'manifest.json',
+      JSON.stringify(manifestObj, null, 2),
+      'manifest: definir nome "'+nome+'" e paths /'+slug+'/');
+
+    // ── 4. Cloudflare: criar D1 + clonar Worker (se credenciais configuradas) ──
+    var cfOk = false, cfDbId = '', cfDbName = '', cfWorkerUrl = '';
+    var cfErr = '';
+
+    if (_cfActiveAcc && _cfActiveAcc.account_id && _cfActiveAcc.api_token) {
+      // ── A: Criar D1 ──
+      try {
+        if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar base de dados D1...';
+        var d1 = await criarD1CF(slug);
+        cfDbId = d1.id; cfDbName = d1.name;
+      } catch(e) { cfErr = 'D1: '+e.message; }
+
+      // ── B: Migrações (independente do Worker) ──
+      if (cfDbId) {
+        try {
+          if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar tabelas...';
+          var migResult = await executarMigracoesCF(cfDbId, slug, nome);
+        } catch(e) { cfErr = (cfErr?cfErr+' | ':'')+'Migrações: '+e.message; }
+      }
+
+      // ── C: Clonar Worker (requer template central) ──
+      if (_cfTemplate.worker_name) {
+        try {
+          if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A clonar Worker...';
+          await clonarWorkerCF(slug, cfDbId);
+          if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A activar workers.dev...';
+          cfWorkerUrl = await activarWorkersDevCF(slug);
+          cfOk = true;
+          try {
+            var cfMap = JSON.parse(localStorage.getItem('imp_sites_cf_map')||'{}');
+            cfMap[_cfActiveAcc.id] = (cfMap[_cfActiveAcc.id]||0) + 1;
+            localStorage.setItem('imp_sites_cf_map', JSON.stringify(cfMap));
+          } catch(e) {}
+          registarWorkerAuto(slug, nome, _cfActiveAcc, ghUser);
+        } catch(e) { cfErr = (cfErr?cfErr+' | ':'')+'Worker: '+e.message; }
+      }
+    }
+
+    closeModal();
+    toast('Site criado! 🎉', 'success');
+
+    setTimeout(function(){
+      var cfSteps = '';
+      if (_cfActiveAcc && _cfActiveAcc.account_id) {
+        if (cfOk) {
+          cfSteps =
+            _stepOk('Base de dados D1 criada', cfDbName)+
+            _stepOk('Worker Cloudflare criado', cfWorkerUrl)+
+            _stepOk('Migrações executadas', 'Tabelas criadas — token: '+(migResult&&migResult.adminToken||'—'));
+        } else if (cfErr) {
+          cfSteps =
+            _stepErr('Cloudflare falhou', cfErr)+
+            _stepPend('Criar Worker manualmente', 'Nome sugerido: '+slug)+
+            _stepPend('Criar D1 manualmente', 'Nome sugerido: '+slug+'-db');
+        }
+      } else {
+        cfSteps =
+          _stepPend('Criar Worker Cloudflare', 'Nome sugerido: '+slug)+
+          _stepPend('Criar D1 Database', 'Nome sugerido: '+slug+'-db')+
+          _stepPend('Configurar VAPID Keys', 'Usar o Gerador VAPID');
+      }
+
+      openModal(
+        '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+        '<div class="mtit">Site <span class="r">Criado!</span> 🎉</div>'+
+        '<div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">'+
+
+          _stepOk('Repositório GitHub criado', ghUser+'/'+slug)+
+          _stepOk('Ficheiros do template copiados', (res.ficheiros_copiados||'')+' ficheiros')+
+          _stepOk('GitHub Pages activado', 'https://'+ghUser+'.github.io/'+slug+'/')+
+          _stepOk('config.js gerado', 'api_url = https://'+slug+'.workers.dev')+
+          _stepOk('manifest.json configurado', nome+' · /'+slug+'/')+
+
+          '<div style="height:1px;background:var(--bd);margin:6px 0"></div>'+
+          cfSteps+
+
+        '</div>'+
+        '<div style="font-size:.65rem;color:var(--gr);margin-top:12px;line-height:1.6">'+
+          (cfOk
+            ? 'Tudo pronto! O site fica online em 1-2 min após o GitHub Pages propagar.'
+            : 'O site fica online em 1-2 min. '+(cfErr?'Cloudflare falhou: '+cfErr+'. ':'')+'Completa os passos pendentes manualmente.'
+          )+
+        '</div>'+
+        '<button class="btn bblue" style="width:100%;margin-top:12px" onclick="closeModal();rSites()">'+
+          '<i class="fa-solid fa-check"></i> Concluir'+
+        '</button>'
+      );
+    }, 300);
+
+    rSites();
+  } catch(e) {
+    csErro('Erro: '+e.message);
+    if(btn){ btn.innerHTML='<i class="fa-solid fa-rocket"></i> Criar Site Automaticamente'; btn.disabled=false; }
+  }
+}
+
+function _stepErr(titulo, sub){
+  return '<div style="display:flex;gap:10px;align-items:center;background:#2a0d0d;border-radius:8px;padding:10px 12px">'+
+    '<i class="fa-solid fa-circle-xmark" style="color:#f87171;font-size:1.1rem"></i>'+
+    '<div><div style="font-size:.78rem;font-weight:600;color:#fff">'+titulo+'</div>'+
+    '<div style="font-size:.65rem;color:#f87171;word-break:break-all">'+sub+'</div></div></div>';
+}
+function _stepOk(titulo, sub){
+  return '<div style="display:flex;gap:10px;align-items:center;background:#0d2a1a;border-radius:8px;padding:10px 12px">'+
+    '<i class="fa-solid fa-circle-check" style="color:#4ade80;font-size:1.1rem"></i>'+
+    '<div><div style="font-size:.78rem;font-weight:600;color:#fff">'+titulo+'</div>'+
+    '<div style="font-size:.65rem;color:#4ade80">'+sub+'</div></div></div>';
+}
+function _stepPend(titulo, sub){
+  return '<div style="display:flex;gap:10px;align-items:center;background:#1a1a2e;border-radius:8px;padding:10px 12px">'+
+    '<i class="fa-solid fa-circle-dot" style="color:#fbbf24;font-size:1.1rem"></i>'+
+    '<div><div style="font-size:.78rem;font-weight:600;color:#fff">'+titulo+'</div>'+
+    '<div style="font-size:.65rem;color:#fbbf24">'+sub+'</div></div></div>';
+}
+
+/* ── Deploy / Actualizar Site ── */
+function abrirDeploySite(clienteId){
+  var c = (_cliList||[]).find(function(x){ return x.id===clienteId; });
+  if(!c){ toast('Cliente não encontrado','error'); return; }
+
+  wGet('/api/admin/templates').then(function(templates){
+    var tOpts = (templates||[]).map(function(t){
+      return '<option value="'+t.id+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
+    }).join('');
+
+    openModal(
+      '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+      '<div class="mtit">Deploy <span class="r">'+c.nome+'</span></div>'+
+
+      '<div style="background:#2a1a0d;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.72rem;color:#fbbf24;line-height:1.6">'+
+        '⚠️ Isto vai <b>sobrescrever</b> os ficheiros do template no repositório <b>'+(c.gh_repo||'—')+'</b>. '+
+        'Os dados da BD (produtos, encomendas) ficam intactos.'+
+      '</div>'+
+
+      '<div class="fg"><label class="fl">Template a usar</label>'+
+        '<select class="fi" id="dpTemplate">'+tOpts+'</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Ficheiros a actualizar</label>'+
+        '<div style="display:flex;flex-direction:column;gap:5px;margin-top:4px">'+
+          _checkDeploy('admin.html','admin.html',true)+
+          _checkDeploy('sw.js','sw.js',true)+
+          _checkDeploy('index.html','index.html',false)+
+          _checkDeploy('manifest.json','manifest.json',false)+
+        '</div>'+
+      '</div>'+
+
+      '<button class="btn bblue" style="width:100%;margin-top:10px" onclick="executarDeploy(\''+clienteId+'\')">'+
+        '<i class="fa-solid fa-upload"></i> Fazer Deploy'+
+      '</button>'
+    );
+  });
+}
+
+function _checkDeploy(label, valor, checked){
+  return '<label style="display:flex;gap:8px;align-items:center;cursor:pointer;font-size:.78rem;color:#ccc">'+
+    '<input type="checkbox" value="'+valor+'" class="dpFile"'+(checked?' checked':'')+'>'+label+'</label>';
+}
+
+async function executarDeploy(clienteId){
+  var c = (_cliList||[]).find(function(x){ return x.id===clienteId; });
+  if(!c){ toast('Cliente não encontrado','error'); return; }
+
+  var tVal = (document.getElementById('dpTemplate')||{}).value||'';
+  if(!tVal){ toast('Selecciona um template','error'); return; }
+
+  var ficheiros = Array.from(document.querySelectorAll('.dpFile:checked')).map(function(cb){ return cb.value; });
+  if(!ficheiros.length){ toast('Selecciona pelo menos um ficheiro','error'); return; }
+
+  var tParts = tVal.split('|');
+  var btn = document.querySelector('#modal .btn.bblue');
+  if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A fazer deploy...'; btn.disabled=true; }
+
+  try {
+    var res = await wPost('/api/admin/sites/deploy', {
+      cliente_id: clienteId,
+      gh_token: c.gh_token, gh_user: c.gh_user, gh_repo: c.gh_repo, gh_branch: c.gh_branch||'main',
+      template_gh_user: tParts[1], template_gh_repo: tParts[2], template_gh_branch: tParts[3]||'main',
+      ficheiros
+    });
+    if(res.erro) throw new Error(res.erro);
+    closeModal();
+    toast('Deploy concluído! '+res.ficheiros_actualizados+' ficheiro(s) actualizado(s) ✅','success');
+    rSites();
+  } catch(e){
+    toast('Erro no deploy: '+e.message,'error');
+    if(btn){ btn.innerHTML='<i class="fa-solid fa-upload"></i> Fazer Deploy'; btn.disabled=false; }
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   TEMPLATES — gestão de templates de sites
+   ═══════════════════════════════════════════════════ */
+
+var _templatesList = [];
+
+async function rTemplates(){
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Temp<span class="r">lates</span></div><div class="ps">Repositórios usados como base para novos sites</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rTemplates()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="abrirNovoTemplate()"><i class="fa-solid fa-plus"></i> Novo Template</button>'+
+    '</div>'+
+    '<div id="tplL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+
+  try {
+    _templatesList = await wGet('/api/admin/templates');
+    var el = document.getElementById('tplL');
+    if(!el) return;
+    if(!_templatesList.length){
+      el.innerHTML='<div class="empty"><i class="fa-solid fa-layer-group"></i><p>Nenhum template ainda.<br>Clica em <b>+ Novo Template</b> para adicionar.</p></div>';
+      return;
+    }
+    var html = '<div style="display:flex;flex-direction:column;gap:10px">';
+    _templatesList.forEach(function(t){
+      var cor = {loja:'#a78bfa',restaurante:'#f97316',portfolio:'#38bdf8',servicos:'#4ade80',pastelaria:'#fb923c'}[t.tipo||'loja']||'#a78bfa';
+      html += '<div class="cc" style="border-left:3px solid '+cor+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+          '<div>'+
+            '<div class="ccn">'+t.nome+'</div>'+
+            '<div style="font-size:.65rem;color:var(--gr);margin-top:1px">'+
+              '<i class="fa-brands fa-github"></i> '+t.gh_user+'/'+t.gh_repo+
+            '</div>'+
+          '</div>'+
+          '<span style="font-size:.6rem;padding:2px 8px;border-radius:20px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'44">'+
+            (t.tipo||'loja')+
+          '</span>'+
+        '</div>'+
+        '<div style="font-size:.7rem;color:var(--gr);margin-bottom:8px">'+(t.descricao||'')+'</div>'+
+        '<div style="display:flex;gap:5px">'+
+          '<a class="btn bgh bsm" href="https://github.com/'+t.gh_user+'/'+t.gh_repo+'" target="_blank" style="flex:1;text-align:center"><i class="fa-brands fa-github"></i> Ver no GitHub</a>'+
+          '<a class="btn bgh bsm" href="https://'+t.gh_user+'.github.io/'+t.gh_repo+'/" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>'+
+          '<button class="btn bdng bsm" onclick="delTemplate('+t.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e){
+    var el2 = document.getElementById('tplL');
+    if(el2) el2.innerHTML = '<div class="empty"><p>Erro: '+e.message+'</p></div>';
+  }
+}
+
+function abrirNovoTemplate(){
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Template</span></div>'+
+
+    '<div class="fg"><label class="fl">Nome</label>'+
+      '<input class="fi" id="tNome" placeholder="Ex: Loja Online, Pastelaria..."/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Tipo</label>'+
+      '<select class="fi" id="tTipo">'+
+        '<option value="loja">🛒 Loja Online</option>'+
+        '<option value="pastelaria">🥐 Pastelaria/Café</option>'+
+        '<option value="restaurante">🍽️ Restaurante</option>'+
+        '<option value="portfolio">💼 Portfólio</option>'+
+        '<option value="servicos">🔧 Serviços</option>'+
+        '<option value="barbearia">✂️ Barbearia/Salão</option>'+
+      '</select>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label>'+
+      '<input class="fi" id="tDesc" placeholder="Breve descrição do template..."/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">GitHub User/Org</label>'+
+      '<input class="fi" id="tGhUser" value="impersilvatech"/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Repositório (nome)</label>'+
+      '<input class="fi" id="tGhRepo" placeholder="Ex: Loja, Pastelaria..."/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Branch</label>'+
+      '<input class="fi" id="tGhBranch" value="main"/>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Ficheiros a copiar <span style="color:var(--gr);font-size:.65rem">(um por linha)</span></label>'+
+      '<textarea class="fi" id="tFicheiros" rows="5" style="resize:vertical">index.html\nadmin.html\nsw.js\nmanifest.json\nfavicon.svg</textarea>'+
+    '</div>'+
+    '<button class="btn bblue" style="width:100%;margin-top:8px" onclick="salvarTemplate()">'+
+      '<i class="fa-solid fa-floppy-disk"></i> Guardar Template'+
+    '</button>'
+  );
+}
+
+async function salvarTemplate(){
+  var nome     = ((document.getElementById('tNome')||{}).value||'').trim();
+  var tipo     = (document.getElementById('tTipo')||{}).value||'loja';
+  var descricao= ((document.getElementById('tDesc')||{}).value||'').trim();
+  var ghUser   = ((document.getElementById('tGhUser')||{}).value||'impersilvatech').trim();
+  var ghRepo   = ((document.getElementById('tGhRepo')||{}).value||'').trim();
+  var ghBranch = ((document.getElementById('tGhBranch')||{}).value||'main').trim();
+  var ficheiros= ((document.getElementById('tFicheiros')||{}).value||'').split('\n').map(function(f){return f.trim();}).filter(Boolean);
+
+  if(!nome){ toast('Nome é obrigatório','error'); return; }
+  if(!ghRepo){ toast('Repositório é obrigatório','error'); return; }
+
+  try {
+    var res = await wPost('/api/admin/templates', { nome, tipo, descricao, gh_user: ghUser, gh_repo: ghRepo, gh_branch: ghBranch, ficheiros: JSON.stringify(ficheiros) });
+    if(res.erro) throw new Error(res.erro);
+    closeModal();
+    toast('Template guardado!','success');
+    rTemplates();
+  } catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+async function delTemplate(id){
+  if(!confirm('Eliminar este template?')) return;
+  try {
+    await wDel('/api/admin/templates/'+id);
+    toast('Template eliminado','success');
+    rTemplates();
+  } catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* PROJECTOS */
+async function rProjetos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Proj<span class="r">ectos</span></div><div class="ps">Projectos associados a clientes</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rProjetos()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openProjModal()"><i class="fa-solid fa-plus"></i> Novo</button>'+
+    '</div>'+
+    '<div id="prjL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/projetos');
+    var el=document.getElementById('prjL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-diagram-project"></i><p>Sem projectos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(p){
+      html+='<div class="cc">'+
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem">'+
+          '<span class="ccid" style="cursor:default">'+p.cliente_id+'</span>'+
+          estadoBadge(p.estado)+
+        '</div>'+
+        '<div class="ccn">'+p.nome+'</div>'+
+        (p.previsao?'<div style="font-size:.63rem;color:var(--gr);margin-bottom:.3rem">'+p.previsao+'</div>':'')+
+        '<div class="pg"><div class="pgf" style="width:'+(p.progresso||0)+'%"></div></div>'+
+        '<div style="font-size:.72rem;color:var(--gr)">'+(p.progresso||0)+'% • '+(p.etapa_actual||'—')+'</div>'+
+        '<div style="margin-top:.65rem">'+
+          '<button class="btn bdng bsm" onclick="delProj('+p.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('prjL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openProjModal() {
+  var estats=['em_progresso','revisao','concluido','pausado'];
+  var eOpts='';
+  estats.forEach(function(s){eOpts+='<option value="'+s+'">'+s.replace('_',' ')+'</option>';});
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Projecto</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Código Cliente</label><input class="fi" id="prCli" placeholder="IMP-XXXXXXXX"></div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="prNome" placeholder="Site Loja X"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><textarea class="fi" id="prDesc"></textarea></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Estado</label><select class="fi" id="prEstado">'+eOpts+'</select></div>'+
+      '<div class="fg"><label class="fl">Progresso (%)</label><input class="fi" type="number" id="prProg" min="0" max="100" value="0"></div>'+
+    '</div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Etapa Actual</label><input class="fi" id="prEtapa" placeholder="Design"></div>'+
+      '<div class="fg"><label class="fl">Previsão</label><input class="fi" id="prPrev" placeholder="Maio 2025"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">URL do Site</label><input class="fi" id="prUrl" placeholder="https://..."></div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveProj()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+async function saveProj() {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var data={
+    cliente_id:document.getElementById('prCli').value.trim().toUpperCase(),
+    nome:document.getElementById('prNome').value.trim(),
+    descricao:document.getElementById('prDesc').value.trim(),
+    estado:document.getElementById('prEstado').value,
+    progresso:parseInt(document.getElementById('prProg').value)||0,
+    etapa_actual:document.getElementById('prEtapa').value.trim(),
+    previsao:document.getElementById('prPrev').value.trim(),
+    url_site:document.getElementById('prUrl').value.trim()
+  };
+  if(!data.cliente_id||!data.nome){toast('Cliente e nome são obrigatórios','error');return;}
+  try{ await wPost('/api/admin/projetos',data); btnOk(saveBtn,'Guardado!'); toast('Projecto guardado!'); notify('Sucesso','Projecto de cliente guardado!','success'); setTimeout(function(){ closeModal(); rProjetos(); },500); }
+  catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delProj(id) {
+  if(!confirm('Apagar projecto?')) return;
+  try{ await wDel('/api/admin/projetos/'+id); toast('Apagado'); rProjetos(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* DOCUMENTOS */
+async function rDocs() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Docu<span class="r">mentos</span></div><div class="ps">Ficheiros e entregas para clientes</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rDocs()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openDocModal()"><i class="fa-solid fa-plus"></i> Novo</button>'+
+    '</div>'+
+    '<div id="docL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/documentos');
+    var el=document.getElementById('docL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-file-arrow-up"></i><p>Sem documentos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(d){
+      html+='<div class="li2">'+
+        '<div class="lib">'+
+          '<div class="liname"><a href="'+d.url+'" target="_blank" style="color:var(--wh)">'+d.nome+'</a></div>'+
+          (d.descricao?'<div class="lidesc">'+d.descricao+'</div>':'')+
+          '<div class="limeta">'+
+            '<span class="ccid" style="cursor:default">'+d.cliente_id+'</span>'+
+            '<span class="badge bb">'+d.tipo+'</span>'+
+            '<span style="font-size:.6rem;color:var(--gr)">'+timeAgo(d.criado_em)+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="lact">'+
+          '<button class="btn bdng bsm" onclick="delDoc('+d.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('docL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function openDocModal() {
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Documento</span></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Código Cliente</label><input class="fi" id="dCli" placeholder="IMP-XXXXXXXX"></div>'+
+      '<div class="fg"><label class="fl">Nome</label><input class="fi" id="dNome" placeholder="Proposta Final v2"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><input class="fi" id="dDesc" placeholder="Proposta com revisões"></div>'+
+    '<div class="fg"><label class="fl">URL do Ficheiro</label><input class="fi" id="dUrl" placeholder="https://drive.google.com/..."></div>'+
+    '<div class="fg"><label class="fl">Tipo</label><select class="fi" id="dTipo">'+
+      '<option value="proposta">Proposta</option><option value="contrato">Contrato</option>'+
+      '<option value="entrega">Entrega</option><option value="factura">Factura</option><option value="outro">Outro</option>'+
+    '</select></div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveDoc()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+async function saveDoc() {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var data={
+    cliente_id:document.getElementById('dCli').value.trim().toUpperCase(),
+    nome:document.getElementById('dNome').value.trim(),
+    descricao:document.getElementById('dDesc').value.trim(),
+    url:document.getElementById('dUrl').value.trim(),
+    tipo:document.getElementById('dTipo').value
+  };
+  if(!data.cliente_id||!data.nome||!data.url){toast('Cliente, nome e URL são obrigatórios','error');return;}
+  try{ await wPost('/api/admin/documentos',data); btnOk(saveBtn,'Guardado!'); toast('Documento guardado!'); notify('Sucesso','Documento adicionado!','success'); setTimeout(function(){ closeModal(); rDocs(); },500); }
+  catch(e){ toast('Erro: '+e.message,'error'); btnReset(saveBtn); }
+}
+async function delDoc(id) {
+  if(!confirm('Apagar documento?')) return;
+  try{ await wDel('/api/admin/documentos/'+id); toast('Apagado'); rDocs(); }
+  catch(e){ toast('Erro: '+e.message,'error'); }
+}
+
+/* TICKETS */
+async function rTickets() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Su<span class="r">porte</span></div><div class="ps">Pedidos de suporte dos clientes</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rTickets()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="tkL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/tickets');
+    setBadge('sb-tk', data.filter(function(t){return t.estado==='aberto';}).length);
+    var el=document.getElementById('tkL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-ticket"></i><p>Sem tickets de suporte</p></div>';return;}
+    var html='';
+    data.forEach(function(t){
+      html+='<div class="inb '+(t.estado==='aberto'?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="ccid" style="cursor:default">'+t.cliente_id+'</span>'+
+          estadoBadge(t.estado)+
+          '<span class="badge '+(t.prioridade==='urgente'?'br':t.prioridade==='alta'?'ba':'bgr')+'">'+(t.prioridade||'normal')+'</span>'+
+          '<span class="inb-date">'+timeAgo(t.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="inb-prev">'+t.assunto+'</div>'+
+        '<div class="inb-body">'+
+          '<p style="margin-bottom:.6rem"><strong>Mensagem:</strong><br>'+t.mensagem+'</p>'+
+          (t.resposta?'<p><strong>Resposta:</strong><br>'+t.resposta+'</p>':'')+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('tkL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* MENSAGENS */
+async function rMensagens() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Men<span class="r">sagens</span></div><div class="ps">Mensagens trocadas com clientes</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rMensagens()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="msL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/mensagens');
+    setBadge('sb-ms', data.filter(function(m){return !m.lido;}).length);
+    var el=document.getElementById('msL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-comments"></i><p>Sem mensagens ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(m){
+      html+='<div class="inb '+(!m.lido?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="ccid" style="cursor:default">'+m.cliente_id+'</span>'+
+          '<span class="badge '+(m.remetente==='cliente'?'bb':'bg')+'">'+m.remetente+'</span>'+
+          '<span class="inb-date">'+timeAgo(m.criado_em)+'</span>'+
+        '</div>'+
+        '<div class="inb-prev">'+m.mensagem+'</div>'+
+        '<div class="inb-body"><p>'+m.mensagem+'</p></div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('msL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* CONTACTOS */
+async function rContactos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Con<span class="r">tactos</span></div><div class="ps">Mensagens recebidas via formulário de contacto</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rContactos()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="ctL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/contactos');
+    setBadge('sb-ct', data.filter(function(c){return !c.lido;}).length);
+    var el=document.getElementById('ctL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-envelope"></i><p>Sem contactos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(c){
+      var wpp=c.telefone.replace(/\D/g,'');
+      html+='<div class="inb '+(!c.lido?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="inb-nome">'+c.nome+'</span>'+
+          '<span class="inb-tel">'+c.telefone+'</span>'+
+          (!c.lido?'<span class="badge br">Novo</span>':'')+
+          '<span class="inb-date">'+timeAgo(c.criado_em)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0">'+
+          (c.servico?'<span class="badge bb">'+c.servico+'</span>':'')+
+          (c.provincia?'<span class="badge bgr">'+c.provincia+'</span>':'')+
+        '</div>'+
+        '<div class="inb-prev">'+c.mensagem+'</div>'+
+        '<div class="inb-body">'+
+          '<p style="margin-bottom:.75rem">'+c.mensagem+'</p>'+
+          '<a href="https://wa.me/'+wpp+'" target="_blank" class="btn bred bsm"><i class="fa-brands fa-whatsapp"></i> Responder WhatsApp</a>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('ctL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* ORÇAMENTOS */
+async function rOrcamentos() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Orça<span class="r">mentos</span></div><div class="ps">Pedidos de orçamento recebidos</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rOrcamentos()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="ocL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data=await wGet('/api/admin/orcamentos');
+    setBadge('sb-oc', data.filter(function(o){return !o.lido;}).length);
+    var el=document.getElementById('ocL');
+    if(!el) return;
+    if(!data.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-file-invoice"></i><p>Sem orçamentos ainda</p></div>';return;}
+    var html='';
+    data.forEach(function(o){
+      var wpp=o.telefone.replace(/\D/g,'');
+      html+='<div class="inb '+(!o.lido?'u':'')+'" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="inb-top">'+
+          '<span class="inb-nome">'+o.nome+'</span>'+
+          '<span class="inb-tel">'+o.telefone+'</span>'+
+          (!o.lido?'<span class="badge br">Novo</span>':'')+
+          '<span class="inb-date">'+timeAgo(o.criado_em)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0">'+
+          (o.tipo_site?'<span class="badge bb">'+o.tipo_site+'</span>':'')+
+          (o.orcamento?'<span class="badge ba">'+o.orcamento+'</span>':'')+
+          (o.prazo?'<span class="badge bgr">'+o.prazo+'</span>':'')+
+        '</div>'+
+        '<div class="inb-prev">'+(o.negocio||'Sem negócio especificado')+'</div>'+
+        '<div class="inb-body">'+
+          (o.funcionalidades?'<p><strong>Funcionalidades:</strong> '+o.funcionalidades+'</p>':'')+
+          (o.estimativa?'<p><strong>Estimativa:</strong> '+o.estimativa+'</p>':'')+
+          (o.notas?'<p><strong>Notas:</strong> '+o.notas+'</p>':'')+
+          '<div style="margin-top:.75rem">'+
+            '<a href="https://wa.me/'+wpp+'" target="_blank" class="btn bred bsm"><i class="fa-brands fa-whatsapp"></i> Responder WhatsApp</a>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML=html;
+  } catch(e) {
+    var el2=document.getElementById('ocL');
+    if(el2) el2.innerHTML='<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+
+/* LEADS */
+function rLeads() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt"><span class="r">Leads</span></div><div class="ps">Contactos e orçamentos recebidos</div></div>'+
+    '<div class="grid2">'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.4rem;padding:1.2rem" onclick="go(\'contactos\')"><i class="fa-solid fa-envelope" style="font-size:1.5rem"></i><span>Contactos</span></button>'+
+      '<button class="btn bgh bfull" style="flex-direction:column;gap:.4rem;padding:1.2rem" onclick="go(\'orcamentos\')"><i class="fa-solid fa-file-invoice" style="font-size:1.5rem"></i><span>Orçamentos</span></button>'+
+    '</div>';
+}
+
+/* CONFIGURAÇÕES */
+function rConfig() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Configu<span class="r">rações</span></div></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-brands fa-github"></i> GitHub — Upload de Imagens</div>'+
+      '<div class="fg"><label class="fl">Personal Access Token</label>'+
+        '<input class="fi" type="password" id="cfGhTok" value="'+_ghtok+'" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">'+
+        '<div style="background:rgba(29,78,216,.08);border:1px solid rgba(29,78,216,.2);border-radius:8px;padding:.75rem;margin-top:.5rem;font-size:.73rem;color:rgba(255,255,255,.55);line-height:1.6">'+
+          '<i class="fa-solid fa-circle-info" style="color:var(--blu2)"></i> GitHub &rarr; Settings &rarr; Developer settings &rarr; Tokens (classic) &rarr; New token &rarr; scope: <strong>repo</strong>'+
+        '</div>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Repositório</label><input class="fi" value="'+REPO+'" readonly></div>'+
+      '<div style="display:flex;gap:.6rem">'+
+        '<button class="btn bred" style="flex:1" onclick="saveGhConfig()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+        '<button class="btn bgh" onclick="testGhConfig()"><i class="fa-solid fa-plug"></i> Testar</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> Worker Template Central</div>'+
+      '<div style="font-size:.72rem;color:var(--gr);margin-bottom:10px;line-height:1.5">'+
+        'Fonte de verdade para todos os novos sites. O código deste Worker é copiado para cada novo site criado.'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Account ID</label>'+
+        '<input class="fi" id="cftAccId" value="'+escHtml(_cfTemplate.account_id||'')+'" placeholder="Account ID da conta onde está o Worker template"></div>'+
+      '<div class="fg"><label class="fl">API Token</label>'+
+        '<input class="fi" type="password" id="cftToken" value="'+escHtml(_cfTemplate.api_token||'')+'" placeholder="Token com Workers Scripts:Read"></div>'+
+      '<div class="fg"><label class="fl">Nome do Worker Template</label>'+
+        '<input class="fi" id="cftWorker" value="'+escHtml(_cfTemplate.worker_name||'')+'" placeholder="ex: impersilva-d1work">'+
+        '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Este Worker nunca é modificado — só lido</div></div>'+
+      '<div style="display:flex;gap:8px">'+
+        '<button class="btn bblue" id="btnSaveCfTemplate" style="flex:1" onclick="saveCfTemplate()">'+
+          '<i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+        '<button class="btn bgh" id="btnTestCfTemplate" onclick="testCfTemplate()">'+
+          '<i class="fa-solid fa-plug"></i> Testar</button>'+
+      '</div>'+
+      '<div id="cftErr" style="display:none;margin-top:8px;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171"></div>'+
+    '</div>'+
+    '<div class="card" id="deployCard">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'+
+        '<div class="ct" style="margin:0"><i class="fa-solid fa-rocket" style="color:#f6821f"></i> Deploy em Massa</div>'+
+        '<button class="btn bblue" style="padding:6px 12px;font-size:.7rem" onclick="abrirRegistarWorker()">'+
+          '<i class="fa-solid fa-plus"></i> Registar</button>'+
+      '</div>'+
+      renderWorkerRegistry()+
+    '</div>'+
+    '<div class="card" id="cfAccountsCard">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'+
+        '<div class="ct" style="margin:0"><i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> Cloudflare</div>'+
+        '<button class="btn bblue" style="padding:6px 14px;font-size:.72rem" onclick="abrirAddCfAccount()"><i class="fa-solid fa-plus"></i> Adicionar</button>'+
+      '</div>'+
+      '<div class="cf-tbl">'+renderCfAccounts()+'</div>'+
+      '<div style="font-size:.65rem;color:var(--gr);margin-top:10px;line-height:1.6">'+
+        '<i class="fa-solid fa-circle-info" style="color:#f6821f"></i> Token: My Profile → API Tokens → Create Token → <strong>Workers Scripts:Edit</strong> + <strong>D1:Edit</strong>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-link"></i> URLs</div>'+
+      '<div class="fg"><label class="fl">Cloudflare Worker</label><input class="fi" value="'+API+'" readonly></div>'+
+      '<div class="fg"><label class="fl">GitHub Pages</label><input class="fi" value="'+SITEURL+'" readonly></div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-shield-halved"></i> Sessão</div>'+
+      '<p style="font-size:.84rem;color:var(--gr);margin-bottom:1rem">O token é guardado localmente neste browser.</p>'+
+      '<button class="btn bdng bfull" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Terminar Sessão</button>'+
+    '</div>';
+}
+function saveGhConfig() {
+  var btn = document.querySelector('#mc .btn.bred');
+  btnLoad(btn, 'A guardar...');
+  var tk=document.getElementById('cfGhTok').value.trim();
+  if(!tk){ toast('Token em branco','error'); btnReset(btn); return; }
+  _ghtok=tk; localStorage.setItem('imp_ghtok',tk);
+  btnOk(btn,'Guardado!'); toast('Token GitHub guardado!');
+}
+async function testGhConfig() {
+  if(!_ghtok){ toast('Guarda o token primeiro','error'); return; }
+  var btn = document.querySelector('#mc .btn.bgh');
+  btnLoad(btn, 'A testar...');
+  try {
+    var r=await fetch('https://api.github.com/repos/'+REPO, {headers:{'Authorization':'token '+_ghtok}});
+    if(r.ok){ btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
+    else{ btnReset(btn); toast('Token inválido ou repo não encontrado','error'); }
+  }catch(e){ btnReset(btn); toast('Erro de ligação: '+e.message,'error'); }
+}
+
+// ═══════════════════════════════════════════════════════
+// CLOUDFLARE AUTOMATION
+// ═══════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+// WORKER TEMPLATE CENTRAL
+// ═══════════════════════════════════════════════════════
+
+function saveCfTemplate() {
+  var btn = document.getElementById('btnSaveCfTemplate');
+  var err = document.getElementById('cftErr');
+  if(btn) btnLoad(btn,'A guardar...');
+  if(err) err.style.display='none';
+  var accId  = (document.getElementById('cftAccId')||{value:''}).value.trim();
+  var tok    = (document.getElementById('cftToken')||{value:''}).value.trim();
+  var worker = (document.getElementById('cftWorker')||{value:''}).value.trim();
+  if(!accId||!tok||!worker){
+    var msg='Account ID, Token e Worker são obrigatórios';
+    if(err){err.textContent=msg;err.style.display='block';}
+    if(btn) btnReset(btn); return;
+  }
+  _cfTemplate = {account_id:accId, api_token:tok, worker_name:worker};
+  localStorage.setItem('imp_cf_template', JSON.stringify(_cfTemplate));
+  if(btn) btnOk(btn,'Guardado!');
+  toast('Worker Template Central guardado!');
+}
+
+async function testCfTemplate() {
+  var btn = document.getElementById('btnTestCfTemplate');
+  var err = document.getElementById('cftErr');
+  var accId  = (document.getElementById('cftAccId')||{value:''}).value.trim();
+  var tok    = (document.getElementById('cftToken')||{value:''}).value.trim();
+  var worker = (document.getElementById('cftWorker')||{value:''}).value.trim();
+  if(!accId||!tok||!worker){
+    if(err){err.textContent='Preenche todos os campos primeiro';err.style.display='block';} return;
+  }
+  if(btn) btnLoad(btn,'A testar...');
+  if(err) err.style.display='none';
+  try {
+    await cfProxy('GET', '/accounts/'+accId+'/workers/scripts/'+worker, tok);
+    if(btn) btnOk(btn,'OK!'); toast('Worker "'+worker+'" encontrado!');
+  } catch(e){
+    if(btn) btnReset(btn);
+    var msg='Erro: '+e.message;
+    if(err){err.textContent=msg;err.style.display='block';} else toast(msg,'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// WORKER REGISTRY
+// ═══════════════════════════════════════════════════════
+
+function saveWorkerReg() {
+  localStorage.setItem('imp_worker_reg', JSON.stringify(_workerReg));
+}
+
+function renderWorkerRegistry() {
+  if (!_workerReg.length) {
+    return '<div style="text-align:center;padding:16px;color:var(--gr);font-size:.78rem">'+
+      '<i class="fa-solid fa-rocket" style="font-size:1.3rem;display:block;margin-bottom:8px;opacity:.25"></i>'+
+      'Nenhum Worker registado ainda<br>'+
+      '<span style="font-size:.68rem">Registar manualmente ou criados automaticamente</span></div>';
+  }
+  var rows = _workerReg.map(function(w,i){
+    return '<div style="display:grid;grid-template-columns:1fr auto auto;gap:5px;align-items:center;'+
+      'padding:7px 10px;background:var(--bg2);border-radius:8px;margin-bottom:5px">'+
+      '<div>'+
+        '<div style="font-size:.78rem;font-weight:700">'+escHtml(w.nome||w.slug)+'</div>'+
+        '<div style="font-size:.6rem;color:var(--gr)">'+escHtml(w.worker_name)+' · '+escHtml(w.cf_account_nome||'—')+'</div>'+
+      '</div>'+
+      '<button class="btn bblue" style="padding:4px 10px;font-size:.62rem" onclick="deployWorker('+i+',this)">'+
+        '<i class="fa-solid fa-rocket"></i> Deploy</button>'+
+      '<button class="btn bdng" style="padding:4px 8px;font-size:.62rem" onclick="removerWorkerReg('+i+')">'+
+        '<i class="fa-solid fa-trash"></i></button>'+
+    '</div>';
+  }).join('');
+  return '<div id="deployList">'+rows+'</div>'+
+    '<button class="btn bblue" style="width:100%;margin-top:8px" onclick="deployTodos()">'+
+      '<i class="fa-solid fa-rocket"></i> Deploy em Todos ('+_workerReg.length+')</button>';
+}
+
+function abrirRegistarWorker() {
+  var accOpts = _cfAccounts.map(function(a,i){
+    return '<option value="'+i+'">'+escHtml(a.nome)+' · '+a.account_id.slice(0,8)+'...</option>';
+  }).join('');
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Registar <span style="color:#f6821f">Worker</span></div>'+
+    '<div class="fg"><label class="fl">Nome do site</label>'+
+      '<input class="fi" id="rwNome" placeholder="Ex: Pastelaria Wandy"></div>'+
+    '<div class="fg"><label class="fl">Slug / Nome do Worker</label>'+
+      '<input class="fi" id="rwSlug" placeholder="ex: impersilva-d1work"></div>'+
+    '<div class="fg"><label class="fl">Conta Cloudflare</label>'+
+      '<select class="fi" id="rwCfAcc">'+
+        '<option value="">— Selecciona a conta —</option>'+accOpts+
+      '</select></div>'+
+    '<div class="fg"><label class="fl">GitHub User/Repo (opcional)</label>'+
+      '<input class="fi" id="rwGhRepo" placeholder="ex: impersilvatech/Loja"></div>'+
+    '<div id="rwErr" style="display:none;margin-top:6px;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171"></div>'+
+    '<button class="btn bblue" style="width:100%;margin-top:10px" onclick="salvarWorkerReg()">'+
+      '<i class="fa-solid fa-floppy-disk"></i> Registar</button>'
+  );
+}
+
+function salvarWorkerReg() {
+  var nome   = (document.getElementById('rwNome')||{value:''}).value.trim();
+  var slug   = (document.getElementById('rwSlug')||{value:''}).value.trim();
+  var cfIdx  = parseInt((document.getElementById('rwCfAcc')||{value:''}).value);
+  var ghRepo = (document.getElementById('rwGhRepo')||{value:''}).value.trim();
+  var err    = document.getElementById('rwErr');
+  if(!slug||isNaN(cfIdx)){
+    if(err){err.textContent='Slug e conta CF são obrigatórios';err.style.display='block';} return;
+  }
+  var acc = _cfAccounts[cfIdx];
+  if(!acc){ if(err){err.textContent='Conta não encontrada';err.style.display='block';} return; }
+  _workerReg.push({
+    id:'wr_'+Date.now(), nome:nome||slug, slug:slug,
+    worker_name:slug, cf_account_id:acc.account_id,
+    cf_account_nome:acc.nome, cf_api_token:acc.api_token,
+    gh_repo:ghRepo
+  });
+  saveWorkerReg();
+  closeModal();
+  rConfig();
+  toast('Worker "'+slug+'" registado!');
+}
+
+function removerWorkerReg(idx) {
+  var w = _workerReg[idx];
+  if(!w||!confirm('Remover "'+w.nome+'" do registo?')) return;
+  _workerReg.splice(idx,1);
+  saveWorkerReg();
+  rConfig();
+}
+
+async function deployWorker(idx, btn) {
+  var w = _workerReg[idx];
+  if(!w){ toast('Worker não encontrado','error'); return; }
+  if(!_cfTemplate.worker_name){ toast('Configura o Worker Template Central primeiro','error'); return; }
+  if(btn) btnLoad(btn,'A fazer deploy...');
+  try {
+    var r = await fetch(API + '/api/cf/clone-worker', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
+      body: JSON.stringify({
+        src_account_id:  _cfTemplate.account_id,
+        src_token:       _cfTemplate.api_token,
+        src_worker_name: _cfTemplate.worker_name,
+        dst_account_id:  w.cf_account_id,
+        dst_token:       w.cf_api_token,
+        dst_worker_name: w.worker_name
+        // sem db_id — mantém os bindings existentes do template
+      })
+    });
+    var data = await r.json();
+    if(!data.sucesso) throw new Error(data.erro || 'Deploy falhou');
+    if(btn) btnOk(btn,'✅ OK');
+    toast('"'+w.nome+'" actualizado com sucesso!');
+  } catch(e){
+    if(btn){ btn.innerHTML='<i class="fa-solid fa-rocket"></i> Deploy'; btn.disabled=false; }
+    toast('Erro em "'+w.nome+'": '+e.message,'error');
+  }
+}
+
+async function deployTodos() {
+  if(!_workerReg.length){ toast('Nenhum Worker registado','error'); return; }
+  if(!_cfTemplate.worker_name){ toast('Configura o Worker Template Central primeiro','error'); return; }
+  if(!confirm('Fazer deploy em '+_workerReg.length+' Worker(s)? Isto actualiza o código de todos os sites.')) return;
+  var btns = document.querySelectorAll('#deployList .btn.bblue');
+  for(var i=0;i<_workerReg.length;i++){
+    await deployWorker(i, btns[i]||null);
+    await new Promise(function(r){setTimeout(r,500);});
+  }
+  toast('Deploy em massa concluído!');
+}
+
+// ── Auto-register Worker when site is created ──
+function registarWorkerAuto(slug, nome, cfAcc, ghUser) {
+  if(!cfAcc) return;
+  var existing = _workerReg.find(function(w){return w.slug===slug;});
+  if(existing) return;
+  _workerReg.push({
+    id:'wr_'+Date.now(), nome:nome, slug:slug,
+    worker_name:slug, cf_account_id:cfAcc.account_id,
+    cf_account_nome:cfAcc.nome, cf_api_token:cfAcc.api_token,
+    gh_repo:ghUser+'/'+slug
+  });
+  saveWorkerReg();
+}
+
+// ── Render compact CF accounts table ──
+function cfAccountSites(a) {
+  // Count sites created with this CF account
+  try {
+    var sites = JSON.parse(localStorage.getItem('imp_sites_cf_map')||'{}');
+    return sites[a.id] || 0;
+  } catch(e) { return 0; }
+}
+
+function renderCfAccounts() {
+  if (!_cfAccounts.length) {
+    return '<div style="text-align:center;padding:20px;color:var(--gr);font-size:.8rem">'+
+      '<i class="fa-brands fa-cloudflare" style="font-size:1.5rem;display:block;margin-bottom:8px;opacity:.3"></i>'+
+      'Nenhuma conta adicionada ainda</div>';
+  }
+  var rows = _cfAccounts.map(function(a, i) {
+    var shortId = a.account_id ? a.account_id.slice(0,8)+'...' : '—';
+    var siteCnt = cfAccountSites(a);
+    var cntColor = siteCnt >= 9 ? '#f87171' : siteCnt >= 7 ? '#fbbf24' : 'var(--tl)';
+    return '<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:6px;align-items:center;'+
+      'padding:8px 10px;background:var(--bg2);border-radius:8px;margin-bottom:6px">'+
+      '<div>'+
+        '<div style="display:flex;align-items:center;gap:6px">'+
+          '<span style="font-size:.8rem;font-weight:700;color:var(--wh)">'+escHtml(a.nome||'Conta '+(i+1))+'</span>'+
+          '<span style="font-size:.6rem;font-weight:700;color:'+cntColor+';background:rgba(0,0,0,.3);'+
+            'padding:1px 6px;border-radius:20px">'+siteCnt+'/10</span>'+
+        '</div>'+
+        '<div style="font-size:.62rem;color:var(--gr)">'+shortId+
+          (a.email ? ' · '+escHtml(a.email) : '')+
+        '</div>'+
+      '</div>'+
+      '<button class="btn bgh" style="padding:5px 10px;font-size:.65rem" onclick="testCfAccount('+i+')">'+
+        '<i class="fa-solid fa-plug"></i></button>'+
+      '<button class="btn" style="padding:5px 10px;font-size:.65rem;background:var(--bd)" onclick="editCfAccount('+i+')">'+
+        '<i class="fa-solid fa-pen"></i></button>'+
+      '<button class="btn bdng" style="padding:5px 10px;font-size:.65rem" onclick="deleteCfAccount('+i+')">'+
+        '<i class="fa-solid fa-trash"></i></button>'+
+    '</div>';
+  }).join('');
+  return rows + '<div style="font-size:.68rem;color:var(--gr);margin-top:4px">'+
+    _cfAccounts.length+' conta(s) configurada(s)</div>';
+}
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function saveCfAccounts() {
+  localStorage.setItem('imp_cf_accounts', JSON.stringify(_cfAccounts));
+}
+
+function refreshCfCard() {
+  var card = document.getElementById('cfAccountsCard');
+  if (!card) return;
+  var tbl = card.querySelector('.cf-tbl');
+  if (tbl) tbl.innerHTML = renderCfAccounts();
+}
+
+function abrirAddCfAccount(editIdx) {
+  var existing = editIdx !== undefined ? _cfAccounts[editIdx] : null;
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">'+(existing?'Editar':'Nova')+' Conta <span style="color:#f6821f">Cloudflare</span></div>'+
+    '<div class="fg"><label class="fl">Nome da conta</label>'+
+      '<input class="fi" id="cfmNome" value="'+escHtml(existing?existing.nome||'':'')+'" placeholder="Ex: CF Principal"></div>'+
+    '<div class="fg"><label class="fl">Account ID</label>'+
+      '<input class="fi" id="cfmAccId" value="'+escHtml(existing?existing.account_id||'':'')+'" placeholder="abc1234def56...">'+
+      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Dashboard → lado direito</div></div>'+
+    '<div class="fg"><label class="fl">API Token</label>'+
+      '<input class="fi" type="password" id="cfmToken" value="'+escHtml(existing?existing.api_token||'':'')+'" placeholder="...">'+
+      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Permissões: Workers Scripts:Edit + D1:Edit</div></div>'+
+    '<div class="fg"><label class="fl">Email da conta Cloudflare</label>'+
+      '<input class="fi" id="cfmEmail" type="email" value="'+escHtml(existing?existing.email||'':'')+'" placeholder="email@exemplo.com">'+
+      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Para identificar de qual conta é</div></div>'+
+    '<div style="display:flex;gap:8px;margin-top:4px">'+
+      '<button class="btn bblue" id="btnSaveCfAcc" style="flex:1" onclick="salvarCfAccount('+
+        (editIdx !== undefined ? editIdx : 'undefined')+')">'+
+        '<i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+      '<button class="btn bgh" id="btnTestCfAcc" onclick="testCfAccountModal()">'+
+        '<i class="fa-solid fa-plug"></i> Testar</button>'+
+    '</div>'+
+    '<div id="cfmErr" style="display:none;margin-top:8px;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171"></div>'
+  );
+}
+
+function editCfAccount(idx) { abrirAddCfAccount(idx); }
+
+function salvarCfAccount(editIdx) {
+  var btn = document.getElementById('btnSaveCfAcc');
+  if(btn) btnLoad(btn,'A guardar...');
+  var nome = (document.getElementById('cfmNome').value||'').trim();
+  var accId = (document.getElementById('cfmAccId').value||'').trim();
+  var tok = (document.getElementById('cfmToken').value||'').trim();
+  var email = (document.getElementById('cfmEmail')||{value:''}).value.trim();
+  if(!accId||!tok) {
+    var err=document.getElementById('cfmErr');
+    if(err){err.textContent='Account ID e Token são obrigatórios';err.style.display='block';}
+    if(btn) btnReset(btn); return;
+  }
+  if(!nome) nome = 'Conta CF ' + (_cfAccounts.length + 1);
+  if(editIdx !== undefined && editIdx < _cfAccounts.length) {
+    _cfAccounts[editIdx] = {id:_cfAccounts[editIdx].id, nome:nome, email:email, account_id:accId, api_token:tok};
+  } else {
+    _cfAccounts.push({id:'cf_'+Date.now(), nome:nome, email:email, account_id:accId, api_token:tok});
+  }
+  saveCfAccounts();
+  if(btn) btnOk(btn,'Guardado!');
+  setTimeout(function(){ closeModal(); rConfig(); }, 800);
+  toast('Conta "'+nome+'" guardada!');
+}
+
+function deleteCfAccount(idx) {
+  var a = _cfAccounts[idx];
+  if(!a) return;
+  if(!confirm('Remover conta "'+a.nome+'"?')) return;
+  _cfAccounts.splice(idx,1);
+  saveCfAccounts();
+  rConfig();
+  toast('Conta removida');
+}
+
+async function testCfAccountModal() {
+  var btn = document.getElementById('btnTestCfAcc');
+  var err = document.getElementById('cfmErr');
+  var accId = (document.getElementById('cfmAccId').value||'').trim();
+  var tok = (document.getElementById('cfmToken').value||'').trim();
+  if(!accId||!tok){
+    if(err){err.textContent='Preenche Account ID e Token primeiro';err.style.display='block';} return;
+  }
+  if(btn) btnLoad(btn,'A testar...');
+  if(err) err.style.display='none';
+  try {
+    var d = await cfProxy('GET', '/accounts/'+accId+'/workers/scripts', tok);
+    if(Array.isArray(d)){ if(btn) btnOk(btn,'OK!'); toast('Ligação OK! '+d.length+' Workers.'); }
+    else{ if(btn) btnReset(btn); var msg='Resposta inesperada'; if(err){err.textContent=msg;err.style.display='block';} }
+  } catch(e){
+    if(btn) btnReset(btn);
+    var msg='Erro: '+e.message;
+    if(err){err.textContent=msg;err.style.display='block';} else toast(msg,'error');
+  }
+}
+
+async function testCfAccount(idx) {
+  var a = _cfAccounts[idx];
+  if(!a) return;
+  toast('A testar '+a.nome+'...','info');
+  try {
+    var d = await cfProxy('GET', '/accounts/'+a.account_id+'/workers/scripts', a.api_token);
+    if(Array.isArray(d)) toast(a.nome+': OK — '+d.length+' Workers');
+    else toast(a.nome+': Resposta inesperada','error');
+  } catch(e){ toast(a.nome+': Erro — '+e.message,'error'); }
+}
+
+// ── Cloudflare proxy helper — resolve CORS chamando o Worker admin ──
+async function cfProxy(method, cfPath, cfToken, body) {
+  var r = await fetch(API + '/api/cf/proxy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
+    body: JSON.stringify({ method: method, path: cfPath, body: body||null, token: cfToken })
+  });
+  var d = await r.json();
+  if (d && !d.success && d.errors) throw new Error((d.errors||[{message:'Erro Cloudflare'}])[0].message);
+  return d.result !== undefined ? d.result : d;
+}
+
+// ── cfApi usa a conta activa ──
+async function cfApi(method, path, body) {
+  var acc = _cfActiveAcc;
+  if (!acc) throw new Error('Nenhuma conta Cloudflare seleccionada');
+  return cfProxy(method, path, acc.api_token, body);
+}
+
+// ── cfRaw — download/upload multipart via proxy raw ──
+async function cfRaw(cfPath, cfToken, method, bodyOrNull) {
+  var url = API + '/api/cf/raw?path=' + encodeURIComponent(cfPath) + '&method=' + (method||'GET');
+  var opts = { method: method||'GET', headers: { 'X-CF-Token': cfToken, 'Authorization': _tok } };
+  if (bodyOrNull) opts.body = bodyOrNull;
+  return fetch(url, opts);
+}
+
+// ── Parse multipart response (module Workers) ──
+function parseMultipart(text, boundary) {
+  var parts = [], sep = '--' + boundary;
+  var sections = text.split(sep);
+  for (var i = 1; i < sections.length - 1; i++) {
+    var s = sections[i];
+    var hEnd = s.indexOf('\r\n\r\n');
+    if (hEnd === -1) hEnd = s.indexOf('\n\n');
+    var hStr = s.substring(0, hEnd);
+    var body = s.substring(hEnd + (s[hEnd+2]==='\n' ? 2 : 4));
+    if (body.endsWith('\r\n')) body = body.slice(0, -2);
+    var headers = {};
+    hStr.split(/\r?\n/).filter(Boolean).forEach(function(h) {
+      var col = h.indexOf(':');
+      if (col > 0) headers[h.slice(0,col).trim().toLowerCase()] = h.slice(col+1).trim();
+    });
+    var cd = headers['content-disposition']||'';
+    var nm  = (cd.match(/name="([^"]+)"/)  ||[])[1]||'';
+    var fn  = (cd.match(/filename="([^"]+)"/)  ||[])[1]||'';
+    parts.push({ name:nm, filename:fn, contentType:headers['content-type']||'application/javascript+module', content:body });
+  }
+  return parts;
+}
+
+// ── Criar D1 database ──
+async function criarD1CF(slug) {
+  var result = await cfApi('POST', '/accounts/'+_cfActiveAcc.account_id+'/d1/database', { name: slug+'-db' });
+  return { id: result.uuid, name: result.name };
+}
+
+// ── Clonar Worker a partir do template central (server-side) ──
+async function clonarWorkerCF(slug, newDbId) {
+  if (!_cfTemplate.worker_name) throw new Error('Worker Template Central não configurado em Configurações');
+  if (!_cfTemplate.account_id || !_cfTemplate.api_token) throw new Error('Credenciais do Template Central em falta');
+  var r = await fetch(API + '/api/cf/clone-worker', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': _tok },
+    body: JSON.stringify({
+      src_account_id:  _cfTemplate.account_id,
+      src_token:       _cfTemplate.api_token,
+      src_worker_name: _cfTemplate.worker_name,
+      dst_account_id:  _cfActiveAcc.account_id,
+      dst_token:       _cfActiveAcc.api_token,
+      dst_worker_name: slug,
+      db_id:           newDbId || null
+    })
+  });
+  var data = await r.json();
+  if (!data.sucesso) throw new Error(data.erro || 'Clone do Worker falhou');
+  return true;
+}
+
+// ── Activar workers.dev subdomain ──
+async function activarWorkersDevCF(slug) {
+  await cfApi('POST', '/accounts/'+_cfActiveAcc.account_id+'/workers/scripts/'+slug+'/subdomain', { enabled: true });
+  return 'https://'+slug+'.workers.dev';
+}
+
+// ── Schema consolidado — todas as tabelas com todas as colunas ──
+var MIGRATIONS = [
+  `CREATE TABLE IF NOT EXISTS lojas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL DEFAULT '',
+    slogan TEXT DEFAULT '', slogan_en TEXT DEFAULT '', descricao TEXT DEFAULT '',
+    email TEXT DEFAULT '', telefone TEXT DEFAULT '', whatsapp TEXT DEFAULT '',
+    morada TEXT DEFAULT '', cidade TEXT DEFAULT '', provincia TEXT DEFAULT '',
+    pais TEXT DEFAULT 'Angola', logo_url TEXT DEFAULT '', banner_url TEXT DEFAULT '',
+    favicon_url TEXT DEFAULT '', simbolo_moeda TEXT DEFAULT 'Kz', moeda TEXT DEFAULT 'AOA',
+    cor_primaria TEXT DEFAULT '#ff6b9d', cor_secundaria TEXT DEFAULT '#b14ae8',
+    entrega_ativa INTEGER DEFAULT 1, entrega_preco REAL DEFAULT 0,
+    entrega_gratis_a REAL DEFAULT 0, entrega_prazo TEXT DEFAULT '',
+    entrega_zonas TEXT DEFAULT '', min_encomenda REAL DEFAULT 0,
+    ativa INTEGER DEFAULT 1, aceita_convidados INTEGER DEFAULT 1,
+    mensagem_fecho TEXT DEFAULT '', admin_token TEXT DEFAULT '', nif TEXT DEFAULT '',
+    tipo TEXT DEFAULT 'loja', instagram TEXT DEFAULT '', facebook TEXT DEFAULT '',
+    tiktok TEXT DEFAULT '', youtube TEXT DEFAULT '', sobre TEXT DEFAULT '',
+    politica TEXT DEFAULT '', termos TEXT DEFAULT '',
+    meta_descricao TEXT DEFAULT '', palavras_chave TEXT DEFAULT '',
+    notif_email INTEGER DEFAULT 0, notif_whatsapp INTEGER DEFAULT 0,
+    callmebot_apikey TEXT DEFAULT '', emailjs_service TEXT DEFAULT '',
+    emailjs_template TEXT DEFAULT '', emailjs_pubkey TEXT DEFAULT '',
+    equipa_fotos TEXT DEFAULT '[]', galeria_fotos TEXT DEFAULT '[]',
+    github_token TEXT DEFAULT '', github_user TEXT DEFAULT 'impersilvatech',
+    github_repo TEXT DEFAULT 'Meu-site.ao', github_branch TEXT DEFAULT 'main',
+    horario_seg TEXT DEFAULT '', horario_ter TEXT DEFAULT '', horario_qua TEXT DEFAULT '',
+    horario_qui TEXT DEFAULT '', horario_sex TEXT DEFAULT '', horario_sab TEXT DEFAULT '',
+    horario_dom TEXT DEFAULT '',
+    referidos_ativo INTEGER DEFAULT 0, referidos_desconto_novo REAL DEFAULT 0,
+    referidos_desconto_ref REAL DEFAULT 0, referidos_min REAL DEFAULT 0,
+    referidos_msg TEXT DEFAULT '',
+    onesignal_app_id TEXT DEFAULT '', onesignal_api_key TEXT DEFAULT '',
+    onesignal_admin_tag TEXT DEFAULT 'admin'
+  )`,
+  `CREATE TABLE IF NOT EXISTS categorias (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL DEFAULT '', slug TEXT DEFAULT '', nome_en TEXT DEFAULT '',
+    descricao TEXT DEFAULT '', descricao_en TEXT DEFAULT '',
+    icone TEXT DEFAULT 'fa-solid fa-tag', ordem INTEGER DEFAULT 0,
+    ativa INTEGER DEFAULT 1, criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS produtos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL DEFAULT '', slug TEXT DEFAULT '',
+    nome_en TEXT DEFAULT '', descricao TEXT DEFAULT '', descricao_en TEXT DEFAULT '',
+    preco_base REAL DEFAULT 0, preco_original REAL DEFAULT NULL,
+    imagem_url TEXT DEFAULT '', imagens_extra TEXT DEFAULT '[]',
+    categoria_id INTEGER DEFAULT NULL, disponivel INTEGER DEFAULT 1,
+    destaque INTEGER DEFAULT 0, stock INTEGER DEFAULT -1, stock_minimo INTEGER DEFAULT 5,
+    etiqueta TEXT DEFAULT NULL, features TEXT DEFAULT '[]', specs TEXT DEFAULT '[]',
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS produto_variacoes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    produto_id INTEGER NOT NULL, nome TEXT NOT NULL DEFAULT '',
+    preco_extra REAL DEFAULT 0, stock INTEGER DEFAULT -1,
+    disponivel INTEGER DEFAULT 1, criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL DEFAULT '', email TEXT DEFAULT '',
+    telefone TEXT DEFAULT '', senha TEXT DEFAULT '',
+    gh_token TEXT DEFAULT NULL, gh_user TEXT DEFAULT NULL,
+    gh_repo TEXT DEFAULT NULL, gh_branch TEXT DEFAULT 'main',
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS encomendas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ref TEXT NOT NULL, nome_cliente TEXT DEFAULT '',
+    email_cliente TEXT DEFAULT '', telefone_cliente TEXT DEFAULT '',
+    whatsapp_cliente TEXT DEFAULT '', tipo_entrega TEXT DEFAULT 'levantamento',
+    morada_entrega TEXT DEFAULT '', cidade_entrega TEXT DEFAULT '',
+    provincia_entrega TEXT DEFAULT '', data_entrega TEXT DEFAULT '',
+    preco_entrega REAL DEFAULT 0, total REAL DEFAULT 0,
+    desconto REAL DEFAULT 0, cupom TEXT DEFAULT '',
+    estado TEXT DEFAULT 'recebido', pagamento_estado TEXT DEFAULT 'pendente',
+    comprovativo_url TEXT DEFAULT '', notas TEXT DEFAULT '',
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS encomenda_itens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    encomenda_id INTEGER NOT NULL, produto_id INTEGER DEFAULT NULL,
+    nome_produto TEXT DEFAULT '', preco_unit REAL DEFAULT 0,
+    quantidade INTEGER DEFAULT 1, variacao TEXT DEFAULT ''
+  )`,
+  `CREATE TABLE IF NOT EXISTS avaliacoes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    produto_id INTEGER NOT NULL, cliente_nome TEXT NOT NULL DEFAULT '',
+    cliente_email TEXT DEFAULT '', estrelas INTEGER NOT NULL DEFAULT 5,
+    comentario TEXT DEFAULT '', aprovada INTEGER DEFAULT 0,
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS cupoes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo TEXT NOT NULL UNIQUE, tipo TEXT DEFAULT 'percentagem',
+    valor REAL NOT NULL DEFAULT 0, minimo_encomenda REAL DEFAULT 0,
+    data_inicio TEXT DEFAULT (datetime('now')),
+    data_fim TEXT DEFAULT (datetime('now', '+30 days')),
+    max_usos INTEGER DEFAULT 0, usos INTEGER DEFAULT 0,
+    ativo INTEGER DEFAULT 1, criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS stock_movimentos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    produto_id INTEGER NOT NULL, tipo TEXT NOT NULL DEFAULT '',
+    quantidade INTEGER NOT NULL DEFAULT 0, stock_anterior INTEGER DEFAULT 0,
+    stock_novo INTEGER DEFAULT 0, motivo TEXT DEFAULT '',
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`,
+  `CREATE TABLE IF NOT EXISTS push_subscriptions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    endpoint TEXT NOT NULL UNIQUE, p256dh TEXT NOT NULL DEFAULT '',
+    auth TEXT NOT NULL DEFAULT '', criado_em TEXT DEFAULT (datetime('now'))
+  )`
+];
+
+// ── Executar migrações via Cloudflare D1 REST API ──
+async function executarMigracoesCF(dbId, slug, nome) {
+  var base = '/accounts/'+_cfActiveAcc.account_id+'/d1/database/'+dbId;
+
+  // Execute each CREATE TABLE individually
+  for (var i = 0; i < MIGRATIONS.length; i++) {
+    await cfApi('POST', base+'/query', { sql: MIGRATIONS[i].trim() });
+  }
+
+  // Insert initial loja row
+  var adminToken = 'admin_'+slug+'_'+Math.random().toString(36).slice(2,8);
+  await cfApi('POST', base+'/query', {
+    sql: "INSERT OR IGNORE INTO lojas (id, nome, admin_token) VALUES (1, ?, ?)",
+    params: [nome, adminToken]
+  });
+
+  return { adminToken: adminToken };
+}
+
+/* RIPPLE */
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.btn');
+  if (!btn) return;
+  var r = document.createElement('span');
+  r.className = 'ripple';
+  var rect = btn.getBoundingClientRect();
+  var size = Math.max(rect.width, rect.height);
+  r.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px';
+  btn.appendChild(r);
+  setTimeout(function(){ r.remove(); }, 600);
+});
+
+/* NOTIFICATION TOASTS */
+var _nqueue = [];
+var _nshowing = false;
+function notify(title, msg, type) {
+  if (!type) type = 'success';
+  _nqueue.push({title:title, msg:msg, type:type});
+  if (!_nshowing) processNQueue();
+}
+function processNQueue() {
+  if (!_nqueue.length) { _nshowing = false; return; }
+  _nshowing = true;
+  var n = _nqueue.shift();
+  var icons = {success:'fa-circle-check', error:'fa-circle-exclamation', info:'fa-circle-info', warn:'fa-triangle-exclamation'};
+  var el = document.createElement('div');
+  el.className = 'ntoast ' + n.type;
+  el.innerHTML = '<i class="fa-solid '+icons[n.type]+' ntoast-ic"></i><div><div class="ntoast-t">'+n.title+'</div><div class="ntoast-m">'+n.msg+'</div></div>';
+  document.body.appendChild(el);
+  setTimeout(function(){ el.classList.add('show'); }, 10);
+  setTimeout(function(){
+    el.classList.remove('show');
+    setTimeout(function(){ el.remove(); processNQueue(); }, 350);
+  }, 3500);
+}
+// toast() defined in main script block
+
+/* BTN LOADING STATE */
+function btnLoad(el, txt) {
+  if (!el) return;
+  el.disabled = true;
+  el._origHTML = el.innerHTML;
+  el.innerHTML = '<span class="spin" style="width:14px;height:14px;border-width:2px;margin-right:.35rem"></span>' + (txt||'A processar...');
+}
+function btnReset(el) {
+  if (!el) return;
+  el.disabled = false;
+  if (el._origHTML) el.innerHTML = el._origHTML;
+}
+function btnOk(el, txt) {
+  if (!el) return;
+  el.disabled = false;
+  el.innerHTML = '<i class="fa-solid fa-check"></i> ' + (txt||'Concluído');
+  setTimeout(function() { if (el._origHTML) el.innerHTML = el._origHTML; }, 2000);
+}
+
+/* GALERIA HELPERS */
+async function loadGaleria(refId, tipo, containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  try {
+    var data = await wGet('/api/galeria/'+tipo+'/'+refId);
+    renderGaleria(data, refId, tipo, containerId);
+  } catch(e) {
+    if (el) el.innerHTML = '<div style="font-size:.75rem;color:var(--gr)">Sem fotos na galeria</div>';
+  }
+}
+function renderGaleria(items, refId, tipo, containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var html = '<div class="gal-grid">';
+  items.forEach(function(item) {
+    var delCall = 'delGaleriaItem(' + item.id + ',\'' + refId + '\',\'' + tipo + '\',\'' + containerId + '\')';
+    html += '<div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:visible;background:var(--card2)">'+
+      '<img src="'+item.url+'" alt="'+(item.legenda||'')+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:8px">'+
+      '<button onclick="'+delCall+'" style="position:absolute;top:-6px;right:-6px;z-index:30;background:#d62828;color:#fff;border:2px solid #0e0e0f;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center;line-height:1">&#10005;</button>'+
+    '</div>';
+  });
+  var addCall = 'addGaleriaItem(this,\'' + refId + '\',\'' + tipo + '\',\'' + containerId + '\')';
+  html += '<div class="gal-add"><input type="file" accept="image/*" onchange="'+addCall+'">'+
+          '<i class="fa-solid fa-plus"></i><span>Adicionar</span></div>';
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+async function addGaleriaItem(input, refId, tipo, containerId) {
+  var file = input.files[0];
+  if (!file) return;
+  if (!_ghtok) { toast('Configure o GitHub Token nas Configurações', 'error'); return; }
+  toast('A enviar imagem...', 'info');
+  try {
+    var url = await ghUpload(file, tipo+'-gal');
+    await wPost('/api/admin/galeria', { referencia_id: refId, tipo: tipo, url: url, legenda: '', ordem: 0 });
+    toast('Foto adicionada!');
+    loadGaleria(refId, tipo, containerId);
+  } catch(e) { toast('Erro: '+e.message, 'error'); }
+}
+async function delGaleriaItem(id, refId, tipo, containerId) {
+  toast('A remover foto...','info');
+  try {
+    var r = await fetch(API+'/api/admin/galeria/'+id, {
+      method:'DELETE',
+      headers:{'Authorization':_tok}
+    });
+    if(!r.ok){ var e=await r.json(); throw new Error(e.erro||r.status); }
+    notify('Sucesso','Foto removida da galeria','success');
+    toast('Foto removida');
+    setTimeout(function(){ loadGaleria(refId, tipo, containerId); }, 300);
+  } catch(e) {
+    toast('Erro ao remover: '+e.message, 'error');
+  }
+}
+
+
+function removeMainPhoto(prefix) {
+  var urlEl = document.getElementById(prefix+'ImgUrl');
+  var prevEl = document.getElementById(prefix==='e'?'ePrev':'pImgPrev');
+  if(urlEl) urlEl.value = '';
+  if(prevEl){ prevEl.src=''; prevEl.style.display='none'; }
+  // Hide the remove button itself
+  var btn = document.querySelector('[onclick*="removeMainPhoto(\''+prefix+'\'"]');
+  if(btn) btn.style.display='none';
+  toast('Foto removida. Clica Guardar para confirmar.','info');
+}
+
+
+async function testarGhCliente() {
+  var user = document.getElementById('cGhUser').value.trim();
+  var repo = document.getElementById('cGhRepo').value.trim();
+  var token = document.getElementById('cGhToken').value.trim();
+  if(!user||!repo){ toast('Preenche utilizador e repositório','error'); return; }
+  var btn = document.querySelector('#mb .btn.bgh[onclick*="testarGh"]');
+  if(btn) btnLoad(btn, 'A testar...');
+  try {
+    var r = await fetch('https://api.github.com/repos/'+user+'/'+repo, {
+      headers: token ? {'Authorization':'token '+token} : {}
+    });
+    if(r.ok){ if(btn) btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
+    else { if(btn) btnReset(btn); toast('Repositório não encontrado ou token inválido','error'); }
+  } catch(e) { if(btn) btnReset(btn); toast('Erro: '+e.message,'error'); }
+}
+
+</script>
+<script>
+/* ══════════════════════════════════════════════════════════
+   FINANÇAS
+══════════════════════════════════════════════════════════ */
+async function rFinancas() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Finan<span class="r">ças</span></div><div class="ps">Vendas, mensalidades e custos dos clientes</div></div>'+
+    '<div class="brow">'+
+      '<button class="btn bred" onclick="rFinancas()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
+      '<button class="btn bblue" onclick="openFinModal()"><i class="fa-solid fa-plus"></i> Novo Registo</button>'+
+    '</div>'+
+    '<div id="finStats" style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem"></div>'+
+    '<div id="finL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data = await wGet('/api/admin/financas');
+    var total = data.reduce(function(s,f){ return s + (f.valor||0); }, 0);
+    var pago = data.filter(function(f){ return f.estado==='pago'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
+    var pend = data.filter(function(f){ return f.estado==='pendente'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
+    document.getElementById('finStats').innerHTML =
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--grn)">'+formatKz(pago)+'</div><div class="sl">Recebido ('+data.filter(function(f){return f.estado==="pago";}).length+')</div></div>'+
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--amb)">'+formatKz(pend)+'</div><div class="sl">Pendente ('+data.filter(function(f){return f.estado==="pendente";}).length+')</div></div>';
+    var el = document.getElementById('finL');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-chart-line"></i><p>Sem registos financeiros ainda</p></div>'; return; }
+    var html = '';
+    data.forEach(function(f) {
+      var eCls = f.estado==='pago'?'bg':f.estado==='cancelado'?'br':'ba';
+      var tCls = f.tipo==='venda'?'bb':f.tipo==='mensalidade'?'bg':'ba';
+      html += '<div class="fin-card">'+
+        '<div class="fin-top">'+
+          '<div>'+
+            '<div class="fin-desc">'+f.descricao+'</div>'+
+            '<div style="font-size:.72rem;color:var(--gr);margin-top:.15rem">'+(f.cliente_nome||f.cliente_id)+(f.data_venc?' • Vence: '+f.data_venc:'')+'</div>'+
+          '</div>'+
+          '<div class="fin-val">'+formatKz(f.valor)+'</div>'+
+        '</div>'+
+        '<div class="fin-meta">'+
+          '<span class="badge '+tCls+'">'+f.tipo+'</span>'+
+          '<span class="badge '+eCls+'">'+f.estado+'</span>'+
+          (f.moeda!=='AOA'?'<span class="badge bgr">'+f.moeda+'</span>':'')+
+          '<span style="font-size:.6rem;color:var(--gr);margin-left:auto">'+timeAgo(f.criado_em)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:.4rem;margin-top:.65rem;flex-wrap:wrap">'+
+          (f.estado==='pendente'?'<button class="btn bgh bsm" onclick="pagarFinanca('+f.id+')"><i class="fa-solid fa-check"></i> Marcar pago</button>':'')+
+          '<button class="btn bgh bsm" onclick="enviarNotifFinanca(\''+f.cliente_id+'\',\''+f.descricao+'\','+f.valor+')"><i class="fa-brands fa-whatsapp"></i> Notificar</button>'+
+          '<button class="btn bdng bsm" onclick="delFinanca('+f.id+')"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>'+
+      '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) {
+    document.getElementById('finL').innerHTML = '<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+function formatKz(v) {
+  if (!v && v !== 0) return '—';
+  return new Intl.NumberFormat('pt-AO').format(v) + ' Kz';
+}
+function openFinModal() {
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Novo <span class="r">Registo</span> Financeiro</div>'+
+    '<div class="fg"><label class="fl">Código do Cliente</label><input class="fi" id="fnCli" placeholder="IMP-XXXXXXXX"></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Tipo</label><select class="fi" id="fnTipo"><option value="venda">Venda de Site</option><option value="mensalidade">Mensalidade</option><option value="adicional">Custo Adicional</option><option value="outro">Outro</option></select></div>'+
+      '<div class="fg"><label class="fl">Moeda</label><select class="fi" id="fnMoeda"><option value="AOA">AOA (Kwanza)</option><option value="USD">USD</option></select></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Descrição</label><input class="fi" id="fnDesc" placeholder="Ex: Criação de site loja online"></div>'+
+    '<div class="grid2">'+
+      '<div class="fg"><label class="fl">Valor</label><input class="fi" type="number" id="fnVal" placeholder="0" min="0"></div>'+
+      '<div class="fg"><label class="fl">Data de Vencimento</label><input class="fi" type="date" id="fnVenc"></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Estado</label><select class="fi" id="fnEstado"><option value="pendente">Pendente</option><option value="pago">Pago</option><option value="cancelado">Cancelado</option></select></div>'+
+    '<div class="fg"><label class="fl">Notas</label><textarea class="fi" id="fnNotas" style="min-height:60px" placeholder="Observações..."></textarea></div>'+
+    '<div class="mact">'+
+      '<button class="btn bgh" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn bred" onclick="saveFinanca()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+    '</div>'
+  );
+}
+async function saveFinanca() {
+  var saveBtn = document.querySelector('#mb .btn.bred');
+  btnLoad(saveBtn, 'A guardar...');
+  var data = {
+    cliente_id: document.getElementById('fnCli').value.trim().toUpperCase(),
+    tipo: document.getElementById('fnTipo').value,
+    descricao: document.getElementById('fnDesc').value.trim(),
+    valor: parseFloat(document.getElementById('fnVal').value)||0,
+    moeda: document.getElementById('fnMoeda').value,
+    estado: document.getElementById('fnEstado').value,
+    data_venc: document.getElementById('fnVenc').value||null,
+    notas: document.getElementById('fnNotas').value.trim()
+  };
+  if (!data.cliente_id || !data.descricao || !data.valor) { toast('Preenche todos os campos obrigatórios','error'); btnReset(saveBtn); return; }
+  try { await wPost('/api/admin/financas', data); btnOk(saveBtn,'Guardado!'); toast('Registo guardado!'); notify('Sucesso','Registo financeiro criado!','success'); setTimeout(function(){ closeModal(); rFinancas(); },500); }
+  catch(e) { toast('Erro: '+e.message,'error'); }
+}
+async function pagarFinanca(id) {
+  var btn = event && event.target ? event.target.closest('.btn') : null;
+  if(btn) btnLoad(btn, 'A processar...');
+  try {
+    // Use /api/admin/financas/:id/pago endpoint (simpler route)
+    var r = await fetch(API+'/api/admin/financas/pago/'+id, {
+      method:'POST', headers:{'Content-Type':'application/json','Authorization':_tok},
+      body:JSON.stringify({estado:'pago'})
+    });
+    if(!r.ok){ var e=await r.json(); throw new Error(e.erro||r.status); }
+    if(btn) btnOk(btn,'Pago!');
+    notify('Sucesso','Pagamento marcado como pago!','success');
+    toast('Marcado como pago!');
+    setTimeout(function(){ rFinancas(); }, 600);
+  } catch(e) {
+    if(btn) btnReset(btn);
+    toast('Erro: '+e.message,'error');
+  }
+}
+async function delFinanca(id) {
+  if (!confirm('Apagar este registo?')) return;
+  try { await wDel('/api/admin/financas/'+id); toast('Apagado'); rFinancas(); }
+  catch(e) { toast('Erro: '+e.message,'error'); }
+}
+function enviarNotifFinanca(cliId, desc, valor) {
+  var msg = 'Olá! Tem um pagamento pendente referente a "'+desc+'". Valor: '+formatKz(valor)+'. Por favor contacte-nos para mais informações.';
+  var wpp = '244954288128';
+  window.open('https://wa.me/'+wpp+'?text='+encodeURIComponent('Para cliente '+cliId+': '+msg), '_blank');
+}
+
+/* ══════════════════════════════════════════════════════════
+   NOTIFICAÇÕES
+══════════════════════════════════════════════════════════ */
+async function rNotificacoes() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Notifi<span class="r">cações</span></div><div class="ps">Enviar notificações directamente para a área do cliente</div></div>'+
+    '<div class="card">'+
+      '<div class="ct"><i class="fa-solid fa-paper-plane"></i> Enviar Notificação</div>'+
+      '<div class="fg"><label class="fl">Destinatário</label>'+
+        '<select class="fi" id="ntDest">'+
+          '<option value="todos">Todos os clientes activos</option>'+
+        '</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Tipo</label>'+
+        '<select class="fi" id="ntTipo">'+
+          '<option value="info">Informação</option>'+
+          '<option value="sucesso">Sucesso / Boas notícias</option>'+
+          '<option value="aviso">Aviso</option>'+
+          '<option value="pagamento">Pagamento</option>'+
+        '</select>'+
+      '</div>'+
+      '<div class="fg"><label class="fl">Título</label><input class="fi" id="ntTitulo" placeholder="Ex: Actualização do teu site"></div>'+
+      '<div class="fg"><label class="fl">Mensagem</label><textarea class="fi" id="ntMsg" placeholder="Escreve a mensagem para o cliente..."></textarea></div>'+
+      '<div style="display:flex;gap:.6rem">'+
+        '<button class="btn bred" style="flex:1" onclick="enviarNotif()"><i class="fa-solid fa-paper-plane"></i> Enviar no Painel</button>'+
+        '<button class="btn bgh" onclick="enviarWppNotif()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>'+
+      '</div>'+
+    '</div>';
+  // Load clientes for select
+  try {
+    var clis = await wGet('/api/admin/clientes');
+    var sel = document.getElementById('ntDest');
+    if (sel) {
+      clis.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.nome + ' (' + c.id + ')';
+        sel.appendChild(opt);
+      });
+    }
+  } catch(e) {}
+}
+async function enviarNotif() {
+  var sendBtn = document.querySelector('#mc .btn.bred');
+  btnLoad(sendBtn, 'A enviar...');
+  var dest = document.getElementById('ntDest').value;
+  var titulo = document.getElementById('ntTitulo').value.trim();
+  var msg = document.getElementById('ntMsg').value.trim();
+  var tipo = document.getElementById('ntTipo').value;
+  if (!titulo || !msg) { toast('Título e mensagem são obrigatórios','error'); return; }
+  try {
+    var r = await wPost('/api/admin/notificacoes', { cliente_id: dest, titulo: titulo, mensagem: msg, tipo: tipo });
+    var txt = dest==='todos' ? 'Enviado para '+r.enviadas+' clientes!' : 'Notificação enviada!';
+    btnOk(sendBtn, 'Enviado!');
+    toast(txt);
+    document.getElementById('ntTitulo').value = '';
+    document.getElementById('ntMsg').value = '';
+  } catch(e) { toast('Erro: '+e.message,'error'); btnReset(sendBtn); }
+}
+function enviarWppNotif() {
+  var titulo = document.getElementById('ntTitulo').value.trim();
+  var msg = document.getElementById('ntMsg').value.trim();
+  if (!titulo || !msg) { toast('Preenche título e mensagem primeiro','error'); return; }
+  var texto = '*'+titulo+'*\n\n'+msg+'\n\n— IMPERSILVA';
+  window.open('https://wa.me/244954288128?text='+encodeURIComponent(texto), '_blank');
+}
+
+/* ══════════════════════════════════════════════════════════
+   UTILIZADORES
+══════════════════════════════════════════════════════════ */
+async function rUsuarios() {
+  document.getElementById('mc').innerHTML =
+    '<div class="ph"><div class="pt">Utiliza<span class="r">dores</span></div><div class="ps">Contas registadas na área de cliente</div></div>'+
+    '<div class="brow"><button class="btn bred" onclick="rUsuarios()"><i class="fa-solid fa-rotate"></i> Actualizar</button></div>'+
+    '<div id="usrL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
+  try {
+    var data = await wGet('/api/admin/usuarios');
+    var el = document.getElementById('usrL');
+    if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-user-shield"></i><p>Sem utilizadores registados</p></div>'; return; }
+    var html = '<div class="card"><div class="ct"><i class="fa-solid fa-users"></i> '+data.length+' utilizador'+(data.length!==1?'es':'')+'</div>';
+    data.forEach(function(u) {
+      html += '<div class="usr-item">'+
+        '<div class="usr-av">'+(u.nome?u.nome[0].toUpperCase():'?')+'</div>'+
+        '<div style="flex:1;min-width:0">'+
+          '<div style="font-weight:600;font-size:.85rem">'+u.nome+'</div>'+
+          '<div style="font-size:.7rem;color:var(--gr)">'+
+            (u.email||u.telefone||'—')+
+            (u.cliente_id?' • <span style="color:var(--blu2)">'+u.cliente_id+'</span>':' • <span style="color:var(--gr)">Sem projecto</span>')+
+          '</div>'+
+          '<div style="font-size:.65rem;color:rgba(255,255,255,.25);margin-top:.1rem">'+timeAgo(u.criado_em)+'</div>'+
+        '</div>'+
+        '<div style="display:flex;gap:.35rem;align-items:center">'+
+          '<span class="badge '+(u.activo?'bg':'br')+'">'+(u.activo?'Activo':'Inactivo')+'</span>'+
+          (u.activo?'<button class="btn bdng bsm" onclick="desactivarUsr('+u.id+')"><i class="fa-solid fa-ban"></i></button>':'')+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  } catch(e) {
+    document.getElementById('usrL').innerHTML = '<div class="empty"><p>Erro ao carregar</p></div>';
+  }
+}
+async function desactivarUsr(id) {
+  if (!confirm('Desactivar este utilizador?')) return;
+  try { await wDel('/api/admin/usuarios/'+id); toast('Utilizador desactivado'); rUsuarios(); }
+  catch(e) { toast('Erro: '+e.message,'error'); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   LIMPEZA DE IMAGENS (GitHub)
+══════════════════════════════════════════════════════════ */
+var _ghFiles = [];
+async function rLimpeza() {
+  var body = '<div class="ph"><div class="pt">Lim<span class="r">peza</span></div><div class="ps">Gerir imagens no repositório GitHub</div></div>';
+  if (!_ghtok) {
+    body += '<div class="card" style="border-color:rgba(214,40,40,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);margin-right:.4rem"></i>GitHub Token não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
+  } else {
+    body += '<div class="brow"><button class="btn bred" onclick="carregarImgsGH()"><i class="fa-solid fa-rotate"></i> Listar imagens</button></div>';
+    body += '<div id="ghImgL"><div class="empty"><i class="fa-brands fa-github"></i><p>Clica em Listar imagens para ver os ficheiros</p></div></div>';
+  }
+  document.getElementById('mc').innerHTML = body;
+}
+
+async function carregarImgsGH() {
+  var el = document.getElementById('ghImgL');
+  if (!el) return;
+  el.innerHTML = '<div class="load"><div class="spin"></div> A carregar do GitHub e verificar utilizações...</div>';
+  try {
+    // 1. Get all images from GitHub
+    var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens', {
+      headers: {'Authorization':'token '+_ghtok, 'Accept':'application/vnd.github.v3+json'}
+    });
+    if (r.status === 404) { el.innerHTML='<div class="empty"><p>Pasta "imagens" não existe ainda</p></div>'; return; }
+    var files = await r.json();
+    _ghFiles = Array.isArray(files) ? files.filter(function(f){ return f.type==='file'; }) : [];
+    if (!_ghFiles.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-images"></i><p>Sem imagens na pasta /imagens</p></div>'; return; }
+
+    // 2. Get all used image URLs from D1 (portfolio + equipa + galeria)
+    var usedUrls = new Set();
+    try {
+      var port = await wGet('/api/portfolio');
+      port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/imagens/').pop()); });
+    } catch(e2){}
+    try {
+      var eq = await wGet('/api/equipa');
+      eq.forEach(function(m){
+        if(m.foto) usedUrls.add(m.foto.split('/imagens/').pop());
+        if(m.galeria) m.galeria.forEach(function(g){ usedUrls.add((g.url||g).split('/imagens/').pop()); });
+      });
+    } catch(e2){}
+
+    var used = _ghFiles.filter(function(f){ return usedUrls.has(f.name); });
+    var unused = _ghFiles.filter(function(f){ return !usedUrls.has(f.name); });
+
+    var html = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
+      '<span class="badge bg"><i class="fa-solid fa-link"></i> '+used.length+' em uso</span>'+
+      '<span class="badge br"><i class="fa-solid fa-unlink"></i> '+unused.length+' não usadas</span>'+
+      '<span class="badge bgr">Total: '+_ghFiles.length+'</span>'+
+    '</div>';
+
+    if (unused.length) {
+      html += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem">'+
+        '<div class="ct" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i> Imagens não usadas ('+unused.length+')</div>';
+      unused.forEach(function(f, i) {
+        var idx = _ghFiles.indexOf(f);
+        var sizeKb = Math.round((f.size||0)/1024);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
+        html += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy">' :
+            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<button class="btn bdng bsm" onclick="removerImgGH('+idx+')" title="Remover"><i class="fa-solid fa-trash"></i></button>'+
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (used.length) {
+      html += '<div class="card">'+
+        '<div class="ct" style="color:var(--grn)"><i class="fa-solid fa-link"></i> Em uso ('+used.length+')</div>';
+      used.forEach(function(f) {
+        var idx = _ghFiles.indexOf(f);
+        var sizeKb = Math.round((f.size||0)/1024);
+        var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
+        html += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy">' :
+            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<span class="badge bg bsm">em uso</span>'+
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    el.innerHTML = html;
+  } catch(e) {
+    el.innerHTML = '<div class="empty"><p>Erro ao carregar: '+e.message+'</p></div>';
+  }
+}
+async function removerImgGH(idx) {
+  var f = _ghFiles[idx];
+  if (!f) return;
+  if (!confirm('Remover "'+f.name+'" do GitHub? Esta acção não pode ser desfeita.')) return;
+  try {
+    var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens/'+f.name, {
+      method: 'DELETE',
+      headers: {'Authorization':'token '+_ghtok,'Content-Type':'application/json'},
+      body: JSON.stringify({ message: 'Admin: remover '+f.name, sha: f.sha, branch: 'main' })
+    });
+    if (!r.ok) { var e=await r.json(); throw new Error(e.message||'Erro'); }
+    toast('"'+f.name+'" removido do GitHub');
+    _ghFiles.splice(idx, 1);
+    carregarImgsGH();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+
+// EXPOR funções para o HTML
+window.executarCriarSite = executarCriarSite;
+window.abrirCriarSite = abrirCriarSite;
+window.abrirDeploySite = abrirDeploySite;
+window.autoSlug = autoSlug;
+</script>
+</body>
+</html>
+
