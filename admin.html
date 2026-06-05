@@ -178,30 +178,6 @@ input:checked+.tsl::before{transform:translateX(16px)}
 
 .btn .spin{vertical-align:middle;margin-right:.3rem;border-color:rgba(255,255,255,.3);border-top-color:#fff}
 
-/* CHARTS */
-.chart-wrap{display:flex;align-items:center;gap:1.2rem;padding:.5rem 0}
-.chart-legend{flex:1;min-width:0}
-.chart-leg-item{display:flex;align-items:center;gap:.5rem;margin-bottom:.45rem;font-size:.75rem}
-.chart-leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.chart-leg-lbl{flex:1;color:var(--gr2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-leg-val{font-weight:700;font-size:.8rem;white-space:nowrap}
-.bar-chart{width:100%;margin-top:.5rem}
-.bar-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
-.bar-lbl{font-size:.65rem;color:var(--gr);width:52px;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-track{flex:1;background:rgba(255,255,255,.05);border-radius:3px;height:16px;overflow:hidden}
-.bar-fill{height:100%;border-radius:3px;background:linear-gradient(to right,var(--red),#ff6b6b);min-width:2px}
-.bar-fill.blue{background:linear-gradient(to right,var(--blue),var(--blu2))}
-.bar-fill.green{background:linear-gradient(to right,#16a34a,var(--grn))}
-.bar-val{font-size:.62rem;font-weight:700;color:var(--gr2);white-space:nowrap;min-width:70px;text-align:right;flex-shrink:0}
-.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
-.kpi{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.85rem;position:relative;overflow:hidden}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--kpi-color,var(--red))}
-.kpi-val{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;line-height:1.1;margin-bottom:.15rem}
-.kpi-lbl{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gr)}
-.kpi-sub{font-size:.62rem;color:var(--gr2);margin-top:.25rem}
-.kpi.green{--kpi-color:var(--grn)}.kpi.blue{--kpi-color:var(--blu2)}.kpi.amber{--kpi-color:var(--amb)}
-.dash-cols{display:flex;flex-direction:column;gap:.8rem}
-
 /* TOAST */
 #toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 #toast.show{opacity:1;transform:translateY(0)}
@@ -216,8 +192,6 @@ input:checked+.tsl::before{transform:translateX(16px)}
   .sr{grid-template-columns:repeat(3,1fr)}
   #mo{align-items:center;padding:1rem}
   #mb{border-radius:14px;max-width:520px;margin:auto}
-  .kpi-grid{grid-template-columns:repeat(4,1fr)}
-  .dash-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 }
 
 /* SIDEBAR */
@@ -635,168 +609,54 @@ async function doUpload(fileInputId, folder, urlInputId, progWrapId, progFillId,
    ======================================================== */
 
 /* PAINEL */
-// ── SVG Donut Chart ────────────────────────────────────────────
-function svgDonut(segs, size, thick) {
-  size  = size  || 110;
-  thick = thick || 20;
-  var total = segs.reduce(function(s,x){return s+(x.v||0);},0);
-  if (!total) return '<svg width="'+size+'" height="'+size+'"><text x="50%" y="53%" text-anchor="middle" fill="rgba(255,255,255,.2)" font-size="11">Sem dados</text></svg>';
-  var cx=size/2, cy=size/2, r=(size-thick)/2, circ=2*Math.PI*r;
-  var html='<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">';
-  // background track
-  html+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="'+thick+'"/>';
-  var cum=0;
-  segs.forEach(function(seg){
-    var pct=(seg.v||0)/total;
-    var arc=pct*circ;
-    var offset=-(cum*circ)+(circ*0.25); // start at 12 o'clock
-    html+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+seg.c+'" stroke-width="'+thick+'" stroke-dasharray="'+arc+' '+(circ-arc)+'" stroke-dashoffset="'+offset+'"/>';
-    cum+=pct;
-  });
-  html+='</svg>';
-  return html;
-}
-
-// ── CSS Bar Chart (returns HTML string) ────────────────────────
-function barChart(items, maxVal) {
-  if (!items || !items.length) return '<div class="empty" style="padding:1rem"><p>Sem dados</p></div>';
-  maxVal = maxVal || Math.max.apply(null, items.map(function(x){return x.v||0;})) || 1;
-  var html='<div class="bar-chart">';
-  items.forEach(function(item){
-    var pct=Math.round(((item.v||0)/maxVal)*100);
-    html+='<div class="bar-row">'+
-      '<div class="bar-lbl">'+item.l+'</div>'+
-      '<div class="bar-track"><div class="bar-fill'+(item.cls?' '+item.cls:'')+'" style="width:'+pct+'%"></div></div>'+
-      '<div class="bar-val">'+item.label+'</div>'+
-    '</div>';
-  });
-  html+='</div>';
-  return html;
-}
-
 async function rPainel() {
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Bem-vindo ao <span class="r">Admin</span></div><div class="ps">IMPERSILVA HOLDING SGPS</div></div>'+
-    '<div class="kpi-grid">'+
-      '<div class="kpi green"><div class="kpi-val" id="kRecebido">—</div><div class="kpi-lbl">Recebido</div><div class="kpi-sub" id="kRecSub"></div></div>'+
-      '<div class="kpi amber"><div class="kpi-val" id="kPendente">—</div><div class="kpi-lbl">Pendente</div><div class="kpi-sub" id="kPenSub"></div></div>'+
-      '<div class="kpi blue"><div class="kpi-val" id="kClientes">—</div><div class="kpi-lbl">Clientes</div><div class="kpi-sub" id="kCliSub"></div></div>'+
-      '<div class="kpi"><div class="kpi-val" id="kSites">—</div><div class="kpi-lbl">Sites Activos</div><div class="kpi-sub" id="kSitSub"></div></div>'+
-    '</div>'+
-    '<div class="dash-cols">'+
-      '<div class="card"><div class="ct"><i class="fa-solid fa-chart-pie"></i> Distribuição Financeira</div><div id="pChart"><div class="load"><div class="spin"></div></div></div></div>'+
-      '<div class="card"><div class="ct"><i class="fa-solid fa-chart-bar"></i> Receita por Tipo</div><div id="pBars"><div class="load"><div class="spin"></div></div></div></div>'+
+    '<div class="sr">'+
+      '<div class="sc"><div class="sn" id="sp1">—</div><div class="sl">Portfólio</div></div>'+
+      '<div class="sc"><div class="sn" id="sp2">—</div><div class="sl">Clientes</div></div>'+
+      '<div class="sc"><div class="sn" id="sp3">—</div><div class="sl">Orçamentos</div></div>'+
     '</div>'+
     '<div class="card"><div class="ct"><i class="fa-solid fa-bolt"></i> Acesso Rápido</div>'+
       '<div class="grid2">'+
-        '<button class="btn bgh bsm bfull" onclick="go(\'clientes\')"><i class="fa-solid fa-users"></i> Clientes</button>'+
-        '<button class="btn bgh bsm bfull" onclick="go(\'financas\')"><i class="fa-solid fa-chart-line"></i> Finanças</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'clientes\')"><i class="fa-solid fa-globe"></i> Clientes</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'portfolio\')"><i class="fa-solid fa-briefcase"></i> Portfólio</button>'+
+        '<button class="btn bgh bsm bfull" onclick="go(\'contactos\')"><i class="fa-solid fa-envelope"></i> Contactos</button>'+
         '<button class="btn bgh bsm bfull" onclick="go(\'orcamentos\')"><i class="fa-solid fa-file-invoice"></i> Orçamentos</button>'+
-        '<button class="btn bgh bsm bfull" onclick="go(\'sites\')"><i class="fa-solid fa-globe"></i> Sites</button>'+
-        '<button class="btn bgh bsm bfull" onclick="go(\'portfolio\')"><i class="fa-solid fa-briefcase\"></i> Portfólio</button>'+
-        '<a class="btn bgh bsm bfull" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Site</a>'+
+        '<a class="btn bgh bsm bfull" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Site</a>'+
+        '<a class="btn bgh bsm bfull" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i> Portal</a>'+
       '</div>'+
     '</div>'+
-    '<div class="card"><div class="ct"><i class="fa-solid fa-clock-rotate-left"></i> Actividade Recente</div><div id="paf"><div class="load"><div class="spin"></div></div></div></div>';
-
-  // Carregar dados em paralelo
+    '<div class="card"><div class="ct"><i class="fa-solid fa-clock-rotate-left"></i> Actividade Recente</div><div id="paf"><div class="load"><div class="spin"></div> A carregar...</div></div></div>';
   try {
-    var [rFin, rCli, rOrc, rSites] = await Promise.allSettled([
-      wGet('/api/admin/financas'),
-      wGet('/api/admin/clientes'),
-      wGet('/api/admin/orcamentos'),
-      wGet('/api/admin/sites')
-    ]);
-    var fin   = rFin.status==='fulfilled'   ? rFin.value   : [];
-    var clis  = rCli.status==='fulfilled'   ? rCli.value   : [];
-    var orcs  = rOrc.status==='fulfilled'   ? rOrc.value   : [];
-    var sites = rSites.status==='fulfilled' ? rSites.value : [];
-
-    // KPIs financeiros
-    var recebido  = fin.filter(function(f){return f.estado==='pago';}).reduce(function(s,f){return s+(f.valor||0);},0);
-    var pendente  = fin.filter(function(f){return f.estado==='pendente';}).reduce(function(s,f){return s+(f.valor||0);},0);
-    var cancelado = fin.filter(function(f){return f.estado==='cancelado';}).reduce(function(s,f){return s+(f.valor||0);},0);
-    var nRec  = fin.filter(function(f){return f.estado==='pago';}).length;
-    var nPen  = fin.filter(function(f){return f.estado==='pendente';}).length;
-    var sitesActivos = sites.filter ? sites.filter(function(s){return s.activo||s.estado==='activo';}).length : (sites.length||0);
-
-    var el;
-    el=document.getElementById('kRecebido'); if(el) el.textContent=formatKz(recebido);
-    el=document.getElementById('kRecSub');   if(el) el.textContent=nRec+' pagamentos';
-    el=document.getElementById('kPendente'); if(el) el.textContent=formatKz(pendente);
-    el=document.getElementById('kPenSub');   if(el) el.textContent=nPen+' pendentes';
-    el=document.getElementById('kClientes'); if(el) el.textContent=clis.length||0;
-    el=document.getElementById('kCliSub');   if(el) el.textContent=orcs.length+' orçamentos';
-    el=document.getElementById('kSites');    if(el) el.textContent=sitesActivos||sites.length||0;
-    el=document.getElementById('kSitSub');   if(el) el.textContent='criados no sistema';
-
-    // Donut chart
-    var chartEl = document.getElementById('pChart');
-    if (chartEl) {
-      if (!recebido && !pendente && !cancelado) {
-        chartEl.innerHTML = '<div class="empty" style="padding:1rem"><i class="fa-solid fa-chart-pie"></i><p>Sem registos financeiros</p></div>';
-      } else {
-        var segs = [];
-        if (recebido)  segs.push({v:recebido,  c:'var(--grn)',  l:'Recebido',  val:formatKz(recebido)});
-        if (pendente)  segs.push({v:pendente,  c:'var(--amb)',  l:'Pendente',  val:formatKz(pendente)});
-        if (cancelado) segs.push({v:cancelado, c:'var(--red)',  l:'Cancelado', val:formatKz(cancelado)});
-        var total = recebido+pendente+cancelado;
-        var legendHtml = segs.map(function(s){
-          return '<div class="chart-leg-item">'+
-            '<div class="chart-leg-dot" style="background:'+s.c+'"></div>'+
-            '<div class="chart-leg-lbl">'+s.l+'</div>'+
-            '<div class="chart-leg-val">'+Math.round(s.v/total*100)+'%</div>'+
-          '</div>';
-        }).join('');
-        chartEl.innerHTML = '<div class="chart-wrap">'+svgDonut(segs)+
-          '<div class="chart-legend">'+legendHtml+
-            '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--div);font-size:.7rem;color:var(--gr)">Total: <strong style="color:var(--wh)">'+formatKz(total)+'</strong></div>'+
-          '</div></div>';
-      }
-    }
-
-    // Bar chart por tipo
-    var barsEl = document.getElementById('pBars');
-    if (barsEl) {
-      var tipos = ['venda','mensalidade','adicional','outro'];
-      var labels = {venda:'Vendas',mensalidade:'Mensalidades',adicional:'Adicionais',outro:'Outros'};
-      var classes = {venda:'',mensalidade:'green',adicional:'blue',outro:''};
-      var barItems = tipos.map(function(t){
-        var v = fin.filter(function(f){return f.tipo===t&&f.estado==='pago';}).reduce(function(s,f){return s+(f.valor||0);},0);
-        return {l:labels[t].substring(0,4), v:v, label:formatKz(v), cls:classes[t]};
-      }).filter(function(x){return x.v>0;});
-      barsEl.innerHTML = barItems.length ? barChart(barItems) : '<div class="empty" style="padding:1rem"><p>Sem receitas registadas</p></div>';
-    }
-
-    // Feed actividade recente
-    var feed = document.getElementById('paf');
-    if (feed) {
-      var items = [];
-      orcs.slice(0,3).forEach(function(o){items.push({icon:'fa-file-invoice',cor:'var(--amb)',txt:o.nome||'Orçamento',sub:'Orçamento',ts:o.criado_em});});
-      clis.slice(0,2).forEach(function(cl){items.push({icon:'fa-user',cor:'var(--blu2)',txt:cl.nome||'Cliente',sub:'Cliente',ts:cl.criado_em});});
-      items.sort(function(a,b){return (b.ts||'')>(a.ts||'')?1:-1;});
-      if (!items.length) {
-        feed.innerHTML='<div class="empty"><i class="fa-solid fa-inbox"></i><p>Sem actividade ainda</p></div>';
-      } else {
-        feed.innerHTML = items.slice(0,5).map(function(it){
-          return '<div style="display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--div)">'+
-            '<div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+
-              '<i class="fa-solid '+it.icon+'" style="font-size:.75rem;color:'+it.cor+'"></i>'+
-            '</div>'+
-            '<div style="flex:1;min-width:0">'+
-              '<div style="font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it.txt+'</div>'+
-              '<div style="font-size:.65rem;color:var(--gr)">'+it.sub+'</div>'+
-            '</div>'+
-            '<div style="font-size:.65rem;color:rgba(255,255,255,.25)">'+timeAgo(it.ts)+'</div>'+
-          '</div>';
-        }).join('');
-      }
-    }
-
-  } catch(e) {
-    console.error('rPainel:', e);
+    var r1=await wGet('/api/portfolio');
+    document.getElementById('sp1').textContent=r1.length;
+  } catch(e){}
+  try {
+    var r2=await wGet('/api/admin/clientes');
+    document.getElementById('sp2').textContent=r2.length;
+  } catch(e){}
+  try {
+    var r3=await wGet('/api/admin/orcamentos');
+    document.getElementById('sp3').textContent=r3.length;
+    var feed=document.getElementById('paf');
+    if(!feed) return;
+    if(!r3.length){feed.innerHTML='<div class="empty"><i class="fa-solid fa-inbox"></i><p>Sem actividade ainda</p></div>';return;}
+    var html='';
+    r3.slice(0,5).forEach(function(o){
+      html+='<div style="display:flex;align-items:center;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--div)">'+
+        '<span class="badge ba">Orçamento</span>'+
+        '<span style="font-size:.85rem;font-weight:600;flex:1">'+o.nome+'</span>'+
+        '<span style="font-size:.68rem;color:rgba(255,255,255,.3)">'+timeAgo(o.criado_em)+'</span>'+
+      '</div>';
+    });
+    feed.innerHTML=html;
+  } catch(e){
+    var feed2=document.getElementById('paf');
+    if(feed2) feed2.innerHTML='<div class="empty"><p>Sem actividade ainda</p></div>';
   }
 }
+
 /* PORTFÓLIO */
 var _portList = [];
 async function rPortfolio() {
@@ -1305,6 +1165,13 @@ async function rSites() {
 }
 
 /* ── Criar Novo Site ── */
+function toggleHospedagemModal() {
+  var sel = document.getElementById('csHospedagem');
+  var ghDiv = document.getElementById('csGhFields');
+  if (!sel || !ghDiv) return;
+  ghDiv.style.display = sel.value === 'github' ? 'block' : 'none';
+}
+
 function buildCfSelector() {
   if (!_cfAccounts.length) {
     return '<div style="background:rgba(246,130,31,.07);border:1px solid rgba(246,130,31,.2);'+
@@ -1329,7 +1196,7 @@ function abrirCriarSite() {
     var tOpts = '';
     if(templates && templates.length){
       templates.forEach(function(t){
-        tOpts += '<option value="'+t.id+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
+        tOpts += '<option value="'+t.id+'|'+(t.pages_url||'')+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
       });
     } else {
       tOpts = '<option value="">Nenhum template — adiciona em Templates primeiro</option>';
@@ -1362,12 +1229,20 @@ function abrirCriarSite() {
           (_cliList||[]).map(function(c){ return '<option value="'+c.id+'">'+c.nome+(c.negocio?' ('+c.negocio+')':'')+'</option>'; }).join('')+
         '</select>'+
       '</div>'+
-      '<div class="fg"><label class="fl">GitHub Token <span style="color:var(--gr);font-size:.65rem">(do cliente ou da org)</span></label>'+
-        '<input class="fi" type="password" id="csGhToken" placeholder="ghp_..."/>'+
-        '<div style="font-size:.65rem;color:var(--gr);margin-top:3px">Precisa de permissão: repo, workflow, pages</div>'+
+      '<div class="fg"><label class="fl">Hospedagem</label>'+
+        '<select class="fi" id="csHospedagem" onchange="toggleHospedagemModal()">'+
+          '<option value="pages">☁️ Cloudflare Pages (recomendado)</option>'+
+          '<option value="github">🐙 GitHub Pages (legado)</option>'+
+        '</select>'+
       '</div>'+
-      '<div class="fg"><label class="fl">GitHub User/Org</label>'+
-        '<input class="fi" id="csGhUser" value="impersilvatech" placeholder="impersilvatech"/>'+
+      '<div id="csGhFields" style="display:none">'+
+        '<div class="fg"><label class="fl">GitHub Token <span style="color:var(--gr);font-size:.65rem">(do cliente ou da org)</span></label>'+
+          '<input class="fi" type="password" id="csGhToken" placeholder="ghp_..."/>'+
+          '<div style="font-size:.65rem;color:var(--gr);margin-top:3px">Permissão: repo, workflow, pages</div>'+
+        '</div>'+
+        '<div class="fg"><label class="fl">GitHub User/Org</label>'+
+          '<input class="fi" id="csGhUser" value="impersilvatech" placeholder="impersilvatech"/>'+
+        '</div>'+
       '</div>'+
 
       buildCfSelector()+
@@ -1452,59 +1327,76 @@ async function executarCriarSite(){
   if(!templateVal||templateVal.indexOf('|')<0){ csErro('Selecciona um template'); return; }
   if(!nome){ csErro('Nome do site é obrigatório'); return; }
   if(!slug){ csErro('Slug é obrigatório'); return; }
-  if(!ghToken){ csErro('GitHub Token é obrigatório — ver Configurações'); return; }
+  var hospedagem = (document.getElementById('csHospedagem')||{value:'pages'}).value||'pages';
+  if(hospedagem==='github' && !ghToken){ csErro('GitHub Token é obrigatório para GitHub Pages'); return; }
 
   var tParts = templateVal.split('|');
-  var tGhUser = tParts[1], tGhRepo = tParts[2], tGhBranch = tParts[3]||'main';
+  var tPagesUrl = tParts[1]||''; var tGhUser = tParts[2]||''; var tGhRepo = tParts[3]||''; var tGhBranch = tParts[4]||'main';
 
   var btn = document.querySelector('#mb .btn.bblue');
   if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar...'; btn.disabled=true; }
 
   try {
-    // ── 1. Criar repositório e copiar template via Worker ──
-    var res = await wPost('/api/admin/sites/criar', {
-      nome, slug, gh_token: ghToken, gh_user: ghUser,
-      template_gh_user: tGhUser, template_gh_repo: tGhRepo, template_gh_branch: tGhBranch,
-      cliente_id: clienteId || null
-    });
+    // ── 1. Criar site (Pages ou GitHub conforme hospedagem) ──
+    var res;
+    if (hospedagem === 'pages') {
+      if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar Pages...';
+      res = await wPost('/api/admin/sites/criar-pages', {
+        nome, slug,
+        cf_account_id:   _cfActiveAcc ? _cfActiveAcc.account_id : '',
+        cf_api_token:    _cfActiveAcc ? _cfActiveAcc.api_token  : '',
+        template_pages_url: tPagesUrl,
+        template_gh_user: tGhUser, template_gh_repo: tGhRepo, template_gh_branch: tGhBranch,
+        cliente_id: clienteId || null
+      });
+    } else {
+      if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar repositório...';
+      res = await wPost('/api/admin/sites/criar', {
+        nome, slug, gh_token: ghToken, gh_user: ghUser,
+        template_gh_user: tGhUser, template_gh_repo: tGhRepo, template_gh_branch: tGhBranch,
+        cliente_id: clienteId || null
+      });
+    }
     if(res.erro) throw new Error(res.erro);
 
-    // ── 2. Gerar e commitar config.js com dados reais do site ──
+    // ── 2. config.js + manifest.json ──
     if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A configurar...';
-    var shortName = nome.split(' ').slice(0,2).join(' ');
-    var configContent =
-      '// config.js — Configuração automática gerada pelo admin\n'+
-      '// Editar api_url se o Worker tiver subdomain diferente.\n\n'+
-      'window.SITE_CONFIG = {\n'+
-      '  api_url:    "https://'+slug+'.workers.dev",\n'+
-      '  slug:       "'+slug+'",\n'+
-      '  gh_user:    "'+ghUser+'",\n'+
-      '  nome:       "'+nome+'",\n'+
-      '  short_name: "'+shortName+'",\n'+
-      '  descricao:  "Loja online — '+nome+'",\n'+
-      '  cor_fundo:  "#0d0d1a"\n'+
-      '};\n'+
-      'window.SITE_API = window.SITE_CONFIG.api_url;\n';
-
-    await commitFileGH(ghToken, ghUser, slug, 'config.js', configContent,
-      'config: definir API e slug para ' + slug);
-
-    // ── 3. Commitar manifest.json ──
-    var manifestObj = {
-      name: nome, short_name: shortName,
-      description: 'Loja online — '+nome,
-      start_url: '/'+slug+'/', scope: '/'+slug+'/',
-      display: 'standalone', orientation: 'portrait',
-      background_color: '#0d0d1a', theme_color: '#0d0d1a',
-      icons: [
-        {src:'/'+slug+'/favicon.svg',sizes:'any',type:'image/svg+xml',purpose:'any maskable'},
-        {src:'/'+slug+'/favicon.svg',sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},
-        {src:'/'+slug+'/favicon.svg',sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}
-      ]
-    };
-    await commitFileGH(ghToken, ghUser, slug, 'manifest.json',
-      JSON.stringify(manifestObj, null, 2),
-      'manifest: definir nome "'+nome+'" e paths /'+slug+'/');
+    // Pages: já incluídos no deploy server-side
+    // GitHub: commitar via API
+    if (hospedagem === 'github') {
+      // GitHub: commitar config.js e manifest.json
+      var shortName = nome.split(' ').slice(0,2).join(' ');
+      var configContent =
+        '// config.js — gerado pelo admin\n'+
+        'window.SITE_CONFIG = {\n'+
+        '  api_url:    "https://'+slug+'.workers.dev",\n'+
+        '  slug:       "'+slug+'",\n'+
+        '  gh_user:    "'+ghUser+'",\n'+
+        '  nome:       "'+nome+'",\n'+
+        '  short_name: "'+nome.split(' ').slice(0,2).join(' ')+'",\n'+
+        '  descricao:  "Loja online — '+nome+'",\n'+
+        '  cor_fundo:  "#0d0d1a"\n'+
+        '};\n'+
+        'window.SITE_API = window.SITE_CONFIG.api_url;\n';
+      await commitFileGH(ghToken, ghUser, slug, 'config.js', configContent,
+        'config: definir API e slug para ' + slug);
+      var manifestObj = {
+        name: nome, short_name: shortName,
+        description: 'Loja online — '+nome,
+        start_url: '/'+slug+'/', scope: '/'+slug+'/',
+        display: 'standalone', orientation: 'portrait',
+        background_color: '#0d0d1a', theme_color: '#0d0d1a',
+        icons: [
+          {src:'/'+slug+'/favicon.svg',sizes:'any',type:'image/svg+xml',purpose:'any maskable'},
+          {src:'/'+slug+'/favicon.svg',sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},
+          {src:'/'+slug+'/favicon.svg',sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}
+        ]
+      };
+      await commitFileGH(ghToken, ghUser, slug, 'manifest.json',
+        JSON.stringify(manifestObj, null, 2),
+        'manifest: definir nome "'+nome+'" e paths /'+slug+'/');
+    }
+    // Pages: config.js e manifest.json já incluídos no deploy server-side
 
     // ── 4. Cloudflare: criar D1 + clonar Worker (se credenciais configuradas) ──
     var cfOk = false, cfDbId = '', cfDbName = '', cfWorkerUrl = '';
@@ -1575,8 +1467,8 @@ async function executarCriarSite(){
 
           _stepOk('Repositório GitHub criado', ghUser+'/'+slug)+
           _stepOk('Ficheiros do template copiados', (res.ficheiros_copiados||'')+' ficheiros')+
-          _stepOk('GitHub Pages activado', 'https://'+ghUser+'.github.io/'+slug+'/')+
-          _stepOk('config.js gerado', 'api_url = https://'+slug+'.workers.dev')+
+          _stepOk(hospedagem==='pages'?'Cloudflare Pages activado':'GitHub Pages activado', hospedagem==='pages'?'https://'+slug+'.pages.dev/':'https://'+ghUser+'.github.io/'+slug+'/')+
+          _stepOk('config.js gerado', 'api_url = https://'+slug+'.workers.dev — site: '+( hospedagem==='pages'?slug+'.pages.dev':ghUser+'.github.io/'+slug))+
           _stepOk('manifest.json configurado', nome+' · /'+slug+'/')+
 
           '<div style="height:1px;background:var(--bd);margin:6px 0"></div>'+
@@ -1585,7 +1477,7 @@ async function executarCriarSite(){
         '</div>'+
         '<div style="font-size:.65rem;color:var(--gr);margin-top:12px;line-height:1.6">'+
           (cfOk
-            ? 'Tudo pronto! O site fica online em 1-2 min após o GitHub Pages propagar.'
+            ? hospedagem==='pages'?'Tudo pronto! O site fica online em segundos no Cloudflare Pages.':'Tudo pronto! O site fica online em 1-2 min após o GitHub Pages propagar.'
             : 'O site fica online em 1-2 min. '+(cfErr?'Cloudflare falhou: '+cfErr+'. ':'')+'Completa os passos pendentes manualmente.'
           )+
         '</div>'+
@@ -1628,7 +1520,7 @@ function abrirDeploySite(clienteId){
 
   wGet('/api/admin/templates').then(function(templates){
     var tOpts = (templates||[]).map(function(t){
-      return '<option value="'+t.id+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
+      return '<option value="'+t.id+'|'+(t.pages_url||'')+'|'+t.gh_user+'|'+t.gh_repo+'|'+t.gh_branch+'">'+t.nome+'</option>';
     }).join('');
 
     openModal(
@@ -1701,6 +1593,118 @@ async function executarDeploy(clienteId){
 
 var _templatesList = [];
 
+
+// ── Ler ficheiro como texto ──
+function lerFicheiro(file) {
+  return new Promise(function(resolve, reject) {
+    var r = new FileReader();
+    r.onload = function(e) { resolve(e.target.result); };
+    r.onerror = reject;
+    r.readAsText(file, 'utf-8');
+  });
+}
+
+// ── Modal upload de ficheiros para Cloudflare Pages ──
+function abrirUploadTemplate(templateId, templateNome, pagesUrlActual) {
+  var accOpts = _cfAccounts.map(function(a,i){
+    return '<option value="'+i+'">'+escHtml(a.nome)+' · '+a.account_id.slice(0,8)+'...</option>';
+  }).join('');
+
+  var slugSugerido = (pagesUrlActual||'')
+    .replace('https://','').replace('.pages.dev','').replace(/[^a-z0-9-]/g,'');
+
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Deploy <span style="color:#f6821f">Cloudflare Pages</span></div>'+
+    '<div style="font-size:.75rem;color:var(--gr);margin-bottom:12px">'+
+      'Carrega os ficheiros do template directamente para o Cloudflare Pages.'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Nome do Pages Project</label>'+
+      '<input class="fi" id="upSlug" value="'+escHtml(slugSugerido||'impersilva-tpl-loja')+'" placeholder="impersilva-tpl-loja">'+
+      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Ficará em: <b id="upUrlPreview">'+escHtml(slugSugerido||'impersilva-tpl-loja')+'.pages.dev</b></div>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Conta Cloudflare</label>'+
+      '<select class="fi" id="upCfAcc">'+accOpts+'</select>'+
+    '</div>'+
+    '<div class="fg">'+
+      '<label class="fl">Ficheiros <span style="color:var(--gr);font-size:.65rem">(selecciona todos os ficheiros do template)</span></label>'+
+      '<input type="file" id="upFiles" multiple accept=".html,.js,.json,.svg,.css,.txt" '+
+        'style="width:100%;padding:10px;background:var(--bg2);border:1px solid var(--bd);border-radius:8px;color:var(--wh);font-size:.8rem">'+
+    '</div>'+
+    '<div id="upProgress" style="display:none;font-size:.72rem;color:var(--gr);padding:8px 0"></div>'+
+    '<div id="upErr" style="display:none;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171;margin-top:6px"></div>'+
+    '<button class="btn bblue" id="btnUpDeploy" style="width:100%;margin-top:10px" onclick="salvarUploadTemplate('+templateId+')">'+
+      '<i class="fa-brands fa-cloudflare"></i> Fazer Deploy'+
+    '</button>'
+  );
+
+  // Live preview of URL
+  var slugEl = document.getElementById('upSlug');
+  if(slugEl) slugEl.addEventListener('input', function(){
+    var prev = document.getElementById('upUrlPreview');
+    if(prev) prev.textContent = this.value.trim() + '.pages.dev';
+  });
+}
+
+async function salvarUploadTemplate(templateId) {
+  var btn = document.getElementById('btnUpDeploy');
+  var prog = document.getElementById('upProgress');
+  var err  = document.getElementById('upErr');
+  if(err) err.style.display = 'none';
+
+  var pages_slug = ((document.getElementById('upSlug')||{}).value||'').trim();
+  var cfIdx      = parseInt((document.getElementById('upCfAcc')||{value:0}).value);
+  var fileInput  = document.getElementById('upFiles');
+
+  if(!pages_slug) { if(err){err.textContent='Nome do projecto obrigatório';err.style.display='block';} return; }
+  if(!fileInput || !fileInput.files.length) { if(err){err.textContent='Selecciona pelo menos um ficheiro';err.style.display='block';} return; }
+
+  var acc = _cfAccounts[cfIdx];
+  if(!acc) { if(err){err.textContent='Selecciona uma conta Cloudflare';err.style.display='block';} return; }
+
+  if(btn) btnLoad(btn, 'A ler ficheiros...');
+  if(prog) { prog.style.display='block'; prog.textContent='A ler '+fileInput.files.length+' ficheiro(s)...'; }
+
+  var TIPOS = { html:'text/html', js:'application/javascript', json:'application/json',
+                svg:'image/svg+xml', css:'text/css', txt:'text/plain' };
+
+  var files = [];
+  try {
+    for (var i = 0; i < fileInput.files.length; i++) {
+      var f = fileInput.files[i];
+      var ext = f.name.split('.').pop().toLowerCase();
+      var content = await lerFicheiro(f);
+      files.push({ path: '/' + f.name, content: content, contentType: TIPOS[ext] || 'text/plain' });
+    }
+  } catch(e) {
+    if(err){err.textContent='Erro ao ler ficheiros: '+e.message;err.style.display='block';}
+    if(btn) btnReset(btn); return;
+  }
+
+  if(prog) prog.textContent = 'A fazer deploy de '+files.length+' ficheiro(s) para Pages...';
+  if(btn) btnLoad(btn, 'A fazer deploy...');
+
+  try {
+    var nome = _templatesList && _templatesList.find(function(t){return t.id===templateId;});
+    var res = await wPost('/api/admin/templates/upload-pages', {
+      nome: nome ? nome.nome : pages_slug,
+      pages_slug: pages_slug,
+      cf_account_id: acc.account_id,
+      cf_api_token:  acc.api_token,
+      files: files,
+      template_id: templateId || null
+    });
+    if(res.erro) throw new Error(res.erro);
+    if(btn) btnOk(btn, '✅ Deploy OK!');
+    if(prog) prog.textContent = 'Deployment ID: '+(res.deployment_id||'—');
+    toast('Template publicado em '+res.pages_url+'!', 'success');
+    setTimeout(function(){ closeModal(); rTemplates(); }, 1200);
+  } catch(e) {
+    if(btn) btnReset(btn);
+    if(err){err.textContent='Erro: '+e.message;err.style.display='block';}
+  }
+}
+
 async function rTemplates(){
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Temp<span class="r">lates</span></div><div class="ps">Repositórios usados como base para novos sites</div></div>'+
@@ -1721,12 +1725,16 @@ async function rTemplates(){
     var html = '<div style="display:flex;flex-direction:column;gap:10px">';
     _templatesList.forEach(function(t){
       var cor = {loja:'#a78bfa',restaurante:'#f97316',portfolio:'#38bdf8',servicos:'#4ade80',pastelaria:'#fb923c'}[t.tipo||'loja']||'#a78bfa';
+      var hasPages = !!(t.pages_url && t.pages_url.includes('.pages.dev'));
       html += '<div class="cc" style="border-left:3px solid '+cor+'">'+
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
           '<div>'+
             '<div class="ccn">'+t.nome+'</div>'+
-            '<div style="font-size:.65rem;color:var(--gr);margin-top:1px">'+
-              '<i class="fa-brands fa-github"></i> '+t.gh_user+'/'+t.gh_repo+
+            '<div style="font-size:.65rem;color:var(--gr);margin-top:2px">'+
+              (hasPages
+                ? '<i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> '+t.pages_url
+                : '<i class="fa-brands fa-github"></i> '+t.gh_user+'/'+t.gh_repo
+              )+
             '</div>'+
           '</div>'+
           '<span style="font-size:.6rem;padding:2px 8px;border-radius:20px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'44">'+
@@ -1735,8 +1743,12 @@ async function rTemplates(){
         '</div>'+
         '<div style="font-size:.7rem;color:var(--gr);margin-bottom:8px">'+(t.descricao||'')+'</div>'+
         '<div style="display:flex;gap:5px">'+
-          '<a class="btn bgh bsm" href="https://github.com/'+t.gh_user+'/'+t.gh_repo+'" target="_blank" style="flex:1;text-align:center"><i class="fa-brands fa-github"></i> Ver no GitHub</a>'+
-          '<a class="btn bgh bsm" href="https://'+t.gh_user+'.github.io/'+t.gh_repo+'/" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>'+
+          (hasPages
+            ? '<a class="btn bgh bsm" href="'+t.pages_url+'" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>'
+            : '<a class="btn bgh bsm" href="https://github.com/'+t.gh_user+'/'+t.gh_repo+'" target="_blank" style="flex:1;text-align:center"><i class="fa-brands fa-github"></i> GitHub</a>'
+          )+
+          '<button class="btn bblue bsm" onclick="abrirUploadTemplate('+t.id+',\''+escHtml(t.nome)+'\',\''+escHtml(t.pages_url||'')+'\')" style="flex:1">'+
+            '<i class="fa-brands fa-cloudflare"></i> Deploy Pages</button>'+
           '<button class="btn bdng bsm" onclick="delTemplate('+t.id+')"><i class="fa-solid fa-trash"></i></button>'+
         '</div>'+
       '</div>';
@@ -1770,17 +1782,15 @@ function abrirNovoTemplate(){
     '<div class="fg"><label class="fl">Descrição</label>'+
       '<input class="fi" id="tDesc" placeholder="Breve descrição do template..."/>'+
     '</div>'+
-    '<div class="fg"><label class="fl">GitHub User/Org</label>'+
-      '<input class="fi" id="tGhUser" value="impersilvatech"/>'+
+    '<div style="background:rgba(246,130,31,.07);border:1px solid rgba(246,130,31,.2);border-radius:8px;padding:.7rem;margin-bottom:8px;font-size:.72rem;color:rgba(255,255,255,.6)">'+
+      '<i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> '+
+      'Depois de guardar, usa o botão <strong>Deploy Pages</strong> para carregar os ficheiros para o Cloudflare Pages.'+
     '</div>'+
-    '<div class="fg"><label class="fl">Repositório (nome)</label>'+
-      '<input class="fi" id="tGhRepo" placeholder="Ex: Loja, Pastelaria..."/>'+
+    '<div class="fg"><label class="fl">Pages URL <span style="color:var(--gr);font-size:.65rem">(se já existe)</span></label>'+
+      '<input class="fi" id="tPagesUrl" placeholder="https://impersilva-tpl-loja.pages.dev"/>'+
     '</div>'+
-    '<div class="fg"><label class="fl">Branch</label>'+
-      '<input class="fi" id="tGhBranch" value="main"/>'+
-    '</div>'+
-    '<div class="fg"><label class="fl">Ficheiros a copiar <span style="color:var(--gr);font-size:.65rem">(um por linha)</span></label>'+
-      '<textarea class="fi" id="tFicheiros" rows="5" style="resize:vertical">index.html\nadmin.html\nsw.js\nmanifest.json\nfavicon.svg</textarea>'+
+    '<div class="fg"><label class="fl">Ficheiros do template <span style="color:var(--gr);font-size:.65rem">(um por linha)</span></label>'+
+      '<textarea class="fi" id="tFicheiros" rows="5" style="resize:vertical">index.html\ncatalogo.html\nproduto.html\ncarrinho.html\ncheckout.html\nconfirmacao.html\nconta.html\nsobre.html\nrastrear.html\npromocoes.html\npersonalizado.html\nwishlist.html\nsw.js\nmanifest.json\nfavicon.svg</textarea>'+
     '</div>'+
     '<button class="btn bblue" style="width:100%;margin-top:8px" onclick="salvarTemplate()">'+
       '<i class="fa-solid fa-floppy-disk"></i> Guardar Template'+
@@ -1797,11 +1807,11 @@ async function salvarTemplate(){
   var ghBranch = ((document.getElementById('tGhBranch')||{}).value||'main').trim();
   var ficheiros= ((document.getElementById('tFicheiros')||{}).value||'').split('\n').map(function(f){return f.trim();}).filter(Boolean);
 
+  var pagesUrl = ((document.getElementById('tPagesUrl')||{}).value||'').trim();
   if(!nome){ toast('Nome é obrigatório','error'); return; }
-  if(!ghRepo){ toast('Repositório é obrigatório','error'); return; }
 
   try {
-    var res = await wPost('/api/admin/templates', { nome, tipo, descricao, gh_user: ghUser, gh_repo: ghRepo, gh_branch: ghBranch, ficheiros: JSON.stringify(ficheiros) });
+    var res = await wPost('/api/admin/templates', { nome, tipo, descricao, gh_user: 'impersilvatech', gh_repo: nome.toLowerCase().replace(/[^a-z0-9]/g,'-'), gh_branch: 'main', ficheiros: JSON.stringify(ficheiros), pages_url: pagesUrl });
     if(res.erro) throw new Error(res.erro);
     closeModal();
     toast('Template guardado!','success');
@@ -2195,7 +2205,7 @@ function rConfig() {
       '</div>'+
       '<div class="cf-tbl">'+renderCfAccounts()+'</div>'+
       '<div style="font-size:.65rem;color:var(--gr);margin-top:10px;line-height:1.6">'+
-        '<i class="fa-solid fa-circle-info" style="color:#f6821f"></i> Token: My Profile → API Tokens → Create Token → <strong>Workers Scripts:Edit</strong> + <strong>D1:Edit</strong>'+
+        '<i class="fa-solid fa-circle-info" style="color:#f6821f"></i> Token: My Profile → API Tokens → Create Token → <strong>Workers Scripts:Edit</strong> + <strong>D1:Edit</strong> + <strong>Cloudflare Pages:Edit</strong>'+
       '</div>'+
     '</div>'+
     '<div class="card">'+
@@ -2486,7 +2496,7 @@ function abrirAddCfAccount(editIdx) {
       '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Dashboard → lado direito</div></div>'+
     '<div class="fg"><label class="fl">API Token</label>'+
       '<input class="fi" type="password" id="cfmToken" value="'+escHtml(existing?existing.api_token||'':'')+'" placeholder="...">'+
-      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Permissões: Workers Scripts:Edit + D1:Edit</div></div>'+
+      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Permissões: Workers Scripts:Edit + D1:Edit + Pages:Edit</div></div>'+
     '<div class="fg"><label class="fl">Email da conta Cloudflare</label>'+
       '<input class="fi" id="cfmEmail" type="email" value="'+escHtml(existing?existing.email||'':'')+'" placeholder="email@exemplo.com">'+
       '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Para identificar de qual conta é</div></div>'+
@@ -2944,38 +2954,16 @@ async function rFinancas() {
       '<button class="btn bred" onclick="rFinancas()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
       '<button class="btn bblue" onclick="openFinModal()"><i class="fa-solid fa-plus"></i> Novo Registo</button>'+
     '</div>'+
-    '<div id="finChart" style="margin-bottom:1rem"></div>'+
+    '<div id="finStats" style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem"></div>'+
     '<div id="finL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
   try {
     var data = await wGet('/api/admin/financas');
     var total = data.reduce(function(s,f){ return s + (f.valor||0); }, 0);
     var pago = data.filter(function(f){ return f.estado==='pago'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
     var pend = data.filter(function(f){ return f.estado==='pendente'; }).reduce(function(s,f){ return s + (f.valor||0); }, 0);
-    // Donut + stats
-    var nPago = data.filter(function(f){return f.estado==='pago';}).length;
-    var nPend = data.filter(function(f){return f.estado==='pendente';}).length;
-    var canc  = data.filter(function(f){return f.estado==='cancelado';}).reduce(function(s,f){return s+(f.valor||0);},0);
-    var nCanc = data.filter(function(f){return f.estado==='cancelado';}).length;
-    var total = pago + pend + canc;
-    var chartEl = document.getElementById('finChart');
-    if (chartEl) {
-      var segs = [];
-      if (pago) segs.push({v:pago, c:'var(--grn)', l:'Recebido ('+nPago+')', val:formatKz(pago)});
-      if (pend) segs.push({v:pend, c:'var(--amb)', l:'Pendente ('+nPend+')', val:formatKz(pend)});
-      if (canc) segs.push({v:canc, c:'var(--red)', l:'Cancelado ('+nCanc+')', val:formatKz(canc)});
-      var legendHtml = segs.map(function(s){
-        return '<div class="chart-leg-item">'+
-          '<div class="chart-leg-dot" style="background:'+s.c+'"></div>'+
-          '<div class="chart-leg-lbl">'+s.l+'</div>'+
-          '<div class="chart-leg-val">'+s.val+'</div>'+
-        '</div>';
-      }).join('');
-      chartEl.innerHTML = '<div class="card"><div class="chart-wrap">'+
-        svgDonut(segs,100,18)+
-        '<div class="chart-legend">'+legendHtml+
-          '<div style="margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--div);font-size:.7rem;color:var(--gr)">Total: <strong style="color:var(--wh)">'+formatKz(total)+'</strong></div>'+
-        '</div></div></div>';
-    }
+    document.getElementById('finStats').innerHTML =
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--grn)">'+formatKz(pago)+'</div><div class="sl">Recebido ('+data.filter(function(f){return f.estado==="pago";}).length+')</div></div>'+
+      '<div class="sc"><div class="sn" style="font-size:1.1rem;color:var(--amb)">'+formatKz(pend)+'</div><div class="sl">Pendente ('+data.filter(function(f){return f.estado==="pendente";}).length+')</div></div>';
     var el = document.getElementById('finL');
     if (!data.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-chart-line"></i><p>Sem registos financeiros ainda</p></div>'; return; }
     var html = '';
@@ -3072,7 +3060,7 @@ async function pagarFinanca(id) {
 }
 async function delFinanca(id) {
   if (!confirm('Apagar este registo?')) return;
-  try { await wDel('/api/admin/financas/'+id); toast('Registo apagado','success'); notify('Apagado','Registo financeiro removido.','info'); rFinancas(); }
+  try { await wDel('/api/admin/financas/'+id); toast('Apagado'); rFinancas(); }
   catch(e) { toast('Erro: '+e.message,'error'); }
 }
 function enviarNotifFinanca(cliId, desc, valor) {
