@@ -1217,19 +1217,15 @@ function abrirCriarSite() {
     }
 
     // Seletor de conta CF (da BD, não localStorage)
-    var contaOpts = '';
-    if(contas.length){
-      contas.forEach(function(c){
-        contaOpts += '<option value="'+escHtml(c.account_id)+'|'+escHtml(c.api_token)+'">'+
-          escHtml(c.nome)+' · '+c.account_id.slice(0,8)+'… ('+c.sites_actuais+'/'+c.limite_sites+' sites)'+
-        '</option>';
-      });
-    }
-    var contaBlock = contas.length
+    var contaOpts = contas.length
       ? '<div class="fg"><label class="fl"><i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> Conta Cloudflare</label>'+
           '<select class="fi" id="csConta">'+
             '<option value="">— Automático (menos sites) —</option>'+
-            contaOpts+
+            contas.map(function(c){
+              return '<option value="'+escHtml(c.account_id)+'">'+
+                escHtml(c.nome)+' · '+c.account_id.slice(0,8)+'… ('+c.sites_actuais+'/'+c.limite_sites+' sites)'+
+              '</option>';
+            }).join('')+
           '</select>'+
         '</div>'
       : '<div style="background:rgba(246,130,31,.07);border:1px solid rgba(246,130,31,.2);border-radius:8px;padding:.6rem .8rem;font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:8px">'+
@@ -1337,11 +1333,9 @@ async function executarCriarSite(){
   var clienteId   = (document.getElementById('csCliente')||{}).value||'';
 
   // Conta CF (da BD, selecionada pelo user ou automática)
-  var contaEl  = document.getElementById('csConta');
-  var contaVal = contaEl ? (contaEl.value||'') : '';
-  var contaParts       = contaVal.split('|');
-  var cf_account_id    = contaParts[0]||'';
-  var cf_api_token     = contaParts[1]||'';
+  var contaEl      = document.getElementById('csConta');
+  var cf_account_id = contaEl ? (contaEl.value||'').trim() : '';
+  // token NÃO passa pelo browser — worker busca na BD pelo account_id
 
   if(!templateVal||templateVal.indexOf('|')<0){ csErro('Selecciona um template'); return; }
   if(!nome){ csErro('Nome do site é obrigatório'); return; }
@@ -1365,18 +1359,14 @@ async function executarCriarSite(){
       template_id: tId || null,
       cliente_id: clienteId || null
     };
-    if(cf_account_id && cf_api_token){
-      payload.cf_account_id  = cf_account_id;
-      payload.cf_api_token   = cf_api_token;
-    }
+    if(cf_account_id) payload.cf_account_id = cf_account_id;
+    // token NÃO é enviado — worker busca na BD
     var res = await wPost('/api/admin/sites/criar-pages', payload);
     if(res.erro) throw new Error(res.erro);
 
     // ── 2. Cloudflare: criar D1 + clonar Worker (se credenciais) ──
     var cfOk = false, cfDbId = '', cfDbName = '', cfWorkerUrl = '', cfErr = '';
-    var cfAcc = cf_account_id
-      ? { account_id: cf_account_id, api_token: cf_api_token }
-      : (_cfActiveAcc || null);
+    var cfAcc = cf_account_id ? { account_id: cf_account_id } : (_cfActiveAcc || null);
 
     if (cfAcc && cfAcc.account_id && cfAcc.api_token) {
       _cfActiveAcc = cfAcc;
@@ -1579,10 +1569,11 @@ function abrirUploadTemplate(templateId, templateNome, pagesUrlActual) {
 
   wGet('/api/admin/contas').then(function(contas){
     var accOpts = (contas||[]).map(function(c){
-      return '<option value="'+escHtml(c.account_id)+'|'+escHtml(c.api_token)+'">'+
+      // Só passar account_id — token fica no servidor
+      return '<option value="'+escHtml(c.account_id)+'">'+
         escHtml(c.nome)+' · '+c.account_id.slice(0,8)+'…</option>';
     }).join('');
-    if(!accOpts) accOpts = '<option value="">— Sem contas CF configuradas —</option>';
+    if (!accOpts) accOpts = '<option value="">— Sem contas CF configuradas —</option>';
 
     openModal(
       '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
@@ -1623,17 +1614,13 @@ async function salvarUploadTemplate(templateId) {
   var err  = document.getElementById('upErr');
   if(err) err.style.display = 'none';
 
-  var pages_slug = ((document.getElementById('upSlug')||{}).value||'').trim();
-  var contaVal   = ((document.getElementById('upCfAcc')||{}).value||'');
-  var fileInput  = document.getElementById('upFiles');
+  var pages_slug    = ((document.getElementById('upSlug')||{}).value||'').trim();
+  var cf_account_id = ((document.getElementById('upCfAcc')||{}).value||'').trim();
+  var fileInput     = document.getElementById('upFiles');
 
   if(!pages_slug) { if(err){err.textContent='Nome do projecto obrigatório';err.style.display='block';} return; }
   if(!fileInput || !fileInput.files.length) { if(err){err.textContent='Selecciona pelo menos um ficheiro';err.style.display='block';} return; }
-  if(!contaVal || !contaVal.includes('|')) { if(err){err.textContent='Selecciona uma conta Cloudflare';err.style.display='block';} return; }
-
-  var cParts = contaVal.split('|');
-  var cf_account_id = cParts[0];
-  var cf_api_token  = cParts[1];
+  if(!cf_account_id) { if(err){err.textContent='Selecciona uma conta Cloudflare';err.style.display='block';} return; }
 
   if(btn) btnLoad(btn, 'A ler ficheiros...');
   if(prog) { prog.style.display='block'; prog.textContent='A ler '+fileInput.files.length+' ficheiro(s)...'; }
@@ -1662,8 +1649,7 @@ async function salvarUploadTemplate(templateId) {
     var res = await wPost('/api/admin/templates/upload-pages', {
       nome: tplObj ? tplObj.nome : pages_slug,
       pages_slug,
-      cf_account_id,
-      cf_api_token,
+      cf_account_id,   // worker busca o token na BD pelo account_id
       files,
       template_id: templateId || null
     });
