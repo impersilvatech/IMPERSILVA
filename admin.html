@@ -2205,6 +2205,7 @@ async function carregarContasCF() {
           '<div style="display:flex;gap:5px">'+
             // BUG FIX: não passar token no onclick — usar data-id e buscar via API
             '<button class="btn bgh bsm" data-cfid="'+c.id+'" onclick="testContaCF(this)"><i class="fa-solid fa-plug"></i></button>'+
+            '<button class="btn bgh bsm" data-cfid="'+c.id+'" onclick="diagPages(this)" style="color:#f6821f" title="Diagnóstico Pages"><i class="fa-brands fa-cloudflare"></i></button>'+
             '<button class="btn bgh bsm" data-cfid="'+c.id+'" onclick="abrirEditContaCF(this)" style="color:var(--blu2)"><i class="fa-solid fa-pen"></i></button>'+
             '<button class="btn bgh bsm" onclick="deletarContaCF('+c.id+',\''+escHtml(c.nome)+'\')" style="color:var(--red)"><i class="fa-solid fa-trash"></i></button>'+
           '</div>'+
@@ -2301,7 +2302,40 @@ async function deletarContaCF(id, nome) {
 }
 
 // BUG FIX: testContaCF recebe o botão e busca o token via cfProxy (não inline)
-async function testContaCF(btnEl) {
+async function diagPages(btnEl) {
+  var id = parseInt(btnEl.getAttribute('data-cfid'));
+  btnLoad(btnEl, '...');
+  try {
+    var contas = await wGet('/api/admin/contas');
+    var c = contas.find(function(x){ return x.id === id; });
+    if(!c){ btnReset(btnEl); toast('Conta não encontrada','error'); return; }
+
+    // Pedir nome do projecto de teste
+    var proj = prompt('Nome do Pages project para testar (deve existir na CF):', 'impersilva-tpl-loja');
+    if(!proj){ btnReset(btnEl); return; }
+
+    var res = await wPost('/api/admin/pages/diagnostico', {
+      cf_account_id: c.account_id,
+      project_name: proj
+    });
+    btnReset(btnEl);
+
+    // Mostrar resultados completos
+    openModal(
+      '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+      '<div class="mtit">Diagnóstico <span style="color:#f6821f">Pages API</span></div>'+
+      '<div style="font-size:.72rem;color:var(--gr);margin-bottom:10px">Hash: '+escHtml(res.hash||'')+'</div>'+
+      (res.resultados||[]).map(function(r){
+        var ok = r.status===200||r.status===201||(r.resposta&&r.resposta.includes('"success":true'));
+        return '<div style="background:rgba(255,255,255,.03);border:1px solid '+(ok?'#4ade80':'#f87171')+';border-radius:8px;padding:.7rem;margin-bottom:8px">'+
+          '<div style="font-size:.75rem;font-weight:700;color:'+(ok?'#4ade80':'#f87171')+'">'+escHtml(r.formato)+' — HTTP '+r.status+'</div>'+
+          '<pre style="font-size:.6rem;color:var(--gr);white-space:pre-wrap;margin-top:4px;word-break:break-all">'+escHtml(r.resposta||r.erro||'')+'</pre>'+
+        '</div>';
+      }).join('')+
+      '<button class="btn bgh" style="width:100%;margin-top:8px" onclick="closeModal()">Fechar</button>'
+    );
+  } catch(e) { btnReset(btnEl); toast('Erro: '+e.message,'error'); }
+}
   var id = parseInt(btnEl.getAttribute('data-cfid'));
   if(btnEl) btnLoad(btnEl,'...');
   try {
