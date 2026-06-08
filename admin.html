@@ -2336,6 +2336,8 @@ async function diagPages(btnEl) {
     );
   } catch(e) { btnReset(btnEl); toast('Erro: '+e.message,'error'); }
 }
+
+async function testContaCF(btnEl) {
   var id = parseInt(btnEl.getAttribute('data-cfid'));
   if(btnEl) btnLoad(btnEl,'...');
   try {
