@@ -1636,6 +1636,10 @@ async function salvarUploadTemplate(templateId) {
       var content = await lerFicheiro(f);
       files.push({ path: '/' + f.name, content: content, contentType: TIPOS[ext] || 'text/plain' });
     }
+    // Injectar _redirects automaticamente (SPA routing na Cloudflare Pages)
+    if (!files.some(function(f){ return f.path === '/_redirects'; })) {
+      files.push({ path: '/_redirects', content: '/* /index.html 200', contentType: 'text/plain' });
+    }
   } catch(e) {
     if(err){err.textContent='Erro ao ler ficheiros: '+e.message;err.style.display='block';}
     if(btn) btnReset(btn); return;
