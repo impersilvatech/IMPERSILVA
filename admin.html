@@ -1659,9 +1659,10 @@ async function salvarUploadTemplate(templateId) {
     });
     if(res.erro) throw new Error(res.erro);
     if(btn) btnOk(btn, '✅ Deploy OK!');
-    if(prog) prog.textContent = 'Deployment ID: '+(res.deployment_id||'—');
-    toast('Template publicado em '+res.pages_url+'!', 'success');
-    setTimeout(function(){ closeModal(); rTemplates(); }, 1200);
+    var debugInfo = 'Ficheiros: ' + (res._debug_ficheiros||'?') + ' | Keys: ' + (res._debug_manifest_keys ? res._debug_manifest_keys.join(', ') : '?') + ' | URL: ' + (res._debug_url||'?');
+    if(prog) { prog.style.whiteSpace='pre-wrap'; prog.textContent = debugInfo; }
+    if(err) { err.style.display='block'; err.style.background='rgba(0,200,0,.1)'; err.style.color='#4ade80'; err.textContent = debugInfo; }
+    toast('Deploy OK - ver detalhes no ecra', 'success');
   } catch(e) {
     if(btn) btnReset(btn);
     if(err){err.textContent='Erro: '+e.message;err.style.display='block';}
