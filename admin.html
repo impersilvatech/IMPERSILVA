@@ -1086,12 +1086,30 @@ function shareCli(id) {
 
 var _sitesList = [];
 
+async function fixTodosRedirects(btn) {
+  if (!confirm('Vai corrigir o _redirects em TODOS os sites. Continuar?')) return;
+  btnLoad(btn, 'A corrigir...');
+  try {
+    const res = await wPost('/api/admin/sites/fix-redirects', {});
+    btnOk(btn, '✅ ' + res.total + ' corrigidos');
+    if (res.errors && res.errors.length) {
+      toast('Erros em: ' + res.errors.map(e => e.site).join(', '), 'erro');
+    } else {
+      toast('Redirects corrigidos em ' + res.total + ' sites. O Pages vai fazer novo deploy automaticamente.', 'ok');
+    }
+  } catch(e) {
+    btnReset(btn);
+    toast('Erro: ' + e.message, 'erro');
+  }
+}
+
 async function rSites() {
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Sites <span class="r">Activos</span></div><div class="ps">Sites criados via Cloudflare Pages</div></div>'+
     '<div class="brow">'+
       '<button class="btn bred" onclick="rSites()"><i class="fa-solid fa-rotate"></i> Actualizar</button>'+
       '<button class="btn bblue" onclick="abrirCriarSite()"><i class="fa-solid fa-plus"></i> Novo Site</button>'+
+      '<button class="btn" style="background:#b45309" onclick="fixTodosRedirects(this)"><i class="fa-solid fa-wrench"></i> Fix Redirects</button>'+
     '</div>'+
     '<div id="sitesL"><div class="load"><div class="spin"></div> A carregar...</div></div>';
 
