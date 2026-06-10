@@ -350,7 +350,6 @@ input:checked+.tsl::before{transform:translateX(16px)}
 
 <script>
 var API = 'https://impersilva-ao.3miliosilva.workers.dev';
-var SITEURL = location.origin + location.pathname.replace(/\/[^\/]*$/, '');
 var GITLAB_NAMESPACE = 'impersilvatech';
 var _glImgProjectId = localStorage.getItem('imp_gl_img_pid')||'';
 var _tok = '';
@@ -431,6 +430,20 @@ async function wDel(path) {
 }
 
 /* GITHUB */
+async function glUpload(file, pasta, projectId) {
+  if(!projectId) throw new Error('GitLab Image Project ID não configurado. Vai a Configurações → GitLab.');
+  var ext = file.name.split('.').pop().toLowerCase();
+  var fname = (pasta||'img')+'-'+Date.now()+'.'+ext;
+  var b64 = await new Promise(function(res,rej){
+    var fr = new FileReader(); fr.onload = function(){ res(fr.result.split(',')[1]); }; fr.onerror = rej; fr.readAsDataURL(file);
+  });
+  var res = await wPost('/api/admin/gitlab/imagens', {
+    project_id: parseInt(projectId), pasta: pasta||'imagens', filename: fname, content_base64: b64, mime_type: file.type||'image/jpeg'
+  });
+  if(res.erro) throw new Error(res.erro);
+  return res.url;
+}
+
 
 /* TOAST */
 function toast(msg, type) {
@@ -573,7 +586,7 @@ async function doUpload(fileInputId, folder, urlInputId, progWrapId, progFillId,
   var pg=document.getElementById(progWrapId), fill=document.getElementById(progFillId), txt=document.getElementById(progTxtId);
   if(pg) pg.style.display='block';
   if(fill) fill.style.width='40%';
-  if(txt) txt.textContent='A enviar para GitHub...';
+  if(txt) txt.textContent='A enviar para GitLab...';
   try {
     var url = await glUpload(file, folder, _glImgProjectId);
     if(fill) fill.style.width='100%';
@@ -993,8 +1006,7 @@ function openCliModal(id) {
       '<div class="fg"><label class="fl">Previsão</label><input class="fi" id="cPrevisao" value="'+(c?c.previsao||'':'')+'" placeholder="Maio 2025"></div>'+
     '</div>'+
     '<div class="fg"><label class="fl">Notas Internas</label><textarea class="fi" id="cNotas">'+(c?c.notas||'':'')+'</textarea></div>'+
-    '<div style="background:rgba(29,78,216,.06);border:1px solid rgba(29,78,216,.15);border-radius:10px;padding:.85rem;margin-bottom:.85rem">'+
-      '<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blu2);margin-bottom:.75rem"><i class="fa-brands fa-github"></i> GitHub — Admin do Site do Cliente</div>'+
+    '<div style="display:none">'+
       '<div class="fg"><label class="fl">GitHub Token (PAT)</label><input class="fi" type="password" id="cGhToken" value="'+(c?c.gh_token||'':'')+'" placeholder="ghp_xxxxxxxxxxxx"></div>'+
       '<div class="grid2">'+
         '<div class="fg"><label class="fl">Utilizador</label><input class="fi" id="cGhUser" value="'+(c?c.gh_user||'':'')+'" placeholder="username"></div>'+
@@ -1037,7 +1049,10 @@ async function saveCli(eid) {
     previsao:document.getElementById('cPrevisao').value.trim(),
     notas:document.getElementById('cNotas').value.trim(),
     activo:document.getElementById('cActivo').checked?1:0,
-    gh_token: null, gh_user: null, gh_repo: null, gh_branch: 'main',
+    gh_token:document.getElementById('cGhToken').value.trim()||null,
+    gh_user:document.getElementById('cGhUser').value.trim()||null,
+    gh_repo:document.getElementById('cGhRepo').value.trim()||null,
+    gh_branch:document.getElementById('cGhBranch').value.trim()||'main',
     loja_token:document.getElementById('cLojaToken')?document.getElementById('cLojaToken').value.trim()||null:null
   };
   if(!data.id||!data.nome){toast('Código e nome são obrigatórios','error');return;}
@@ -1186,7 +1201,7 @@ function abrirCriarSite() {
     var tOpts = '';
     if(templates.length){
       templates.forEach(function(t){
-        var hasPages = !!(t.gitlab_repo_id || t.gitlab_slug); // V5: publicado se tem gitlab
+        var hasPages = !!(t.gitlab_repo_id || t.gitlab_slug);
         tOpts += '<option value="'+t.id+'|'+(t.gitlab_repo_id||'')+'"'+(hasPages?'':' disabled')+'>'+
           escHtml(t.nome)+(hasPages?'':' (sem Pages URL)')+
         '</option>';
@@ -1324,7 +1339,7 @@ async function executarCriarSite(){
   var tId       = tParts[0]||'';
   var tPagesUrl = tParts[1]||'';
 
-  if(!tPagesUrl){ csErro('O template selecionado ainda não foi publicado no GitLab. Vai a Templates → Publicar GitLab primeiro.'); return; }
+  if(!tPagesUrl){ csErro('O template ainda não foi publicado no GitLab. Vai a Templates → Publicar GitLab primeiro.'); return; }
 
   var btn = document.querySelector('#mb .btn.bblue');
   if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar...'; btn.disabled=true; }
@@ -1334,7 +1349,7 @@ async function executarCriarSite(){
     if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar Pages...';
     var payload = {
       nome, slug,
-      template_gitlab_id: tPagesUrl, // V5: agora é o gitlab_repo_id
+      template_gitlab_id: tPagesUrl,
       template_id: tId || null,
       cliente_id: clienteId || null
     };
@@ -1543,85 +1558,52 @@ function lerFicheiro(file) {
 
 // ── Modal upload de ficheiros para Cloudflare Pages ──
 function abrirPublicarGitLab(templateId, templateNome, gitlabSlugActual) {
-  var slugSugerido = gitlabSlugActual || ('impersilva-tpl-' + (templateNome||'loja').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''));
+  var slugSugerido = gitlabSlugActual || ('impersilva-tpl-'+(templateNome||'loja').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''));
   openModal(
     '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
     '<div class="mtit">Publicar no <span style="color:#fc6d26">GitLab</span></div>'+
-    '<div style="font-size:.75rem;color:var(--gr);margin-bottom:12px">'+
-      'Carrega os ficheiros do template para um repositório privado no GitLab.<br>'+
-      'O Cloudflare Pages ligará ao repositório via Git para criar sites.'+
-    '</div>'+
+    '<div style="font-size:.75rem;color:var(--gr);margin-bottom:12px">Carrega os ficheiros do template para um repositório privado no GitLab.</div>'+
     '<div class="fg"><label class="fl">Nome do Repositório GitLab</label>'+
-      '<input class="fi" id="glSlug" value="'+escHtml(slugSugerido)+'" placeholder="impersilva-tpl-loja" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,\'\')">'+
+      '<input class="fi" id="glSlug" value="'+escHtml(slugSugerido)+'" placeholder="impersilva-tpl-loja" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,\'\'); document.getElementById(\'glSlugPrev\').textContent=this.value||'+"'slug'"+' ;">'+
       '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Ficará em: <b>gitlab.com/impersilvatech/<span id="glSlugPrev">'+escHtml(slugSugerido)+'</span></b></div>'+
     '</div>'+
     '<div class="fg">'+
       '<label class="fl">Ficheiros <span style="color:var(--gr);font-size:.65rem">(selecciona todos os ficheiros do template)</span></label>'+
-      '<input type="file" id="glFiles" multiple accept=".html,.js,.json,.svg,.css,.txt,._redirects" '+
-        'style="width:100%;padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:8px;color:var(--wh);font-size:.8rem">'+
+      '<input type="file" id="glFiles" multiple accept=".html,.js,.json,.svg,.css,.txt" style="width:100%;padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:8px;color:var(--wh);font-size:.8rem">'+
     '</div>'+
     '<div id="glProgress" style="display:none;font-size:.72rem;color:var(--gr);padding:8px 0"></div>'+
     '<div id="glErr" style="display:none;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171;margin-top:6px"></div>'+
     '<button class="btn bblue" id="btnGlPublish" style="width:100%;margin-top:10px;background:#fc6d26" onclick="salvarPublicarGitLab('+templateId+')">'+
-      '<i class="fa-brands fa-gitlab"></i> Publicar no GitLab'+
-    '</button>'
+      '<i class="fa-brands fa-gitlab"></i> Publicar no GitLab</button>'
   );
-  var slugEl = document.getElementById('glSlug');
-  if(slugEl) slugEl.addEventListener('input', function(){
-    var prev = document.getElementById('glSlugPrev');
-    if(prev) prev.textContent = this.value.trim() || 'slug';
-  });
 }
-
 async function salvarPublicarGitLab(templateId) {
-  var btn  = document.getElementById('btnGlPublish');
-  var prog = document.getElementById('glProgress');
-  var err  = document.getElementById('glErr');
-  if(err) err.style.display = 'none';
-
-  var gitlab_slug = ((document.getElementById('glSlug')||{}).value||'').trim();
-  var fileInput   = document.getElementById('glFiles');
-
+  var btn=document.getElementById('btnGlPublish'), prog=document.getElementById('glProgress'), err=document.getElementById('glErr');
+  if(err) err.style.display='none';
+  var gitlab_slug=((document.getElementById('glSlug')||{}).value||'').trim();
+  var fileInput=document.getElementById('glFiles');
   if(!gitlab_slug){ if(err){err.textContent='Nome do repositório obrigatório';err.style.display='block';} return; }
-  if(!fileInput || !fileInput.files.length){ if(err){err.textContent='Selecciona pelo menos um ficheiro';err.style.display='block';} return; }
-
-  if(btn) btnLoad(btn, 'A ler ficheiros...');
-  if(prog){ prog.style.display='block'; prog.textContent='A ler '+fileInput.files.length+' ficheiro(s)...'; }
-
-  var TIPOS = { html:'text/html', js:'application/javascript', json:'application/json', svg:'image/svg+xml', css:'text/css', txt:'text/plain' };
-  var files = [];
+  if(!fileInput||!fileInput.files.length){ if(err){err.textContent='Selecciona pelo menos um ficheiro';err.style.display='block';} return; }
+  if(btn) btnLoad(btn,'A ler ficheiros...');
+  if(prog){prog.style.display='block';prog.textContent='A ler '+fileInput.files.length+' ficheiro(s)...';}
+  var TIPOS={html:'text/html',js:'application/javascript',json:'application/json',svg:'image/svg+xml',css:'text/css',txt:'text/plain'};
+  var files=[];
   try {
-    for(var i = 0; i < fileInput.files.length; i++){
-      var f = fileInput.files[i];
-      var ext = f.name.split('.').pop().toLowerCase();
-      var content = await lerFicheiro(f);
-      files.push({ path: f.name, content: content, contentType: TIPOS[ext]||'text/plain' });
+    for(var i=0;i<fileInput.files.length;i++){
+      var f=fileInput.files[i], ext=f.name.split('.').pop().toLowerCase(), content=await lerFicheiro(f);
+      files.push({path:f.name,content:content,contentType:TIPOS[ext]||'text/plain'});
     }
-  } catch(e){
-    if(err){err.textContent='Erro ao ler ficheiros: '+e.message;err.style.display='block';}
-    if(btn) btnReset(btn); return;
-  }
-
-  if(prog) prog.textContent = 'A publicar '+files.length+' ficheiro(s) no GitLab...';
-  if(btn) btnLoad(btn, 'A publicar...');
-
+  } catch(e){ if(err){err.textContent='Erro ao ler: '+e.message;err.style.display='block';} if(btn)btnReset(btn); return; }
+  if(prog) prog.textContent='A publicar '+files.length+' ficheiro(s) no GitLab...';
+  if(btn) btnLoad(btn,'A publicar...');
   try {
-    var tplObj = _templatesList && _templatesList.find(function(t){return t.id===templateId;});
-    var res = await wPost('/api/admin/templates/publicar-gitlab', {
-      template_id: templateId || null,
-      gitlab_slug: gitlab_slug,
-      files: files,
-      nome: tplObj ? tplObj.nome : gitlab_slug
-    });
+    var res=await wPost('/api/admin/templates/publicar-gitlab',{template_id:templateId||null,gitlab_slug:gitlab_slug,files:files});
     if(res.erro) throw new Error(res.erro);
-    if(btn) btnOk(btn, '✅ Publicado!');
-    if(prog) prog.textContent = res.ficheiros_publicados+' ficheiros publicados em gitlab.com/impersilvatech/'+gitlab_slug;
-    toast('Template publicado no GitLab!', 'success');
-    setTimeout(function(){ closeModal(); rTemplates(); }, 1500);
-  } catch(e){
-    if(btn) btnReset(btn);
-    if(err){err.textContent='Erro: '+e.message;err.style.display='block';}
-  }
+    if(btn) btnOk(btn,'✅ Publicado!');
+    if(prog) prog.textContent=res.ficheiros_publicados+' ficheiros publicados em gitlab.com/impersilvatech/'+gitlab_slug;
+    toast('Template publicado no GitLab!','success');
+    setTimeout(function(){closeModal();rTemplates();},1500);
+  } catch(e){ if(btn)btnReset(btn); if(err){err.textContent='Erro: '+e.message;err.style.display='block';} }
 }
 
 async function rTemplates(){
@@ -1644,7 +1626,7 @@ async function rTemplates(){
     var html = '<div style="display:flex;flex-direction:column;gap:10px">';
     _templatesList.forEach(function(t){
       var cor = {loja:'#a78bfa',restaurante:'#f97316',portfolio:'#38bdf8',servicos:'#4ade80',pastelaria:'#fb923c'}[t.tipo||'loja']||'#a78bfa';
-      var hasPages = !!(t.gitlab_repo_id || t.gitlab_slug); // V5: publicado se tem gitlab
+      var hasPages = !!(t.gitlab_repo_id || t.gitlab_slug);
       html += '<div class="cc" style="border-left:3px solid '+cor+'">'+
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
           '<div>'+
@@ -2076,7 +2058,7 @@ async function rConfig() {
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Configu<span class="r">rações</span></div></div>'+
     '<div class="card">'+
-      '<div class="ct"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i> GitLab — Upload de Imagens &amp; Templates</div>'+
+      '<div class="ct"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i> GitLab — Imagens &amp; Templates</div>'+
       '<div class="fg"><label class="fl">Personal Access Token</label>'+
         '<input class="fi" type="password" id="cfGlTok" value="'+_gltok+'" placeholder="glpat-xxxxxxxxxxxxxxxxxxxx">'+
         '<div style="background:rgba(252,109,38,.06);border:1px solid rgba(252,109,38,.2);border-radius:8px;padding:.75rem;margin-top:.5rem;font-size:.73rem;color:rgba(255,255,255,.55);line-height:1.6">'+
@@ -2085,14 +2067,14 @@ async function rConfig() {
       '</div>'+
       '<div class="fg"><label class="fl">Project ID — Repositório de Imagens</label>'+
         '<input class="fi" id="cfGlImgPid" value="'+_glImgProjectId+'" placeholder="Ex: 12345678">'+
-        '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">ID do projecto GitLab onde ficam as imagens (impersilva-imagens). Podes criar em GitLab → Novo Projecto, depois copiar o ID.</div>'+
+        '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">ID do projecto GitLab para imagens (impersilva-imagens)</div>'+
       '</div>'+
       '<div style="display:flex;gap:.6rem">'+
         '<button class="btn bred" style="flex:1" onclick="saveGlConfig()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
         '<button class="btn bgh" onclick="testGlConfig()"><i class="fa-solid fa-plug"></i> Testar</button>'+
       '</div>'+
       '<div id="glConfigErr" style="display:none;margin-top:8px;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171"></div>'+
-    '</div>'+
+    '</div>'+'</div>'+
     '<div class="card">'+
       '<div class="ct"><i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> Worker Template Central</div>'+
       '<div style="font-size:.72rem;color:var(--gr);margin-bottom:10px;line-height:1.5">'+
@@ -2333,24 +2315,17 @@ async function testGlConfig() {
   if(btn) btnLoad(btn, 'A testar...');
   if(errEl) errEl.style.display='none';
   try {
-    var r = await fetch('https://gitlab.com/api/v4/user', {
-      headers:{'Authorization':'Bearer '+tk}
-    });
+    var r = await fetch('https://gitlab.com/api/v4/user', { headers:{'Authorization':'Bearer '+tk} });
     var d = await r.json();
-    if(r.ok && d.username){
-      if(btn) btnOk(btn,'OK!');
-      toast('GitLab ligado! Conta: '+d.username);
-    } else {
+    if(r.ok && d.username){ if(btn) btnOk(btn,'OK!'); toast('GitLab ligado! Conta: '+d.username); }
+    else {
       if(btn) btnReset(btn);
       var msg = d.message || 'Token inválido';
-      if(errEl){errEl.textContent=msg;errEl.style.display='block';}
-      else toast(msg,'error');
+      if(errEl){errEl.textContent=msg;errEl.style.display='block';} else toast(msg,'error');
     }
   } catch(e) {
     if(btn) btnReset(btn);
-    var msg2 = 'Erro: '+e.message;
-    if(errEl){errEl.textContent=msg2;errEl.style.display='block';}
-    else toast(msg2,'error');
+    if(errEl){errEl.textContent='Erro: '+e.message;errEl.style.display='block';} else toast('Erro: '+e.message,'error');
   }
 }
 
@@ -2900,7 +2875,6 @@ function removeMainPhoto(prefix) {
 }
 
 
-
 async function rFinancas() {
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Finan<span class="r">ças</span></div><div class="ps">Vendas, mensalidades e custos dos clientes</div></div>'+
@@ -3133,18 +3107,16 @@ async function desactivarUsr(id) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   LIMPEZA DE IMAGENS (GitLab)
+   LIMPEZA DE IMAGENS (GitHub)
 ══════════════════════════════════════════════════════════ */
-var _glFiles = [];
+var _ghFiles = [];
 async function rLimpeza() {
-  var body = '<div class="ph"><div class="pt">Lim<span class="r">peza</span></div><div class="ps">Gerir imagens no repositório GitLab</div></div>';
-  if (!_gltok) {
-    body += '<div class="card" style="border-color:rgba(252,109,38,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:#fc6d26;margin-right:.4rem"></i>GitLab Token não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
-  } else if(!_glImgProjectId) {
-    body += '<div class="card" style="border-color:rgba(252,109,38,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:#fc6d26;margin-right:.4rem"></i>Project ID de imagens não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
+  var body = '<div class="ph"><div class="pt">Lim<span class="r">peza</span></div><div class="ps">Gerir imagens no repositório GitHub</div></div>';
+  if (!_ghtok) {
+    body += '<div class="card" style="border-color:rgba(214,40,40,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);margin-right:.4rem"></i>GitHub Token não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
   } else {
-    body += '<div class="brow"><button class="btn bred" onclick="carregarImgsGL()"><i class="fa-solid fa-rotate"></i> Listar imagens</button></div>';
-    body += '<div id="glImgL"><div class="empty"><i class="fa-brands fa-gitlab" style="color:#fc6d26;font-size:2rem;margin-bottom:.8rem;display:block"></i><p>Clica em Listar imagens para ver os ficheiros</p></div></div>';
+    body += '<div class="brow"><button class="btn bred" onclick="carregarImgsGH()"><i class="fa-solid fa-rotate"></i> Listar imagens</button></div>';
+    body += '<div id="ghImgL"><div class="empty"><i class="fa-brands fa-github"></i><p>Clica em Listar imagens para ver os ficheiros</p></div></div>';
   }
   document.getElementById('mc').innerHTML = body;
 }
@@ -3156,89 +3128,54 @@ async function carregarImgsGL() {
   try {
     var data = await wGet('/api/admin/gitlab/imagens?project_id='+_glImgProjectId+'&pasta=imagens');
     _glFiles = Array.isArray(data) ? data.filter(function(f){ return f.type==='blob'; }) : [];
-    if (!_glFiles.length) {
-      el.innerHTML='<div class="empty"><i class="fa-brands fa-gitlab" style="color:#fc6d26;font-size:2rem;display:block;margin-bottom:.8rem"></i><p>Sem imagens na pasta /imagens</p></div>';
-      return;
-    }
-
-    // Verificar imagens em uso
+    if (!_glFiles.length) { el.innerHTML='<div class="empty"><i class="fa-brands fa-gitlab" style="color:#fc6d26;font-size:2rem;display:block;margin-bottom:.8rem"></i><p>Sem imagens em /imagens</p></div>'; return; }
     var usedUrls = new Set();
-    try {
-      var port = await wGet('/api/portfolio');
-      port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/').pop()); });
-    } catch(e2){}
-    try {
-      var eq = await wGet('/api/equipa');
-      eq.forEach(function(m){ if(m.foto) usedUrls.add(m.foto.split('/').pop()); });
-    } catch(e2){}
-
+    try { var port=await wGet('/api/portfolio'); port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/').pop()); }); } catch(e2){}
     var used   = _glFiles.filter(function(f){ return usedUrls.has(f.name); });
     var unused = _glFiles.filter(function(f){ return !usedUrls.has(f.name); });
-
-    var html2 = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
-      '<span class="badge bg"><i class="fa-solid fa-link"></i> '+used.length+' em uso</span>'+
-      '<span class="badge br"><i class="fa-solid fa-unlink"></i> '+unused.length+' não usadas</span>'+
-      '<span class="badge bgr">Total: '+_glFiles.length+'</span>'+
-    '</div>';
-
     var rawBase = 'https://gitlab.com/impersilvatech/impersilva-imagens/-/raw/main/imagens/';
-
+    var html2 = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
+      '<span class="badge bg"> '+used.length+' em uso</span>'+
+      '<span class="badge br"> '+unused.length+' não usadas</span>'+
+      '<span class="badge bgr">Total: '+_glFiles.length+'</span></div>';
     if (unused.length) {
-      html2 += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem">'+
-        '<div class="ct" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i> Não usadas ('+unused.length+')</div>';
+      html2 += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem"><div class="ct" style="color:var(--red)">Não usadas ('+unused.length+')</div>';
       unused.forEach(function(f) {
-        var idx = _glFiles.indexOf(f);
         var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
         html2 += '<div class="img-file">'+
-          (isImg ? '<img class="img-file-thumb" src="'+rawBase+f.name+'" alt="'+f.name+'" loading="lazy">' :
-            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
-          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div></div>'+
-          '<button class="btn bdng bsm" onclick="removerImgGL('+idx+')" title="Remover"><i class="fa-solid fa-trash"></i></button>'+
-        '</div>';
+          (isImg ? '<img class="img-file-thumb" src="'+rawBase+escHtml(f.name)+'" loading="lazy">' : '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+escHtml(f.name)+'</div></div>'+
+          '<button class="btn bdng bsm" onclick="removerImgGL('+_glFiles.indexOf(f)+')" title="Remover"><i class="fa-solid fa-trash"></i></button></div>';
       });
       html2 += '</div>';
     }
     if (used.length) {
-      html2 += '<div class="card"><div class="ct" style="color:var(--grn)"><i class="fa-solid fa-link"></i> Em uso ('+used.length+')</div>';
+      html2 += '<div class="card"><div class="ct" style="color:var(--grn)">Em uso ('+used.length+')</div>';
       used.forEach(function(f) {
         var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
         html2 += '<div class="img-file">'+
-          (isImg ? '<img class="img-file-thumb" src="'+rawBase+f.name+'" alt="'+f.name+'" loading="lazy">' :
-            '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
-          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div></div>'+
-          '<span class="badge bg bsm">em uso</span>'+
-        '</div>';
+          (isImg ? '<img class="img-file-thumb" src="'+rawBase+escHtml(f.name)+'" loading="lazy">' : '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-file"></i></div>')+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+escHtml(f.name)+'</div></div>'+
+          '<span class="badge bg bsm">em uso</span></div>';
       });
       html2 += '</div>';
     }
     el.innerHTML = html2;
-  } catch(e) {
-    el.innerHTML = '<div class="empty"><p>Erro ao carregar: '+e.message+'</p></div>';
-  }
+  } catch(e) { el.innerHTML = '<div class="empty"><p>Erro: '+e.message+'</p></div>'; }
 }
 async function removerImgGL(idx) {
-  var f = _glFiles[idx];
-  if (!f) return;
-  if (!confirm('Remover "'+f.name+'" do GitLab? Esta acção não pode ser desfeita.')) return;
+  var f = _glFiles[idx]; if (!f) return;
+  if (!confirm('Remover "'+f.name+'" do GitLab?')) return;
   try {
-    var res = await wPost('/api/admin/gitlab/imagens', { // Note: DELETE via wPost with _method
-      project_id: parseInt(_glImgProjectId),
-      file_path: 'imagens/' + f.name
-    });
-    // Actually use DELETE
     var r = await fetch(API+'/api/admin/gitlab/imagens', {
-      method: 'DELETE',
-      headers: {'Content-Type':'application/json','Authorization':_tok},
-      body: JSON.stringify({ project_id: parseInt(_glImgProjectId), file_path: 'imagens/'+f.name })
+      method:'DELETE', headers:{'Content-Type':'application/json','Authorization':_tok},
+      body: JSON.stringify({project_id:parseInt(_glImgProjectId), file_path:'imagens/'+f.name})
     });
     var d = await r.json();
-    if(d.erro) throw new Error(d.erro);
-    toast('"'+f.name+'" removido do GitLab');
-    _glFiles.splice(idx, 1);
-    carregarImgsGL();
+    if (d.erro) throw new Error(d.erro);
+    toast('"'+f.name+'" removido'); _glFiles.splice(idx,1); carregarImgsGL();
   } catch(e) { toast('Erro: '+e.message,'error'); }
 }
-
 // EXPOR funções para o HTML
 window.executarCriarSite = executarCriarSite;
 window.abrirCriarSite = abrirCriarSite;
