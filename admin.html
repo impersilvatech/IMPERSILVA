@@ -295,7 +295,7 @@ input:checked+.tsl::before{transform:translateX(16px)}
       <div class="sbi" onclick="go('financas',this)"><i class="fa-solid fa-chart-line"></i> Finanças</div>
       <div class="sbi" onclick="go('usuarios',this)"><i class="fa-solid fa-user-shield"></i> Utilizadores</div>
       <div class="sbi" onclick="go('notificacoes',this)"><i class="fa-solid fa-bell"></i> Notificações</div>
-      <div class="sbi" onclick="go('limpeza',this)"><i class="fa-brands fa-github"></i> Limpeza</div>
+      <div class="sbi" onclick="go('limpeza',this)"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i> Limpeza</div>
     </nav>
     <div class="sbf">
       <div class="sbfu">Administrador</div>
@@ -338,7 +338,7 @@ input:checked+.tsl::before{transform:translateX(16px)}
       <div class="mi" onclick="closeMore();go('config')"><i class="fa-solid fa-gear"></i>Config</div>
       <div class="mi" onclick="closeMore();go('financas')"><i class="fa-solid fa-chart-line"></i>Finanças</div>
       <div class="mi" onclick="closeMore();go('notificacoes')"><i class="fa-solid fa-bell"></i>Notifs</div>
-      <div class="mi" onclick="closeMore();go('limpeza')"><i class="fa-brands fa-github"></i>Limpeza</div>
+      <div class="mi" onclick="closeMore();go('limpeza')"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i>Limpeza</div>
       <a class="mi" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Site</a>
       <a class="mi" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i>Portal</a>
     </div>
@@ -350,10 +350,10 @@ input:checked+.tsl::before{transform:translateX(16px)}
 
 <script>
 var API = 'https://impersilva-ao.3miliosilva.workers.dev';
-var REPO = 'impersilvatech/IMPERSILVA';
-var SITEURL = 'https://impersilvatech.github.io/IMPERSILVA';
+var GITLAB_NAMESPACE = 'impersilvatech';
+var _glImgProjectId = localStorage.getItem('imp_gl_img_pid')||'';
 var _tok = '';
-var _ghtok = '';
+var _gltok = localStorage.getItem('imp_gltok')||'';
 var _cfAccounts = [];      // [{id,nome,email,account_id,api_token}]
 var _cfActiveAcc = null;   // account in use during site creation
 var _cfTemplate = {};      // {account_id,api_token,worker_name} — template central
@@ -390,7 +390,280 @@ function startApp() {
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
   if(window.innerWidth>=700) document.getElementById('sb').style.display='flex';
-  _ghtok = localStorage.getItem('imp_ghtok')||'';
+  _gltok = localStorage.getItem('imp_gltok')||''; _glImgProjectId = localStorage.getItem('imp_gl_img_pid')||'';
+  try{ _cfAccounts = JSON.parse(localStorage.getItem('imp_cf_accounts')||'[]'); }catch(e){ _cfAccounts=[]; }
+  try{ _cfTemplate = JSON.parse(localStorage.getItem('imp_cf_template')||'{}'); }catch(e){ _cfTemplate={}; }
+  try{ _workerReg = JSON.parse(localStorage.getItem('imp_worker_reg')||'[]'); }catch(e){ _workerReg=[]; }
+  // Show loading state immediately
+  document.getElementById('mc').innerHTML = '<div class="load" style="height:50vh;align-items:center"><div class="spin"></div> A carregar painel...</div>';
+  setTimeout(function() {
+    go('painel');
+    loadBadges();
+  }, 100);
+}
+
+function doLogout() {
+  localStorage.removeItem('imp_tok');
+  localStorage.removeItem('imp_session');
+  location.reload();
+}
+
+var saved = localStorage.getItem('imp_tok');
+if(saved) { _tok=saved; startApp(); }
+
+/* API HELPERS */
+async function wGet(path) {
+  var r = await fetch(API+path, {headers:{'Authorization':_tok}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function wPost(path, data) {
+  var r = await fetch(API+path, {method:'POST', headers:{'Content-Type':'application/json','Authorization':_tok}, body:JSON.stringify(data)});
+  var j = await r.json();
+  if(!r.ok) throw new Error(j.erro||r.status);
+  return j;
+}
+async function wDel(path) {
+  var r = await fetch(API+path, {method:'DELETE', headers:{'Authorization':_tok}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+/* GITLAB — Upload de Imagens */
+async function glUpload(file, pasta, projectId) {
+  if(!projectId) throw new Error('GitLab Image Project ID não configurado. Vai a Configurações.');
+  var ext = file.name.split('.').pop().toLowerCase();
+  var fname = (pasta||'img')+'-'+Date.now()+'.'+ext;
+  var b64 = await new Promise(function(res,rej){
+    var fr = new FileReader();
+    fr.onload = function(){ res(fr.result.split(',')[1]); };
+    fr.onerror = rej;
+    fr.readAsDataURL(file);
+  });
+  var res = await wPost('/api/admin/gitlab/imagens', {
+    project_id: parseInt(projectId),
+    pasta: pasta || 'imagens',
+    filename: fname,
+    content_base64: b64,
+    mime_type: file.type || 'image/jpeg'
+  });
+  if(res.erro) throw new Error(res.erro);
+  return res.url;
+}
+
+/* TOAST */
+#toast{position:fixed;top:calc(var(--top)+.7rem);left:1rem;right:1rem;z-index:9999;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;opacity:0;transform:translateY(-6px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+#toast.show{opacity:1;transform:translateY(0)}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tdot.g{background:var(--grn)}.tdot.r{background:var(--red)}.tdot.b{background:var(--blu2)}
+
+@media(min-width:700px){
+  #tb,#bn,#mm,#mov{display:none!important}
+  #sb{display:flex!important}
+  #mn{margin-top:0;margin-left:220px;padding-bottom:1.5rem}
+  #mc{padding:1.5rem}
+  .sr{grid-template-columns:repeat(3,1fr)}
+  #mo{align-items:center;padding:1rem}
+  #mb{border-radius:14px;max-width:520px;margin:auto}
+}
+
+/* SIDEBAR */
+#sb{display:none;position:fixed;top:0;left:0;bottom:0;width:220px;flex-direction:column;background:var(--bg);border-right:1px solid var(--div);z-index:100;overflow-y:auto}
+.sbl{padding:1.2rem 1rem .8rem;border-bottom:1px solid var(--div)}
+.sblt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:.05em}
+.sblt .r{color:var(--red)}.sblt .b{color:var(--blu2)}
+.sbls{font-size:.47rem;letter-spacing:.22em;color:var(--gr);text-transform:uppercase}
+.sbb{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(214,40,40,.12);color:var(--red);border:1px solid rgba(214,40,40,.25);padding:.15rem .4rem;border-radius:3px;margin-top:.4rem;display:inline-block}
+.sbn{flex:1;padding:.5rem 0}
+.sbsec{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:.7rem 1rem .3rem}
+.sbi{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;font-size:.8rem;font-weight:500;color:var(--gr);cursor:pointer;border-left:2px solid transparent;transition:all .18s;position:relative}
+.sbi:hover{color:var(--wh);background:rgba(255,255,255,.03)}
+.sbi.on{color:var(--wh);border-left-color:var(--red);background:rgba(214,40,40,.08)}
+.sbi i{font-size:.9rem;width:18px;text-align:center}
+.sbib{margin-left:auto;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;padding:.1rem .4rem;border-radius:8px;min-width:16px;text-align:center;display:none}
+.sbf{padding:.8rem 1rem;border-top:1px solid var(--div)}
+.sbfu{font-size:.7rem;color:var(--gr);margin-bottom:.4rem}
+.sbfl{font-size:.7rem;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Barlow',sans-serif;padding:0}
+
+/* RIPPLE */
+.btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:rip .5s linear;background:rgba(255,255,255,.25);pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+
+/* NOTIF TOAST */
+.ntoast{position:fixed;top:calc(var(--top,52px)+.7rem);right:1rem;z-index:9998;max-width:300px;background:var(--card);border:1px solid var(--div);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:flex-start;gap:.6rem;box-shadow:0 8px 24px rgba(0,0,0,.5);transform:translateX(120%);transition:transform .3s;font-size:.82rem}
+.ntoast.show{transform:translateX(0)}
+.ntoast-ic{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.ntoast.success .ntoast-ic{color:var(--grn)}.ntoast.error .ntoast-ic{color:var(--red)}.ntoast.info .ntoast-ic{color:var(--blu2)}.ntoast.warn .ntoast-ic{color:var(--amb)}
+.ntoast-t{font-weight:700;font-size:.78rem;margin-bottom:.2rem}
+.ntoast-m{color:var(--gr2);font-size:.75rem;line-height:1.4}
+
+/* GALERIA */
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem}
+.gal-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--card2)}
+.gal-item img{width:100%;height:100%;object-fit:cover}
+.gal-del{position:absolute;top:.25rem;right:.25rem;background:rgba(214,40,40,.85);color:#fff;border:none;border-radius:50%;width:26px;height:26px;z-index:10;cursor:pointer;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-add{border:2px dashed rgba(255,255,255,.15);border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--gr);font-size:.65rem;gap:.3rem;transition:all .2s;position:relative}
+.gal-add:hover{border-color:var(--red);background:rgba(214,40,40,.05);color:var(--red)}
+.gal-add input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.gal-add i{font-size:1.3rem}
+
+/* FINANÇA */
+.fin-card{background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:10px;padding:.9rem;margin-bottom:.65rem}
+.fin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.fin-desc{font-weight:600;font-size:.88rem;flex:1}
+.fin-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;color:var(--wh);white-space:nowrap}
+.fin-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+
+/* USUARIOS */
+.usr-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.usr-item:last-child{border-bottom:none}
+.usr-av{width:36px;height:36px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--gr);font-size:1rem;flex-shrink:0}
+
+/* LIMPEZA */
+.img-file{display:flex;align-items:center;gap:.6rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.img-file:last-child{border-bottom:none}
+.img-file-thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--card2);flex-shrink:0}
+.img-file-name{font-size:.75rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.img-file-size{font-size:.65rem;color:var(--gr);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div id="ls">
+  <div class="lb">
+    <div class="ll">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+    <div class="ls">Admin Panel</div>
+    <input class="li" type="password" id="lp" placeholder="Token de acesso" autocomplete="current-password">
+    <div class="le" id="le">Token incorrecto. Tente novamente.</div>
+    <button class="lb-btn" id="lbtn" onclick="doLogin()"><i class="fa-solid fa-lock-open"></i> ENTRAR</button>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sb">
+    <div class="sbl">
+      <div class="sblt">IMPERSIL<span class="r">V</span><span class="b">A</span></div>
+      <div class="sbls">Holding SGPS</div>
+      <div class="sbb">Admin</div>
+    </div>
+    <nav class="sbn">
+      <div class="sbsec">Geral</div>
+      <div class="sbi on" onclick="go('painel',this)"><i class="fa-solid fa-gauge"></i> Painel</div>
+      <div class="sbsec">Conteúdo</div>
+      <div class="sbi" onclick="go('portfolio',this)"><i class="fa-solid fa-briefcase"></i> Portfólio</div>
+      <div class="sbi" onclick="go('equipa',this)"><i class="fa-solid fa-users"></i> Equipa</div>
+      <div class="sbsec">Clientes</div>
+      <div class="sbi" onclick="go('clientes',this)"><i class="fa-solid fa-globe"></i> Clientes</div>
+      <div class="sbi" onclick="go('projetos',this)"><i class="fa-solid fa-diagram-project"></i> Projectos</div>
+      <div class="sbi" onclick="go('documentos',this)"><i class="fa-solid fa-file-arrow-up"></i> Documentos</div>
+      <div class="sbi" onclick="go('tickets',this)"><i class="fa-solid fa-ticket"></i> Suporte <span class="sbib" id="sb-tk">0</span></div>
+      <div class="sbi" onclick="go('mensagens',this)"><i class="fa-solid fa-comments"></i> Mensagens <span class="sbib" id="sb-ms">0</span></div>
+      <div class="sbsec">Leads</div>
+      <div class="sbi" onclick="go('contactos',this)"><i class="fa-solid fa-envelope"></i> Contactos <span class="sbib" id="sb-ct">0</span></div>
+      <div class="sbi" onclick="go('orcamentos',this)"><i class="fa-solid fa-file-invoice"></i> Orçamentos <span class="sbib" id="sb-oc">0</span></div>
+      <div class="sbsec">Sistema</div>
+      <div class="sbi" onclick="go('config',this)"><i class="fa-solid fa-gear"></i> Configurações</div>
+      <div class="sbsec">Negócio</div>
+      <div class="sbi" onclick="go('financas',this)"><i class="fa-solid fa-chart-line"></i> Finanças</div>
+      <div class="sbi" onclick="go('usuarios',this)"><i class="fa-solid fa-user-shield"></i> Utilizadores</div>
+      <div class="sbi" onclick="go('notificacoes',this)"><i class="fa-solid fa-bell"></i> Notificações</div>
+      <div class="sbi" onclick="go('limpeza',this)"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i> Limpeza</div>
+    </nav>
+    <div class="sbf">
+      <div class="sbfu">Administrador</div>
+      <button class="sbfl" onclick="doLogout()">Terminar sessão</button>
+    </div>
+  </aside>
+
+  <div id="tb">
+    <div>
+      <div class="tl">IMPERSIL<span class="r">V</span><span class="b">A</span><span class="tl-s">Holding SGPS</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.7rem">
+      <span class="tbadge">Admin</span>
+      <button style="background:none;border:none;color:var(--gr);font-size:1rem;cursor:pointer" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+
+  <div id="mn"><div id="mc"></div></div>
+
+  <nav id="bn">
+    <button class="bni on" onclick="goB(this,'painel')"><i class="fa-solid fa-gauge"></i><span>Painel</span></button>
+    <button class="bni" onclick="goB(this,'clientes')"><i class="fa-solid fa-globe"></i><span>Clientes</span></button>
+    <button class="bni" onclick="goB(this,'sites')"><i class="fa-solid fa-rocket"></i><span>Sites</span></button>
+    <button class="bni" onclick="goB(this,'leads')"><i class="fa-solid fa-envelope"></i><span>Leads</span><span class="bnb" id="bn-leads">0</span></button>
+    <button class="bni" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i><span>Mais</span></button>
+  </nav>
+
+  <div id="mov" onclick="closeMore()"></div>
+  <div id="mm">
+    <div class="mh"></div>
+    <div class="mg">
+      <div class="mi" onclick="closeMore();go('equipa')"><i class="fa-solid fa-users"></i>Equipa</div>
+      <div class="mi" onclick="closeMore();go('projetos')"><i class="fa-solid fa-diagram-project"></i>Projectos</div>
+      <div class="mi" onclick="closeMore();go('sites')"><i class="fa-solid fa-rocket"></i>Sites</div>
+      <div class="mi" onclick="closeMore();go('templates')"><i class="fa-solid fa-layer-group"></i>Templates</div>
+      <div class="mi" onclick="closeMore();go('portfolio')"><i class="fa-solid fa-briefcase"></i>Portfólio</div>
+      <div class="mi" onclick="closeMore();go('documentos')"><i class="fa-solid fa-file-arrow-up"></i>Documentos</div>
+      <div class="mi" onclick="closeMore();go('tickets')"><i class="fa-solid fa-ticket"></i>Suporte</div>
+      <div class="mi" onclick="closeMore();go('mensagens')"><i class="fa-solid fa-comments"></i>Mensagens</div>
+      <div class="mi" onclick="closeMore();go('config')"><i class="fa-solid fa-gear"></i>Config</div>
+      <div class="mi" onclick="closeMore();go('financas')"><i class="fa-solid fa-chart-line"></i>Finanças</div>
+      <div class="mi" onclick="closeMore();go('notificacoes')"><i class="fa-solid fa-bell"></i>Notifs</div>
+      <div class="mi" onclick="closeMore();go('limpeza')"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i>Limpeza</div>
+      <a class="mi" href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Site</a>
+      <a class="mi" href="verificar-site.html" target="_blank"><i class="fa-solid fa-qrcode"></i>Portal</a>
+    </div>
+  </div>
+</div>
+
+<div id="mo" onclick="if(event.target===this)closeModal()"><div id="mb"></div></div>
+<div id="toast"><div class="tdot" id="td"></div><span id="tm"></span></div>
+
+<script>
+var API = 'https://impersilva-ao.3miliosilva.workers.dev';
+var GITLAB_NAMESPACE = 'impersilvatech';
+var _glImgProjectId = localStorage.getItem('imp_gl_img_pid')||'';
+var _tok = '';
+var _gltok = localStorage.getItem('imp_gltok')||'';
+var _cfAccounts = [];      // [{id,nome,email,account_id,api_token}]
+var _cfActiveAcc = null;   // account in use during site creation
+var _cfTemplate = {};      // {account_id,api_token,worker_name} — template central
+var _workerReg = [];       // [{id,nome,slug,worker_name,cf_account_id,cf_account_nome,gh_user,gh_repo}]
+var _ttimer;
+
+/* AUTH */
+document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+async function doLogin() {
+  var p = document.getElementById('lp').value.trim();
+  if(!p) return;
+  document.getElementById('lbtn').textContent = 'A verificar...';
+  try {
+    var r = await fetch(API+'/api/admin/contactos', {headers:{'Authorization':p}});
+    if(r.status===401) { showLoginErr(); return; }
+    _tok = p;
+    localStorage.setItem('imp_tok', p);
+    startApp();
+  } catch(e) {
+    _tok = p;
+    localStorage.setItem('imp_tok', p);
+    startApp();
+  }
+}
+
+function showLoginErr() {
+  document.getElementById('le').style.display='block';
+  document.getElementById('lp').value='';
+  document.getElementById('lbtn').textContent='ENTRAR';
+}
+
+function startApp() {
+  document.getElementById('ls').style.display='none';
+  document.getElementById('app').style.display='block';
+  if(window.innerWidth>=700) document.getElementById('sb').style.display='flex';
+  _gltok = localStorage.getItem('imp_gltok')||''; _glImgProjectId = localStorage.getItem('imp_gl_img_pid')||'';
   try{ _cfAccounts = JSON.parse(localStorage.getItem('imp_cf_accounts')||'[]'); }catch(e){ _cfAccounts=[]; }
   try{ _cfTemplate = JSON.parse(localStorage.getItem('imp_cf_template')||'{}'); }catch(e){ _cfTemplate={}; }
   try{ _workerReg = JSON.parse(localStorage.getItem('imp_worker_reg')||'[]'); }catch(e){ _workerReg=[]; }
@@ -430,25 +703,6 @@ async function wDel(path) {
 }
 
 /* GITHUB */
-async function ghUpload(file, folder) {
-  if(!_ghtok) throw new Error('GitHub Token não configurado. Vai a Configurações.');
-  var ext = file.name.split('.').pop().toLowerCase();
-  var fname = folder+'-'+Date.now()+'.'+ext;
-  var path = 'imagens/'+fname;
-  var b64 = await new Promise(function(res,rej){
-    var fr = new FileReader();
-    fr.onload = function(){ res(fr.result.split(',')[1]); };
-    fr.onerror = rej;
-    fr.readAsDataURL(file);
-  });
-  var resp = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path, {
-    method:'PUT',
-    headers:{'Authorization':'token '+_ghtok,'Content-Type':'application/json'},
-    body:JSON.stringify({message:'Admin: upload '+fname, content:b64, branch:'main'})
-  });
-  if(!resp.ok) { var e=await resp.json(); throw new Error(e.message||'Erro GitHub'); }
-  return SITEURL+'/'+path;
-}
 
 /* TOAST */
 function toast(msg, type) {
@@ -593,7 +847,7 @@ async function doUpload(fileInputId, folder, urlInputId, progWrapId, progFillId,
   if(fill) fill.style.width='40%';
   if(txt) txt.textContent='A enviar para GitHub...';
   try {
-    var url = await ghUpload(file, folder);
+    var url = await glUpload(file, folder, _glImgProjectId);
     if(fill) fill.style.width='100%';
     if(txt) txt.textContent='Concluído!';
     if(urlInputId) document.getElementById(urlInputId).value=url;
@@ -1055,10 +1309,7 @@ async function saveCli(eid) {
     previsao:document.getElementById('cPrevisao').value.trim(),
     notas:document.getElementById('cNotas').value.trim(),
     activo:document.getElementById('cActivo').checked?1:0,
-    gh_token:document.getElementById('cGhToken').value.trim()||null,
-    gh_user:document.getElementById('cGhUser').value.trim()||null,
-    gh_repo:document.getElementById('cGhRepo').value.trim()||null,
-    gh_branch:document.getElementById('cGhBranch').value.trim()||'main',
+    gh_token: null, gh_user: null, gh_repo: null, gh_branch: 'main',
     loja_token:document.getElementById('cLojaToken')?document.getElementById('cLojaToken').value.trim()||null:null
   };
   if(!data.id||!data.nome){toast('Código e nome são obrigatórios','error');return;}
@@ -1207,8 +1458,8 @@ function abrirCriarSite() {
     var tOpts = '';
     if(templates.length){
       templates.forEach(function(t){
-        var hasPages = !!(t.pages_url && t.pages_url.includes('.pages.dev'));
-        tOpts += '<option value="'+t.id+'|'+(t.pages_url||'')+'"'+(hasPages?'':' disabled')+'>'+
+        var hasPages = !!(t.gitlab_repo_id || t.gitlab_slug); // V5: publicado se tem gitlab
+        tOpts += '<option value="'+t.id+'|'+(t.gitlab_repo_id||'')+'"'+(hasPages?'':' disabled')+'>'+
           escHtml(t.nome)+(hasPages?'':' (sem Pages URL)')+
         '</option>';
       });
@@ -1345,7 +1596,7 @@ async function executarCriarSite(){
   var tId       = tParts[0]||'';
   var tPagesUrl = tParts[1]||'';
 
-  if(!tPagesUrl){ csErro('O template selecionado não tem URL Pages configurada. Faz deploy do template primeiro.'); return; }
+  if(!tPagesUrl){ csErro('O template selecionado ainda não foi publicado no GitLab. Vai a Templates → Publicar GitLab primeiro.'); return; }
 
   var btn = document.querySelector('#mb .btn.bblue');
   if(btn){ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar...'; btn.disabled=true; }
@@ -1355,13 +1606,13 @@ async function executarCriarSite(){
     if(btn) btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> A criar Pages...';
     var payload = {
       nome, slug,
-      template_pages_url: tPagesUrl,
+      template_gitlab_id: tPagesUrl, // V5: agora é o gitlab_repo_id
       template_id: tId || null,
       cliente_id: clienteId || null
     };
     if(cf_account_id) payload.cf_account_id = cf_account_id;
     // token NÃO é enviado — worker busca na BD
-    var res = await wPost('/api/admin/sites/criar-pages', payload);
+    var res = await wPost('/api/admin/sites/criar-gitlab', payload);
     if(res.erro) throw new Error(res.erro);
 
     // ── 2. Cloudflare: criar D1 + clonar Worker (se credenciais) ──
@@ -1563,107 +1814,83 @@ function lerFicheiro(file) {
 }
 
 // ── Modal upload de ficheiros para Cloudflare Pages ──
-function abrirUploadTemplate(templateId, templateNome, pagesUrlActual) {
-  var slugSugerido = (pagesUrlActual||'')
-    .replace('https://','').replace('.pages.dev','').replace(/[^a-z0-9-]/g,'');
-
-  wGet('/api/admin/contas').then(function(contas){
-    var accOpts = (contas||[]).map(function(c){
-      // Só passar account_id — token fica no servidor
-      return '<option value="'+escHtml(c.account_id)+'">'+
-        escHtml(c.nome)+' · '+c.account_id.slice(0,8)+'…</option>';
-    }).join('');
-    if (!accOpts) accOpts = '<option value="">— Sem contas CF configuradas —</option>';
-
-    openModal(
-      '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
-      '<div class="mtit">Deploy <span style="color:#f6821f">Cloudflare Pages</span></div>'+
-      '<div style="font-size:.75rem;color:var(--gr);margin-bottom:12px">'+
-        'Carrega os ficheiros do template directamente para o Cloudflare Pages.'+
-      '</div>'+
-      '<div class="fg"><label class="fl">Nome do Pages Project</label>'+
-        '<input class="fi" id="upSlug" value="'+escHtml(slugSugerido||'impersilva-tpl-loja')+'" placeholder="impersilva-tpl-loja">'+
-        '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Ficará em: <b id="upUrlPreview">'+escHtml(slugSugerido||'impersilva-tpl-loja')+'.pages.dev</b></div>'+
-      '</div>'+
-      '<div class="fg"><label class="fl">Conta Cloudflare</label>'+
-        '<select class="fi" id="upCfAcc">'+accOpts+'</select>'+
-      '</div>'+
-      '<div class="fg">'+
-        '<label class="fl">Ficheiros <span style="color:var(--gr);font-size:.65rem">(selecciona todos os ficheiros do template)</span></label>'+
-        '<input type="file" id="upFiles" multiple accept=".html,.js,.json,.svg,.css,.txt" '+
-          'style="width:100%;padding:10px;background:var(--bg2);border:1px solid var(--div);border-radius:8px;color:var(--wh);font-size:.8rem">'+
-      '</div>'+
-      '<div id="upProgress" style="display:none;font-size:.72rem;color:var(--gr);padding:8px 0"></div>'+
-      '<div id="upErr" style="display:none;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171;margin-top:6px"></div>'+
-      '<button class="btn bblue" id="btnUpDeploy" style="width:100%;margin-top:10px" onclick="salvarUploadTemplate('+templateId+')">'+
-        '<i class="fa-brands fa-cloudflare"></i> Fazer Deploy'+
-      '</button>'
-    );
-
-    var slugEl = document.getElementById('upSlug');
-    if(slugEl) slugEl.addEventListener('input', function(){
-      var prev = document.getElementById('upUrlPreview');
-      if(prev) prev.textContent = this.value.trim() + '.pages.dev';
-    });
-  }).catch(function(){ toast('Erro ao carregar contas Cloudflare', 'error'); });
+function abrirPublicarGitLab(templateId, templateNome, gitlabSlugActual) {
+  var slugSugerido = gitlabSlugActual || ('impersilva-tpl-' + (templateNome||'loja').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''));
+  openModal(
+    '<button class="mcl" onclick="closeModal()">&#10005;</button>'+
+    '<div class="mtit">Publicar no <span style="color:#fc6d26">GitLab</span></div>'+
+    '<div style="font-size:.75rem;color:var(--gr);margin-bottom:12px">'+
+      'Carrega os ficheiros do template para um repositório privado no GitLab.<br>'+
+      'O Cloudflare Pages ligará ao repositório via Git para criar sites.'+
+    '</div>'+
+    '<div class="fg"><label class="fl">Nome do Repositório GitLab</label>'+
+      '<input class="fi" id="glSlug" value="'+escHtml(slugSugerido)+'" placeholder="impersilva-tpl-loja" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,\'\')">'+
+      '<div style="font-size:.68rem;color:var(--gr);margin-top:3px">Ficará em: <b>gitlab.com/impersilvatech/<span id="glSlugPrev">'+escHtml(slugSugerido)+'</span></b></div>'+
+    '</div>'+
+    '<div class="fg">'+
+      '<label class="fl">Ficheiros <span style="color:var(--gr);font-size:.65rem">(selecciona todos os ficheiros do template)</span></label>'+
+      '<input type="file" id="glFiles" multiple accept=".html,.js,.json,.svg,.css,.txt,._redirects" '+
+        'style="width:100%;padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--div);border-radius:8px;color:var(--wh);font-size:.8rem">'+
+    '</div>'+
+    '<div id="glProgress" style="display:none;font-size:.72rem;color:var(--gr);padding:8px 0"></div>'+
+    '<div id="glErr" style="display:none;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171;margin-top:6px"></div>'+
+    '<button class="btn bblue" id="btnGlPublish" style="width:100%;margin-top:10px;background:#fc6d26" onclick="salvarPublicarGitLab('+templateId+')">'+
+      '<i class="fa-brands fa-gitlab"></i> Publicar no GitLab'+
+    '</button>'
+  );
+  var slugEl = document.getElementById('glSlug');
+  if(slugEl) slugEl.addEventListener('input', function(){
+    var prev = document.getElementById('glSlugPrev');
+    if(prev) prev.textContent = this.value.trim() || 'slug';
+  });
 }
 
-async function salvarUploadTemplate(templateId) {
-  var btn = document.getElementById('btnUpDeploy');
-  var prog = document.getElementById('upProgress');
-  var err  = document.getElementById('upErr');
+async function salvarPublicarGitLab(templateId) {
+  var btn  = document.getElementById('btnGlPublish');
+  var prog = document.getElementById('glProgress');
+  var err  = document.getElementById('glErr');
   if(err) err.style.display = 'none';
 
-  var pages_slug    = ((document.getElementById('upSlug')||{}).value||'').trim();
-  var cf_account_id = ((document.getElementById('upCfAcc')||{}).value||'').trim();
-  var fileInput     = document.getElementById('upFiles');
+  var gitlab_slug = ((document.getElementById('glSlug')||{}).value||'').trim();
+  var fileInput   = document.getElementById('glFiles');
 
-  if(!pages_slug) { if(err){err.textContent='Nome do projecto obrigatório';err.style.display='block';} return; }
-  if(!fileInput || !fileInput.files.length) { if(err){err.textContent='Selecciona pelo menos um ficheiro';err.style.display='block';} return; }
-  if(!cf_account_id) { if(err){err.textContent='Selecciona uma conta Cloudflare';err.style.display='block';} return; }
+  if(!gitlab_slug){ if(err){err.textContent='Nome do repositório obrigatório';err.style.display='block';} return; }
+  if(!fileInput || !fileInput.files.length){ if(err){err.textContent='Selecciona pelo menos um ficheiro';err.style.display='block';} return; }
 
   if(btn) btnLoad(btn, 'A ler ficheiros...');
-  if(prog) { prog.style.display='block'; prog.textContent='A ler '+fileInput.files.length+' ficheiro(s)...'; }
+  if(prog){ prog.style.display='block'; prog.textContent='A ler '+fileInput.files.length+' ficheiro(s)...'; }
 
-  var TIPOS = { html:'text/html', js:'application/javascript', json:'application/json',
-                svg:'image/svg+xml', css:'text/css', txt:'text/plain' };
-
+  var TIPOS = { html:'text/html', js:'application/javascript', json:'application/json', svg:'image/svg+xml', css:'text/css', txt:'text/plain' };
   var files = [];
   try {
-    for (var i = 0; i < fileInput.files.length; i++) {
+    for(var i = 0; i < fileInput.files.length; i++){
       var f = fileInput.files[i];
       var ext = f.name.split('.').pop().toLowerCase();
       var content = await lerFicheiro(f);
-      files.push({ path: '/' + f.name, content: content, contentType: TIPOS[ext] || 'text/plain' });
+      files.push({ path: f.name, content: content, contentType: TIPOS[ext]||'text/plain' });
     }
-    // Injectar _redirects automaticamente (SPA routing na Cloudflare Pages)
-    if (!files.some(function(f){ return f.path === '/_redirects'; })) {
-      files.push({ path: '/_redirects', content: '/ /index.html 200\n/* /index.html 200', contentType: 'text/plain' });
-    }
-  } catch(e) {
+  } catch(e){
     if(err){err.textContent='Erro ao ler ficheiros: '+e.message;err.style.display='block';}
     if(btn) btnReset(btn); return;
   }
 
-  if(prog) prog.textContent = 'A fazer deploy de '+files.length+' ficheiro(s) para Pages...';
-  if(btn) btnLoad(btn, 'A fazer deploy...');
+  if(prog) prog.textContent = 'A publicar '+files.length+' ficheiro(s) no GitLab...';
+  if(btn) btnLoad(btn, 'A publicar...');
 
   try {
     var tplObj = _templatesList && _templatesList.find(function(t){return t.id===templateId;});
-    var res = await wPost('/api/admin/templates/upload-pages', {
-      nome: tplObj ? tplObj.nome : pages_slug,
-      pages_slug,
-      cf_account_id,   // worker busca o token na BD pelo account_id
-      files,
-      template_id: templateId || null
+    var res = await wPost('/api/admin/templates/publicar-gitlab', {
+      template_id: templateId || null,
+      gitlab_slug: gitlab_slug,
+      files: files,
+      nome: tplObj ? tplObj.nome : gitlab_slug
     });
     if(res.erro) throw new Error(res.erro);
-    if(btn) btnOk(btn, '✅ Deploy OK!');
-    var debugInfo = 'Ficheiros: ' + (res._debug_ficheiros||'?') + ' | Keys: ' + (res._debug_manifest_keys ? res._debug_manifest_keys.join(', ') : '?') + ' | URL: ' + (res._debug_url||'?');
-    if(prog) { prog.style.whiteSpace='pre-wrap'; prog.textContent = debugInfo; }
-    if(err) { err.style.display='block'; err.style.background='rgba(0,200,0,.1)'; err.style.color='#4ade80'; err.textContent = debugInfo; }
-    toast('Deploy OK - ver detalhes no ecra', 'success');
-  } catch(e) {
+    if(btn) btnOk(btn, '✅ Publicado!');
+    if(prog) prog.textContent = res.ficheiros_publicados+' ficheiros publicados em gitlab.com/impersilvatech/'+gitlab_slug;
+    toast('Template publicado no GitLab!', 'success');
+    setTimeout(function(){ closeModal(); rTemplates(); }, 1500);
+  } catch(e){
     if(btn) btnReset(btn);
     if(err){err.textContent='Erro: '+e.message;err.style.display='block';}
   }
@@ -1689,7 +1916,7 @@ async function rTemplates(){
     var html = '<div style="display:flex;flex-direction:column;gap:10px">';
     _templatesList.forEach(function(t){
       var cor = {loja:'#a78bfa',restaurante:'#f97316',portfolio:'#38bdf8',servicos:'#4ade80',pastelaria:'#fb923c'}[t.tipo||'loja']||'#a78bfa';
-      var hasPages = !!(t.pages_url && t.pages_url.includes('.pages.dev'));
+      var hasPages = !!(t.gitlab_repo_id || t.gitlab_slug); // V5: publicado se tem gitlab
       html += '<div class="cc" style="border-left:3px solid '+cor+'">'+
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
           '<div>'+
@@ -1711,8 +1938,8 @@ async function rTemplates(){
             ? '<a class="btn bgh bsm" href="'+t.pages_url+'" target="_blank" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>'
             : '<a class="btn bgh bsm" href="https://github.com/'+t.gh_user+'/'+t.gh_repo+'" target="_blank" style="flex:1;text-align:center"><i class="fa-brands fa-github"></i> GitHub</a>'
           )+
-          '<button class="btn bblue bsm" onclick="abrirUploadTemplate('+t.id+',\''+escHtml(t.nome)+'\',\''+escHtml(t.pages_url||'')+'\')" style="flex:1">'+
-            '<i class="fa-brands fa-cloudflare"></i> Deploy Pages</button>'+
+          '<button class="btn bblue bsm" onclick="abrirPublicarGitLab('+t.id+',\''+escHtml(t.nome)+'\',\''+escHtml(t.pages_url||'')+'\')" style="flex:1">'+
+            '<i class="fa-brands fa-gitlab" style="color:#fc6d26"></i> Publicar GitLab</button>'+
           '<button class="btn bdng bsm" onclick="delTemplate('+t.id+')"><i class="fa-solid fa-trash"></i></button>'+
         '</div>'+
       '</div>';
@@ -2121,19 +2348,22 @@ async function rConfig() {
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Configu<span class="r">rações</span></div></div>'+
     '<div class="card">'+
-      '<div class="ct"><i class="fa-brands fa-github"></i> GitHub — Upload de Imagens</div>'+
+      '<div class="ct"><i class="fa-brands fa-gitlab" style="color:#fc6d26"></i> GitLab — Upload de Imagens &amp; Templates</div>'+
       '<div class="fg"><label class="fl">Personal Access Token</label>'+
-        '<input class="fi" type="password" id="cfGhTok" value="'+_ghtok+'" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">'+
-        '<div style="background:rgba(29,78,216,.08);border:1px solid rgba(29,78,216,.2);border-radius:8px;padding:.75rem;margin-top:.5rem;font-size:.73rem;color:rgba(255,255,255,.55);line-height:1.6">'+
-          '<i class="fa-solid fa-circle-info" style="color:var(--blu2)"></i> GitHub &rarr; Settings &rarr; Developer settings &rarr; Tokens (classic) &rarr; New token &rarr; scope: <strong>repo</strong>'+
-          '<br><span style="color:rgba(255,255,255,.35)">Apenas necessário para upload de imagens (logos, produtos, banners)</span>'+
+        '<input class="fi" type="password" id="cfGlTok" value="'+_gltok+'" placeholder="glpat-xxxxxxxxxxxxxxxxxxxx">'+
+        '<div style="background:rgba(252,109,38,.06);border:1px solid rgba(252,109,38,.2);border-radius:8px;padding:.75rem;margin-top:.5rem;font-size:.73rem;color:rgba(255,255,255,.55);line-height:1.6">'+
+          '<i class="fa-solid fa-circle-info" style="color:#fc6d26"></i> GitLab &rarr; Edit profile &rarr; Access Tokens &rarr; Token legado &rarr; scope: <strong>api</strong>'+
         '</div>'+
       '</div>'+
-      '<div class="fg"><label class="fl">Repositório</label><input class="fi" value="'+REPO+'" readonly></div>'+
-      '<div style="display:flex;gap:.6rem">'+
-        '<button class="btn bred" style="flex:1" onclick="saveGhConfig()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
-        '<button class="btn bgh" onclick="testGhConfig()"><i class="fa-solid fa-plug"></i> Testar</button>'+
+      '<div class="fg"><label class="fl">Project ID — Repositório de Imagens</label>'+
+        '<input class="fi" id="cfGlImgPid" value="'+_glImgProjectId+'" placeholder="Ex: 12345678">'+
+        '<div style="font-size:.67rem;color:var(--gr);margin-top:.3rem">ID do projecto GitLab onde ficam as imagens (impersilva-imagens). Podes criar em GitLab → Novo Projecto, depois copiar o ID.</div>'+
       '</div>'+
+      '<div style="display:flex;gap:.6rem">'+
+        '<button class="btn bred" style="flex:1" onclick="saveGlConfig()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>'+
+        '<button class="btn bgh" onclick="testGlConfig()"><i class="fa-solid fa-plug"></i> Testar</button>'+
+      '</div>'+
+      '<div id="glConfigErr" style="display:none;margin-top:8px;background:rgba(214,40,40,.1);border:1px solid rgba(214,40,40,.3);border-radius:8px;padding:.6rem;font-size:.75rem;color:#f87171"></div>'+
     '</div>'+
     '<div class="card">'+
       '<div class="ct"><i class="fa-brands fa-cloudflare" style="color:#f6821f"></i> Worker Template Central</div>'+
@@ -2356,23 +2586,44 @@ async function testContaCF(btnEl) {
     else { btnReset(btnEl); toast(c.nome+': '+(r.erro||'Token inválido'),'error'); }
   } catch(e) { btnReset(btnEl); toast('Erro: '+e.message,'error'); }
 }
-function saveGhConfig() {
+function saveGlConfig() {
   var btn = document.querySelector('#mc .btn.bred');
-  btnLoad(btn, 'A guardar...');
-  var tk=document.getElementById('cfGhTok').value.trim();
-  if(!tk){ toast('Token em branco','error'); btnReset(btn); return; }
-  _ghtok=tk; localStorage.setItem('imp_ghtok',tk);
-  btnOk(btn,'Guardado!'); toast('Token GitHub guardado!');
+  if(btn) btnLoad(btn, 'A guardar...');
+  var tk  = (document.getElementById('cfGlTok')||{value:''}).value.trim();
+  var pid = (document.getElementById('cfGlImgPid')||{value:''}).value.trim();
+  if(!tk){ toast('Token em branco','error'); if(btn) btnReset(btn); return; }
+  _gltok = tk; localStorage.setItem('imp_gltok', tk);
+  if(pid){ _glImgProjectId = pid; localStorage.setItem('imp_gl_img_pid', pid); }
+  if(btn) btnOk(btn,'Guardado!');
+  toast('Configuração GitLab guardada!');
 }
-async function testGhConfig() {
-  if(!_ghtok){ toast('Guarda o token primeiro','error'); return; }
+async function testGlConfig() {
+  var tk = (document.getElementById('cfGlTok')||{value:_gltok}).value.trim() || _gltok;
+  if(!tk){ toast('Guarda o token primeiro','error'); return; }
   var btn = document.querySelector('#mc .btn.bgh');
-  btnLoad(btn, 'A testar...');
+  var errEl = document.getElementById('glConfigErr');
+  if(btn) btnLoad(btn, 'A testar...');
+  if(errEl) errEl.style.display='none';
   try {
-    var r=await fetch('https://api.github.com/repos/'+REPO, {headers:{'Authorization':'token '+_ghtok}});
-    if(r.ok){ btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
-    else{ btnReset(btn); toast('Token inválido ou repo não encontrado','error'); }
-  }catch(e){ btnReset(btn); toast('Erro de ligação: '+e.message,'error'); }
+    var r = await fetch('https://gitlab.com/api/v4/user', {
+      headers:{'Authorization':'Bearer '+tk}
+    });
+    var d = await r.json();
+    if(r.ok && d.username){
+      if(btn) btnOk(btn,'OK!');
+      toast('GitLab ligado! Conta: '+d.username);
+    } else {
+      if(btn) btnReset(btn);
+      var msg = d.message || 'Token inválido';
+      if(errEl){errEl.textContent=msg;errEl.style.display='block';}
+      else toast(msg,'error');
+    }
+  } catch(e) {
+    if(btn) btnReset(btn);
+    var msg2 = 'Erro: '+e.message;
+    if(errEl){errEl.textContent=msg2;errEl.style.display='block';}
+    else toast(msg2,'error');
+  }
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2886,7 +3137,7 @@ async function addGaleriaItem(input, refId, tipo, containerId) {
   if (!_ghtok) { toast('Configure o GitHub Token nas Configurações', 'error'); return; }
   toast('A enviar imagem...', 'info');
   try {
-    var url = await ghUpload(file, tipo+'-gal');
+    var url = await glUpload(file, tipo+'-gal', _glImgProjectId);
     await wPost('/api/admin/galeria', { referencia_id: refId, tipo: tipo, url: url, legenda: '', ordem: 0 });
     toast('Foto adicionada!');
     loadGaleria(refId, tipo, containerId);
@@ -2921,27 +3172,7 @@ function removeMainPhoto(prefix) {
 }
 
 
-async function testarGhCliente() {
-  var user = document.getElementById('cGhUser').value.trim();
-  var repo = document.getElementById('cGhRepo').value.trim();
-  var token = document.getElementById('cGhToken').value.trim();
-  if(!user||!repo){ toast('Preenche utilizador e repositório','error'); return; }
-  var btn = document.querySelector('#mb .btn.bgh[onclick*="testarGh"]');
-  if(btn) btnLoad(btn, 'A testar...');
-  try {
-    var r = await fetch('https://api.github.com/repos/'+user+'/'+repo, {
-      headers: token ? {'Authorization':'token '+token} : {}
-    });
-    if(r.ok){ if(btn) btnOk(btn,'OK!'); toast('GitHub ligado! Repositório encontrado.'); }
-    else { if(btn) btnReset(btn); toast('Repositório não encontrado ou token inválido','error'); }
-  } catch(e) { if(btn) btnReset(btn); toast('Erro: '+e.message,'error'); }
-}
 
-</script>
-<script>
-/* ══════════════════════════════════════════════════════════
-   FINANÇAS
-══════════════════════════════════════════════════════════ */
 async function rFinancas() {
   document.getElementById('mc').innerHTML =
     '<div class="ph"><div class="pt">Finan<span class="r">ças</span></div><div class="ps">Vendas, mensalidades e custos dos clientes</div></div>'+
@@ -3174,110 +3405,109 @@ async function desactivarUsr(id) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   LIMPEZA DE IMAGENS (GitHub)
+   LIMPEZA DE IMAGENS (GitLab)
 ══════════════════════════════════════════════════════════ */
-var _ghFiles = [];
+var _glFiles = [];
 async function rLimpeza() {
-  var body = '<div class="ph"><div class="pt">Lim<span class="r">peza</span></div><div class="ps">Gerir imagens no repositório GitHub</div></div>';
-  if (!_ghtok) {
-    body += '<div class="card" style="border-color:rgba(214,40,40,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);margin-right:.4rem"></i>GitHub Token não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
+  var body = '<div class="ph"><div class="pt">Lim<span class="r">peza</span></div><div class="ps">Gerir imagens no repositório GitLab</div></div>';
+  if (!_gltok) {
+    body += '<div class="card" style="border-color:rgba(252,109,38,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:#fc6d26;margin-right:.4rem"></i>GitLab Token não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
+  } else if(!_glImgProjectId) {
+    body += '<div class="card" style="border-color:rgba(252,109,38,.3)"><p style="color:var(--gr);font-size:.85rem"><i class="fa-solid fa-triangle-exclamation" style="color:#fc6d26;margin-right:.4rem"></i>Project ID de imagens não configurado. <button class="btn bgh bsm" onclick="go(&apos;config&apos;)">Ir a Configurações</button></p></div>';
   } else {
-    body += '<div class="brow"><button class="btn bred" onclick="carregarImgsGH()"><i class="fa-solid fa-rotate"></i> Listar imagens</button></div>';
-    body += '<div id="ghImgL"><div class="empty"><i class="fa-brands fa-github"></i><p>Clica em Listar imagens para ver os ficheiros</p></div></div>';
+    body += '<div class="brow"><button class="btn bred" onclick="carregarImgsGL()"><i class="fa-solid fa-rotate"></i> Listar imagens</button></div>';
+    body += '<div id="glImgL"><div class="empty"><i class="fa-brands fa-gitlab" style="color:#fc6d26;font-size:2rem;margin-bottom:.8rem;display:block"></i><p>Clica em Listar imagens para ver os ficheiros</p></div></div>';
   }
   document.getElementById('mc').innerHTML = body;
 }
 
-async function carregarImgsGH() {
-  var el = document.getElementById('ghImgL');
+async function carregarImgsGL() {
+  var el = document.getElementById('glImgL');
   if (!el) return;
-  el.innerHTML = '<div class="load"><div class="spin"></div> A carregar do GitHub e verificar utilizações...</div>';
+  el.innerHTML = '<div class="load"><div class="spin"></div> A carregar do GitLab...</div>';
   try {
-    // 1. Get all images from GitHub
-    var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens', {
-      headers: {'Authorization':'token '+_ghtok, 'Accept':'application/vnd.github.v3+json'}
-    });
-    if (r.status === 404) { el.innerHTML='<div class="empty"><p>Pasta "imagens" não existe ainda</p></div>'; return; }
-    var files = await r.json();
-    _ghFiles = Array.isArray(files) ? files.filter(function(f){ return f.type==='file'; }) : [];
-    if (!_ghFiles.length) { el.innerHTML='<div class="empty"><i class="fa-solid fa-images"></i><p>Sem imagens na pasta /imagens</p></div>'; return; }
+    var data = await wGet('/api/admin/gitlab/imagens?project_id='+_glImgProjectId+'&pasta=imagens');
+    _glFiles = Array.isArray(data) ? data.filter(function(f){ return f.type==='blob'; }) : [];
+    if (!_glFiles.length) {
+      el.innerHTML='<div class="empty"><i class="fa-brands fa-gitlab" style="color:#fc6d26;font-size:2rem;display:block;margin-bottom:.8rem"></i><p>Sem imagens na pasta /imagens</p></div>';
+      return;
+    }
 
-    // 2. Get all used image URLs from D1 (portfolio + equipa + galeria)
+    // Verificar imagens em uso
     var usedUrls = new Set();
     try {
       var port = await wGet('/api/portfolio');
-      port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/imagens/').pop()); });
+      port.forEach(function(p){ if(p.imagem) usedUrls.add(p.imagem.split('/').pop()); });
     } catch(e2){}
     try {
       var eq = await wGet('/api/equipa');
-      eq.forEach(function(m){
-        if(m.foto) usedUrls.add(m.foto.split('/imagens/').pop());
-        if(m.galeria) m.galeria.forEach(function(g){ usedUrls.add((g.url||g).split('/imagens/').pop()); });
-      });
+      eq.forEach(function(m){ if(m.foto) usedUrls.add(m.foto.split('/').pop()); });
     } catch(e2){}
 
-    var used = _ghFiles.filter(function(f){ return usedUrls.has(f.name); });
-    var unused = _ghFiles.filter(function(f){ return !usedUrls.has(f.name); });
+    var used   = _glFiles.filter(function(f){ return usedUrls.has(f.name); });
+    var unused = _glFiles.filter(function(f){ return !usedUrls.has(f.name); });
 
-    var html = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
+    var html2 = '<div style="display:flex;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap">'+
       '<span class="badge bg"><i class="fa-solid fa-link"></i> '+used.length+' em uso</span>'+
       '<span class="badge br"><i class="fa-solid fa-unlink"></i> '+unused.length+' não usadas</span>'+
-      '<span class="badge bgr">Total: '+_ghFiles.length+'</span>'+
+      '<span class="badge bgr">Total: '+_glFiles.length+'</span>'+
     '</div>';
 
+    var rawBase = 'https://gitlab.com/impersilvatech/impersilva-imagens/-/raw/main/imagens/';
+
     if (unused.length) {
-      html += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem">'+
-        '<div class="ct" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i> Imagens não usadas ('+unused.length+')</div>';
-      unused.forEach(function(f, i) {
-        var idx = _ghFiles.indexOf(f);
-        var sizeKb = Math.round((f.size||0)/1024);
+      html2 += '<div class="card" style="border-color:rgba(214,40,40,.25);margin-bottom:.75rem">'+
+        '<div class="ct" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i> Não usadas ('+unused.length+')</div>';
+      unused.forEach(function(f) {
+        var idx = _glFiles.indexOf(f);
         var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
-        html += '<div class="img-file">'+
-          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy">' :
+        html2 += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+rawBase+f.name+'" alt="'+f.name+'" loading="lazy">' :
             '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
-          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
-          '<button class="btn bdng bsm" onclick="removerImgGH('+idx+')" title="Remover"><i class="fa-solid fa-trash"></i></button>'+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div></div>'+
+          '<button class="btn bdng bsm" onclick="removerImgGL('+idx+')" title="Remover"><i class="fa-solid fa-trash"></i></button>'+
         '</div>';
       });
-      html += '</div>';
+      html2 += '</div>';
     }
-
     if (used.length) {
-      html += '<div class="card">'+
-        '<div class="ct" style="color:var(--grn)"><i class="fa-solid fa-link"></i> Em uso ('+used.length+')</div>';
+      html2 += '<div class="card"><div class="ct" style="color:var(--grn)"><i class="fa-solid fa-link"></i> Em uso ('+used.length+')</div>';
       used.forEach(function(f) {
-        var idx = _ghFiles.indexOf(f);
-        var sizeKb = Math.round((f.size||0)/1024);
         var isImg = /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name);
-        html += '<div class="img-file">'+
-          (isImg ? '<img class="img-file-thumb" src="'+SITEURL+'/imagens/'+f.name+'" alt="'+f.name+'" loading="lazy">' :
+        html2 += '<div class="img-file">'+
+          (isImg ? '<img class="img-file-thumb" src="'+rawBase+f.name+'" alt="'+f.name+'" loading="lazy">' :
             '<div class="img-file-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gr)"><i class="fa-solid fa-file"></i></div>')+
-          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div><div class="img-file-size">'+sizeKb+'KB</div></div>'+
+          '<div style="flex:1;min-width:0"><div class="img-file-name">'+f.name+'</div></div>'+
           '<span class="badge bg bsm">em uso</span>'+
         '</div>';
       });
-      html += '</div>';
+      html2 += '</div>';
     }
-
-    el.innerHTML = html;
+    el.innerHTML = html2;
   } catch(e) {
     el.innerHTML = '<div class="empty"><p>Erro ao carregar: '+e.message+'</p></div>';
   }
 }
-async function removerImgGH(idx) {
-  var f = _ghFiles[idx];
+async function removerImgGL(idx) {
+  var f = _glFiles[idx];
   if (!f) return;
-  if (!confirm('Remover "'+f.name+'" do GitHub? Esta acção não pode ser desfeita.')) return;
+  if (!confirm('Remover "'+f.name+'" do GitLab? Esta acção não pode ser desfeita.')) return;
   try {
-    var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/imagens/'+f.name, {
-      method: 'DELETE',
-      headers: {'Authorization':'token '+_ghtok,'Content-Type':'application/json'},
-      body: JSON.stringify({ message: 'Admin: remover '+f.name, sha: f.sha, branch: 'main' })
+    var res = await wPost('/api/admin/gitlab/imagens', { // Note: DELETE via wPost with _method
+      project_id: parseInt(_glImgProjectId),
+      file_path: 'imagens/' + f.name
     });
-    if (!r.ok) { var e=await r.json(); throw new Error(e.message||'Erro'); }
-    toast('"'+f.name+'" removido do GitHub');
-    _ghFiles.splice(idx, 1);
-    carregarImgsGH();
+    // Actually use DELETE
+    var r = await fetch(API+'/api/admin/gitlab/imagens', {
+      method: 'DELETE',
+      headers: {'Content-Type':'application/json','Authorization':_tok},
+      body: JSON.stringify({ project_id: parseInt(_glImgProjectId), file_path: 'imagens/'+f.name })
+    });
+    var d = await r.json();
+    if(d.erro) throw new Error(d.erro);
+    toast('"'+f.name+'" removido do GitLab');
+    _glFiles.splice(idx, 1);
+    carregarImgsGL();
   } catch(e) { toast('Erro: '+e.message,'error'); }
 }
 
@@ -3286,6 +3516,12 @@ window.executarCriarSite = executarCriarSite;
 window.abrirCriarSite = abrirCriarSite;
 window.abrirDeploySite = abrirDeploySite;
 window.autoSlug = autoSlug;
+window.abrirPublicarGitLab = abrirPublicarGitLab;
+window.salvarPublicarGitLab = salvarPublicarGitLab;
+window.carregarImgsGL = carregarImgsGL;
+window.removerImgGL = removerImgGL;
+window.saveGlConfig = saveGlConfig;
+window.testGlConfig = testGlConfig;
 </script>
 </body>
 </html>
