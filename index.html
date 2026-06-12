@@ -113,9 +113,9 @@
        HERO
    ══════════════════════════════════════ */
     .hero {
-      min-height: 100vh;
+      min-height: calc(100vh - 68px);
       position: relative;
-      display: flex; align-items: center;
+      display: flex; align-items: flex-start;
       overflow: hidden;
     }
     .hero-bg {
@@ -152,11 +152,11 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* FIX 1 — hero-content: padding-top reduzido de 6rem → 2.5rem */
+    /* FIX 1 — hero-content: padding controlado, alinha ao topo */
     .hero-content {
       position: relative; z-index: 1;
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-      padding-top: 2.5rem; padding-bottom: 4rem;
+      width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      padding-top: 3.5rem; padding-bottom: 4rem;
       display: grid; grid-template-columns: 1.1fr 0.9fr; min-width: 0;
       gap: 4rem; align-items: center;
     }
@@ -475,7 +475,7 @@
       50%       { box-shadow: 0 6px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.07); }
     }
 
-/* ══ DRAWER MOBILE — FIX 4: IDs correctos mm-drawer/mm-overlay ══ */
+/* ══ DRAWER MOBILE ══ */
     #mmOverlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.65); z-index: 998;
@@ -483,49 +483,65 @@
     }
     #mmOverlay.active { display: block; }
     #mmDrawer {
-      position: fixed; top: 0; right: 0; bottom: 0;
-      width: 78%; max-width: 300px;
-      background: var(--dark); z-index: 999;
+      position: fixed; top: 0; right: 0;
+      width: 72%; max-width: 280px;
+      height: auto; max-height: 100dvh;
+      background: var(--black); z-index: 999;
       transform: translateX(100%);
       transition: transform .3s cubic-bezier(.4,0,.2,1);
-      border-left: 1px solid var(--border);
+      border-left: 1px solid rgba(255,255,255,0.08);
       display: flex; flex-direction: column;
+      border-bottom-left-radius: 16px;
+      overflow: hidden;
     }
     #mmDrawer.active { transform: translateX(0); }
     .mmDrawer-head {
       display: flex; align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.02);
+      flex-shrink: 0;
     }
     .mmDrawer-head .mm-title {
-      font-size: .6rem; font-weight: 700;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(255,255,255,.3);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.25);
     }
     .mmDrawer-head .mm-close {
-      background: none; border: none;
-      color: rgba(255,255,255,.5); font-size: 1.2rem;
-      cursor: pointer; line-height: 1; padding: .3rem;
-      transition: color .2s;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.5); font-size: .9rem;
+      cursor: pointer; line-height: 1;
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
     }
-    .mmDrawer-head .mm-close:hover { color: #fff; }
+    .mmDrawer-head .mm-close:hover { background: var(--red); border-color: var(--red); color: #fff; }
     #mmDrawer nav {
       display: flex; flex-direction: column;
-      padding: 8px 0; overflow-y: auto; flex: 1;
+      padding: 6px 0 6px;
+      overflow-y: auto;
     }
     #mmDrawer nav a {
-      color: var(--gray-lt); text-decoration: none;
-      font-size: .9rem; font-weight: 500;
-      padding: 13px 20px;
+      color: rgba(255,255,255,.7); text-decoration: none;
+      font-size: .92rem; font-weight: 500;
+      padding: 11px 18px;
       border-bottom: 1px solid rgba(255,255,255,.04);
-      transition: .2s;
+      transition: all .15s;
+      display: flex; align-items: center; gap: 8px;
     }
-    #mmDrawer nav a:hover {
-      color: var(--white);
-      background: rgba(255,255,255,.04);
-      padding-left: 28px;
+    #mmDrawer nav a:last-child { border-bottom: none; }
+    #mmDrawer nav a:hover { color: var(--white); background: rgba(255,255,255,.04); padding-left: 24px; }
+    #mmDrawer nav a.mm-cta {
+      margin: 10px 14px 12px;
+      background: var(--red); color: #fff;
+      border-radius: 6px; border: none;
+      padding: 11px 18px;
+      font-weight: 600; letter-spacing: .04em;
+      justify-content: center;
     }
+    #mmDrawer nav a.mm-cta:hover { background: var(--red-lt); padding-left: 18px; }
 
 /* ══ RESPONSIVE ══ */
 @media(max-width:860px){
@@ -773,22 +789,22 @@
   </svg>
 </a>
 
-<!-- FIX 4: Drawer com IDs correctos e fechar ao clicar nos links -->
+<!-- DRAWER MOBILE -->
 <div id="mmOverlay" onclick="closeDrawer()"></div>
 <div id="mmDrawer">
   <div class="mmDrawer-head">
-    <span class="mm-title">Menu</span>
+    <span class="mm-title">IMPERSILVA</span>
     <button class="mm-close" onclick="closeDrawer()">&#10005;</button>
   </div>
   <nav>
-    <a href="/index.html">Início</a>
-    <a href="/tech.html">Tech</a>
-    <a href="/consultoria.html">Consultoria</a>
-    <a href="/portfolio.html">Portfólio</a>
-    <a href="/sobre.html">Sobre</a>
-    <a href="/contacto.html">Contacto</a>
-    <a href="/orcamento.html">Orçamento →</a>
-    <a href="/verificar-site.html">Portal do Cliente</a>
+    <a href="/index.html"><i class="fa-solid fa-house" style="width:14px;opacity:.5;font-size:.8rem"></i>Início</a>
+    <a href="/tech.html"><i class="fa-solid fa-code" style="width:14px;opacity:.5;font-size:.8rem"></i>Tech</a>
+    <a href="/consultoria.html"><i class="fa-solid fa-chart-line" style="width:14px;opacity:.5;font-size:.8rem"></i>Consultoria</a>
+    <a href="/portfolio.html"><i class="fa-solid fa-briefcase" style="width:14px;opacity:.5;font-size:.8rem"></i>Portfólio</a>
+    <a href="/sobre.html"><i class="fa-solid fa-circle-info" style="width:14px;opacity:.5;font-size:.8rem"></i>Sobre</a>
+    <a href="/contacto.html"><i class="fa-solid fa-envelope" style="width:14px;opacity:.5;font-size:.8rem"></i>Contacto</a>
+    <a href="/verificar-site.html"><i class="fa-solid fa-user" style="width:14px;opacity:.5;font-size:.8rem"></i>Portal do Cliente</a>
+    <a href="/orcamento.html" class="mm-cta">Pedir Orçamento →</a>
   </nav>
 </div>
 
