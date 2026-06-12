@@ -1,33 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-AO" data-theme="dark">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="IMPERSILVA HOLDING SGPS — Entre nós, fluem oportunidades. Consultoria empresarial e soluções tecnológicas em Angola."/>
-  <meta name="keywords" content="IMPERSILVA, holding, consultoria, tecnologia, angola, empresas, digital"/>
-  <meta property="og:title" content="IMPERSILVA HOLDING SGPS"/>
-  <meta property="og:description" content="Entre nós, fluem oportunidades."/>
-  <title>IMPERSILVA HOLDING SGPS</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>IMPERSILVA — Criamos sites que vendem</title>
+<meta name="description" content="Criamos lojas online e sites institucionais para negócios angolanos. Do design ao lançamento em 7 dias."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,800;0,900;1,700;1,800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="/config.js"></script>
+<style>
 
-  <!-- ═══════ PWA ═══════ -->
-  <!-- IMPORTANTE: este script deve ser o PRIMEIRO — captura beforeinstallprompt cedo -->
-  <script src="js/pwa-install.js"></script>
-  <link rel="manifest" href="manifest.json"/>
-  <meta name="theme-color" content="#0e0e0e"/>
-  <meta name="msapplication-TileColor" content="#0e0e0e"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="IMPERSILVA"/>
-  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
-  <link rel="icon" type="image/svg+xml" href="icons/icon.svg"/>
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <!-- ═══════ /PWA ═══════ -->
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="js/config.js"></script>
-  <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -46,6 +30,7 @@
       --gray:       #888896;
       --gray-lt:    #c0c0cc;
       --divider:    rgba(255,255,255,0.07);
+      --border:     rgba(255,255,255,0.07);
     }
 
     html { scroll-behavior: smooth; }
@@ -60,9 +45,9 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* ══════════════════════════════════════
+/* ══════════════════════════════════════
        NAVBAR
-    ══════════════════════════════════════ */
+   ══════════════════════════════════════ */
     .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: rgba(14,14,14,0.97);
       backdrop-filter: blur(20px);
@@ -118,22 +103,15 @@
       display: none; flex-direction: column; gap: 5px;
       background: none; border: none; cursor: pointer; padding: 0.3rem;
     }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    .mobile-menu a {
-      color: var(--gray-lt); text-decoration: none;
-      font-size: 0.95rem; padding: 0.75rem 0;
-      border-bottom: 1px solid var(--divider);
-      transition: color 0.2s;
+    @media (max-width: 860px) {
+      .hamburger { display: flex; }
+      .nav-links  { display: none !important; }
     }
-    .mobile-menu a:hover { color: var(--white); }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
 
-    /* ══════════════════════════════════════
+/* ══════════════════════════════════════
        HERO
-    ══════════════════════════════════════ */
+   ══════════════════════════════════════ */
     .hero {
       min-height: 100vh;
       position: relative;
@@ -173,11 +151,13 @@
       background: linear-gradient(to bottom, transparent, rgba(214,40,40,0.3), transparent);
       pointer-events: none; z-index: 0;
     }
+
+    /* FIX 1 — hero-content: padding-top reduzido de 6rem → 2.5rem */
     .hero-content {
       position: relative; z-index: 1;
       max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-      padding-top: 6rem; padding-bottom: 6rem;
-      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      padding-top: 2.5rem; padding-bottom: 4rem;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; min-width: 0;
       gap: 4rem; align-items: center;
     }
     .hero-label {
@@ -238,7 +218,7 @@
     }
     .btn-ghost:hover { border-color: var(--blue-lt); color: var(--blue-lt); transform: translateY(-2px); }
 
-    .hero-visual { display: flex; flex-direction: column; gap: 1.1rem; }
+    .hero-visual { display: flex; flex-direction: column; gap: 1.1rem; min-width: 0; overflow: hidden; }
     .hero-card {
       background: var(--charcoal);
       border: 1px solid rgba(255,255,255,0.07); border-radius: 10px;
@@ -284,9 +264,9 @@
       50%       { transform: translateX(-50%) translateY(7px); }
     }
 
-    /* ══════════════════════════════════════
+/* ══════════════════════════════════════
        STATS BAR
-    ══════════════════════════════════════ */
+   ══════════════════════════════════════ */
     .stats-bar {
       background: var(--charcoal);
       border-top: 1px solid var(--divider);
@@ -317,204 +297,134 @@
       text-transform: uppercase; margin-top: 0.4rem;
     }
 
-    /* ══════════════════════════════════════
-       SECTIONS BASE
-    ══════════════════════════════════════ */
-    .section { padding: 6rem 1.5rem; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-tag {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-size: 0.68rem; font-weight: 600;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gray); margin-bottom: 1rem;
-    }
-    .section-tag .tag-bars { display: flex; gap: 3px; }
-    .section-tag .tag-bars span { display: block; width: 14px; height: 2px; border-radius: 1px; }
-    .section-tag .tag-bars span:first-child { background: var(--red); }
-    .section-tag .tag-bars span:last-child  { background: var(--blue); }
-    .section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.02em; line-height: 1.05; margin-bottom: 0.5rem;
-    }
-    .section-title .red  { color: var(--red); }
-    .section-title .blue { color: var(--blue-lt); }
+/* ══ REVEAL ══ */
+    .reveal { opacity: 1; transform: none; }
+    .js-ready .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .js-ready .reveal.visible { opacity: 1; transform: none; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* ══ QUEM SOMOS ══ */
-    .sobre-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 5rem; align-items: start; margin-top: 3.5rem;
-    }
-    .sobre-text p {
-      font-size: 0.97rem; font-weight: 300;
-      color: rgba(255,255,255,0.7); line-height: 1.9; margin-bottom: 1.2rem;
-    }
-    .sobre-text p strong { color: var(--white); font-weight: 600; }
-    .sobre-text p .red  { color: var(--red); }
-    .sobre-text p .blue { color: var(--blue-lt); }
-    .valores-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-      background: var(--divider); border: 1px solid var(--divider);
-      border-radius: 10px; overflow: hidden;
-    }
-    .valor-card { background: var(--charcoal); padding: 1.5rem; transition: background 0.25s; }
-    .valor-card:hover { background: var(--charcoal-lt); }
-    .valor-icon { font-size: 1.4rem; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
-    .valor-bar { width: 24px; height: 3px; border-radius: 2px; display: inline-block; }
-    .valor-bar.r { background: var(--red); }
-    .valor-bar.b { background: var(--blue); }
-    .valor-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.95rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 0.4rem;
-    }
-    .valor-desc { font-size: 0.8rem; color: var(--gray); font-weight: 300; line-height: 1.6; }
+/* ══ PILARES ══ */
+.pilares-sec { padding: 80px 0; background: var(--dark); }
+.pilares-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+.sec-tag { font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;display:flex;align-items:center;gap:8px }
+.sec-tag::before { content:'';width:18px;height:1.5px;background:var(--red);flex-shrink:0 }
+.sec-title { font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(1.8rem,4vw,3rem);line-height:1;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:40px }
+.sec-title .r { color:var(--red) }
+.sec-title .b { color:var(--blue-lt) }
+.sec-title .accent-red  { color:var(--red) }
+.sec-title .accent-blue { color:var(--blue-lt) }
+.sec-title em { font-style:italic }
+.pilares-row { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px }
+.pilar { border-radius:16px;overflow:hidden;position:relative;text-decoration:none;color:var(--white);display:flex;flex-direction:column;min-height:280px;transition:transform .3s }
+.pilar:hover { transform:translateY(-4px) }
+.pilar-tech { background:linear-gradient(140deg,#1a0505 0%,#2d0a0a 50%,#3d0f0f 100%) }
+.pilar-cons { background:linear-gradient(140deg,#050d1f 0%,#0a1a3d 50%,#0f2060 100%) }
+.pilar-glow-r { position:absolute;bottom:-40%;right:-20%;width:80%;height:80%;border-radius:50%;background:radial-gradient(circle,rgba(214,40,40,.35) 0%,transparent 65%);pointer-events:none }
+.pilar-glow-b { position:absolute;bottom:-40%;right:-20%;width:80%;height:80%;border-radius:50%;background:radial-gradient(circle,rgba(29,78,216,.35) 0%,transparent 65%);pointer-events:none }
+.pilar-icon { position:absolute;right:20px;top:18px;font-size:3.5rem;opacity:.08 }
+.pilar-num { position:absolute;right:16px;bottom:12px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:6rem;line-height:1;opacity:.05;letter-spacing:-3px }
+.pilar-body { position:relative;z-index:1;padding:28px;display:flex;flex-direction:column;flex:1 }
+.pilar-badge { display:inline-flex;align-items:center;gap:5px;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:14px;width:fit-content;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1) }
+.badge-r { color:rgba(255,100,100,.9) }
+.badge-b { color:rgba(100,150,255,.9) }
+.pilar-nome { font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.65rem;text-transform:uppercase;line-height:1;margin-bottom:6px;letter-spacing:.03em }
+.pilar-sub { font-size:.7rem;color:rgba(255,255,255,.45);margin-bottom:14px;font-weight:300 }
+.pilar-desc { font-size:.83rem;color:rgba(255,255,255,.6);line-height:1.7;font-weight:300;flex:1;margin-bottom:20px }
+.pilar-arrow { font-size:.73rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;transition:gap .2s }
+.pilar:hover .pilar-arrow { gap:12px }
+.arrow-r { color:rgba(255,120,120,.9) }
+.arrow-b { color:rgba(120,160,255,.9) }
 
-    /* ══ EMPRESAS ══ */
-    .empresas { background: var(--black); padding: 6rem 1.5rem; }
-    .empresas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3.5rem; }
-    .empresa-card {
-      background: var(--charcoal); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px; padding: 2.5rem 2rem;
-      position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s;
-    }
-    .empresa-card:hover { transform: translateY(-5px); }
-    .empresa-card.card-red { border-top: 3px solid var(--red); }
-    .empresa-card.card-red:hover { border-color: var(--red); }
-    .empresa-card.card-blue { border-top: 3px solid var(--blue); }
-    .empresa-card.card-blue:hover { border-color: var(--blue); }
-    .empresa-num {
-      position: absolute; right: 1.5rem; top: 1.2rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 5rem; font-weight: 900;
-      color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none;
-    }
-    .empresa-badge {
-      display: inline-block; font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 0.25rem 0.7rem; border-radius: 3px; margin-bottom: 1.2rem;
-    }
-    .badge-red  { background: var(--red-dim);  color: var(--red);     border: 1px solid rgba(214,40,40,0.3); }
-    .badge-blue { background: var(--blue-dim); color: var(--blue-lt); border: 1px solid rgba(29,78,216,0.3); }
-    .empresa-nome {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.7rem; font-weight: 800;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 0.2rem; line-height: 1;
-    }
-    .empresa-subtitulo { font-size: 0.78rem; color: var(--gray); letter-spacing: 0.06em; margin-bottom: 1.3rem; font-weight: 300; }
-    .empresa-desc { font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.85; margin-bottom: 1.8rem; }
-    .empresa-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 2rem; }
-    .empresa-features li {
-      font-size: 0.85rem; color: rgba(255,255,255,0.7);
-      display: flex; align-items: flex-start; gap: 0.6rem;
-      font-weight: 300; line-height: 1.5;
-    }
-    .empresa-features li .bullet { flex-shrink: 0; margin-top: 0.4rem; width: 6px; height: 6px; border-radius: 1px; }
-    .bullet-r { background: var(--red); }
-    .bullet-b { background: var(--blue-lt); }
-    .empresa-link {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.8rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none; transition: gap 0.2s;
-    }
-    .link-red  { color: var(--red); }
-    .link-blue { color: var(--blue-lt); }
-    .empresa-link:hover { gap: 0.9rem; }
+/* ══ NEWS CARD ══ */
+.news-card { border-radius:14px;overflow:hidden;position:relative;height:190px;margin-top:16px;cursor:pointer }
+.news-slide { display:none;position:absolute;inset:0 }
+.news-slide.active { display:block }
+.news-bg { position:absolute;inset:0;width:100%;height:100%;object-fit:cover }
+.news-gradient { position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.25) 60%,transparent 100%) }
+.news-placeholder { position:absolute;inset:0;display:flex;align-items:center;justify-content:center }
+.news-body { position:absolute;bottom:0;left:0;right:0;padding:20px }
+.news-badge { font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px }
+.news-titulo { font-size:.95rem;font-weight:700;line-height:1.35;margin-bottom:4px }
+.news-data { font-size:.65rem;color:rgba(255,255,255,.4) }
+.news-dots { position:absolute;bottom:14px;right:16px;display:flex;gap:5px;z-index:10 }
+.ndot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.25s }
+.ndot.active { background:var(--red);width:16px;border-radius:3px }
 
-    /* ══ PROCESSO ══ */
-    .processo { padding: 6rem 1.5rem; }
-    .processo-steps {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-      margin-top: 3.5rem; background: var(--divider);
-      border: 1px solid var(--divider); border-radius: 10px; overflow: hidden;
-    }
-    .passo { background: var(--charcoal); padding: 2rem 1.5rem; transition: background 0.25s; }
-    .passo:hover { background: var(--charcoal-lt); }
-    .passo-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 2.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.8rem;
-    }
-    .passo:nth-child(odd) .passo-num  { color: var(--red); }
-    .passo:nth-child(even) .passo-num { color: var(--blue-lt); }
-    .passo-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 0.6rem;
-    }
-    .passo-desc { font-size: 0.82rem; color: var(--gray); font-weight: 300; line-height: 1.65; }
+/* ══ PROCESSO ══ */
+.processo-sec { padding:80px 0;background:var(--black) }
+.passos { display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden }
+.passo { padding:28px 22px;border-right:1px solid var(--border);transition:background .2s }
+.passo:last-child { border-right:none }
+.passo:hover { background:var(--charcoal) }
+.passo-n { font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.5rem;line-height:1;margin-bottom:12px }
+.passo:nth-child(odd) .passo-n { color:var(--red) }
+.passo:nth-child(even) .passo-n { color:var(--blue-lt) }
+.passo h3 { font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px }
+.passo p { font-size:.77rem;color:var(--gray);line-height:1.6;font-weight:300 }
 
-    /* ══ VISÃO ══ */
-    .visao { background: var(--black); padding: 6rem 1.5rem; position: relative; overflow: hidden; }
-    .visao::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(to bottom, var(--red), var(--blue));
-    }
-    .visao-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .visao-quote {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800; text-transform: uppercase;
-      line-height: 1.1; color: var(--white);
-    }
-    .visao-quote .red  { color: var(--red); }
-    .visao-quote .blue { color: var(--blue-lt); }
-    .visao-sub { margin-top: 1.5rem; font-size: 0.93rem; font-weight: 300; color: var(--gray); line-height: 1.85; }
-    .visao-items { display: flex; flex-direction: column; gap: 1px; background: var(--divider); border: 1px solid var(--divider); border-radius: 10px; overflow: hidden; }
-    .visao-item {
-      background: var(--charcoal); padding: 1.3rem 1.5rem;
-      display: flex; gap: 1rem; align-items: flex-start; transition: background 0.2s;
-    }
-    .visao-item:hover { background: var(--charcoal-lt); }
-    .visao-item-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .visao-item-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 0.25rem;
-    }
-    .visao-item-desc { font-size: 0.78rem; color: var(--gray); font-weight: 300; line-height: 1.5; }
+/* ══ CATEGORIAS ══ */
+.cats-sec { padding:80px 0;background:var(--dark) }
+.cats-header { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px }
+.cats { display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px }
+.cat { background:var(--charcoal);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;cursor:pointer;transition:.2s }
+.cat:hover { background:var(--charcoal-lt);border-color:rgba(214,40,40,.3);transform:translateY(-2px) }
+.cat i { font-size:1.2rem;color:var(--red);margin-bottom:8px;display:block }
+.cat span { font-size:.7rem;font-weight:600;color:var(--gray-lt) }
 
-    /* ══ DEPOIMENTOS ══ */
-    .depoimentos { padding: 6rem 1.5rem; }
-    .depoimentos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
-    .depo-card {
-      background: var(--charcoal); border: 1px solid var(--divider); border-radius: 10px;
-      padding: 1.8rem; position: relative; transition: transform 0.25s, border-color 0.25s;
-    }
-    .depo-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.14); }
-    .depo-mark { font-family: 'Barlow Condensed', sans-serif; font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.6rem; }
-    .depo-card:nth-child(1) .depo-mark { color: var(--red); }
-    .depo-card:nth-child(2) .depo-mark { color: var(--blue-lt); }
-    .depo-card:nth-child(3) .depo-mark { color: var(--red); }
-    .depo-text { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 1.5rem; font-style: italic; }
-    .depo-author { display: flex; align-items: center; gap: 0.8rem; }
-    .depo-avatar {
-      width: 40px; height: 40px; border-radius: 50%; background: var(--charcoal-lt);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0; border: 2px solid var(--divider);
-    }
-    .depo-name { font-size: 0.85rem; font-weight: 600; color: var(--white); letter-spacing: 0.03em; }
-    .depo-role { font-size: 0.72rem; color: var(--gray); font-weight: 300; }
+/* ══ DEPOIMENTOS SLIDER ══ */
+.dep-sec { padding:80px 0;background:var(--black) }
+.dep-slider { position:relative;overflow:hidden;border-radius:14px }
+.dep-track { display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1) }
+.dep-item { min-width:100%;padding:36px;background:var(--charcoal);border:1px solid var(--border);border-radius:14px }
+.dep-quote { font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:10px }
+.dep-item:nth-child(3n+1) .dep-quote { color:var(--red) }
+.dep-item:nth-child(3n+2) .dep-quote { color:var(--blue-lt) }
+.dep-item:nth-child(3n+3) .dep-quote { color:var(--gray) }
+.dep-txt { font-size:.9375rem;font-style:italic;font-weight:300;color:var(--gray-lt);line-height:1.8;margin-bottom:20px }
+.dep-author { display:flex;align-items:center;gap:12px }
+.dep-av { width:40px;height:40px;border-radius:50%;background:var(--charcoal-lt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--red);flex-shrink:0 }
+.dep-name { font-size:.88rem;font-weight:600 }
+.dep-role { font-size:.72rem;color:var(--gray);margin-top:2px }
+.dep-controls { display:flex;align-items:center;gap:10px;margin-top:16px }
+.dep-btn { width:32px;height:32px;border-radius:50%;background:var(--charcoal);border:1px solid var(--border);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s }
+.dep-btn:hover { background:var(--red);border-color:var(--red);color:var(--white) }
+.dep-dots { display:flex;gap:5px;flex:1;justify-content:center }
+.ddot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.25s }
+.ddot.active { background:var(--red);width:18px;border-radius:3px }
 
-    /* ══ CTA ══ */
+/* ══ CTA — FIX 2: usa .container, sem overflow ══ */
     .cta-section {
       background: var(--charcoal);
       border-top: 1px solid var(--divider); border-bottom: 1px solid var(--divider);
-      padding: 5.5rem 1.5rem; text-align: center;
+      padding: 5.5rem 0;
       position: relative; overflow: hidden;
+      text-align: center;
     }
     .cta-section::before {
       content: ''; position: absolute; inset: 0;
       background:
         radial-gradient(ellipse 60% 80% at 20% 50%, rgba(214,40,40,0.07) 0%, transparent 60%),
         radial-gradient(ellipse 60% 80% at 80% 50%, rgba(29,78,216,0.07) 0%, transparent 60%);
+      pointer-events: none;
     }
     .cta-section .container { position: relative; }
+
+    /* FIX 5 — section-tag */
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 1rem;
+    }
+    .tag-bars { display: flex; gap: 3px; }
+    .tag-bars span { display: block; width: 16px; height: 2px; border-radius: 2px; }
+    .tag-bars span:first-child { background: var(--red); }
+    .tag-bars span:last-child  { background: var(--blue); }
+
     .cta-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(2rem, 5vw, 3.5rem);
@@ -523,8 +433,11 @@
     }
     .cta-title .red  { color: var(--red); }
     .cta-title .blue { color: var(--blue-lt); }
-    .cta-sub { font-size: 1rem; color: var(--gray); font-weight: 300; margin-bottom: 2.5rem; }
-    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-title .accent-red  { color: var(--red); }
+    .cta-title .accent-blue { color: var(--blue-lt); }
+    .cta-desc { font-size: 1rem; color: var(--gray); font-weight: 300; margin-bottom: 2.5rem; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
     .btn-blue {
       background: var(--blue); color: var(--white);
       font-family: 'Barlow', sans-serif;
@@ -536,9 +449,9 @@
     }
     .btn-blue:hover { background: var(--blue-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(29,78,216,0.35); }
 
-    /* ══ FOOTER ══ */
-    footer { background: var(--black); border-top: 1px solid var(--divider); padding: 4rem 1.5rem 2rem; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
+/* ══ FOOTER — FIX 3: padding lateral adicionado ══ */
+    footer { background: var(--black); border-top: 1px solid var(--divider); padding: 4rem 0 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
     .footer-divider { height: 1px; background: var(--divider); margin: 2.5rem 0 1.5rem; }
     .footer-bottom {
       display: flex; justify-content: space-between; align-items: center;
@@ -546,7 +459,7 @@
     }
     .footer-bottom a { color: var(--red); text-decoration: none; }
 
-    /* ══ WPP FLOAT ══ */
+/* ══ WPP FLOAT ══ */
     .wpp-float {
       position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 999;
       width: 54px; height: 54px; border-radius: 50%; background: #25D366;
@@ -562,110 +475,130 @@
       50%       { box-shadow: 0 6px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.07); }
     }
 
-    /* ══ REVEAL ══ */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+/* ══ DRAWER MOBILE — FIX 4: IDs correctos mm-drawer/mm-overlay ══ */
+    #mmOverlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65); z-index: 998;
+      backdrop-filter: blur(3px);
+    }
+    #mmOverlay.active { display: block; }
+    #mmDrawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 78%; max-width: 300px;
+      background: var(--dark); z-index: 999;
+      transform: translateX(100%);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+      border-left: 1px solid var(--border);
+      display: flex; flex-direction: column;
+    }
+    #mmDrawer.active { transform: translateX(0); }
+    .mmDrawer-head {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .mmDrawer-head .mm-title {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+    .mmDrawer-head .mm-close {
+      background: none; border: none;
+      color: rgba(255,255,255,.5); font-size: 1.2rem;
+      cursor: pointer; line-height: 1; padding: .3rem;
+      transition: color .2s;
+    }
+    .mmDrawer-head .mm-close:hover { color: #fff; }
+    #mmDrawer nav {
+      display: flex; flex-direction: column;
+      padding: 8px 0; overflow-y: auto; flex: 1;
+    }
+    #mmDrawer nav a {
+      color: var(--gray-lt); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      padding: 13px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      transition: .2s;
+    }
+    #mmDrawer nav a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,.04);
+      padding-left: 28px;
+    }
 
-    /* ══ DRAWER MENU ══ */
-    .mm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:8000; }
-    .mm-overlay.active { display:block; }
-    .mm-drawer {
-      position:fixed; top:0; right:0; width:55%; max-width:280px;
-      background:var(--black); border-left:1px solid rgba(255,255,255,.08);
-      z-index:8001; transform:translateX(100%); transition:transform .3s ease;
-      display:flex; flex-direction:column; padding:0; overflow:hidden; height:auto; max-height:100dvh;
-    }
-    .mm-drawer.active { transform:translateX(0); }
-    .mm-header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:.9rem 1.2rem; border-bottom:1px solid rgba(255,255,255,.07); flex-shrink:0;
-    }
-    .mm-title { font-size:.6rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.3); }
-    .mm-close { background:none; border:none; color:rgba(255,255,255,.5); font-size:1.2rem; cursor:pointer; line-height:1; padding:.3rem; transition:color .2s; }
-    .mm-close:hover { color:#fff; }
-    .mm-nav { flex:1; overflow-y:auto; padding:.5rem 0; }
-    .mm-nav a {
-      display:block; color:rgba(255,255,255,.75); text-decoration:none;
-      font-size:.95rem; font-weight:400; padding:.85rem 1.2rem;
-      border-bottom:1px solid rgba(255,255,255,.05); transition:all .15s;
-    }
-    .mm-nav a:last-child { border-bottom:none; }
-    .mm-nav a:hover { color:#fff; background:rgba(255,255,255,.04); padding-left:1.5rem; }
-
-    /* ══ RESPONSIVO ══ */
-    @media (max-width: 1024px) {
-      .hero-content { grid-template-columns: 1fr; gap: 3rem; }
-      .sobre-grid, .visao-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .empresas-grid { grid-template-columns: 1fr; }
-      .stats-inner { grid-template-columns: repeat(2, 1fr); }
-      .stat-item:nth-child(2)::after { display: none; }
-      .depoimentos-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .section, .empresas, .processo, .visao, .depoimentos { padding: 4rem 1.2rem; }
-      .processo-steps { grid-template-columns: 1fr 1fr; }
-      .depoimentos-grid { grid-template-columns: 1fr; }
-      .hero-content { padding-top: 3rem; }
-    }
-    @media (max-width: 480px) {
-      .processo-steps { grid-template-columns: 1fr; }
-      .stats-inner { grid-template-columns: 1fr 1fr; }
-      .cta-btns { flex-direction: column; align-items: stretch; }
-    }
-  </style>
+/* ══ RESPONSIVE ══ */
+@media(max-width:860px){
+  .hero-content {
+    grid-template-columns: 1fr !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 3rem;
+    gap: 0 !important;
+  }
+  .hero-visual { display: none !important; }
+  .hero-title { font-size: clamp(2.2rem, 10vw, 3.8rem) !important; }
+  .pilares-row { grid-template-columns: 1fr !important; }
+  .passos { grid-template-columns: 1fr 1fr !important; }
+  .stats-inner { grid-template-columns: repeat(2,1fr) !important; }
+}
+@media(max-width:600px){
+  .passos { grid-template-columns:1fr 1fr }
+  .passo:nth-child(odd) { border-right:1px solid var(--border) }
+  .passo:nth-child(even) { border-right:none }
+}
+@media(max-width:480px){
+  .cats { grid-template-columns: repeat(3,1fr) !important; }
+  .passos { grid-template-columns: 1fr !important; }
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="logo-link" href="index.html">
+    <a class="logo-link" href="/index.html">
       <div class="logo-wordmark">
         IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span>
       </div>
       <span class="logo-sub">Holding SGPS</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Início</a></li>
-      <li><a href="sobre.html">Sobre Nós</a></li>
-      <li><a href="projetos.html">Projectos</a></li>
-      <li><a href="consultoria.html">Consultoria</a></li>
-      <li><a href="tech.html">Tech</a></li>
-      <li><a href="contacto.html" class="nav-cta">Falar Connosco</a></li>
+      <li><a href="/index.html" class="active">Início</a></li>
+      <li><a href="/sobre.html">Sobre</a></li>
+      <li><a href="/tech.html">Tech</a></li>
+      <li><a href="/consultoria.html">Consultoria</a></li>
+      <li><a href="/portfolio.html">Portfólio</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+      <li><a href="/orcamento.html" class="nav-cta">Orçamento</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="var d=document.getElementById('mmDrawer'),o=document.getElementById('mmOverlay');d.classList.toggle('active');o.classList.toggle('active');document.body.style.overflow=d.classList.contains('active')?'hidden':'';">
+    <!-- FIX 4: botão hamburger chama as funções correctas -->
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="openDrawer()">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-glow-blue"></div>
   <div class="hero-stripe"></div>
   <div class="hero-content">
     <div>
-      <div class="hero-label reveal">
+      <div class="hero-label">
         <div class="hero-label-bar"><span></span><span></span></div>
         Angola · Grupo Empresarial
       </div>
-      <h1 class="hero-title reveal reveal-delay-1">
+      <h1 class="hero-title">
         Entre nós,<br>fluem<br><span class="accent-red">opor</span><span class="accent-blue">tuni</span>dades
       </h1>
-      <p class="hero-slogan reveal reveal-delay-2">" Entre nós, fluem oportunidades "</p>
-      <p class="hero-desc reveal reveal-delay-3">
+      <p class="hero-slogan">" Entre nós, fluem oportunidades "</p>
+      <p class="hero-desc">
         Somos um grupo empresarial angolano que apoia negócios com consultoria estratégica e inovação digital. Do primeiro passo à expansão — estamos consigo em cada etapa.
       </p>
-      <div class="hero-btns reveal reveal-delay-4">
-        <a href="sobre.html" class="btn-red">Conheça-nos →</a>
-        <a href="contacto.html" class="btn-ghost">Falar Connosco</a>
+      <div class="hero-btns">
+        <a href="/sobre.html" class="btn-red">Conheça-nos →</a>
+        <a href="/contacto.html" class="btn-ghost">Falar Connosco</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -695,269 +628,144 @@
   <div class="scroll-hint">Explorar</div>
 </section>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat-item">
-      <span class="stat-number" data-target="120"><span class="red">0</span></span>
+      <span class="stat-number" id="statClientes"><span class="red">—</span></span>
       <span class="stat-label">Clientes Apoiados</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="2"><span class="blue">0</span></span>
+      <span class="stat-number" id="statEmpresas"><span class="blue">2</span></span>
       <span class="stat-label">Empresas do Grupo</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="98"><span class="red">0</span></span>
+      <span class="stat-number" id="statSat"><span class="red">—</span></span>
       <span class="stat-label">% Satisfação</span>
     </div>
     <div class="stat-item">
-      <span class="stat-number" data-target="50"><span class="blue">0</span></span>
+      <span class="stat-number" id="statSites"><span class="blue">—</span></span>
       <span class="stat-label">Projectos Digitais</span>
     </div>
   </div>
 </div>
 
-<!-- QUEM SOMOS -->
-<section class="section" id="sobre">
-  <div class="section-inner">
-    <div class="section-tag reveal">
-      <div class="tag-bars"><span></span><span></span></div>
-      Quem Somos
-    </div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Um grupo feito<br>para <span class="red">servir</span> e <span class="blue">transformar</span>
-    </h2>
-    <div class="sobre-grid">
-      <div class="sobre-text reveal">
-        <p>A <strong>IMPERSILVA HOLDING SGPS</strong> é um grupo empresarial angolano fundado com a missão de democratizar o acesso ao empreendedorismo e à tecnologia em Angola.</p>
-        <p>Reunimos dois pilares estratégicos: a <strong class="red">IMPERSILVA Consultoria</strong>, focada em guiar empresas desde a concepção até à consolidação, e a <strong class="blue">IMPERSILVA TECH</strong>, dedicada a digitalizar e amplificar a presença de negócios no mundo online.</p>
-        <p>O nosso compromisso é claro: tratamos cada cliente como parceiro. O crescimento do seu negócio é a nossa maior conquista.</p>
-        <div style="margin-top:1.5rem;">
-          <a href="sobre.html" class="btn-ghost" style="font-size:0.82rem;">Ver a nossa história →</a>
-        </div>
-      </div>
-      <div class="valores-grid reveal reveal-delay-2">
-        <div class="valor-card">
-          <div class="valor-icon"><span class="valor-bar r"></span></div>
-          <div class="valor-title">Missão</div>
-          <div class="valor-desc">Impulsionar negócios angolanos com estratégia, tecnologia e acompanhamento próximo.</div>
-        </div>
-        <div class="valor-card">
-          <div class="valor-icon"><span class="valor-bar b"></span></div>
-          <div class="valor-title">Visão</div>
-          <div class="valor-desc">Ser o grupo de referência em soluções empresariais e digitais em Angola.</div>
-        </div>
-        <div class="valor-card">
-          <div class="valor-icon"><span class="valor-bar r"></span></div>
-          <div class="valor-title">Compromisso</div>
-          <div class="valor-desc">O seu sucesso é o nosso sucesso. Acompanhamos cada etapa da sua jornada.</div>
-        </div>
-        <div class="valor-card">
-          <div class="valor-icon"><span class="valor-bar b"></span></div>
-          <div class="valor-title">Inovação</div>
-          <div class="valor-desc">Soluções modernas e adaptadas à realidade do mercado angolano.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- PILARES -->
+<section class="pilares-sec">
+  <div class="pilares-inner">
+    <div class="sec-tag reveal">O que fazemos</div>
+    <div class="sec-title reveal reveal-delay-1">Dois <span class="r">pilares</span>,<br>uma só <em><span class="b">visão</span></em></div>
 
-<!-- EMPRESAS -->
-<section class="empresas">
-  <div class="section-inner">
-    <div class="section-tag reveal">
-      <div class="tag-bars"><span></span><span></span></div>
-      Os Nossos Projectos
+    <div class="pilares-row">
+      <a href="/tech.html" class="pilar pilar-tech reveal reveal-delay-2">
+        <div class="pilar-glow-r"></div>
+        <div class="pilar-icon"><i class="fa-solid fa-code"></i></div>
+        <span class="pilar-num">01</span>
+        <div class="pilar-body">
+          <div class="pilar-badge badge-r"><i class="fa-solid fa-bolt"></i> IMPERSILVA TECH</div>
+          <div class="pilar-nome" id="techNome">Sites &amp;<br>Lojas <em>Online</em></div>
+          <div class="pilar-sub" id="techSub">Criação de lojas online para qualquer negócio</div>
+          <p class="pilar-desc" id="techDesc">Do restaurante à loja de roupa — criamos o teu site de vendas, sistema de encomendas e painel de gestão. Lançamento em menos de 7 dias.</p>
+          <span class="pilar-arrow arrow-r">Explorar Tech <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <a href="/consultoria.html" class="pilar pilar-cons reveal reveal-delay-3">
+        <div class="pilar-glow-b"></div>
+        <div class="pilar-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <span class="pilar-num">02</span>
+        <div class="pilar-body">
+          <div class="pilar-badge badge-b"><i class="fa-solid fa-briefcase"></i> IMPERSILVA CONSULTORIA</div>
+          <div class="pilar-nome" id="consNome">Estratégia &amp;<br><em>Crescimento</em></div>
+          <div class="pilar-sub" id="consSub">Apoio empresarial do registo à escala</div>
+          <p class="pilar-desc" id="consDesc">Criamos a tua empresa, definimos a estratégia e acompanhamos o crescimento. Com o Plano Escalador tens um roteiro claro para o sucesso.</p>
+          <span class="pilar-arrow arrow-b">Explorar Consultoria <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </a>
     </div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Dois pilares,<br>uma só <span class="red">vis</span><span class="blue">ão</span>
-    </h2>
-    <div class="empresas-grid">
-      <div class="empresa-card card-red reveal reveal-delay-2">
-        <span class="empresa-num">01</span>
-        <div class="empresa-badge badge-red">Consultoria Empresarial</div>
-        <div class="empresa-nome">IMPERSILVA</div>
-        <div class="empresa-subtitulo">Consultoria & Administração de Empresa</div>
-        <p class="empresa-desc">Apoiamos quem quer começar e quem já começou. Desde a abertura da sua empresa até à consolidação no mercado, estamos em cada etapa do percurso.</p>
-        <ul class="empresa-features">
-          <li><span class="bullet bullet-r"></span>Suporte completo na criação e registo de empresas</li>
-          <li><span class="bullet bullet-r"></span>Plano <strong>"Escalador de Empresa"</strong> — para negócios que querem crescer</li>
-          <li><span class="bullet bullet-r"></span>Consultoria estratégica e administrativa</li>
-          <li><span class="bullet bullet-r"></span>Acompanhamento contínuo para pequenos negócios</li>
-        </ul>
-        <a href="consultoria.html" class="empresa-link link-red">Saber mais ›</a>
-      </div>
-      <div class="empresa-card card-blue reveal reveal-delay-3">
-        <span class="empresa-num">02</span>
-        <div class="empresa-badge badge-blue">Tecnologia & Digital</div>
-        <div class="empresa-nome">IMPERSILVA <span style="color:var(--blue-lt)">|</span> TECH</div>
-        <div class="empresa-subtitulo">Soluções Tecnológicas & Customização Digital</div>
-        <p class="empresa-desc">Levamos pequenas empresas para o mundo digital. Criamos sites de vendas, gerimos redes sociais e facilitamos o contacto entre vendedor e cliente.</p>
-        <ul class="empresa-features">
-          <li><span class="bullet bullet-b"></span>Criação de sites de vendas e pedidos online</li>
-          <li><span class="bullet bullet-b"></span>Gestão e crescimento de redes sociais</li>
-          <li><span class="bullet bullet-b"></span>Visibilidade digital para negócios locais</li>
-          <li><span class="bullet bullet-b"></span>Centralização da presença online da sua empresa</li>
-        </ul>
-        <a href="tech.html" class="empresa-link link-blue">Saber mais ›</a>
-      </div>
+
+    <!-- CARD NOTÍCIAS -->
+    <div class="news-card reveal reveal-delay-4" id="newsCard">
+      <div id="newsSlides"></div>
+      <div class="news-dots" id="newsDots"></div>
     </div>
   </div>
 </section>
 
 <!-- PROCESSO -->
-<section class="processo">
-  <div class="section-inner">
-    <div class="section-tag reveal">
-      <div class="tag-bars"><span></span><span></span></div>
-      O Nosso Processo
-    </div>
-    <h2 class="section-title reveal reveal-delay-1">Como trabalhamos<br>consigo</h2>
-    <div class="processo-steps reveal reveal-delay-2">
-      <div class="passo">
-        <div class="passo-num">01</div>
-        <div class="passo-title">Consulta Inicial</div>
-        <div class="passo-desc">Ouvimos o seu projecto, necessidades e objectivos. Sem compromisso, sem custos.</div>
-      </div>
-      <div class="passo">
-        <div class="passo-num">02</div>
-        <div class="passo-title">Diagnóstico</div>
-        <div class="passo-desc">Analisamos a sua situação e identificamos o caminho certo para crescer.</div>
-      </div>
-      <div class="passo">
-        <div class="passo-num">03</div>
-        <div class="passo-title">Plano de Acção</div>
-        <div class="passo-desc">Desenvolvemos uma estratégia personalizada com metas claras e alcançáveis.</div>
-      </div>
-      <div class="passo">
-        <div class="passo-num">04</div>
-        <div class="passo-title">Execução</div>
-        <div class="passo-desc">Implementamos e acompanhamos cada passo para garantir resultados reais.</div>
-      </div>
+<section class="processo-sec">
+  <div class="pilares-inner">
+    <div class="sec-tag reveal">O processo</div>
+    <div class="sec-title reveal reveal-delay-1">Do contacto ao site <span class="r">no ar</span></div>
+    <div class="passos reveal reveal-delay-2" id="passosGrid">
+      <div class="passo"><div class="passo-n">01</div><h3>Contacto</h3><p>Falas connosco. Respondemos em menos de 24h com tudo o que precisas saber.</p></div>
+      <div class="passo"><div class="passo-n">02</div><h3>Proposta</h3><p>Enviamos uma proposta clara com prazo, preço e o que está incluído.</p></div>
+      <div class="passo"><div class="passo-n">03</div><h3>Design</h3><p>Desenvolvemos o teu site e enviamos para aprovação. Ajustes sem custo extra.</p></div>
+      <div class="passo"><div class="passo-n">04</div><h3>Lançamento</h3><p>O teu site vai ao ar. Recebes painel de gestão e és totalmente autónomo.</p></div>
     </div>
   </div>
 </section>
 
-<!-- VISÃO FUTURA -->
-<section class="visao">
-  <div class="section-inner">
-    <div class="visao-grid">
-      <div class="reveal">
-        <div class="section-tag">
-          <div class="tag-bars"><span></span><span></span></div>
-          O Futuro que Construímos
-        </div>
-        <div class="visao-quote">
-          Queremos ser<br>o maior grupo<br>de suporte<br><span class="red">empre</span><span class="blue">sarial</span><br>de Angola.
-        </div>
-        <p class="visao-sub">Temos uma visão ambiciosa: expandir as nossas soluções, alcançar mais empreendedores e digitalizar mais negócios angolanos em cada canto do país.</p>
+<!-- CATEGORIAS -->
+<section class="cats-sec">
+  <div class="pilares-inner">
+    <div class="cats-header">
+      <div>
+        <div class="sec-tag reveal">Para qualquer negócio</div>
+        <div class="sec-title reveal reveal-delay-1" style="margin-bottom:0">Seja qual for a tua <span class="b">área</span></div>
       </div>
-      <div class="visao-items reveal reveal-delay-2">
-        <div class="visao-item">
-          <div class="visao-item-icon">🌍</div>
-          <div>
-            <div class="visao-item-title">Expansão Nacional</div>
-            <div class="visao-item-desc">Levar as nossas soluções a todas as províncias de Angola.</div>
-          </div>
-        </div>
-        <div class="visao-item">
-          <div class="visao-item-icon">📱</div>
-          <div>
-            <div class="visao-item-title">Plataforma Digital Própria</div>
-            <div class="visao-item-desc">Aplicação para gestão de pedidos e negócios dos nossos clientes.</div>
-          </div>
-        </div>
-        <div class="visao-item">
-          <div class="visao-item-icon">🎓</div>
-          <div>
-            <div class="visao-item-title">Academia IMPERSILVA</div>
-            <div class="visao-item-desc">Formação de empreendedores angolanos com conteúdos práticos e acessíveis.</div>
-          </div>
-        </div>
-        <div class="visao-item">
-          <div class="visao-item-icon">🤝</div>
-          <div>
-            <div class="visao-item-title">Rede de Parceiros</div>
-            <div class="visao-item-desc">Ecossistema de empresas parceiras para fortalecer o mercado nacional.</div>
-          </div>
-        </div>
-      </div>
+      <a href="/tech.html" class="btn-ghost reveal reveal-delay-2" style="flex-shrink:0">Ver todos</a>
     </div>
+    <div class="cats" id="catsGrid"></div>
   </div>
 </section>
 
 <!-- DEPOIMENTOS -->
-<section class="depoimentos">
-  <div class="section-inner">
-    <div class="section-tag reveal">
-      <div class="tag-bars"><span></span><span></span></div>
-      Depoimentos
+<section class="dep-sec">
+  <div class="pilares-inner">
+    <div class="sec-tag reveal">O que dizem</div>
+    <div class="sec-title reveal reveal-delay-1">Clientes reais. <span class="accent-red">Resul</span><span class="accent-blue">tados</span> reais.</div>
+    <div class="dep-slider reveal reveal-delay-2">
+      <div class="dep-track" id="depTrack"></div>
     </div>
-    <h2 class="section-title reveal reveal-delay-1">
-      O que dizem os nossos <span class="red">cli</span><span class="blue">entes</span>
-    </h2>
-    <div class="depoimentos-grid">
-      <div class="depo-card reveal reveal-delay-1">
-        <div class="depo-mark">"</div>
-        <p class="depo-text">A IMPERSILVA ajudou-me a formalizar o meu negócio e a criar uma estratégia real. Em poucos meses as minhas vendas duplicaram.</p>
-        <div class="depo-author">
-          <div class="depo-avatar">👩</div>
-          <div>
-            <div class="depo-name">Maria Fernandes</div>
-            <div class="depo-role">Loja de Moda — Huambo</div>
-          </div>
-        </div>
-      </div>
-      <div class="depo-card reveal reveal-delay-2">
-        <div class="depo-mark">"</div>
-        <p class="depo-text">A IMPERSILVA TECH criou o meu site de pedidos e agora os meus clientes encomendam sem precisar de se deslocar. Revolucionou o meu negócio.</p>
-        <div class="depo-author">
-          <div class="depo-avatar">👨</div>
-          <div>
-            <div class="depo-name">Carlos Mendes</div>
-            <div class="depo-role">Restaurante — Benguela</div>
-          </div>
-        </div>
-      </div>
-      <div class="depo-card reveal reveal-delay-3">
-        <div class="depo-mark">"</div>
-        <p class="depo-text">Com o Plano Escalador percebi onde estava a errar e o que precisava mudar. O suporte da equipa é próximo e muito profissional.</p>
-        <div class="depo-author">
-          <div class="depo-avatar">👩</div>
-          <div>
-            <div class="depo-name">Ana Lopes</div>
-            <div class="depo-role">Serviços — Huíla</div>
-          </div>
-        </div>
-      </div>
+    <div class="dep-controls">
+      <button class="dep-btn" onclick="moveDep(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="dep-dots" id="depDots"></div>
+      <button class="dep-btn" onclick="moveDep(1)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL -->
+<!-- FIX 2: CTA usa .container em vez de .cta-inner -->
 <section class="cta-section">
   <div class="container">
-    <h2 class="cta-title">Pronto para <span class="red">cres</span><span class="blue">cer</span>?</h2>
-    <p class="cta-sub">A primeira consulta é gratuita e sem compromisso. Fale connosco hoje.</p>
-    <div class="cta-btns">
-      <a href="contacto.html" class="btn-blue">Solicitar Consulta</a>
+    <div class="section-tag reveal">
+      <div class="tag-bars"><span></span><span></span></div>
+      Próximo Passo
+    </div>
+    <h2 class="cta-title reveal reveal-delay-1">
+      Pronto para<br><span class="accent-red">come</span><span class="accent-blue">çar?</span>
+    </h2>
+    <p class="cta-desc reveal reveal-delay-2" id="ctaSub">Fala connosco hoje. Em menos de 24h tens uma proposta na mão.</p>
+    <div class="cta-actions reveal reveal-delay-3">
+      <a href="/orcamento.html" class="btn-red">Pedir Orçamento →</a>
+      <a href="/contacto.html" class="btn-ghost">Falar Connosco</a>
+      <a href="/verificar-site.html" class="btn-ghost" style="border-color:rgba(29,78,216,.4);color:var(--blue-lt)">Área do Cliente</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FIX 3: footer-inner já tem padding no CSS -->
 <footer>
   <div class="footer-inner">
     <div style="font-size:0.55rem;letter-spacing:0.25em;color:var(--gray);text-transform:uppercase;margin-bottom:0.5rem;">Holding SGPS</div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
       <span>© <span id="yr"></span> IMPERSILVA HOLDING SGPS. Todos os direitos reservados.</span>
-      <span>Desenvolvido por <a href="tech.html">IMPERSILVA TECH</a></span>
+      <span>Desenvolvido por <a href="/tech.html">IMPERSILVA TECH</a></span>
     </div>
   </div>
 </footer>
 
-<!-- WPP FLOAT -->
 <a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços." target="_blank" class="wpp-float" title="WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -965,95 +773,183 @@
   </svg>
 </a>
 
-<!-- MENU MOBILE -->
-<div class="mm-overlay" id="mmOverlay" onclick="document.getElementById('mmDrawer').classList.remove('active');this.classList.remove('active');document.body.style.overflow='';"></div>
-<div class="mm-drawer" id="mmDrawer">
-  <div class="mm-header">
+<!-- FIX 4: Drawer com IDs correctos e fechar ao clicar nos links -->
+<div id="mmOverlay" onclick="closeDrawer()"></div>
+<div id="mmDrawer">
+  <div class="mmDrawer-head">
     <span class="mm-title">Menu</span>
-    <button class="mm-close" onclick="document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';">&#10005;</button>
+    <button class="mm-close" onclick="closeDrawer()">&#10005;</button>
   </div>
-  <nav class="mm-nav">
-    <a href="index.html">Início</a>
-    <a href="sobre.html">Sobre Nós</a>
-    <a href="projetos.html">Projectos</a>
-    <a href="consultoria.html">Consultoria</a>
-    <a href="tech.html">IMPERSILVA TECH</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="verificar-site.html">Portal de Clientes</a>
+  <nav>
+    <a href="/index.html">Início</a>
+    <a href="/tech.html">Tech</a>
+    <a href="/consultoria.html">Consultoria</a>
+    <a href="/portfolio.html">Portfólio</a>
+    <a href="/sobre.html">Sobre</a>
+    <a href="/contacto.html">Contacto</a>
+    <a href="/orcamento.html">Orçamento →</a>
+    <a href="/verificar-site.html">Portal do Cliente</a>
   </nav>
 </div>
 
 <script>
-  // REVEAL AO SCROLL
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const API=(window.IMPERSILVA&&window.IMPERSILVA.api_url)||(window.SITE_CONFIG&&window.SITE_CONFIG.api_url)||'https://impersilva-ao.3miliosilva.workers.dev';
 
-  // Hero revela imediatamente
-  document.querySelectorAll('.hero .reveal').forEach((el, i) => {
-    setTimeout(() => el.classList.add('visible'), 150 + i * 130);
-  });
+// ── REVEAL ────────────────────────────────────────────────
+document.documentElement.classList.add('js-ready');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('.hero .reveal, .hero-content .reveal').forEach((el,i)=>{
+  setTimeout(()=>el.classList.add('visible'), i*100);
+});
 
-  // CONTADORES ANIMADOS
-  const counterObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { animateCount(e.target); counterObs.unobserve(e.target); }
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObs.observe(el));
+// ── NAV SCROLL ────────────────────────────────────────────
+const navbar=document.querySelector('.navbar');
+window.addEventListener('scroll',()=>{navbar.style.borderBottomColor=window.scrollY>60?'rgba(214,40,40,0.2)':'rgba(255,255,255,0.07)';},{passive:true});
 
-  function animateCount(el) {
-    const target = +el.dataset.target;
-    const suffix = el.dataset.target >= 98 ? '%' : '+';
-    let n = 0;
-    const step = target / (1600 / 16);
-    const t = setInterval(() => {
-      n += step;
-      if (n >= target) { el.textContent = target + suffix; clearInterval(t); }
-      else { el.textContent = Math.floor(n) + suffix; }
-    }, 16);
-  }
-
-  // NAVBAR SCROLL
-  const navbar = document.querySelector('.navbar');
-  window.addEventListener('scroll', () => {
-    navbar.style.borderBottomColor = window.scrollY > 60
-      ? 'rgba(214,40,40,0.2)'
-      : 'rgba(255,255,255,0.07)';
-  });
-  document.getElementById("yr").textContent = new Date().getFullYear();
-</script>
-
-<!-- ═══════ PWA: SERVICE WORKER ═══════ -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js', { scope: '/' })
-      .then((reg) => {
-        console.log('[PWA] Service Worker registado:', reg.scope);
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              /* Banner de actualização disponível */
-              const b = document.createElement('div');
-              b.style.cssText = 'position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#242428;border:1px solid rgba(255,255,255,0.12);border-left:3px solid #d62828;color:#fff;font-family:Barlow,sans-serif;font-size:0.82rem;padding:0.75rem 1.2rem;border-radius:8px;display:flex;align-items:center;gap:1rem;z-index:99998;box-shadow:0 8px 32px rgba(0,0,0,0.4);white-space:nowrap;';
-              b.innerHTML = '<span>🔄 Nova versão disponível</span><button onclick="location.reload()" style="background:#d62828;color:#fff;border:none;border-radius:4px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:600;cursor:pointer;">Actualizar</button><button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:1rem;">✕</button>';
-              document.body.appendChild(b);
-              setTimeout(() => b.remove(), 12000);
-            }
-          });
-        });
-      })
-      .catch((err) => console.warn('[PWA] SW falhou:', err));
-  });
+// ── DRAWER — FIX 4: funções ligadas aos IDs correctos ─────
+function openDrawer(){
+  document.getElementById('mmDrawer').classList.add('active');
+  document.getElementById('mmOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
 }
-</script>
-<!-- ═══════ /PWA ═══════ -->
+function closeDrawer(){
+  document.getElementById('mmDrawer').classList.remove('active');
+  document.getElementById('mmOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+// Fechar ao navegar
+document.querySelectorAll('#mmDrawer nav a').forEach(a=>{
+  a.addEventListener('click', closeDrawer);
+});
 
+// ── FOOTER ANO ────────────────────────────────────────────
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+// ── STATS COUNTER ─────────────────────────────────────────
+function counter(id,target,suf){
+  const el=document.getElementById(id);if(!el)return;
+  let n=0,step=target/60;
+  const t=setInterval(()=>{n+=step;if(n>=target){el.innerHTML=target+suf;clearInterval(t);}else el.innerHTML=Math.floor(n)+suf;},16);
+}
+new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){counter('statClientes',120,'+');counter('statSites',50,'+');counter('statSat',98,'%');}});},{threshold:.5}).observe(document.querySelector('.stats-bar'));
+
+// ── CATEGORIAS ────────────────────────────────────────────
+const CATS=[
+  {i:'fa-utensils',l:'Restaurantes'},{i:'fa-shirt',l:'Moda'},
+  {i:'fa-mobile-alt',l:'Tecnologia'},{i:'fa-scissors',l:'Salões'},
+  {i:'fa-cake-candles',l:'Padarias'},{i:'fa-ticket',l:'Eventos'},
+  {i:'fa-book',l:'Livrarias'},{i:'fa-briefcase',l:'Escritório'},
+  {i:'fa-dumbbell',l:'Desporto'},{i:'fa-heart-pulse',l:'Saúde'},
+  {i:'fa-car',l:'Automóvel'},{i:'fa-store',l:'Outros'},
+];
+function renderCats(cats){
+  document.getElementById('catsGrid').innerHTML=cats.map(c=>
+    `<div class="cat" onclick="location.href='/orcamento.html?tipo=${encodeURIComponent(c.l||c.nome)}'">
+      <i class="fa-solid ${c.i||c.icon||'fa-store'}"></i>
+      <span>${c.l||c.nome}</span>
+    </div>`
+  ).join('');
+}
+
+// ── DEPOIMENTOS SLIDER ────────────────────────────────────
+const DEP_FB=[
+  {nome:'Maria Fernandes',negocio:'Loja de Moda — Huambo',texto:'A IMPERSILVA ajudou-me a formalizar o meu negócio e criar uma estratégia real. Em poucos meses as minhas vendas duplicaram.'},
+  {nome:'Carlos Mendes',negocio:'Restaurante — Benguela',texto:'Criaram o meu site de pedidos. Agora os clientes encomendam sem se deslocar. Revolucionou completamente o meu negócio.'},
+  {nome:'Ana Lopes',negocio:'Serviços — Huíla',texto:'Com o Plano Escalador percebi onde estava a errar e o que precisava mudar. O suporte é próximo e muito profissional.'},
+];
+let depIdx=0,depTimer,depData=[];
+function renderDep(deps){
+  depData=deps;
+  const track=document.getElementById('depTrack');
+  const dots=document.getElementById('depDots');
+  track.innerHTML=deps.map((d,i)=>{
+    const ini=(d.nome||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    return`<div class="dep-item"><div class="dep-quote">"</div><p class="dep-txt">${d.texto}</p>
+      <div class="dep-author"><div class="dep-av">${ini}</div>
+      <div><div class="dep-name">${d.nome}</div><div class="dep-role">${d.negocio||''}</div></div></div></div>`;
+  }).join('');
+  dots.innerHTML=deps.map((_,i)=>`<div class="ddot${i===0?' active':''}" onclick="goDep(${i})"></div>`).join('');
+  clearInterval(depTimer);
+  depTimer=setInterval(()=>moveDep(1),5000);
+}
+function goDep(i){
+  depIdx=(i+depData.length)%depData.length;
+  document.getElementById('depTrack').style.transform=`translateX(-${depIdx*100}%)`;
+  document.querySelectorAll('.ddot').forEach((d,j)=>d.classList.toggle('active',j===depIdx));
+  clearInterval(depTimer);depTimer=setInterval(()=>moveDep(1),5000);
+}
+function moveDep(dir){goDep(depIdx+dir);}
+
+// ── NOTÍCIAS SLIDER ───────────────────────────────────────
+const NEWS_FB=[
+  {label:'Novidade',titulo:'Lojas online prontas em 7 dias para qualquer negócio angolano',data:'Jun 2025',cor1:'#1a0505',cor2:'#3d0f0f',icon:'fa-rocket'},
+  {label:'Dica',titulo:'Como escolher o template certo para o teu negócio',data:'Mai 2025',cor1:'#050d1f',cor2:'#0f2060',icon:'fa-lightbulb'},
+  {label:'Sucesso',titulo:'Mais de 50 sites lançados em Angola',data:'Abr 2025',cor1:'#0d0d0d',cor2:'#1a1a1a',icon:'fa-trophy'},
+];
+let newsIdx=0,newsTimer2;
+function renderNews(items){
+  const slides=document.getElementById('newsSlides');
+  const dots=document.getElementById('newsDots');
+  slides.innerHTML=items.map((n,i)=>`
+    <div class="news-slide${i===0?' active':''}" data-i="${i}">
+      ${n.imagem?`<img class="news-bg" src="${n.imagem}" alt="">`:''}
+      <div class="news-placeholder" style="background:linear-gradient(135deg,${n.cor1||'#0d0d0d'} 0%,${n.cor2||'#1a1a1a'} 100%)">
+        <i class="fa-solid ${n.icon||'fa-newspaper'}" style="font-size:5rem;opacity:.06;position:absolute;color:white"></i>
+      </div>
+      <div class="news-gradient"></div>
+      <div class="news-body">
+        <div class="news-badge" style="color:${n.cor||'var(--red)'}">${n.label||'Notícia'}</div>
+        <div class="news-titulo">${n.titulo}</div>
+        <div class="news-data">${n.data||''}</div>
+      </div>
+    </div>`
+  ).join('');
+  dots.innerHTML=items.map((_,i)=>`<div class="ndot${i===0?' active':''}" onclick="goNews(${i})"></div>`).join('');
+  clearInterval(newsTimer2);newsTimer2=setInterval(()=>goNews((newsIdx+1)%items.length),4000);
+}
+function goNews(i){
+  const slides=document.getElementById('newsSlides').querySelectorAll('.news-slide');
+  const dots=document.getElementById('newsDots').querySelectorAll('.ndot');
+  if(!slides.length)return;
+  slides[newsIdx].classList.remove('active');
+  dots[newsIdx].classList.remove('active');
+  newsIdx=i;
+  slides[newsIdx].classList.add('active');
+  dots[newsIdx].classList.add('active');
+}
+
+// ── CARREGAR DADOS ────────────────────────────────────────
+async function carregarDados(){
+  renderCats(CATS);
+  renderDep(DEP_FB);
+  renderNews(NEWS_FB);
+  try{
+    const d=await fetch(API+'/api/site/home',{signal:AbortSignal.timeout(5000)}).then(r=>r.ok?r.json():null);
+    if(!d)return;
+    if(d.hero){
+      if(d.hero.titulo)document.querySelector('.hero-title').innerHTML=d.hero.titulo;
+      if(d.hero.subtitulo)document.querySelector('.hero-desc').textContent=d.hero.subtitulo;
+    }
+    if(d.pilares){
+      const t=d.pilares.tech,c=d.pilares.consultoria;
+      if(t&&t.desc)document.getElementById('techDesc').textContent=t.desc;
+      if(c&&c.desc)document.getElementById('consDesc').textContent=c.desc;
+    }
+    if(d.categorias&&d.categorias.length)renderCats(d.categorias);
+    if(d.depoimentos&&d.depoimentos.length)renderDep(d.depoimentos);
+    if(d.noticias&&d.noticias.length)renderNews(d.noticias);
+    if(d.cta&&d.cta.subtitulo)document.getElementById('ctaSub').textContent=d.cta.subtitulo;
+    if(d.footer&&d.footer.whatsapp){
+      const wpp=document.querySelector('.wpp-float');
+      if(wpp)wpp.href=d.footer.whatsapp;
+    }
+  }catch(e){}
+}
+carregarDados();
+
+// ── SERVICE WORKER ────────────────────────────────────────
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
 </body>
 </html>
