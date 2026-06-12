@@ -9,7 +9,8 @@
 <script src="/config.js"></script>
 <style>
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Times New Roman', Times, serif; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body, body *:not(i):not([class*="fa"]) { font-family: 'Times New Roman', Times, serif; }
 
     :root {
       --black:      #0e0e0e;
@@ -256,8 +257,19 @@
 .pilar-nome { font-weight:900;font-size:1.65rem;text-transform:uppercase;line-height:1;margin-bottom:6px;letter-spacing:.03em }
 .pilar-sub { font-size:.7rem;color:rgba(255,255,255,.45);margin-bottom:14px;font-weight:300 }
 .pilar-desc { font-size:.83rem;color:rgba(255,255,255,.6);line-height:1.7;font-weight:300;flex:1;margin-bottom:20px }
-.pilar-arrow { font-size:.73rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;transition:gap .2s }
-.pilar:hover .pilar-arrow { gap:12px }
+.pilar-arrow { font-size:.73rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;transition:gap .2s;position:relative;overflow:hidden; }
+.pilar-arrow::after { content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;transition:width .35s ease; }
+.arrow-r::after { background:rgba(255,120,120,.8); }
+.arrow-b::after { background:rgba(120,160,255,.8); }
+.pilar:hover .pilar-arrow::after { width:100%; }
+.pilar:hover .pilar-arrow { gap:14px; }
+.pilar-arrow i { transition:transform .3s ease; }
+.pilar:hover .pilar-arrow i { transform:translateX(5px); }
+@keyframes arrowPulse {
+  0%,100% { opacity:1; transform:translateX(0); }
+  50%      { opacity:.6; transform:translateX(4px); }
+}
+.pilar-arrow i { animation:arrowPulse 1.8s ease-in-out infinite; }
 .arrow-r { color:rgba(255,120,120,.9) }
 .arrow-b { color:rgba(120,160,255,.9) }
 
@@ -280,8 +292,28 @@
 .cats-sec { padding:80px 0;background:var(--dark) }
 .cats-header { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px }
 .cats { display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px }
-.cat { border:none;border-radius:10px;padding:18px 12px;text-align:center;cursor:pointer;transition:.2s;color:#fff;background:var(--charcoal) }
+/* ── cat card ── */
+.cat {
+  border:none;border-radius:10px;padding:18px 12px;
+  text-align:center;cursor:pointer;transition:.2s;
+  color:#fff;background:var(--charcoal);
+  position:relative;overflow:hidden;          /* ← NOVO */
+}
 .cat:hover { background:var(--charcoal-lt);transform:translateY(-2px) }
+/* imagem de fundo opcional */
+.cat-bg {
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;z-index:0;
+  transition:transform .35s;
+}
+.cat:hover .cat-bg { transform:scale(1.07) }
+.cat-overlay {
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.30) 100%);
+}
+.cat i,.cat span { position:relative;z-index:2 }
+/* fim cat card */
 .cat i { font-size:1.2rem;color:var(--red);margin-bottom:8px;display:block }
 .cat span { font-size:.7rem;font-weight:600;color:var(--gray-lt) }
 
@@ -439,6 +471,34 @@
     #mmDrawer nav a:hover {
       background: var(--charcoal-lt); padding-left: 24px;
     }
+
+/* ══ HERO DESKTOP 2 COLUNAS ══ */
+@media(min-width:861px){
+  .hero { align-items:center; }
+  .hero-content {
+    display:grid;
+    grid-template-columns:1fr 400px;
+    grid-template-rows:auto auto auto auto auto;
+    column-gap:3rem;
+    align-items:start;
+    padding-top:5rem;
+    padding-bottom:5rem;
+  }
+  .hero-label         { grid-column:1; grid-row:1; }
+  .hero-title         { grid-column:1; grid-row:2; }
+  .hero-desc          { grid-column:1; grid-row:3; }
+  .hero-btns          { grid-column:1; grid-row:4; }
+  .scroll-hint-inline { grid-column:1; grid-row:5; margin-top:1.2rem; }
+  .hero-content > .news-card {
+    grid-column:2;
+    grid-row:1 / -1;
+    margin-top:0;
+    height:100%;
+    min-height:420px;
+    max-height:520px;
+    align-self:center;
+  }
+}
 
 /* ══ RESPONSIVE ══ */
 @media(max-width:860px){
@@ -606,7 +666,7 @@
   </div>
 </footer>
 
-<a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços." target="_blank" class="wpp-float" title="WhatsApp">
+<a href="https://wa.me/244954288128?text=Ol%C3%A1%20IMPERSILVA!%20Gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20servi%C3%A7os." target="_blank" class="wpp-float" title="WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
     <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
@@ -673,20 +733,29 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
 // ── CATEGORIAS ────────────────────────────────────────────
 const CATS=[
-  {i:'fa-utensils',l:'Restaurantes'},{i:'fa-shirt',l:'Moda'},
-  {i:'fa-mobile-alt',l:'Tecnologia'},{i:'fa-scissors',l:'Salões'},
-  {i:'fa-cake-candles',l:'Padarias'},{i:'fa-ticket',l:'Eventos'},
-  {i:'fa-book',l:'Livrarias'},{i:'fa-briefcase',l:'Escritório'},
-  {i:'fa-dumbbell',l:'Desporto'},{i:'fa-heart-pulse',l:'Saúde'},
-  {i:'fa-car',l:'Automóvel'},{i:'fa-store',l:'Outros'},
+  {i:'fa-utensils',l:'Restaurante'},
+  {i:'fa-burger',l:'Fast Food'},
+  {i:'fa-motorcycle',l:'Delivery'},
+  {i:'fa-shirt',l:'Loja de Roupa'},
+  {i:'fa-scissors',l:'Salão de Beleza'},
+  {i:'fa-jar',l:'Loja de Cosméticos'},
+  {i:'fa-mobile-screen',l:'Loja de Telemóveis'},
+  {i:'fa-headphones',l:'Loja de Acessórios'},
+  {i:'fa-cake-candles',l:'Pastelaria'},
+  {i:'fa-dumbbell',l:'Loja de Desporto'},
+  {i:'fa-car',l:'Automóvel'},
+  {i:'fa-couch',l:'Loja de Móveis'},
+  {i:'fa-store',l:'Outros'},
 ];
 function renderCats(cats){
-  document.getElementById('catsGrid').innerHTML=cats.map(c=>
-    `<div class="cat" onclick="location.href='/orcamento.html?tipo=${encodeURIComponent(c.l||c.nome)}'">
+  document.getElementById('catsGrid').innerHTML=cats.map(c=>{
+    const bg=c.imagem||c.bg||'';
+    return `<div class="cat" onclick="location.href='/orcamento.html?tipo=${encodeURIComponent(c.l||c.nome)}'">
+      ${bg?`<img class="cat-bg" src="${bg}" alt="" loading="lazy"><div class="cat-overlay"></div>`:''}
       <i class="fa-solid ${c.i||c.icon||'fa-store'}"></i>
       <span>${c.l||c.nome}</span>
-    </div>`
-  ).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── DEPOIMENTOS SLIDER ────────────────────────────────────
