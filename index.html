@@ -109,7 +109,6 @@
        HERO
    ══════════════════════════════════════ */
     .hero {
-      min-height: calc(100vh - 68px);
       position: relative;
       display: flex; align-items: flex-start;
       overflow: hidden;
@@ -474,35 +473,34 @@
 
 /* ══ HERO DESKTOP 2 COLUNAS ══ */
 @media(min-width:861px){
-  .hero { align-items:center; }
+  .hero { min-height: auto; }
   .hero-content {
-    display:grid;
-    grid-template-columns:1fr 400px;
-    grid-template-rows:auto auto auto auto auto;
-    column-gap:3rem;
-    align-items:start;
-    padding-top:5rem;
-    padding-bottom:5rem;
+    display: grid;
+    grid-template-columns: 1fr minmax(260px, 380px);
+    grid-template-rows: auto auto auto auto auto;
+    column-gap: clamp(1.5rem, 3vw, 3.5rem);
+    align-items: start;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
   .hero-label         { grid-column:1; grid-row:1; }
   .hero-title         { grid-column:1; grid-row:2; }
   .hero-desc          { grid-column:1; grid-row:3; }
   .hero-btns          { grid-column:1; grid-row:4; }
-  .scroll-hint-inline { grid-column:1; grid-row:5; margin-top:1.2rem; }
+  .scroll-hint-inline { grid-column:1; grid-row:5; }
   .hero-content > .news-card {
-    grid-column:2;
-    grid-row:1 / -1;
-    margin-top:0;
-    height:100%;
-    min-height:420px;
-    max-height:520px;
-    align-self:center;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    margin-top: 0;
+    align-self: stretch;
+    min-height: 340px;
   }
 }
 
 /* ══ RESPONSIVE ══ */
 @media(max-width:860px){
-  .hero-content { padding-top: 1.5rem !important; padding-bottom: 3rem; }
+  .hero { min-height: calc(100vh - 68px); }
+  .hero-content { padding-top: 2rem !important; padding-bottom: 3rem; }
   .hero-title { font-size: clamp(2.2rem, 10vw, 3.8rem) !important; }
   .pilares-row { grid-template-columns: 1fr !important; }
   .pilares-sec, .cats-sec, .dep-sec { padding: 40px 0 !important; }
