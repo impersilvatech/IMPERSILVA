@@ -287,34 +287,43 @@
 .ndot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.25s }
 .ndot.active { background:var(--red);width:16px;border-radius:3px }
 
-/* ══ CATEGORIAS ══ */
+/* ══ CATEGORIAS SLIDER ══ */
 .cats-sec { padding:80px 0;background:var(--dark) }
 .cats-header { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px }
-.cats { display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px }
-/* ── cat card ── */
+.cats-slider { position:relative;overflow:hidden;border-radius:16px }
+.cats-track { display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1) }
 .cat {
-  border:none;border-radius:10px;padding:18px 12px;
-  text-align:center;cursor:pointer;transition:.2s;
-  color:#fff;background:var(--charcoal);
-  position:relative;overflow:hidden;          /* ← NOVO */
+  min-width:100%;
+  border:none;border-radius:16px;
+  cursor:pointer;color:#fff;
+  position:relative;overflow:hidden;
+  height:320px;
+  display:flex;align-items:flex-end;
+  background:var(--charcoal);
 }
-.cat:hover { background:var(--charcoal-lt);transform:translateY(-2px) }
-/* imagem de fundo opcional */
 .cat-bg {
   position:absolute;inset:0;
   width:100%;height:100%;
   object-fit:cover;z-index:0;
-  transition:transform .35s;
+  transition:transform 6s ease;
 }
-.cat:hover .cat-bg { transform:scale(1.07) }
+.cat.active .cat-bg { transform:scale(1.08) }
 .cat-overlay {
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.30) 100%);
+  background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.35) 55%,transparent 100%);
 }
-.cat i,.cat span { position:relative;z-index:2 }
-/* fim cat card */
-.cat i { font-size:1.2rem;color:var(--red);margin-bottom:8px;display:block }
-.cat span { font-size:.7rem;font-weight:600;color:var(--gray-lt) }
+.cat-body { position:relative;z-index:2;padding:28px;width:100% }
+.cat i { font-size:1.6rem;color:var(--red);margin-bottom:10px;display:block }
+.cat-nome { font-size:1.4rem;font-weight:900;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px }
+.cat-desc { font-size:.85rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.6;max-width:520px }
+.cats-dots { display:flex;gap:5px;justify-content:center;margin-top:16px;flex-wrap:wrap }
+.cdot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.25s }
+.cdot.active { background:var(--red);width:18px;border-radius:3px }
+@media(max-width:860px){
+  .cat { height:240px; }
+  .cat-nome { font-size:1.15rem; }
+  .cat-desc { font-size:.78rem; }
+}
 
 /* ══ DEPOIMENTOS SLIDER ══ */
 .dep-sec { padding:80px 0;background:var(--black) }
@@ -480,7 +489,7 @@
   }
   .news-card {
     margin-top: 2.5rem;
-    height: 380px;
+    height: 480px;
     width: 100%;
   }
 }
@@ -499,7 +508,7 @@
   .hero-desc { margin-bottom: 1.5rem; }
   .hero-btns { margin-bottom: 1rem; }
   .scroll-hint-inline { display: none; margin: 0; }
-  .news-card { margin-top: 1.2rem; height: 220px; }
+  .news-card { margin-top: 1.2rem; height: 280px; }
   .news-titulo { font-size: 0.85rem; }
   .pilares-row { grid-template-columns: 1fr !important; }
   .pilar { min-height: 200px; }
@@ -523,7 +532,7 @@
   footer { padding: 2.5rem 0 1.5rem !important; }
 }
 @media(max-width:480px){
-  .cats { grid-template-columns: repeat(3,1fr) !important; }
+  .cat { height:220px; }
   .passos { grid-template-columns: 1fr !important; }
 }
 </style>
@@ -629,7 +638,10 @@
       </div>
       <a href="/tech.html" class="btn-ghost reveal reveal-delay-2" style="flex-shrink:0;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#c0c0cc">Ver todos</a>
     </div>
-    <div class="cats" id="catsGrid"></div>
+    <div class="cats-slider reveal reveal-delay-2">
+      <div class="cats-track" id="catsTrack"></div>
+    </div>
+    <div class="cats-dots" id="catsDots"></div>
   </div>
 </section>
 
@@ -748,32 +760,64 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
 
 
-// ── CATEGORIAS ────────────────────────────────────────────
+// ── CATEGORIAS SLIDER ─────────────────────────────────────
 const CATS=[
-  {i:'fa-utensils',l:'Restaurante'},
-  {i:'fa-burger',l:'Fast Food'},
-  {i:'fa-motorcycle',l:'Delivery'},
-  {i:'fa-shirt',l:'Loja de Roupa'},
-  {i:'fa-scissors',l:'Salão de Beleza'},
-  {i:'fa-jar',l:'Loja de Cosméticos'},
-  {i:'fa-mobile-screen',l:'Loja de Telemóveis'},
-  {i:'fa-headphones',l:'Loja de Acessórios'},
-  {i:'fa-cake-candles',l:'Pastelaria'},
-  {i:'fa-dumbbell',l:'Loja de Desporto'},
-  {i:'fa-car',l:'Automóvel'},
-  {i:'fa-couch',l:'Loja de Móveis'},
-  {i:'fa-store',l:'Outros'},
+  {i:'fa-utensils',l:'Restaurante',desc:'Site de pedidos online, cardápio digital e painel de gestão para o teu restaurante.',cor1:'#1a0505',cor2:'#3d0f0f'},
+  {i:'fa-burger',l:'Fast Food',desc:'Sistema de encomendas rápido, com promoções e combos para o teu fast food.',cor1:'#1a0a05',cor2:'#3d1f0f'},
+  {i:'fa-motorcycle',l:'Delivery',desc:'Plataforma de entregas com rastreio de pedidos e gestão de motoristas.',cor1:'#0a1a05',cor2:'#1f3d0f'},
+  {i:'fa-shirt',l:'Loja de Roupa',desc:'Loja online com catálogo, tamanhos, cores e checkout simplificado.',cor1:'#1a0520',cor2:'#3d0f3d'},
+  {i:'fa-scissors',l:'Salão de Beleza',desc:'Agendamento online, galeria de serviços e fidelização de clientes.',cor1:'#200a1a',cor2:'#3d0f2a'},
+  {i:'fa-jar',l:'Loja de Cosméticos',desc:'E-commerce completo para venda de produtos de beleza e skincare.',cor1:'#1a0510',cor2:'#3d0f25'},
+  {i:'fa-mobile-screen',l:'Loja de Telemóveis',desc:'Catálogo de telemóveis e acessórios com especificações e comparação.',cor1:'#050d1a',cor2:'#0f1f3d'},
+  {i:'fa-headphones',l:'Loja de Acessórios',desc:'Vitrine digital para acessórios eletrónicos e gadgets.',cor1:'#0a051a',cor2:'#1f0f3d'},
+  {i:'fa-cake-candles',l:'Pastelaria',desc:'Encomendas de bolos e doces com calendário de entregas.',cor1:'#1a1005',cor2:'#3d2a0f'},
+  {i:'fa-dumbbell',l:'Loja de Desporto',desc:'Loja online de equipamentos desportivos e planos de fitness.',cor1:'#051a0a',cor2:'#0f3d1f'},
+  {i:'fa-car',l:'Automóvel',desc:'Catálogo de veículos, peças e agendamento de serviços automóveis.',cor1:'#0a1015',cor2:'#1f2a3d'},
+  {i:'fa-couch',l:'Loja de Móveis',desc:'Showroom digital de mobiliário com fotos e medidas detalhadas.',cor1:'#15100a',cor2:'#3d2f1f'},
+  {i:'fa-store',l:'Outros',desc:'Tens outro tipo de negócio? Criamos uma solução à tua medida.',cor1:'#0d0d0d',cor2:'#1a1a1a'},
 ];
-function renderCats(cats){
-  document.getElementById('catsGrid').innerHTML=cats.map(c=>{
+let catIdx=0, catTimer, catData=[], catPaused=false;
+function renderCatsSlider(cats){
+  catData=cats;
+  const track=document.getElementById('catsTrack');
+  const dots=document.getElementById('catsDots');
+  track.innerHTML=cats.map((c,idx)=>{
     const bg=c.imagem||c.bg||'';
-    return `<div class="cat" onclick="location.href='/orcamento.html?tipo=${encodeURIComponent(c.l||c.nome)}'">
-      ${bg?`<img class="cat-bg" src="${bg}" alt="" loading="lazy"><div class="cat-overlay"></div>`:''}
-      <i class="fa-solid ${c.i||c.icon||'fa-store'}"></i>
-      <span>${c.l||c.nome}</span>
+    return `<div class="cat${idx===0?' active':''}" data-i="${idx}" onclick="location.href='/orcamento.html?tipo=${encodeURIComponent(c.l||c.nome)}'">
+      ${bg?`<img class="cat-bg" src="${bg}" alt="" loading="lazy">`
+        :`<div class="cat-bg" style="background:linear-gradient(135deg,${c.cor1||'#0d0d0d'} 0%,${c.cor2||'#1a1a1a'} 100%)"></div>`}
+      <div class="cat-overlay"></div>
+      <div class="cat-body">
+        <i class="fa-solid ${c.i||c.icon||'fa-store'}"></i>
+        <div class="cat-nome">${c.l||c.nome}</div>
+        ${c.desc?`<div class="cat-desc">${c.desc}</div>`:''}
+      </div>
     </div>`;
   }).join('');
+  dots.innerHTML=cats.map((_,i)=>`<div class="cdot${i===0?' active':''}" onclick="goCat(${i})"></div>`).join('');
+
+  // Pausa enquanto pressionado/touch
+  track.querySelectorAll('.cat').forEach(card=>{
+    const pause=()=>{catPaused=true;};
+    const resume=()=>{catPaused=false;};
+    card.addEventListener('mousedown',pause);
+    card.addEventListener('mouseup',resume);
+    card.addEventListener('mouseleave',resume);
+    card.addEventListener('touchstart',pause,{passive:true});
+    card.addEventListener('touchend',resume);
+    card.addEventListener('touchcancel',resume);
+  });
+
+  clearInterval(catTimer);
+  catTimer=setInterval(()=>{ if(!catPaused) moveCat(1); },4500);
 }
+function goCat(i){
+  catIdx=(i+catData.length)%catData.length;
+  document.getElementById('catsTrack').style.transform=`translateX(-${catIdx*100}%)`;
+  document.querySelectorAll('.cdot').forEach((d,j)=>d.classList.toggle('active',j===catIdx));
+  document.querySelectorAll('.cat').forEach((c,j)=>c.classList.toggle('active',j===catIdx));
+}
+function moveCat(dir){goCat(catIdx+dir);}
 
 // ── DEPOIMENTOS SLIDER ────────────────────────────────────
 const DEP_FB=[
@@ -845,7 +889,7 @@ function goNews(i){
 
 // ── CARREGAR DADOS ────────────────────────────────────────
 async function carregarDados(){
-  renderCats(CATS);
+  renderCatsSlider(CATS);
   renderDep(DEP_FB);
   renderNews(NEWS_FB);
   try{
@@ -860,7 +904,7 @@ async function carregarDados(){
       if(t&&t.desc)document.getElementById('techDesc').textContent=t.desc;
       if(c&&c.desc)document.getElementById('consDesc').textContent=c.desc;
     }
-    if(d.categorias&&d.categorias.length)renderCats(d.categorias);
+    if(d.categorias&&d.categorias.length)renderCatsSlider(d.categorias);
     if(d.depoimentos&&d.depoimentos.length)renderDep(d.depoimentos);
     if(d.noticias&&d.noticias.length)renderNews(d.noticias);
     if(d.cta&&d.cta.subtitulo)document.getElementById('ctaSub').textContent=d.cta.subtitulo;
