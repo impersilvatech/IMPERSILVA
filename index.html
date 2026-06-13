@@ -471,28 +471,17 @@
       background: var(--charcoal-lt); padding-left: 24px;
     }
 
-/* ══ HERO DESKTOP 2 COLUNAS ══ */
+/* ══ HERO DESKTOP ══ */
 @media(min-width:861px){
   .hero { min-height: auto; }
   .hero-content {
-    display: grid;
-    grid-template-columns: 1fr minmax(260px, 380px);
-    grid-template-rows: auto auto auto auto auto;
-    column-gap: clamp(1.5rem, 3vw, 3.5rem);
-    align-items: start;
     padding-top: 5rem;
     padding-bottom: 5rem;
   }
-  .hero-label         { grid-column:1; grid-row:1; }
-  .hero-title         { grid-column:1; grid-row:2; }
-  .hero-desc          { grid-column:1; grid-row:3; }
-  .hero-btns          { grid-column:1; grid-row:4; }
-  .scroll-hint-inline { grid-column:1; grid-row:5; }
-  .hero-content > .news-card {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    margin-top: 0;
-    align-self: stretch;
+  .news-card {
+    margin-top: 2.5rem;
+    height: 380px;
+    max-width: 800px;
   }
 }
 
@@ -510,7 +499,7 @@
   .hero-desc { margin-bottom: 1.5rem; }
   .hero-btns { margin-bottom: 1rem; }
   .scroll-hint-inline { display: none; margin: 0; }
-  .news-card { margin-top: 1.2rem; }
+  .news-card { margin-top: 1.2rem; height: 220px; }
   .news-titulo { font-size: 0.85rem; }
   .pilares-row { grid-template-columns: 1fr !important; }
   .pilar { min-height: 200px; }
@@ -730,30 +719,6 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 document.querySelectorAll('.hero .reveal, .hero-content .reveal').forEach((el,i)=>{
   setTimeout(()=>el.classList.add('visible'), i*100);
 });
-
-// ── NEWS CARD HEIGHT SYNC ─────────────────────────────────
-function syncNewsCardHeight(){
-  const card = document.getElementById('newsCard');
-  if(!card) return;
-  if(window.innerWidth > 860){
-    // Desktop: igualar à altura da coluna de texto do hero
-    card.style.height = '';
-  } else {
-    // Mobile: igualar à soma da altura do bloco de texto (label + título + desc + btns)
-    const content = document.querySelector('.hero-content');
-    const label = document.querySelector('.hero-label');
-    const title = document.querySelector('.hero-title');
-    const desc = document.querySelector('.hero-desc');
-    const btns = document.querySelector('.hero-btns');
-    if(label && title && desc && btns){
-      const total = label.offsetHeight + title.offsetHeight + desc.offsetHeight + btns.offsetHeight;
-      card.style.height = Math.max(total * 0.55, 220) + 'px';
-    }
-  }
-}
-window.addEventListener('load', syncNewsCardHeight);
-window.addEventListener('resize', syncNewsCardHeight);
-setTimeout(syncNewsCardHeight, 300);
 
 // ── NAV SCROLL ────────────────────────────────────────────
 const navbar=document.querySelector('.navbar');
