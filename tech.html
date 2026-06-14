@@ -1,622 +1,650 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-AO" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Início — IMPERSILVA TECH</title>
-<meta name="description" content="Criamos sites profissionais para negócios angolanos. Lojas online, restaurantes, delivery, eventos e muito mais."/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="js/config.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>IMPERSILVA TECH — Sites & Lojas Online</title>
+<meta name="description" content="Criamos lojas online e sites institucionais para negócios angolanos. Escolhe um template e lança o teu site em 7 dias."/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="/config.js"></script>
 <style>
-/* ═══════════════════════════════════════
-   IMPERSILVA TECH — BASE STYLES
-   Shared across all tech/ pages
-═══════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{max-width:100%;overflow-x:hidden}
 :root{
-  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2e2e33;
-  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
-  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
-  --green:#22c55e;--green-dim:rgba(34,197,94,.1);--green-lt:#4ade80;
-  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.1);
-  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
-  --radius:12px;--radius-lg:18px;
+  --black:#0e0e0e;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2f2f34;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,0.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,0.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.1);
+  --white:#ffffff;--gray:#888896;--gray-lt:#c0c0cc;
+  --divider:rgba(255,255,255,0.07);--border:rgba(255,255,255,0.07);
 }
 html{scroll-behavior:smooth}
-body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;padding-top:68px}
+body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;font-weight:400;line-height:1.6;padding-top:68px}
 
-/* ── NAVBAR ── */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:all .3s}
-.navbar-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
-.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
-.logo-main{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
-.logo-main .r{color:var(--red)}.logo-main .b{color:var(--blue-lt)}
-.logo-sub{font-size:.44rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
-.nav-links{display:flex;align-items:center;gap:2rem}
-.nav-links a{color:var(--gray);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;transition:color .2s;white-space:nowrap}
-.nav-links a:hover,.nav-links a.active{color:var(--white)}
-.nav-links a.active{border-bottom:1px solid var(--red);padding-bottom:2px}
-.nav-cta{background:var(--red)!important;color:#fff!important;padding:.45rem 1.1rem;border-radius:6px;font-weight:700!important;letter-spacing:.06em!important;transition:background .2s!important}
+/* ── NAV ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:border-color .3s}
+.navbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-decoration:none;line-height:1}
+.logo-wordmark{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1}
+.logo-sub{font-size:.5rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray);padding-left:1px}
+.nav-links{display:flex;align-items:center;gap:.1rem;list-style:none}
+.nav-links a{color:var(--gray-lt);text-decoration:none;font-size:.85rem;font-weight:400;padding:.5rem .9rem;border-radius:5px;transition:all .2s}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.05)}
+.nav-links a.active{color:var(--white)}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;font-weight:600!important;padding:.5rem 1.3rem!important;border-radius:5px!important}
 .nav-cta:hover{background:var(--red-lt)!important}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
-.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:1px;transition:all .3s}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all .3s}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:860px){.hamburger{display:flex}.nav-links{display:none!important}}
 
-/* ── SECTION COMMONS ── */
-.eyebrow{display:flex;align-items:center;gap:.6rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
-.eyebrow::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
-.eyebrow::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:.8rem}
-.sec-title .r{color:var(--red)}.sec-title .b{color:var(--blue-lt)}.sec-title .g{color:var(--green)}
-.sec-sub{font-size:.95rem;font-weight:300;color:var(--gray-lt);line-height:1.75;max-width:640px}
-.container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
-section{padding:5rem 1.5rem}
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;padding:5rem 0 4rem}
+.hero-bg{position:absolute;inset:0;background:var(--black)}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px}
+.hero-glow-r{position:absolute;left:-150px;bottom:-150px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(214,40,40,.12) 0%,transparent 65%);pointer-events:none}
+.hero-glow-b{position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(29,78,216,.1) 0%,transparent 65%);pointer-events:none}
+.hero-stripe{position:absolute;top:0;right:30%;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(214,40,40,.2),transparent);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 1.5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red-dim);border:1px solid rgba(214,40,40,.25);color:rgba(255,130,130,.9);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:1.5rem}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2.4rem,8vw,5.5rem);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:1.2rem;word-break:break-word}
+.hero-title .r{color:var(--red)}
+.hero-title .b{color:var(--blue-lt)}
+.hero-title em{font-style:italic}
+.hero-sub{font-size:1rem;color:var(--gray);line-height:1.8;margin-bottom:2rem;max-width:620px;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--divider)}
+.hstat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.2rem;line-height:1}
+.hstat-n .r{color:var(--red)}
+.hstat-n .b{color:var(--blue-lt)}
+.hstat-n .g{color:var(--green)}
+.hstat-l{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 
 /* ── BUTTONS ── */
-.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s}
-.btn-primary:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.35)}
-.btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .25s}
-.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.06)}
-.btn-blue{background:var(--blue)!important}.btn-blue:hover{background:var(--blue-lt)!important}
-.btn-green{background:var(--green)!important}.btn-green:hover{background:var(--green-lt)!important}
-.btn-sm{padding:.55rem 1.1rem!important;font-size:.78rem!important}
+.btn-red{background:var(--red);color:var(--white);font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 2rem;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
+.btn-red:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.3)}
+.btn-ghost{background:rgba(255,255,255,.08);color:var(--white);font-size:.88rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 2rem;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
+.btn-ghost:hover{border-color:var(--blue-lt);color:var(--blue-lt);transform:translateY(-2px)}
+.btn-blue{background:var(--blue);color:var(--white);font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 2rem;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
+.btn-blue:hover{background:var(--blue-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.35)}
 
-/* ── CARDS ── */
-.card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);transition:all .3s}
-.card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
-.card-pad{padding:1.5rem}
+/* ── SECTION BASE ── */
+.sec{padding:80px 0}
+.sec-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.sec-tag{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:18px;height:1.5px;background:var(--red);flex-shrink:0}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(1.8rem,4vw,3.2rem);line-height:1;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:40px}
+.sec-title .r{color:var(--red)}
+.sec-title .b{color:var(--blue-lt)}
+.sec-title em{font-style:italic}
+.sec-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px}
 
-/* ── BADGE ── */
-.badge{display:inline-flex;align-items:center;gap:.4rem;border-radius:50px;padding:.3rem .8rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.badge-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
-.badge-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
-.badge-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
-.badge-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+/* ── TIPOS DE NEGÓCIO (slider fullscreen) ── */
+.tipos-sec{background:var(--black)}
+.cats-slider{position:relative;overflow:hidden;border-radius:16px}
+.cats-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.cat{min-width:100%;border:none;border-radius:16px;cursor:pointer;color:#fff;position:relative;overflow:hidden;height:560px;display:flex;align-items:flex-end;background:var(--charcoal)}
+.cat-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform 6s ease}
+.cat.active .cat-bg{transform:scale(1.06)}
+.cat-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 55%,transparent 100%)}
+.cat-body{position:relative;z-index:2;padding:32px;width:100%}
+.cat i{font-size:1.8rem;color:var(--red);margin-bottom:12px;display:block}
+.cat-nome{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px}
+.cat-desc{font-size:.88rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.6;max-width:580px;margin-bottom:14px}
+.cat-cta{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,120,120,.9);background:rgba(214,40,40,.12);border:1px solid rgba(214,40,40,.25);padding:6px 14px;border-radius:4px;transition:.2s}
+.cat-cta:hover{background:var(--red);color:#fff}
+.cats-nav{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.cats-dots{display:flex;gap:5px;flex-wrap:wrap}
+.cdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.25s}
+.cdot.active{background:var(--red);width:18px;border-radius:3px}
+.cats-arrows{display:flex;gap:8px}
+.cat-arr{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s}
+.cat-arr:hover{background:var(--red);border-color:var(--red);color:#fff}
 
-/* ── STATS ── */
-.stats-bar{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:2.5rem 1.5rem}
-.stats-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
-.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:.3rem}
-.stat-lbl{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+/* ── TEMPLATES ── */
+.tpl-sec{background:var(--dark)}
+.tpl-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tpl-filter-btn{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--gray-lt);cursor:pointer;transition:.2s}
+.tpl-filter-btn:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
+.tpl-filter-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.tpl-card{background:var(--charcoal);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s;position:relative;display:block;text-decoration:none;color:var(--white)}
+.tpl-card:hover{transform:translateY(-5px);border-color:rgba(214,40,40,.35);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+/* Preview mockup */
+.tpl-preview{height:200px;position:relative;overflow:hidden;background:var(--charcoal-lt)}
+.tpl-preview-screen{width:85%;height:78%;position:absolute;top:10%;left:7.5%;background:#fff;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.tpl-preview-bar{height:20px;background:#e5e5e5;display:flex;align-items:center;padding:0 8px;gap:4px}
+.tpl-preview-dot{width:6px;height:6px;border-radius:50%}
+.tpl-preview-content{background:var(--tpl-bg,#fff);height:calc(100% - 20px);position:relative;overflow:hidden}
+.tpl-preview-hero{width:100%;height:55%;display:flex;align-items:center;justify-content:center;position:relative}
+.tpl-preview-lines{padding:8px;display:flex;flex-direction:column;gap:4px}
+.tpl-preview-line{height:4px;border-radius:2px;background:rgba(0,0,0,.08)}
+.tpl-preview-line.short{width:60%}
+.tpl-badge-new{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.tpl-badge-pop{position:absolute;top:10px;right:10px;background:var(--green);color:#000;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.tpl-overlay{position:absolute;inset:0;background:rgba(214,40,40,.08);opacity:0;transition:.2s;display:flex;align-items:center;justify-content:center}
+.tpl-card:hover .tpl-overlay{opacity:1}
+.tpl-overlay-btn{background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 18px;border-radius:4px;display:flex;align-items:center;gap:6px}
+.tpl-body{padding:16px}
+.tpl-cat{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.tpl-nome{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.03em;text-transform:uppercase;margin-bottom:4px}
+.tpl-desc{font-size:.76rem;color:var(--gray);line-height:1.5;font-weight:300;margin-bottom:10px}
+.tpl-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tpl-tag{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--gray-lt);font-size:.56rem;padding:2px 6px;border-radius:3px;font-weight:500}
+.tpl-empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--gray)}
 
-/* ── WPP FLOAT ── */
-.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);animation:wpp-pulse 3s ease-in-out infinite}
-.wpp-float:hover{transform:scale(1.12)}
-@keyframes wpp-pulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+/* ── PROCESSO ── */
+.proc-sec{background:var(--black)}
+.passos{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.passo{padding:28px 22px;border-right:1px solid var(--border);transition:background .2s}
+.passo:last-child{border-right:none}
+.passo:hover{background:var(--charcoal)}
+.passo-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.8rem;line-height:1;margin-bottom:12px}
+.passo:nth-child(odd) .passo-n{color:var(--red)}
+.passo:nth-child(even) .passo-n{color:var(--blue-lt)}
+.passo h3{font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.passo p{font-size:.78rem;color:var(--gray);line-height:1.65;font-weight:300}
+.passo-prazo{display:inline-flex;align-items:center;gap:4px;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);color:var(--green);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;margin-top:10px}
 
-/* ── DRAWER (mobile) ── */
-.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:8000}
-.mm-overlay.active{display:block}
-.mm-drawer{position:fixed;top:0;right:0;width:80%;max-width:320px;height:100%;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
-.mm-drawer.active{transform:translateX(0)}
-.mm-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
-.mm-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
-.mm-close{background:rgba(255,255,255,.08);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
-.mm-body{flex:1;overflow-y:auto;padding:.5rem 0 2rem}
-.mm-section-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);padding:.9rem 1.2rem .4rem}
-.mm-nav a{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;padding:.8rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04);transition:all .15s}
-.mm-nav a i{width:18px;text-align:center;font-size:.85rem;flex-shrink:0}
-.mm-nav a span.mm-badge{margin-left:auto;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.15rem .5rem;border-radius:50px}
-.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
-.mm-nav a.mm-active{color:#fff;background:rgba(255,255,255,.05)}
-.mm-divider{height:1px;background:rgba(255,255,255,.06);margin:.5rem 1.2rem}
-.mm-cta{margin:1rem 1.2rem 0}
+/* ── DIFERENCIAIS ── */
+.dif-sec{background:var(--dark)}
+.dif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.dif-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:24px;transition:.25s}
+.dif-card:hover{border-color:rgba(214,40,40,.25);transform:translateY(-3px)}
+.dif-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:14px}
+.dif-icon-r{background:var(--red-dim);color:var(--red)}
+.dif-icon-b{background:var(--blue-dim);color:var(--blue-lt)}
+.dif-icon-g{background:var(--green-dim);color:var(--green)}
+.dif-h{font-size:.88rem;font-weight:700;margin-bottom:6px}
+.dif-p{font-size:.78rem;color:var(--gray);line-height:1.6;font-weight:300}
+
+/* ── CTA ── */
+.cta-section{background:var(--charcoal);border-top:1px solid var(--divider);padding:5.5rem 0;position:relative;overflow:hidden;text-align:center}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(214,40,40,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 50%,rgba(29,78,216,.07) 0%,transparent 60%);pointer-events:none}
+.cta-section .container{position:relative}
+.section-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:1rem}
+.tag-bars{display:flex;gap:3px}
+.tag-bars span{display:block;width:16px;height:2px;border-radius:2px}
+.tag-bars span:first-child{background:var(--red)}
+.tag-bars span:last-child{background:var(--blue)}
+.cta-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;color:var(--white);margin-bottom:.8rem;text-transform:uppercase}
+.cta-title .r{color:var(--red)}
+.cta-title .b{color:var(--blue-lt)}
+.cta-desc{font-size:1rem;color:var(--gray);font-weight:300;margin-bottom:2.5rem}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 
 /* ── FOOTER ── */
-footer{background:var(--black);border-top:1px solid var(--divider);padding:3rem 1.5rem 2rem}
-.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
-.footer-brand .logo-main{font-size:1.3rem}
-.footer-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.7;margin-top:.7rem;max-width:280px}
-.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.9rem}
-.footer-col a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;font-weight:300;margin-bottom:.5rem;transition:color .2s}
-.footer-col a:hover{color:var(--white)}
-.footer-bottom{max-width:1280px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.72rem;color:var(--gray)}
-.footer-bottom a{color:var(--gray);text-decoration:none}
-.footer-bottom a:hover{color:var(--white)}
+footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 0 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.footer-divider{height:1px;background:var(--divider);margin:2.5rem 0 1.5rem}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.73rem;color:rgba(255,255,255,.2);flex-wrap:wrap;gap:.5rem}
+.footer-bottom a{color:var(--red);text-decoration:none}
+
+/* ── WPP ── */
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);transition:.25s;animation:wppPulse 3s ease-in-out infinite}
+.wpp-float:hover{transform:scale(1.1)}
+@keyframes wppPulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+
+/* ── DRAWER ── */
+#mmOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:998;backdrop-filter:blur(3px)}
+#mmOverlay.active{display:block}
+#mmDrawer{position:fixed;top:0;right:0;width:72%;max-width:280px;max-height:100dvh;background:var(--black);z-index:999;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;border-bottom-left-radius:16px;overflow:hidden}
+#mmDrawer.active{transform:translateX(0)}
+.mmDrawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);flex-shrink:0}
+.mmDrawer-head .mm-title{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.mmDrawer-head .mm-close{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);font-size:.9rem;cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mmDrawer-head .mm-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+#mmDrawer nav{display:flex;flex-direction:column;padding:14px 0 6px;overflow-y:auto}
+#mmDrawer nav a{text-decoration:none;font-size:.92rem;font-weight:600;padding:11px 18px;margin:6px 14px;border-radius:6px;transition:all .15s;display:flex;align-items:center;gap:8px;color:#fff;background:var(--charcoal)}
+#mmDrawer nav a:hover{background:var(--charcoal-lt);padding-left:24px}
 
 /* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:none}
-.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
-
-/* ── PAGE HERO ── */
-.page-hero{background:var(--black);padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
-.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
-.page-hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(214,40,40,.12) 0%,transparent 70%)}
-.page-hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
-.breadcrumb{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.7rem;color:var(--gray);margin-bottom:1.2rem}
-.breadcrumb a{color:var(--gray);text-decoration:none;transition:color .2s}
-.breadcrumb a:hover{color:var(--white)}
-.breadcrumb-sep{opacity:.4}
+.reveal{opacity:1;transform:none}
+.js-ready .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.js-ready .reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
 
 /* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
-  .footer-brand{grid-column:1/-1}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:860px){
+  .sec{padding:56px 0}
+  .hero{padding:3rem 0 2.5rem}
+  .cat{height:420px}
+  .passos{grid-template-columns:1fr 1fr}
+  .passo{border-right:none;border-bottom:1px solid var(--border)}
+  .passo:nth-child(odd){border-right:1px solid var(--border)}
+  .passo:nth-last-child(-n+2){border-bottom:none}
+  .tpl-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 }
-@media(max-width:640px){
-  section{padding:3.5rem 1rem}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .footer-inner{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
-  .stat-val{font-size:2rem}
+@media(max-width:540px){
+  .cat{height:360px}
+  .passos{grid-template-columns:1fr}
+  .passo{border-right:none!important;border-bottom:1px solid var(--border)!important}
+  .passo:last-child{border-bottom:none!important}
+  .tpl-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:1.5rem}
 }
-
-/* ── INDEX PAGE SPECIFIC ── */
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;background:var(--black);position:relative;overflow:hidden}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02)1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02)1px,transparent 1px);background-size:60px 60px}
-.hero-glow-r{position:absolute;top:-200px;right:-150px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(214,40,40,.14) 0%,transparent 70%);animation:glow-pulse 5s ease-in-out infinite}
-.hero-glow-b{position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(29,78,216,.12) 0%,transparent 70%);animation:glow-pulse 5s ease-in-out infinite reverse}
-@keyframes glow-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
-.hero-inner{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:5rem 1.5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(214,40,40,.15);border:1px solid rgba(214,40,40,.3);border-radius:50px;padding:.35rem .9rem;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:1.3rem}
-.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;text-transform:uppercase;letter-spacing:.01em;line-height:.9;margin-bottom:1.2rem}
-.hero-tw-wrap{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.2rem,3.5vw,2rem);font-weight:700;color:var(--blue-lt);margin-bottom:1.5rem;min-height:2.4rem}
-.tw-cursor{border-right:2px solid var(--blue-lt);animation:blink .8s step-end infinite;margin-left:1px}
-@keyframes blink{0%,100%{border-color:var(--blue-lt)}50%{border-color:transparent}}
-.hero-sub{font-size:1rem;font-weight:300;color:var(--gray-lt);line-height:1.75;margin-bottom:2rem;max-width:480px}
-.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.hero-trust{display:flex;gap:1.5rem;flex-wrap:wrap}
-.trust-item{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--gray-lt);font-weight:400}
-.trust-item i{color:var(--green);font-size:.7rem}
-/* Hero visual */
-.hero-visual{position:relative;display:flex;justify-content:center}
-.phone-mockup{width:260px;background:var(--charcoal);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:1.2rem .8rem;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06);position:relative;overflow:hidden}
-.phone-notch{width:80px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin:0 auto .8rem}
-.phone-screen{background:var(--dark);border-radius:16px;overflow:hidden;aspect-ratio:9/16;position:relative}
-.phone-screen-content{padding:.6rem}
-.psc-bar{height:4px;background:linear-gradient(90deg,var(--red),var(--blue-lt));border-radius:2px;margin-bottom:.5rem}
-.psc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
-.psc-logo{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.05em;color:var(--white)}
-.psc-tag{font-size:.45rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--red-dim);color:var(--red);padding:.15rem .4rem;border-radius:50px}
-.psc-img{height:90px;background:linear-gradient(135deg,rgba(29,78,216,.2),rgba(214,40,40,.1));border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.5rem;font-size:1.6rem;color:rgba(255,255,255,.2)}
-.psc-name{font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;letter-spacing:.04em;margin-bottom:.3rem}
-.psc-price{font-size:.6rem;color:var(--gray);margin-bottom:.5rem}
-.psc-btn{display:block;background:var(--red);color:#fff;text-align:center;padding:.35rem;border-radius:6px;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
-.psc-row{display:flex;gap:.3rem;margin-bottom:.3rem}
-.psc-chip{background:rgba(255,255,255,.06);border-radius:4px;padding:.25rem .4rem;font-size:.5rem;color:var(--gray)}
-.phone-floating{position:absolute}
-.phone-f1{top:-20px;right:-30px;background:var(--charcoal);border:1px solid var(--divider);border-radius:10px;padding:.6rem .8rem;font-size:.65rem;font-weight:600;color:var(--green);display:flex;align-items:center;gap:.4rem;white-space:nowrap;animation:float1 3s ease-in-out infinite}
-.phone-f2{bottom:30px;left:-40px;background:var(--charcoal);border:1px solid var(--divider);border-radius:10px;padding:.6rem .8rem;font-size:.62rem;color:var(--white);display:flex;align-items:center;gap:.4rem;white-space:nowrap;animation:float2 3.5s ease-in-out infinite}
-.phone-f2 strong{color:var(--blue-lt)}
-@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-
-/* ── CATEGORIES PREVIEW ── */
-.cat-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.cat-preview-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);padding:1.3rem;cursor:pointer;transition:all .3s;text-decoration:none;display:block;position:relative;overflow:hidden}
-.cat-preview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .3s;opacity:0}
-.cat-preview-card.red::before{background:linear-gradient(90deg,var(--red),transparent)}
-.cat-preview-card.blue::before{background:linear-gradient(90deg,var(--blue-lt),transparent)}
-.cat-preview-card.green::before{background:linear-gradient(90deg,var(--green),transparent)}
-.cat-preview-card.amber::before{background:linear-gradient(90deg,var(--amber),transparent)}
-.cat-preview-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.14);box-shadow:0 16px 40px rgba(0,0,0,.35)}
-.cat-preview-card:hover::before{opacity:1}
-.cat-icon-wrap{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.85rem}
-.cat-icon-wrap.red{background:var(--red-dim);color:var(--red)}
-.cat-icon-wrap.blue{background:var(--blue-dim);color:var(--blue-lt)}
-.cat-icon-wrap.green{background:var(--green-dim);color:var(--green)}
-.cat-icon-wrap.amber{background:var(--amber-dim);color:var(--amber)}
-.cat-preview-name{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.3rem;line-height:1.2}
-.cat-preview-desc{font-size:.72rem;color:var(--gray);font-weight:300;line-height:1.55;margin-bottom:.8rem}
-.cat-preview-link{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-lt);display:flex;align-items:center;gap:.3rem}
-.cat-preview-card:hover .cat-preview-link i{transform:translateX(3px)}
-.cat-preview-link i{font-size:.58rem;transition:transform .2s}
-
-/* ── DIFF GRID ── */
-.diff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.diff-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);padding:1.3rem;transition:all .3s}
-.diff-card:hover{border-color:rgba(255,255,255,.13);transform:translateY(-2px)}
-.diff-icon{font-size:1.4rem;margin-bottom:.8rem;display:block}
-.diff-title{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.4rem}
-.diff-desc{font-size:.75rem;color:var(--gray);font-weight:300;line-height:1.6}
-
-/* ── PORTFOLIO HIGHLIGHT ── */
-.port-hl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-.port-hl-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .3s;text-decoration:none}
-.port-hl-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.14);box-shadow:0 16px 40px rgba(0,0,0,.35)}
-.port-hl-img{aspect-ratio:16/9;background:linear-gradient(135deg,var(--charcoal-lt),var(--charcoal));display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(255,255,255,.12);position:relative;overflow:hidden}
-.port-hl-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
-.port-hl-card:hover .port-hl-img img{transform:scale(1.05)}
-.port-hl-stripe{position:absolute;bottom:0;left:0;right:0;height:3px;display:flex}
-.port-hl-stripe span:first-child{flex:1;background:var(--red)}
-.port-hl-stripe span:last-child{flex:1;background:var(--blue-lt)}
-.port-hl-body{padding:1.1rem}
-.port-hl-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .55rem;border-radius:50px;margin-bottom:.5rem}
-.port-hl-tag.t-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
-.port-hl-tag.t-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
-.port-hl-tag.t-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
-.port-hl-name{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.3rem}
-.port-hl-result{display:flex;align-items:center;gap:.35rem;font-size:.7rem;color:var(--green);font-weight:600;margin-top:.5rem}
-.port-hl-result i{font-size:.62rem}
-
-/* ── CTA BAND ── */
-.cta-band{background:linear-gradient(135deg,var(--red-dim),var(--blue-dim));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:5rem 1.5rem;text-align:center}
-.cta-band-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:900;text-transform:uppercase;line-height:1.05;margin-bottom:.8rem}
-.cta-band-sub{font-size:.95rem;color:var(--gray-lt);font-weight:300;margin-bottom:2rem;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.7}
-.cta-guarantees{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.cta-g{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--gray-lt)}
-.cta-g i{color:var(--green);font-size:.7rem}
-.cta-band-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-
-/* ── IMAGINE STRIP ── */
-.imagine-strip{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:3rem 1.5rem;text-align:center}
-.imagine-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;text-transform:uppercase;line-height:1.1;margin-bottom:.9rem}
-.imagine-sub{font-size:.9rem;color:var(--gray-lt);max-width:600px;margin:0 auto 1.5rem;font-weight:300;line-height:1.7}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr;gap:2.5rem;text-align:center}
-  .hero-visual{display:none}
-  .hero-btns,.hero-trust{justify-content:center}
-  .cat-preview-grid{grid-template-columns:repeat(2,1fr)}
-  .diff-grid{grid-template-columns:repeat(2,1fr)}
-  .port-hl-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:640px){
-  .hero-inner{padding:3rem 1rem 2.5rem}
-  .cat-preview-grid{grid-template-columns:1fr 1fr;gap:.7rem}
-  .cat-preview-card{padding:1rem}
-  .diff-grid{grid-template-columns:1fr 1fr;gap:.7rem}
-  .port-hl-grid{grid-template-columns:1fr}
-}
+@media(max-width:380px){.tpl-grid{grid-template-columns:1fr}}
 </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
+
+<!-- NAV -->
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="logo-link" href="index.html">
-      <span class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> <span style="color:var(--blue-lt);font-size:1rem">|</span> TECH</span>
-      <span class="logo-sub">Customização Digital</span>
+    <a class="logo-link" href="/index.html">
+      <div class="logo-wordmark">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span></div>
+      <span class="logo-sub">Holding SGPS</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Início</a>
-      <a href="servicos.html">Serviços</a>
-      <a href="portfolio.html">Portfólio</a>
-      <a href="como-funciona.html">Como Funciona</a>
-      <a href="precos.html">Preços</a>
-      <a href="orcamento.html" class="nav-cta">Orçamento</a>
-      
-    </div>
-    <button class="hamburger" id="hamburger" onclick="openDrawer()">
+    <ul class="nav-links">
+      <li><a href="/index.html">Início</a></li>
+      <li><a href="/sobre.html">Sobre</a></li>
+      <li><a href="/tech.html" class="active">Tech</a></li>
+      <li><a href="/consultoria.html">Consultoria</a></li>
+      <li><a href="/portfolio.html">Portfólio</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+      <li><a href="/verificar-site.html"><i class="fa-solid fa-user" style="font-size:.75rem;opacity:.7"></i> Portal</a></li>
+      <li><a href="/orcamento.html" class="nav-cta">Orçamento</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleDrawer()">
       <span></span><span></span><span></span>
     </button>
   </div>
-</nav><div class="mm-overlay" id="mmOverlay" onclick="closeDrawer()"></div>
-<div class="mm-drawer" id="mmDrawer">
-  <div class="mm-head">
-    <span class="mm-logo">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span> TECH</span>
-    <button class="mm-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-  <div class="mm-body">
-    <div class="mm-section-label">Navegação</div>
-    <nav class="mm-nav">
-      <a href="index.html"><i class="fa-solid fa-house"></i> Início</a>
-      <a href="servicos.html"><i class="fa-solid fa-layer-group"></i> Serviços <span class="mm-badge">9 tipos</span></a>
-      <a href="portfolio.html"><i class="fa-solid fa-briefcase"></i> Portfólio</a>
-      <a href="como-funciona.html"><i class="fa-solid fa-route"></i> Como Funciona</a>
-      <a href="precos.html"><i class="fa-solid fa-tag"></i> Preços</a>
-      <a href="orcamento.html"><i class="fa-solid fa-file-invoice"></i> Orçamento</a>
-    </nav>
-    <div class="mm-divider"></div>
-    <div class="mm-section-label">Tipos de Sites</div>
-    <nav class="mm-nav">
-      <a href="servicos.html#roupa"><i class="fa-solid fa-shirt" style="color:var(--red)"></i> Lojas de Roupa & Sapatos</a>
-      <a href="servicos.html#celulares"><i class="fa-solid fa-mobile-screen" style="color:var(--blue-lt)"></i> Celulares & Acessórios</a>
-      <a href="servicos.html#restaurante"><i class="fa-solid fa-utensils" style="color:var(--green)"></i> Restaurante & Delivery</a>
-      <a href="servicos.html#fastfood"><i class="fa-solid fa-burger" style="color:var(--amber)"></i> Hamburgueria & Fast Food</a>
-      <a href="servicos.html#bolos"><i class="fa-solid fa-cake-candles" style="color:var(--blue-lt)"></i> Padaria & Bolos</a>
-      <a href="servicos.html#eventos"><i class="fa-solid fa-ticket" style="color:var(--green)"></i> Eventos & Bilhetes</a>
-      <a href="servicos.html#salao"><i class="fa-solid fa-scissors" style="color:var(--red)"></i> Salão de Beleza</a>
-      <a href="servicos.html#livros"><i class="fa-solid fa-book-open" style="color:var(--blue-lt)"></i> Livros & Produtos</a>
-      <a href="servicos.html#escritorio"><i class="fa-solid fa-briefcase" style="color:var(--amber)"></i> Escritório & Serviços</a>
-    </nav>
-    <div class="mm-divider"></div>
-    <div class="mm-cta">
-      <a href="orcamento.html" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none" onclick="closeDrawer()">
-        <i class="fa-solid fa-file-invoice"></i> Pedir Orçamento
-      </a>
-    </div>
-  </div>
-</div><a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA%20TECH!%20Vi%20o%20site%20e%20quero%20saber%20mais." target="_blank" class="wpp-float" title="WhatsApp">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
-</a>
-<!-- ═══ HERO ═══ -->
-<section class="hero" id="hero">
-  <div class="hero-grid"></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
   <div class="hero-glow-r"></div>
   <div class="hero-glow-b"></div>
+  <div class="hero-stripe"></div>
   <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-badge reveal"><i class="fa-solid fa-bolt"></i> IMPERSILVA TECH — Customização Digital</div>
-      <h1 class="hero-title reveal rd1">
-        O seu negócio<br><span style="color:var(--red)">merece</span> estar<br><span style="color:var(--blue-lt)">online.</span>
-      </h1>
-      <div class="hero-tw-wrap reveal rd2">
-        <span id="tw-prefix" style="color:var(--gray-lt)">Sites para </span><span id="tw-text"></span><span class="tw-cursor"></span>
+    <div class="hero-badge reveal"><i class="fa-solid fa-bolt"></i> IMPERSILVA TECH</div>
+    <h1 class="hero-title reveal reveal-delay-1" id="techHeroTitle">
+      Criamos sites<br>que <span class="r">vendem</span><br><em>de verdade</em>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2" id="techHeroSub">Lojas online, sites institucionais e sistemas de encomendas para qualquer negócio angolano. Escolhe um template, personaliza e lança em menos de 7 dias.</p>
+    <div class="hero-btns reveal reveal-delay-3">
+      <a href="#templates" class="btn-red"><i class="fa-solid fa-layer-group"></i> Ver templates</a>
+      <a href="/orcamento.html" class="btn-ghost"><i class="fa-solid fa-rocket"></i> Pedir orçamento</a>
+    </div>
+    <div class="hero-stats reveal reveal-delay-3">
+      <div>
+        <div class="hstat-n r" id="statSites">50<span style="font-size:1.4rem">+</span></div>
+        <div class="hstat-l">Sites lançados</div>
       </div>
-      <p class="hero-sub reveal rd2">Transformamos qualquer negócio angolano numa loja digital completa. Sites rápidos, modernos e acessíveis — do zero ao ar em poucos dias.</p>
-      <div class="hero-btns reveal rd3">
-        <a href="servicos.html" class="btn-primary"><i class="fa-solid fa-layer-group"></i> Ver todos os serviços</a>
-        <a href="orcamento.html" class="btn-outline"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento</a>
+      <div>
+        <div class="hstat-n b">7<span style="font-size:1.4rem">d</span></div>
+        <div class="hstat-l">Prazo médio</div>
       </div>
-      <div class="hero-trust reveal rd4">
-        <div class="trust-item"><i class="fa-solid fa-check-circle"></i> Entrega em 3–7 dias</div>
-        <div class="trust-item"><i class="fa-solid fa-check-circle"></i> Hospedagem gratuita</div>
-        <div class="trust-item"><i class="fa-solid fa-check-circle"></i> 100% mobile</div>
+      <div>
+        <div class="hstat-n g" id="statSat">98<span style="font-size:1.4rem">%</span></div>
+        <div class="hstat-l">Satisfação</div>
+      </div>
+      <div>
+        <div class="hstat-n r" id="statTpl">10<span style="font-size:1.4rem">+</span></div>
+        <div class="hstat-l">Templates</div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="phone-floating phone-f1"><i class="fa-solid fa-arrow-trend-up" style="color:var(--green)"></i> +200 encomendas/mês</div>
-      <div class="phone-mockup reveal rd2">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-screen-content">
-            <div class="psc-bar"></div>
-            <div class="psc-header">
-              <span class="psc-logo">LOJA MODA+</span>
-              <span class="psc-tag">Online</span>
+  </div>
+</section>
+
+<!-- TIPOS DE NEGÓCIO -->
+<section class="sec tipos-sec" id="tipos">
+  <div class="sec-inner">
+    <div class="sec-header">
+      <div>
+        <div class="sec-tag reveal">Para qualquer negócio</div>
+        <div class="sec-title reveal reveal-delay-1" style="margin-bottom:0">Sites para <span class="r">cada</span><br>tipo de negócio</div>
+      </div>
+      <div class="cats-arrows reveal reveal-delay-2">
+        <button class="cat-arr" onclick="moveCat(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="cat-arr" onclick="moveCat(1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="cats-slider reveal reveal-delay-2">
+      <div class="cats-track" id="catsTrack"></div>
+    </div>
+    <div class="cats-nav">
+      <div class="cats-dots" id="catsDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="sec tpl-sec" id="templates">
+  <div class="sec-inner">
+    <div class="sec-header">
+      <div>
+        <div class="sec-tag reveal">Biblioteca de templates</div>
+        <div class="sec-title reveal reveal-delay-1" style="margin-bottom:0">Escolhe o teu<br><span class="b">template</span></div>
+      </div>
+      <a href="/verificar-site.html" class="btn-blue reveal reveal-delay-2" style="flex-shrink:0"><i class="fa-solid fa-user"></i> Criar o meu site</a>
+    </div>
+    <!-- Filtros por categoria -->
+    <div class="tpl-filter reveal reveal-delay-2" id="tplFilter">
+      <button class="tpl-filter-btn active" onclick="filterTpl('todos',this)">Todos</button>
+      <button class="tpl-filter-btn" onclick="filterTpl('loja',this)">Lojas</button>
+      <button class="tpl-filter-btn" onclick="filterTpl('restaurante',this)">Restaurantes</button>
+      <button class="tpl-filter-btn" onclick="filterTpl('servicos',this)">Serviços</button>
+      <button class="tpl-filter-btn" onclick="filterTpl('institucional',this)">Institucional</button>
+    </div>
+    <div class="tpl-grid" id="tplGrid">
+      <div class="tpl-empty"><i class="fa-solid fa-spinner fa-spin"></i> A carregar templates...</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section class="sec proc-sec">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Como funciona</div>
+    <div class="sec-title reveal reveal-delay-1">Do template ao site <span class="r">no ar</span></div>
+    <div class="passos reveal reveal-delay-2" id="passosGrid">
+      <div class="passo">
+        <div class="passo-n">01</div>
+        <h3>Escolhe o template</h3>
+        <p>Navega pela biblioteca e escolhe o template que mais se adequa ao teu negócio.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-n">02</div>
+        <h3>Personaliza</h3>
+        <p>Define o nome, cores, logo e o conteúdo da tua loja. Sem precisar de código.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-n">03</div>
+        <h3>Publica</h3>
+        <p>Com um clique o teu site vai ao ar. Recebe o link e o painel de gestão.</p>
+        <div class="passo-prazo"><i class="fa-solid fa-clock"></i> Em menos de 7 dias</div>
+      </div>
+      <div class="passo">
+        <div class="passo-n">04</div>
+        <h3>Gere e vende</h3>
+        <p>Actualiza produtos, responde a encomendas e acompanha as vendas em tempo real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="sec dif-sec">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Por que escolher a IMPERSILVA TECH</div>
+    <div class="sec-title reveal reveal-delay-1">O que nos <span class="r">diferencia</span></div>
+    <div class="dif-grid reveal reveal-delay-2" id="difGrid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="section-tag reveal"><div class="tag-bars"><span></span><span></span></div>Próximo Passo</div>
+    <h2 class="cta-title reveal reveal-delay-1">Pronto para <span class="r">lançar</span><br>o teu site?</h2>
+    <p class="cta-desc reveal reveal-delay-2" id="techCtaSub">Escolhe um template e tens o teu site no ar em menos de 7 dias.</p>
+    <div class="cta-actions reveal reveal-delay-3">
+      <a href="#templates" class="btn-red"><i class="fa-solid fa-layer-group"></i> Escolher template</a>
+      <a href="/orcamento.html" class="btn-ghost">Pedir orçamento</a>
+      <a href="/verificar-site.html" class="btn-blue"><i class="fa-solid fa-user"></i> Criar conta</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div style="font-size:.55rem;letter-spacing:.25em;color:var(--gray);text-transform:uppercase;margin-bottom:.4rem">Holding SGPS</div>
+    <div style="font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin-bottom:1.2rem">Entre nós, <span style="color:var(--red)">fluem</span> <span style="color:var(--blue-lt)">oportunidades</span></div>
+    <div style="display:flex;gap:.7rem;margin-bottom:0">
+      <a href="https://www.facebook.com/impersilva" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#1877f2';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/impersilva" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#e1306c';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/company/impersilva" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#0a66c2';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://wa.me/244954288128" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#25d366';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© <span id="yr"></span> IMPERSILVA HOLDING SGPS. Todos os direitos reservados.</span>
+      <span>Desenvolvido por <a href="/tech.html">IMPERSILVA TECH</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA%20TECH!" target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+
+<!-- DRAWER -->
+<div id="mmOverlay" onclick="closeDrawer()"></div>
+<div id="mmDrawer">
+  <div class="mmDrawer-head">
+    <span class="mm-title">IMPERSILVA</span>
+    <button class="mm-close" onclick="closeDrawer()">&#10005;</button>
+  </div>
+  <nav>
+    <a href="/index.html"><i class="fa-solid fa-house" style="width:14px;opacity:.5;font-size:.8rem"></i>Início</a>
+    <a href="/tech.html"><i class="fa-solid fa-code" style="width:14px;opacity:.5;font-size:.8rem"></i>Tech</a>
+    <a href="/consultoria.html"><i class="fa-solid fa-chart-line" style="width:14px;opacity:.5;font-size:.8rem"></i>Consultoria</a>
+    <a href="/portfolio.html"><i class="fa-solid fa-briefcase" style="width:14px;opacity:.5;font-size:.8rem"></i>Portfólio</a>
+    <a href="/sobre.html"><i class="fa-solid fa-circle-info" style="width:14px;opacity:.5;font-size:.8rem"></i>Sobre</a>
+    <a href="/contacto.html"><i class="fa-solid fa-envelope" style="width:14px;opacity:.5;font-size:.8rem"></i>Contacto</a>
+    <a href="/orcamento.html"><i class="fa-solid fa-file-invoice" style="width:14px;opacity:.5;font-size:.8rem"></i>Orçamento</a>
+    <a href="/verificar-site.html"><i class="fa-solid fa-user" style="width:14px;opacity:.5;font-size:.8rem"></i>Portal do Cliente</a>
+  </nav>
+</div>
+
+<script>
+const API=(window.IMPERSILVA&&window.IMPERSILVA.api_url)||(window.SITE_CONFIG&&window.SITE_CONFIG.api_url)||'https://impersilva-ao.3miliosilva.workers.dev';
+
+// ── REVEAL ────────────────────────────────────────────────
+document.documentElement.classList.add('js-ready');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('.hero .reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*120));
+
+// ── NAV + FOOTER ─────────────────────────────────────────
+window.addEventListener('scroll',()=>{document.querySelector('.navbar').style.borderBottomColor=window.scrollY>60?'rgba(214,40,40,0.2)':'rgba(255,255,255,0.07)';},{passive:true});
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+// ── DRAWER ────────────────────────────────────────────────
+function toggleDrawer(){document.getElementById('mmDrawer').classList.contains('active')?closeDrawer():openDrawer();}
+function openDrawer(){document.getElementById('mmDrawer').classList.add('active');document.getElementById('mmOverlay').classList.add('active');document.getElementById('hamburger').classList.add('active');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.getElementById('hamburger').classList.remove('active');document.body.style.overflow='';}
+document.querySelectorAll('#mmDrawer nav a').forEach(a=>a.addEventListener('click',closeDrawer));
+
+// ── TIPOS DE NEGÓCIO FALLBACK ─────────────────────────────
+const CATS_FB=[
+  {i:'fa-utensils',l:'Restaurantes',desc:'Site de pedidos online, cardápio digital e painel de gestão para o teu restaurante.',cor1:'#1a0505',cor2:'#3d0f0f'},
+  {i:'fa-burger',l:'Fast Food & Delivery',desc:'Sistema de encomendas rápido com promoções, combos e rastreio de entrega.',cor1:'#1a0a05',cor2:'#3d1f0f'},
+  {i:'fa-shirt',l:'Loja de Roupa & Moda',desc:'Catálogo visual com filtros de tamanho, cor e estilo. Checkout simplificado.',cor1:'#1a0520',cor2:'#3d0f3d'},
+  {i:'fa-scissors',l:'Salão & Barbearia',desc:'Agendamento online, galeria de serviços, promoções e fidelização de clientes.',cor1:'#200a1a',cor2:'#3d0f2a'},
+  {i:'fa-jar',l:'Cosméticos & Beleza',desc:'E-commerce completo para venda de produtos de beleza, skincare e perfumes.',cor1:'#1a0510',cor2:'#3d0f25'},
+  {i:'fa-mobile-screen',l:'Loja de Telemóveis',desc:'Catálogo com especificações técnicas, comparação de modelos e stock actualizado.',cor1:'#050d1a',cor2:'#0f1f3d'},
+  {i:'fa-headphones',l:'Electrónica & Gadgets',desc:'Vitrine digital para acessórios eletrónicos, computadores e gadgets.',cor1:'#0a051a',cor2:'#1f0f3d'},
+  {i:'fa-cake-candles',l:'Padaria & Pastelaria',desc:'Encomendas de bolos e doces com calendário de entregas e catálogo visual.',cor1:'#1a1005',cor2:'#3d2a0f'},
+  {i:'fa-dumbbell',l:'Desporto & Fitness',desc:'Loja de equipamentos desportivos, planos de treino e suplementos online.',cor1:'#051a0a',cor2:'#0f3d1f'},
+  {i:'fa-car',l:'Automóvel & Peças',desc:'Catálogo de veículos, peças e agendamento de serviços automóveis.',cor1:'#0a1015',cor2:'#1f2a3d'},
+  {i:'fa-couch',l:'Móveis & Decoração',desc:'Showroom digital de mobiliário com fotos, medidas e encomenda directa.',cor1:'#15100a',cor2:'#3d2f1f'},
+  {i:'fa-briefcase',l:'Serviços & Consultoria',desc:'Site institucional com portfólio, equipa, serviços e formulário de contacto.',cor1:'#0d0d1a',cor2:'#1a1a3d'},
+  {i:'fa-graduation-cap',l:'Educação & Formação',desc:'Plataforma para cursos, matrículas online e materiais de aprendizagem.',cor1:'#0a1a0a',cor2:'#1a3d1a'},
+  {i:'fa-store',l:'Outros negócios',desc:'Tens outro tipo de negócio? Criamos uma solução completamente à tua medida.',cor1:'#0d0d0d',cor2:'#1a1a1a'},
+];
+
+// ── CATEGORIAS SLIDER ─────────────────────────────────────
+let catIdx=0,catTimer,catData=[],catPaused=false;
+function renderCats(cats){
+  catData=cats;
+  const track=document.getElementById('catsTrack');
+  const dots=document.getElementById('catsDots');
+  track.innerHTML=cats.map((c,i)=>{
+    const bg=c.imagem||'';
+    return`<div class="cat${i===0?' active':''}" data-i="${i}">
+      ${bg?`<img class="cat-bg" src="${bg}" alt="" loading="lazy">`:`<div class="cat-bg" style="background:linear-gradient(135deg,${c.cor1||'#0d0d0d'} 0%,${c.cor2||'#1a1a1a'} 100%)"></div>`}
+      <div class="cat-overlay"></div>
+      <div class="cat-body">
+        <i class="fa-solid ${c.i||c.icon||'fa-store'}"></i>
+        <div class="cat-nome">${c.l||c.nome}</div>
+        <div class="cat-desc">${c.desc||''}</div>
+        <span class="cat-cta" onclick="location.href='/orcamento.html?tipo=${encodeURIComponent(c.l||c.nome)}'">Criar este site <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+    </div>`;
+  }).join('');
+  dots.innerHTML=cats.map((_,i)=>`<div class="cdot${i===0?' active':''}" onclick="goCat(${i})"></div>`).join('');
+  track.querySelectorAll('.cat').forEach(card=>{
+    card.addEventListener('mousedown',()=>catPaused=true);
+    card.addEventListener('mouseup',()=>catPaused=false);
+    card.addEventListener('mouseleave',()=>catPaused=false);
+    card.addEventListener('touchstart',()=>catPaused=true,{passive:true});
+    card.addEventListener('touchend',()=>catPaused=false);
+  });
+  clearInterval(catTimer);catTimer=setInterval(()=>{if(!catPaused)moveCat(1);},4500);
+}
+function goCat(i){
+  catIdx=(i+catData.length)%catData.length;
+  document.getElementById('catsTrack').style.transform=`translateX(-${catIdx*100}%)`;
+  document.querySelectorAll('.cdot').forEach((d,j)=>d.classList.toggle('active',j===catIdx));
+  document.querySelectorAll('.cat').forEach((c,j)=>c.classList.toggle('active',j===catIdx));
+}
+function moveCat(dir){goCat(catIdx+dir);}
+
+// ── TEMPLATES FALLBACK ────────────────────────────────────
+const TPLS_FB=[
+  {id:'tpl-loja-basica',nome:'Loja Simples',categoria:'loja',cat_label:'Loja Online',desc:'Template limpo e rápido para qualquer tipo de loja.',tags:['Catálogo','WhatsApp','Mobile'],novo:false,popular:true,cor:'#1d4ed8',cor2:'#0a1220'},
+  {id:'tpl-restaurante',nome:'Restaurante Pro',categoria:'restaurante',cat_label:'Restaurante',desc:'Cardápio digital com sistema de pedidos e delivery.',tags:['Pedidos','Cardápio','Delivery'],novo:true,popular:false,cor:'#d62828',cor2:'#1a0505'},
+  {id:'tpl-moda',nome:'Fashion Store',categoria:'loja',cat_label:'Moda & Roupa',desc:'Loja elegante com galeria de produtos e lookbook.',tags:['Lookbook','Tamanhos','Filtros'],novo:false,popular:false,cor:'#7c3aed',cor2:'#1a0528'},
+  {id:'tpl-fast-food',nome:'Fast Food',categoria:'restaurante',cat_label:'Fast Food',desc:'Menu visual com combos, promoções e encomendas rápidas.',tags:['Combos','Promoções','Rápido'],novo:true,popular:false,cor:'#ea580c',cor2:'#1a0a05'},
+  {id:'tpl-salao',nome:'Beauty Salon',categoria:'servicos',cat_label:'Salão & Barbearia',desc:'Agendamento online e galeria de trabalhos realizados.',tags:['Agendamento','Galeria','Serviços'],novo:false,popular:false,cor:'#db2777',cor2:'#200a18'},
+  {id:'tpl-tech-store',nome:'Tech Store',categoria:'loja',cat_label:'Electrónica',desc:'Catálogo de telemóveis e gadgets com especificações.',tags:['Specs','Comparação','Stock'],novo:false,popular:true,cor:'#0ea5e9',cor2:'#05101a'},
+  {id:'tpl-cosmeticos',nome:'Beauty & Skin',categoria:'loja',cat_label:'Cosméticos',desc:'Loja premium de beleza com reviews e guia de produtos.',tags:['Reviews','Skincare','Premium'],novo:true,popular:false,cor:'#f472b6',cor2:'#1a0510'},
+  {id:'tpl-delivery',nome:'Delivery Express',categoria:'restaurante',cat_label:'Delivery',desc:'Plataforma de entregas com rastreio e gestão de pedidos.',tags:['Rastreio','Pedidos','App'],novo:false,popular:false,cor:'#22c55e',cor2:'#051a0a'},
+  {id:'tpl-institucional',nome:'Corporativo',categoria:'institucional',cat_label:'Institucional',desc:'Site profissional com portfólio, equipa e serviços.',tags:['Portfólio','Equipa','Blog'],novo:false,popular:false,cor:'#64748b',cor2:'#0d1017'},
+  {id:'tpl-fitness',nome:'Gym & Fitness',categoria:'servicos',cat_label:'Desporto',desc:'Planos, horários, equipa e loja de suplementos.',tags:['Planos','Horários','Loja'],novo:true,popular:false,cor:'#f59e0b',cor2:'#1a1005'},
+];
+
+let tplData=[], tplFiltro='todos';
+function renderTpls(tpls){
+  tplData=tpls;
+  const filtered=tplFiltro==='todos'?tpls:tpls.filter(t=>t.categoria===tplFiltro);
+  const g=document.getElementById('tplGrid');
+  if(!filtered.length){g.innerHTML='<div class="tpl-empty">Nenhum template nesta categoria ainda.</div>';return;}
+  g.innerHTML=filtered.map(t=>{
+    const cor=t.cor||'#1d4ed8', cor2=t.cor2||'#0a0a0b';
+    return`<div class="tpl-card" onclick="location.href='/portfolio.html?template=${encodeURIComponent(t.id||t.nome)}'">
+      <div class="tpl-preview">
+        ${t.imagem?`<img src="${t.imagem}" alt="${t.nome}" style="width:100%;height:100%;object-fit:cover">`:`
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cor2} 0%,${cor2} 100%)"></div>
+        <div class="tpl-preview-screen">
+          <div class="tpl-preview-bar">
+            <div class="tpl-preview-dot" style="background:#ff5f57"></div>
+            <div class="tpl-preview-dot" style="background:#febc2e"></div>
+            <div class="tpl-preview-dot" style="background:#28c840"></div>
+          </div>
+          <div class="tpl-preview-content">
+            <div class="tpl-preview-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)">
+              <i class="fa-solid ${t.icon||'fa-store'}" style="font-size:1.8rem;color:rgba(255,255,255,.2)"></i>
             </div>
-            <div class="psc-img"><i class="fa-solid fa-shirt"></i></div>
-            <div class="psc-name">Vestido Elegance</div>
-            <div class="psc-price">Kz 8.500 · Tamanhos S M L XL</div>
-            <div class="psc-row">
-              <span class="psc-chip">Preto</span><span class="psc-chip">Branco</span><span class="psc-chip">Azul</span>
-            </div>
-            <div class="psc-btn">Encomendar via WhatsApp</div>
-            <div class="psc-row">
-              <span class="psc-chip">Ver galeria</span><span class="psc-chip">Novidades</span><span class="psc-chip">Promoções</span>
+            <div class="tpl-preview-lines">
+              <div class="tpl-preview-line"></div>
+              <div class="tpl-preview-line short"></div>
+              <div class="tpl-preview-line"></div>
             </div>
           </div>
-        </div>
+        </div>`}
+        ${t.novo?'<div class="tpl-badge-new">Novo</div>':''}
+        ${t.popular&&!t.novo?'<div class="tpl-badge-pop">Popular</div>':''}
+        <div class="tpl-overlay"><div class="tpl-overlay-btn"><i class="fa-solid fa-eye"></i> Ver template</div></div>
       </div>
-      <div class="phone-floating phone-f2"><i class="fa-solid fa-star" style="color:var(--amber)"></i> Novo pedido! <strong>Rania S.</strong></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ STATS BAR ═══ -->
-<div class="stats-bar">
-  <div class="stats-grid">
-    <div class="reveal"><div class="stat-val" style="color:var(--red)" data-target="47" data-suffix="+">0</div><div class="stat-lbl">Sites entregues</div></div>
-    <div class="reveal rd1"><div class="stat-val" style="color:var(--blue-lt)" data-target="38" data-suffix="+">0</div><div class="stat-lbl">Clientes activos</div></div>
-    <div class="reveal rd2"><div class="stat-val" style="color:var(--green)" data-target="7" data-suffix=" dias">0</div><div class="stat-lbl">Prazo médio entrega</div></div>
-    <div class="reveal rd3"><div class="stat-val" style="color:var(--white)" data-target="100" data-suffix="%">0</div><div class="stat-lbl">Satisfação garantida</div></div>
-  </div>
-</div>
-
-<!-- ═══ IMAGINE STRIP ═══ -->
-<div class="imagine-strip">
-  <div class="container">
-    <h2 class="imagine-title reveal">Já imaginou os seus clientes a <span style="color:var(--red)">encomendar</span> em casa<br>e você a <span style="color:var(--blue-lt)">vender</span> 24 horas por dia?</h2>
-    <p class="imagine-sub reveal rd1">Com um site criado pela IMPERSILVA TECH, o seu negócio nunca fecha. As pessoas vêem os seus produtos, escolhem, e encomendam directamente pelo WhatsApp — mesmo enquanto dorme.</p>
-    <a href="precos.html" class="btn-primary reveal rd2"><i class="fa-solid fa-calculator"></i> Calcular o meu orçamento</a>
-  </div>
-</div>
-
-<!-- ═══ CATEGORIAS PREVIEW ═══ -->
-<section id="categorias" style="background:var(--black)">
-  <div class="container">
-    <div style="margin-bottom:3rem">
-      <div class="eyebrow reveal">O que criamos</div>
-      <h2 class="sec-title reveal rd1">Sites para <span class="r">cada</span> <span class="b">negócio</span></h2>
-      <p class="sec-sub reveal rd2">Do pequeno empreendedor ao negócio estabelecido — temos uma solução à medida para cada tipo de negócio angolano.</p>
-    </div>
-    <div class="cat-preview-grid">
-      <a href="servicos.html#roupa" class="cat-preview-card red reveal">
-        <div class="cat-icon-wrap red"><i class="fa-solid fa-shirt"></i></div>
-        <div class="cat-preview-name">Loja de Roupa & Sapatos</div>
-        <div class="cat-preview-desc">Catálogo visual com filtros de tamanho, cor e estilo. Encomendas pelo WhatsApp.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#celulares" class="cat-preview-card blue reveal rd1">
-        <div class="cat-icon-wrap blue"><i class="fa-solid fa-mobile-screen"></i></div>
-        <div class="cat-preview-name">Celulares & Acessórios</div>
-        <div class="cat-preview-desc">Especificações técnicas, comparações de modelos e stock actualizado.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#restaurante" class="cat-preview-card green reveal rd2">
-        <div class="cat-icon-wrap green"><i class="fa-solid fa-utensils"></i></div>
-        <div class="cat-preview-name">Restaurante & Delivery</div>
-        <div class="cat-preview-desc">Menu digital com fotos, pedidos de delivery e reservas online.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#fastfood" class="cat-preview-card red reveal">
-        <div class="cat-icon-wrap red"><i class="fa-solid fa-burger"></i></div>
-        <div class="cat-preview-name">Hamburgueria & Fast Food</div>
-        <div class="cat-preview-desc">Combos, extras e pedidos express com entrega ao domicílio.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#bolos" class="cat-preview-card blue reveal rd1">
-        <div class="cat-icon-wrap blue"><i class="fa-solid fa-cake-candles"></i></div>
-        <div class="cat-preview-name">Padaria & Bolos</div>
-        <div class="cat-preview-desc">Galeria de bolos, preços por tamanho e encomendas com antecedência.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#eventos" class="cat-preview-card green reveal rd2">
-        <div class="cat-icon-wrap green"><i class="fa-solid fa-ticket"></i></div>
-        <div class="cat-preview-name">Eventos & Bilhetes</div>
-        <div class="cat-preview-desc">Countdown, tipos de ingresso e venda de bilhetes online.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#salao" class="cat-preview-card amber reveal">
-        <div class="cat-icon-wrap amber"><i class="fa-solid fa-scissors"></i></div>
-        <div class="cat-preview-name">Salão de Beleza</div>
-        <div class="cat-preview-desc">Portfólio de trabalhos e agendamentos online pelo WhatsApp.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#livros" class="cat-preview-card blue reveal rd1">
-        <div class="cat-icon-wrap blue"><i class="fa-solid fa-book-open"></i></div>
-        <div class="cat-preview-name">Livros & Produtos Digitais</div>
-        <div class="cat-preview-desc">Catálogo com sinopse, compras online e entrega digital.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-      <a href="servicos.html#escritorio" class="cat-preview-card amber reveal rd2">
-        <div class="cat-icon-wrap amber"><i class="fa-solid fa-briefcase"></i></div>
-        <div class="cat-preview-name">Escritório & Serviços</div>
-        <div class="cat-preview-desc">Apresentação profissional com agendamentos e portfólio de serviços.</div>
-        <div class="cat-preview-link">Ver detalhes <i class="fa-solid fa-arrow-right"></i></div>
-      </a>
-    </div>
-    <div style="text-align:center;margin-top:2.5rem" class="reveal">
-      <a href="servicos.html" class="btn-outline"><i class="fa-solid fa-layer-group"></i> Explorar todos os serviços em detalhe</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PORTFOLIO DESTAQUES ═══ -->
-<section id="portfolio-hl" style="background:var(--dark)">
-  <div class="container">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:3rem">
-      <div>
-        <div class="eyebrow reveal">Portfólio</div>
-        <h2 class="sec-title reveal rd1">Sites que já <span class="r">criámos</span></h2>
+      <div class="tpl-body">
+        <div class="tpl-cat">${t.cat_label||t.categoria}</div>
+        <div class="tpl-nome">${t.nome}</div>
+        <div class="tpl-desc">${t.desc||''}</div>
+        <div class="tpl-tags">${(t.tags||[]).map(tag=>`<span class="tpl-tag">${tag}</span>`).join('')}</div>
       </div>
-      <a href="portfolio.html" class="btn-outline btn-sm reveal"><i class="fa-solid fa-arrow-right"></i> Ver portfólio completo</a>
-    </div>
-    <div class="port-hl-grid">
-      <a href="portfolio.html#moda" class="port-hl-card reveal">
-        <div class="port-hl-img"><i class="fa-solid fa-shirt"></i><div class="port-hl-stripe"><span></span><span></span></div></div>
-        <div class="port-hl-body">
-          <span class="port-hl-tag t-blue">Loja Online</span>
-          <div class="port-hl-name">Loja de Moda Online</div>
-          <div style="font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.55">Catálogo com 200+ produtos, filtros e encomendas via WhatsApp.</div>
-          <div class="port-hl-result"><i class="fa-solid fa-arrow-trend-up"></i> +200 encomendas no 1º mês</div>
-        </div>
-      </a>
-      <a href="portfolio.html#cosmeticos" class="port-hl-card reveal rd1">
-        <div class="port-hl-img"><i class="fa-solid fa-bottle-droplet"></i><div class="port-hl-stripe"><span></span><span></span></div></div>
-        <div class="port-hl-body">
-          <span class="port-hl-tag t-red">Loja Online</span>
-          <div class="port-hl-name">Belle Cosméticos</div>
-          <div style="font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.55">Loja elegante com entregas ao domicílio e catálogo visual.</div>
-          <div class="port-hl-result"><i class="fa-solid fa-arrow-trend-up"></i> Entregas ao domicílio activas</div>
-        </div>
-      </a>
-      <a href="portfolio.html#restaurante" class="port-hl-card reveal rd2">
-        <div class="port-hl-img"><i class="fa-solid fa-utensils"></i><div class="port-hl-stripe"><span></span><span></span></div></div>
-        <div class="port-hl-body">
-          <span class="port-hl-tag t-green">Delivery</span>
-          <div class="port-hl-name">Restaurante & Delivery</div>
-          <div style="font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.55">Menu digital com pedidos de delivery e reservas online.</div>
-          <div class="port-hl-result"><i class="fa-solid fa-arrow-trend-up"></i> Triplicou pedidos em 2 meses</div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ DIFERENCIAIS ═══ -->
-<section id="diferenciais" style="background:var(--black)">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:3rem">
-      <div class="eyebrow reveal" style="justify-content:center">Por que nós</div>
-      <h2 class="sec-title reveal rd1">O que nos <span class="b">diferencia</span></h2>
-    </div>
-    <div class="diff-grid">
-      <div class="diff-card reveal"><i class="fa-solid fa-bolt diff-icon" style="color:var(--amber)"></i><div class="diff-title">Entrega Rápida</div><div class="diff-desc">Sites entregues entre 3 a 7 dias úteis. Sem esperas longas.</div></div>
-      <div class="diff-card reveal rd1"><i class="fa-solid fa-mobile-screen diff-icon" style="color:var(--blue-lt)"></i><div class="diff-title">100% Mobile</div><div class="diff-desc">Optimizados para telemóvel. Porque os seus clientes estão no mobile.</div></div>
-      <div class="diff-card reveal rd2"><i class="fa-brands fa-whatsapp diff-icon" style="color:#25D366"></i><div class="diff-title">WhatsApp Integrado</div><div class="diff-desc">Todos os sites têm integração directa com WhatsApp para encomendas.</div></div>
-      <div class="diff-card reveal rd3"><i class="fa-solid fa-rotate diff-icon" style="color:var(--green)"></i><div class="diff-title">Fácil de Actualizar</div><div class="diff-desc">Painel de administração incluído. Actualiza sem saber programar.</div></div>
-      <div class="diff-card reveal"><i class="fa-solid fa-palette diff-icon" style="color:var(--red)"></i><div class="diff-title">Design Personalizado</div><div class="diff-desc">Cada site é único e criado de acordo com a identidade do negócio.</div></div>
-      <div class="diff-card reveal rd1"><i class="fa-brands fa-github diff-icon" style="color:var(--white)"></i><div class="diff-title">Hospedagem Gratuita</div><div class="diff-desc">GitHub Pages — gratuito para sempre. Sem custos mensais.</div></div>
-      <div class="diff-card reveal rd2"><i class="fa-solid fa-chart-line diff-icon" style="color:var(--green)"></i><div class="diff-title">Resultados Reais</div><div class="diff-desc">Clientes com +60% nas vendas e centenas de encomendas/mês.</div></div>
-      <div class="diff-card reveal rd3"><i class="fa-solid fa-handshake diff-icon" style="color:var(--blue-lt)"></i><div class="diff-title">Suporte Local</div><div class="diff-desc">Equipa angolana em Huambo. Falamos a mesma língua.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CTA BAND ═══ -->
-<div class="cta-band">
-  <div class="container">
-    <div class="badge badge-red reveal" style="margin-bottom:1rem"><i class="fa-solid fa-fire"></i> Comece hoje</div>
-    <h2 class="cta-band-title reveal rd1">O seu negócio merece<br>um site <span style="color:var(--green)">profissional.</span></h2>
-    <p class="cta-band-sub reveal rd2">Junte-se a dezenas de empreendedores angolanos que já venderam mais com a IMPERSILVA TECH.</p>
-    <div class="cta-guarantees reveal rd2">
-      <div class="cta-g"><i class="fa-solid fa-check-circle"></i> Orçamento gratuito</div>
-      <div class="cta-g"><i class="fa-solid fa-check-circle"></i> Sem mensalidade</div>
-      <div class="cta-g"><i class="fa-solid fa-check-circle"></i> Suporte incluído</div>
-    </div>
-    <div class="cta-band-btns reveal rd3">
-      <a href="orcamento.html" class="btn-primary" style="font-size:.95rem;padding:1rem 2.5rem"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento gratuito</a>
-      <a href="portfolio.html" class="btn-outline"><i class="fa-solid fa-briefcase"></i> Ver portfólio</a>
-    </div>
-  </div>
-</div>
-<footer>
-  <div class="footer-inner container">
-    <div class="footer-brand">
-      <div class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> TECH</div>
-      <p class="footer-desc">Criamos sites profissionais para negócios angolanos. Lojas online, restaurantes, delivery, eventos e muito mais. Rápidos, modernos e acessíveis.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Serviços</h4>
-      <a href="servicos.html#roupa">Lojas de Roupa</a>
-      <a href="servicos.html#restaurante">Restaurantes</a>
-      <a href="servicos.html#fastfood">Hamburguerias</a>
-      <a href="servicos.html#eventos">Eventos</a>
-      <a href="servicos.html#escritorio">Escritórios</a>
-    </div>
-    <div class="footer-col">
-      <h4>Empresa</h4>
-      <a href="portfolio.html">Portfólio</a>
-      <a href="como-funciona.html">Como Funciona</a>
-      <a href="precos.html">Preços</a>
-      <a href="orcamento.html">Orçamento</a>
-      <a href="../index.html">IMPERSILVA Holding</a>
-    </div>
-  </div>
-  <div class="footer-bottom container">
-    <span>© <span class="yr"></span> IMPERSILVA TECH — Customização Digital · Huambo, Angola</span>
-    <a href="https://wa.me/244954288128" target="_blank">+244 954 288 128</a>
-  </div>
-</footer><script>
-// Year
-document.querySelectorAll('.yr').forEach(e => e.textContent = new Date().getFullYear());
-// Reveal
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
-},{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-// Drawer
-function openDrawer(){document.getElementById('mmDrawer').classList.add('active');document.getElementById('mmOverlay').classList.add('active');document.body.style.overflow='hidden';}
-function closeDrawer(){document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';}
-// Counters
-const cObs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const target=parseInt(e.target.dataset.target);
-      const suffix=e.target.dataset.suffix||'';
-      let v=0;const step=target/(1800/16);
-      const t=setInterval(()=>{v=Math.min(v+step,target);e.target.textContent=Math.floor(v)+suffix;if(v>=target){e.target.textContent=target+suffix;clearInterval(t);}},16);
-      cObs.unobserve(e.target);
-    }
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',function(e){
-    const t=document.querySelector(this.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
-  });
-});
-</script>
-<script>
-// ── TYPEWRITER ──
-const words=['lojas de roupa','restaurantes','hamburguerias','padarias e bolos','lojas de celulares','eventos e bilhetes','salões de beleza','escritórios'];
-let wi=0,ci=0,del=false;
-const el=document.getElementById('tw-text');
-function tw(){
-  const w=words[wi];
-  if(!del){el.textContent=w.substring(0,++ci);if(ci===w.length){del=true;setTimeout(tw,1800);return;}}
-  else{el.textContent=w.substring(0,--ci);if(ci===0){del=false;wi=(wi+1)%words.length;}}
-  setTimeout(tw,del?55:95);
+    </div>`;
+  }).join('');
 }
-setTimeout(tw,600);
+function filterTpl(cat,btn){
+  tplFiltro=cat;
+  document.querySelectorAll('.tpl-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTpls(tplData);
+}
+
+// ── DIFERENCIAIS ──────────────────────────────────────────
+const DIF_FB=[
+  {icon:'fa-rocket',cor:'r',h:'Lançamento em 7 dias',p:'Do template escolhido ao site no ar. Sem esperas longas, sem complicações.'},
+  {icon:'fa-mobile-screen',cor:'b',h:'100% Mobile',p:'Todos os templates são optimizados para telemóvel — onde os teus clientes estão.'},
+  {icon:'fa-whatsapp brands',cor:'g',h:'WhatsApp Integrado',p:'Encomendas e contactos directamente pelo WhatsApp, sem plataformas externas.'},
+  {icon:'fa-sliders',cor:'r',h:'Painel de Gestão',p:'Gere produtos, preços e encomendas sem precisar de saber código.'},
+  {icon:'fa-shield-halved',cor:'b',h:'Seguro & Rápido',p:'Hospedagem na Cloudflare — rápida, segura e fiável em todo o mundo.'},
+  {icon:'fa-headset',cor:'g',h:'Suporte Contínuo',p:'A nossa equipa está disponível para ajudar sempre que precisares.'},
+];
+function renderDif(items){
+  document.getElementById('difGrid').innerHTML=items.map(d=>`
+    <div class="dif-card">
+      <div class="dif-icon dif-icon-${d.cor||'r'}"><i class="fa-solid ${d.icon}"></i></div>
+      <div class="dif-h">${d.h}</div>
+      <div class="dif-p">${d.p}</div>
+    </div>`
+  ).join('');
+}
+
+// ── CARREGAR DADOS ────────────────────────────────────────
+async function carregarDados(){
+  renderCats(CATS_FB);
+  renderTpls(TPLS_FB);
+  renderDif(DIF_FB);
+  try{
+    const d=await fetch(API+'/api/site/tech',{signal:AbortSignal.timeout(5000)}).then(r=>r.ok?r.json():null);
+    if(!d)return;
+    if(d.hero){
+      if(d.hero.titulo)   document.getElementById('techHeroTitle').innerHTML=d.hero.titulo;
+      if(d.hero.subtitulo) document.getElementById('techHeroSub').textContent=d.hero.subtitulo;
+      if(d.hero.stats){
+        if(d.hero.stats.sites) document.getElementById('statSites').innerHTML=d.hero.stats.sites+'<span style="font-size:1.4rem">+</span>';
+        if(d.hero.stats.sat)   document.getElementById('statSat').innerHTML=d.hero.stats.sat+'<span style="font-size:1.4rem">%</span>';
+        if(d.hero.stats.templates) document.getElementById('statTpl').innerHTML=d.hero.stats.templates+'<span style="font-size:1.4rem">+</span>';
+      }
+    }
+    if(d.tipos&&d.tipos.length)       renderCats(d.tipos);
+    if(d.templates&&d.templates.length){renderTpls(d.templates);renderFilterBtns(d.templates);}
+    if(d.diferenciais&&d.diferenciais.length) renderDif(d.diferenciais);
+    if(d.processo&&d.processo.length)  renderProcesso(d.processo);
+    if(d.cta&&d.cta.subtitulo) document.getElementById('techCtaSub').textContent=d.cta.subtitulo;
+  }catch(e){}
+}
+
+function renderFilterBtns(tpls){
+  const cats=[...new Set(tpls.map(t=>t.categoria))];
+  const labels={loja:'Lojas',restaurante:'Restaurantes',servicos:'Serviços',institucional:'Institucional'};
+  const existing=document.querySelectorAll('.tpl-filter-btn[data-dyn]');
+  existing.forEach(b=>b.remove());
+  const filter=document.getElementById('tplFilter');
+  cats.forEach(cat=>{
+    if(cat==='todos')return;
+    const btn=document.createElement('button');
+    btn.className='tpl-filter-btn';
+    btn.setAttribute('data-dyn','1');
+    btn.textContent=labels[cat]||cat;
+    btn.onclick=()=>filterTpl(cat,btn);
+    filter.appendChild(btn);
+  });
+}
+
+function renderProcesso(passos){
+  document.getElementById('passosGrid').innerHTML=passos.map(p=>`
+    <div class="passo">
+      <div class="passo-n">${p.n||p.numero}</div>
+      <h3>${p.titulo}</h3>
+      <p>${p.desc}</p>
+      ${p.prazo?`<div class="passo-prazo"><i class="fa-solid fa-clock"></i>${p.prazo}</div>`:''}
+    </div>`
+  ).join('');
+}
+
+carregarDados();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
 </body>
 </html>
