@@ -89,12 +89,6 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .dor-sec{background:var(--black)}
 .dor-intro{max-width:640px;margin-bottom:40px}
 .dor-intro p{font-size:.97rem;color:var(--gray);line-height:1.8;font-weight:300}
-.dor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.dor-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;display:flex;gap:14px;align-items:flex-start;transition:.25s}
-.dor-card:hover{border-color:rgba(214,40,40,.25);transform:translateY(-2px)}
-.dor-icon{width:40px;height:40px;border-radius:8px;background:var(--red-dim);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:.95rem;flex-shrink:0}
-.dor-h{font-size:.88rem;font-weight:700;margin-bottom:5px}
-.dor-p{font-size:.78rem;color:var(--gray);line-height:1.6;font-weight:300}
 
 /* ── PLANO ESCALADOR ── */
 .escalador-sec{background:var(--dark)}
@@ -104,35 +98,6 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .escalador-garantias{display:flex;flex-direction:column;gap:10px}
 .garantia{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--gray-lt);line-height:1.5}
 .garantia i{color:var(--green);margin-top:2px;flex-shrink:0}
-.fases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.fase{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;position:relative;transition:.25s;overflow:hidden}
-.fase:hover{border-color:rgba(29,78,216,.3);transform:translateY(-3px)}
-.fase::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--blue),var(--blue-lt))}
-.fase-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem;color:rgba(29,78,216,.12);line-height:1;margin-bottom:8px;letter-spacing:-.02em}
-.fase-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
-.fase-h .b{color:var(--blue-lt)}
-.fase-p{font-size:.78rem;color:var(--gray);line-height:1.6;font-weight:300}
-
-/* ── PARA QUEM ── */
-.para-quem-sec{background:var(--black)}
-.para-quem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-.pq-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;transition:.25s;text-align:center}
-.pq-card:hover{border-color:rgba(29,78,216,.25);transform:translateY(-3px)}
-.pq-icon{width:52px;height:52px;border-radius:12px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;color:var(--blue-lt);font-size:1.3rem;margin:0 auto 14px}
-.pq-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}
-.pq-p{font-size:.78rem;color:var(--gray);line-height:1.6;font-weight:300}
-
-/* ── SERVIÇOS ADICIONAIS ── */
-.servicos-sec{background:var(--dark)}
-.serv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.serv-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;transition:.25s}
-.serv-card:hover{border-color:rgba(29,78,216,.25);transform:translateY(-3px)}
-.serv-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;margin-bottom:14px}
-.serv-icon-b{background:var(--blue-dim);color:var(--blue-lt)}
-.serv-icon-r{background:var(--red-dim);color:var(--red)}
-.serv-icon-g{background:var(--green-dim);color:var(--green)}
-.serv-h{font-size:.88rem;font-weight:700;margin-bottom:6px}
-.serv-p{font-size:.78rem;color:var(--gray);line-height:1.6;font-weight:300}
 
 /* ── PROCESSO ── */
 .proc-sec{background:var(--black)}
@@ -226,21 +191,12 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 .js-ready .reveal.visible{opacity:1;transform:none}
 .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
 
-/* ── CARROSSEL AUTOMÁTICO ── */
-.gc-track-outer{position:relative;overflow:hidden;border-radius:16px}
-.gc-track{display:flex;transition:transform .7s cubic-bezier(.25,.46,.45,.94);will-change:transform;align-items:stretch}
-.gc-track .dor-card,
-.gc-track .fase,
-.gc-track .pq-card,
-.gc-track .serv-card{flex-shrink:0;box-sizing:border-box;margin-right:16px;transition:all .5s cubic-bezier(.25,.46,.45,.94);opacity:.7;transform:scale(.95)}
-.gc-track .dor-card:last-child,
-.gc-track .fase:last-child,
-.gc-track .pq-card:last-child,
-.gc-track .serv-card:last-child{margin-right:0}
-.gc-track .dor-card.active-slide,
-.gc-track .fase.active-slide,
-.gc-track .pq-card.active-slide,
-.gc-track .serv-card.active-slide{opacity:1;transform:scale(1);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+/* ── CARROSSEL CORRIGIDO ── */
+.gc-wrap{position:relative;width:100%;overflow:hidden}
+.gc-track-outer{position:relative;overflow:hidden;border-radius:16px;width:100%}
+.gc-track{display:flex;transition:transform .7s cubic-bezier(.25,.46,.45,.94);will-change:transform;gap:16px;padding:4px 0}
+.gc-track > div{flex:0 0 auto;box-sizing:border-box;border-radius:12px;transition:all .5s cubic-bezier(.25,.46,.45,.94);opacity:.8;transform:scale(.96)}
+.gc-track > div.active-slide{opacity:1;transform:scale(1);box-shadow:0 8px 32px rgba(0,0,0,.3)}
 .gc-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px;padding:8px 16px;background:rgba(255,255,255,.03);border-radius:30px;border:1px solid var(--border);backdrop-filter:blur(6px);max-width:300px;margin-left:auto;margin-right:auto}
 .gc-btn{width:36px;height:36px;border-radius:50%;background:var(--charcoal);border:1px solid var(--border);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .25s cubic-bezier(.25,.46,.45,.94);flex-shrink:0}
 .gc-btn:hover{background:var(--blue);border-color:var(--blue);color:var(--white);transform:scale(1.05);box-shadow:0 4px 16px rgba(29,78,216,.3)}
@@ -253,12 +209,41 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 .gc-timer-badge .progress-ring{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.1);border-top-color:var(--blue-lt);animation:spin 3s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── CARDS MELHORADOS ── */
+.dor-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;display:flex;gap:14px;align-items:flex-start;height:100%;min-height:180px}
+.dor-card:hover{border-color:rgba(214,40,40,.25);transform:translateY(-2px)}
+.dor-icon{width:40px;height:40px;border-radius:8px;background:var(--red-dim);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:.95rem;flex-shrink:0}
+.dor-h{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:4px}
+.dor-p{font-size:.82rem;color:var(--gray-lt);line-height:1.6;font-weight:300}
+
+.fase{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;position:relative;overflow:hidden;height:100%;min-height:200px}
+.fase:hover{border-color:rgba(29,78,216,.3);transform:translateY(-3px)}
+.fase::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--blue),var(--blue-lt))}
+.fase-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3rem;color:rgba(29,78,216,.12);line-height:1;margin-bottom:8px;letter-spacing:-.02em}
+.fase-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;color:var(--white)}
+.fase-h .b{color:var(--blue-lt)}
+.fase-p{font-size:.82rem;color:var(--gray-lt);line-height:1.6;font-weight:300}
+
+.pq-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;height:100%;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pq-card:hover{border-color:rgba(29,78,216,.25);transform:translateY(-3px)}
+.pq-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto 12px}
+.pq-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;color:var(--white)}
+.pq-p{font-size:.82rem;color:var(--gray-lt);line-height:1.6;font-weight:300}
+
+.serv-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:24px;height:100%;min-height:180px}
+.serv-card:hover{border-color:rgba(29,78,216,.25);transform:translateY(-3px)}
+.serv-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem;margin-bottom:12px}
+.serv-icon-b{background:var(--blue-dim);color:var(--blue-lt)}
+.serv-icon-r{background:var(--red-dim);color:var(--red)}
+.serv-icon-g{background:var(--green-dim);color:var(--green)}
+.serv-h{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:4px}
+.serv-p{font-size:.82rem;color:var(--gray-lt);line-height:1.6;font-weight:300}
+
 /* ── RESPONSIVE ── */
 @media(max-width:860px){
   .sec{padding:56px 0}
   .hero{padding:3rem 0 2.5rem}
   .escalador-header{grid-template-columns:1fr}
-  .fases-grid{grid-template-columns:1fr 1fr}
   .passos{grid-template-columns:1fr 1fr}
   .passo{border-right:none;border-bottom:1px solid var(--border)}
   .passo:nth-child(odd){border-right:1px solid var(--border)}
@@ -267,12 +252,13 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   .gc-timer-badge{display:none}
 }
 @media(max-width:540px){
-  .fases-grid{grid-template-columns:1fr}
   .passos{grid-template-columns:1fr}
   .passo{border-right:none!important;border-bottom:1px solid var(--border)!important}
   .passo:last-child{border-bottom:none!important}
-  .para-quem-grid{grid-template-columns:1fr 1fr}
   .hero-stats{gap:1.5rem}
+  .gc-track{flex-wrap:nowrap}
+  .gc-track > div{min-width:calc(100% - 16px)!important}
+  .dor-card,.fase,.pq-card,.serv-card{min-height:160px}
 }
 </style>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -586,15 +572,11 @@ const FAQ_FB=[
   {q:'Qual é o investimento para o Plano Escalador completo?',a:'O investimento varia consoante a dimensão e necessidades específicas do teu negócio. Após o diagnóstico gratuito, apresentamos uma proposta personalizada e transparente.'},
 ];
 
-// ── CARROSSEL AUTOMÁTICO AVANÇADO ──
+// ── CARROSSEL CORRIGIDO ──
 const GC = {};
 
 function gcPP() {
   return window.innerWidth <= 540 ? 1 : window.innerWidth <= 860 ? 2 : 3;
-}
-
-function gcCardW(pp) {
-  return (100 / pp) - (16 * (pp - 1) / pp);
 }
 
 function gcInit(id, items, tmpl) {
@@ -614,18 +596,13 @@ function gcInit(id, items, tmpl) {
 
 function gcRender(id) {
   const { items, tmpl, idx, pp, pages } = GC[id];
-  const w = gcCardW(pp);
-  const gap = 16;
   const track = document.getElementById(id + 'Track');
   const dots = document.getElementById(id + 'Dots');
   
   track.innerHTML = items.map((it, i) => {
     const card = tmpl(it);
     const isActive = Math.floor(i / pp) === idx;
-    return card.replace(
-      /^<div /,
-      `<div style="min-width:calc(${w}% - ${gap*(pp-1)/pp}px);margin-right:${gap}px;" class="${isActive ? 'active-slide' : ''}" `
-    );
+    return card;
   }).join('');
   
   dots.innerHTML = Array.from({ length: pages }, (_, i) =>
@@ -637,17 +614,31 @@ function gcRender(id) {
 
 function gcApply(id) {
   const { idx, pp } = GC[id];
-  const w = gcCardW(pp);
-  const gap = 16;
   const track = document.getElementById(id + 'Track');
-  const offset = idx * pp;
-  track.style.transform = `translateX(calc(-${offset * w}% - ${offset * gap}px))`;
+  const cards = track.querySelectorAll(':scope > div');
+  const totalCards = cards.length;
   
-  const cards = track.querySelectorAll('.dor-card, .fase, .pq-card, .serv-card');
   cards.forEach((card, i) => {
     const slideIdx = Math.floor(i / pp);
     card.classList.toggle('active-slide', slideIdx === idx);
   });
+  
+  // Calcular largura dos cards baseada no container
+  const containerWidth = track.parentElement.clientWidth;
+  const gap = 16;
+  const cardWidth = (containerWidth - gap * (pp - 1)) / pp;
+  
+  cards.forEach(card => {
+    card.style.minWidth = cardWidth + 'px';
+    card.style.maxWidth = cardWidth + 'px';
+    card.style.marginRight = gap + 'px';
+  });
+  if (cards.length > 0) {
+    cards[cards.length - 1].style.marginRight = '0';
+  }
+  
+  const offset = idx * (cardWidth + gap);
+  track.style.transform = `translateX(-${offset}px)`;
   
   document.querySelectorAll(`#${id}Dots .gc-dot`).forEach((d, i) => {
     d.classList.toggle('active', i === idx);
@@ -703,7 +694,7 @@ window.addEventListener('resize', () => {
   });
 }, { passive: true });
 
-// ── RENDER FUNÇÕES MELHORADAS ──
+// ── RENDER FUNÇÕES ──
 function renderDor(items) {
   gcInit('dor', items, d => `
     <div class="dor-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);">
@@ -711,8 +702,8 @@ function renderDor(items) {
         <i class="fa-solid ${d.icon}"></i>
       </div>
       <div>
-        <div class="dor-h" style="font-size:0.95rem;font-weight:700;color:var(--white);">${d.h}</div>
-        <div class="dor-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${d.p}</div>
+        <div class="dor-h">${d.h}</div>
+        <div class="dor-p">${d.p}</div>
       </div>
     </div>
   `);
@@ -721,34 +712,34 @@ function renderDor(items) {
 function renderFases(fases) {
   gcInit('fases', fases, f => `
     <div class="fase" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);">
-      <div class="fase-n" style="font-size:3.2rem;font-weight:900;color:rgba(29,78,216,0.08);">${f.n}</div>
-      <div class="fase-h" style="font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;">${f.h}</div>
-      <div class="fase-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${f.p}</div>
-      <div style="position:absolute;bottom:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(29,78,216,0.06);border:1px solid rgba(29,78,216,0.1);display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--blue-lt);font-weight:700;">${f.n}</div>
+      <div class="fase-n">${f.n}</div>
+      <div class="fase-h">${f.h}</div>
+      <div class="fase-p">${f.p}</div>
+      <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(29,78,216,0.06);border:1px solid rgba(29,78,216,0.1);display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--blue-lt);font-weight:700;">${f.n}</div>
     </div>
   `);
 }
 
 function renderParaQuem(items) {
   gcInit('paraQuem', items, p => `
-    <div class="pq-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);padding:28px 24px;">
-      <div class="pq-icon" style="background:var(--${p.cor === 'r' ? 'red' : 'blue'}-dim);color:var(--${p.cor === 'r' ? 'red' : 'blue-lt'});width:56px;height:56px;border-radius:14px;font-size:1.5rem;">
+    <div class="pq-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);padding:28px 20px;">
+      <div class="pq-icon" style="background:var(--${p.cor === 'r' ? 'red' : 'blue'}-dim);color:var(--${p.cor === 'r' ? 'red' : 'blue-lt'});">
         <i class="fa-solid ${p.icon}"></i>
       </div>
-      <div class="pq-h" style="font-size:1.05rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">${p.h}</div>
-      <div class="pq-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${p.p}</div>
+      <div class="pq-h">${p.h}</div>
+      <div class="pq-p">${p.p}</div>
     </div>
   `);
 }
 
 function renderServicos(items) {
   gcInit('serv', items, s => `
-    <div class="serv-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);padding:26px 22px;">
-      <div class="serv-icon serv-icon-${s.cor}" style="width:48px;height:48px;border-radius:12px;font-size:1.1rem;background:var(--${s.cor === 'r' ? 'red' : s.cor === 'b' ? 'blue' : 'green'}-dim);color:var(--${s.cor === 'r' ? 'red' : s.cor === 'b' ? 'blue-lt' : 'green'});">
+    <div class="serv-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);padding:24px 20px;">
+      <div class="serv-icon serv-icon-${s.cor}" style="background:var(--${s.cor === 'r' ? 'red' : s.cor === 'b' ? 'blue' : 'green'}-dim);color:var(--${s.cor === 'r' ? 'red' : s.cor === 'b' ? 'blue-lt' : 'green'});">
         <i class="fa-solid ${s.icon}"></i>
       </div>
-      <div class="serv-h" style="font-size:0.95rem;font-weight:700;color:var(--white);">${s.h}</div>
-      <div class="serv-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${s.p}</div>
+      <div class="serv-h">${s.h}</div>
+      <div class="serv-p">${s.p}</div>
     </div>
   `);
 }
@@ -764,7 +755,7 @@ function renderProcesso(passos) {
   `).join('');
 }
 
-// ── DEPOIMENTOS SLIDER ────────────────────────────────────
+// ── DEPOIMENTOS SLIDER ──
 let depIdx = 0, depTimer, depData = [];
 
 function renderDep(deps) {
@@ -798,7 +789,7 @@ function moveDep(dir) {
   goDep(depIdx + dir);
 }
 
-// ── FAQ ───────────────────────────────────────────────────
+// ── FAQ ──
 function renderFaq(items) {
   document.getElementById('faqList').innerHTML = items.map((f, i) => `
     <div class="faq-item" id="faq${i}">
@@ -818,7 +809,7 @@ function toggleFaq(i) {
   if (!isOpen) item.classList.add('open');
 }
 
-// ── CARREGAR DADOS ────────────────────────────────────────
+// ── CARREGAR DADOS ──
 async function carregarDados() {
   renderDor(DOR_FB);
   renderFases(FASES_FB);
