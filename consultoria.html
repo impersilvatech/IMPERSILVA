@@ -245,6 +245,22 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   .para-quem-grid{grid-template-columns:1fr 1fr}
   .hero-stats{gap:1.5rem}
 }
+
+/* ── GRID CAROUSEL (sintomas, fases, para-quem, serviços) ── */
+.gc-wrap{position:relative}
+.gc-track-outer{overflow:hidden;border-radius:12px}
+.gc-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);align-items:stretch}
+.gc-track .dor-card,
+.gc-track .fase,
+.gc-track .pq-card,
+.gc-track .serv-card{flex-shrink:0;box-sizing:border-box}
+.gc-controls{display:flex;align-items:center;gap:10px;margin-top:16px}
+.gc-btn{width:32px;height:32px;border-radius:50%;background:var(--charcoal);border:1px solid var(--border);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s;flex-shrink:0}
+.gc-btn:hover{background:var(--blue);border-color:var(--blue);color:var(--white)}
+.gc-dots{display:flex;gap:5px;flex:1;justify-content:center}
+.gc-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.25s}
+.gc-dot.active{background:var(--blue-lt);width:18px;border-radius:3px}
+@media(max-width:860px){.gc-btn{display:none}}
 </style>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
@@ -315,7 +331,14 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
     <div class="dor-intro reveal reveal-delay-1">
       <p id="dorIntro">Estas são as razões mais comuns pelas quais micro e pequenas empresas não crescem em Angola. Se reconheces pelo menos 2, o Plano Escalador foi feito para ti.</p>
     </div>
-    <div class="dor-grid reveal reveal-delay-2" id="dorGrid"></div>
+    <div class="gc-wrap reveal reveal-delay-2">
+      <div class="gc-track-outer"><div class="gc-track" id="dorTrack"></div></div>
+      <div class="gc-controls">
+        <button class="gc-btn" onclick="gcMove('dor',-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="gc-dots" id="dorDots"></div>
+        <button class="gc-btn" onclick="gcMove('dor',1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -337,7 +360,14 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <div class="garantia"><i class="fa-solid fa-check"></i> Resultados mensuráveis</div>
       </div>
     </div>
-    <div class="fases-grid reveal reveal-delay-2" id="fasesGrid"></div>
+    <div class="gc-wrap reveal reveal-delay-2">
+      <div class="gc-track-outer"><div class="gc-track" id="fasesTrack"></div></div>
+      <div class="gc-controls">
+        <button class="gc-btn" onclick="gcMove('fases',-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="gc-dots" id="fasesDots"></div>
+        <button class="gc-btn" onclick="gcMove('fases',1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -346,7 +376,14 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   <div class="sec-inner">
     <div class="sec-tag reveal">Público</div>
     <div class="sec-title reveal reveal-delay-1">Para quem é a<br>nossa <span class="b">consultoria?</span></div>
-    <div class="para-quem-grid reveal reveal-delay-2" id="paraQuemGrid"></div>
+    <div class="gc-wrap reveal reveal-delay-2">
+      <div class="gc-track-outer"><div class="gc-track" id="paraQuemTrack"></div></div>
+      <div class="gc-controls">
+        <button class="gc-btn" onclick="gcMove('paraQuem',-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="gc-dots" id="paraQuemDots"></div>
+        <button class="gc-btn" onclick="gcMove('paraQuem',1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -355,7 +392,14 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   <div class="sec-inner">
     <div class="sec-tag reveal">Mais serviços</div>
     <div class="sec-title reveal reveal-delay-1">O que mais<br><span class="r">oferecemos</span></div>
-    <div class="serv-grid reveal reveal-delay-2" id="servGrid"></div>
+    <div class="gc-wrap reveal reveal-delay-2">
+      <div class="gc-track-outer"><div class="gc-track" id="servTrack"></div></div>
+      <div class="gc-controls">
+        <button class="gc-btn" onclick="gcMove('serv',-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="gc-dots" id="servDots"></div>
+        <button class="gc-btn" onclick="gcMove('serv',1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -525,44 +569,81 @@ const FAQ_FB=[
   {q:'Qual é o investimento para o Plano Escalador completo?',a:'O investimento varia consoante a dimensão e necessidades específicas do teu negócio. Após o diagnóstico gratuito, apresentamos uma proposta personalizada e transparente.'},
 ];
 
+// ── GRID CAROUSEL ENGINE ─────────────────────────────────
+const GC={};
+function gcPP(){return window.innerWidth<=540?1:window.innerWidth<=860?2:3;}
+function gcCardW(pp){return(100/pp);}
+function gcInit(id,items,tmpl){
+  const pp=gcPP();
+  GC[id]={items,tmpl,idx:0,pages:Math.ceil(items.length/pp)};
+  gcRender(id);
+}
+function gcRender(id){
+  const {items,tmpl,idx,pages}=GC[id];
+  const pp=gcPP();
+  const w=gcCardW(pp);
+  const gap=14;
+  const track=document.getElementById(id+'Track');
+  const dots=document.getElementById(id+'Dots');
+  track.innerHTML=items.map(it=>{
+    const card=tmpl(it);
+    // injectar largura inline em cada card
+    return card.replace(/^<div /, `<div style="min-width:calc(${w}% - ${gap*(pp-1)/pp}px);margin-right:${gap}px;" `);
+  }).join('');
+  dots.innerHTML=Array.from({length:pages},(_,i)=>
+    `<div class="gc-dot${i===idx?' active':''}" onclick="gcGo('${id}',${i})"></div>`
+  ).join('');
+  gcApply(id);
+}
+function gcApply(id){
+  const {idx}=GC[id];
+  const pp=gcPP();
+  const w=gcCardW(pp);
+  const gap=14;
+  const track=document.getElementById(id+'Track');
+  const offset=idx*pp;
+  track.style.transform=`translateX(calc(-${offset*w}% - ${offset*gap}px))`;
+  document.querySelectorAll(`#${id}Dots .gc-dot`).forEach((d,i)=>d.classList.toggle('active',i===GC[id].idx));
+}
+function gcGo(id,i){
+  const pages=GC[id].pages;
+  GC[id].idx=((i%pages)+pages)%pages;
+  gcApply(id);
+}
+function gcMove(id,dir){gcGo(id,GC[id].idx+dir);}
+window.addEventListener('resize',()=>{
+  ['dor','fases','paraQuem','serv'].forEach(id=>{
+    if(GC[id]){GC[id].pages=Math.ceil(GC[id].items.length/gcPP());GC[id].idx=0;gcRender(id);}
+  });
+},{passive:true});
+
 // ── RENDER FUNÇÕES ────────────────────────────────────────
 function renderDor(items){
-  document.getElementById('dorGrid').innerHTML=items.map(d=>`
-    <div class="dor-card">
+  gcInit('dor',items,d=>`<div class="dor-card">
       <div class="dor-icon"><i class="fa-solid ${d.icon}"></i></div>
       <div><div class="dor-h">${d.h}</div><div class="dor-p">${d.p}</div></div>
-    </div>`
-  ).join('');
+    </div>`);
 }
-
 function renderFases(fases){
-  document.getElementById('fasesGrid').innerHTML=fases.map(f=>`
-    <div class="fase">
+  gcInit('fases',fases,f=>`<div class="fase">
       <div class="fase-n">${f.n}</div>
       <div class="fase-h">${f.h}</div>
       <div class="fase-p">${f.p}</div>
-    </div>`
-  ).join('');
+    </div>`);
 }
-
 function renderParaQuem(items){
-  document.getElementById('paraQuemGrid').innerHTML=items.map(p=>`
-    <div class="pq-card">
+  gcInit('paraQuem',items,p=>`<div class="pq-card">
       <div class="pq-icon" style="background:var(--${p.cor==='r'?'red':'blue'}-dim);color:var(--${p.cor==='r'?'red':'blue-lt'})"><i class="fa-solid ${p.icon}"></i></div>
       <div class="pq-h">${p.h}</div>
       <div class="pq-p">${p.p}</div>
-    </div>`
-  ).join('');
+    </div>`);
 }
-
 function renderServicos(items){
-  document.getElementById('servGrid').innerHTML=items.map(s=>`
-    <div class="serv-card">
+  gcInit('serv',items,s=>`<div class="serv-card">
       <div class="serv-icon serv-icon-${s.cor}"><i class="fa-solid ${s.icon}"></i></div>
       <div class="serv-h">${s.h}</div>
       <div class="serv-p">${s.p}</div>
-    </div>`
-  ).join('');
+    </div>`);
 }
 
 function renderProcesso(passos){
