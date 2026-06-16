@@ -226,6 +226,33 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 .js-ready .reveal.visible{opacity:1;transform:none}
 .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
 
+/* ── CARROSSEL AUTOMÁTICO ── */
+.gc-track-outer{position:relative;overflow:hidden;border-radius:16px}
+.gc-track{display:flex;transition:transform .7s cubic-bezier(.25,.46,.45,.94);will-change:transform;align-items:stretch}
+.gc-track .dor-card,
+.gc-track .fase,
+.gc-track .pq-card,
+.gc-track .serv-card{flex-shrink:0;box-sizing:border-box;margin-right:16px;transition:all .5s cubic-bezier(.25,.46,.45,.94);opacity:.7;transform:scale(.95)}
+.gc-track .dor-card:last-child,
+.gc-track .fase:last-child,
+.gc-track .pq-card:last-child,
+.gc-track .serv-card:last-child{margin-right:0}
+.gc-track .dor-card.active-slide,
+.gc-track .fase.active-slide,
+.gc-track .pq-card.active-slide,
+.gc-track .serv-card.active-slide{opacity:1;transform:scale(1);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.gc-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px;padding:8px 16px;background:rgba(255,255,255,.03);border-radius:30px;border:1px solid var(--border);backdrop-filter:blur(6px);max-width:300px;margin-left:auto;margin-right:auto}
+.gc-btn{width:36px;height:36px;border-radius:50%;background:var(--charcoal);border:1px solid var(--border);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .25s cubic-bezier(.25,.46,.45,.94);flex-shrink:0}
+.gc-btn:hover{background:var(--blue);border-color:var(--blue);color:var(--white);transform:scale(1.05);box-shadow:0 4px 16px rgba(29,78,216,.3)}
+.gc-btn:active{transform:scale(.92)}
+.gc-dots{display:flex;gap:6px;flex:1;justify-content:center}
+.gc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .4s cubic-bezier(.25,.46,.45,.94);border:none;padding:0}
+.gc-dot.active{background:var(--blue-lt);width:28px;border-radius:4px;box-shadow:0 0 12px rgba(29,78,216,.3)}
+.gc-dot:hover:not(.active){background:rgba(255,255,255,.3);transform:scale(1.2)}
+.gc-timer-badge{position:absolute;bottom:16px;right:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:6px 14px;font-size:.65rem;color:var(--gray-lt);display:flex;align-items:center;gap:8px;z-index:5;pointer-events:none}
+.gc-timer-badge .progress-ring{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.1);border-top-color:var(--blue-lt);animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ── RESPONSIVE ── */
 @media(max-width:860px){
   .sec{padding:56px 0}
@@ -236,6 +263,8 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   .passo{border-right:none;border-bottom:1px solid var(--border)}
   .passo:nth-child(odd){border-right:1px solid var(--border)}
   .passo:nth-last-child(-n+2){border-bottom:none}
+  .gc-btn{width:32px;height:32px;font-size:.7rem}
+  .gc-timer-badge{display:none}
 }
 @media(max-width:540px){
   .fases-grid{grid-template-columns:1fr}
@@ -245,22 +274,6 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   .para-quem-grid{grid-template-columns:1fr 1fr}
   .hero-stats{gap:1.5rem}
 }
-
-/* ── GRID CAROUSEL (sintomas, fases, para-quem, serviços) ── */
-.gc-wrap{position:relative}
-.gc-track-outer{overflow:hidden;border-radius:12px}
-.gc-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);align-items:stretch}
-.gc-track .dor-card,
-.gc-track .fase,
-.gc-track .pq-card,
-.gc-track .serv-card{flex-shrink:0;box-sizing:border-box}
-.gc-controls{display:flex;align-items:center;gap:10px;margin-top:16px}
-.gc-btn{width:32px;height:32px;border-radius:50%;background:var(--charcoal);border:1px solid var(--border);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s;flex-shrink:0}
-.gc-btn:hover{background:var(--blue);border-color:var(--blue);color:var(--white)}
-.gc-dots{display:flex;gap:5px;flex:1;justify-content:center}
-.gc-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.25s}
-.gc-dot.active{background:var(--blue-lt);width:18px;border-radius:3px}
-@media(max-width:860px){.gc-btn{display:none}}
 </style>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
@@ -337,6 +350,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <button class="gc-btn" onclick="gcMove('dor',-1)"><i class="fa-solid fa-chevron-left"></i></button>
         <div class="gc-dots" id="dorDots"></div>
         <button class="gc-btn" onclick="gcMove('dor',1)"><i class="fa-solid fa-chevron-right"></i></button>
+        <span class="gc-timer-badge"><span class="progress-ring"></span> Auto</span>
       </div>
     </div>
   </div>
@@ -366,6 +380,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <button class="gc-btn" onclick="gcMove('fases',-1)"><i class="fa-solid fa-chevron-left"></i></button>
         <div class="gc-dots" id="fasesDots"></div>
         <button class="gc-btn" onclick="gcMove('fases',1)"><i class="fa-solid fa-chevron-right"></i></button>
+        <span class="gc-timer-badge"><span class="progress-ring"></span> Auto</span>
       </div>
     </div>
   </div>
@@ -382,6 +397,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <button class="gc-btn" onclick="gcMove('paraQuem',-1)"><i class="fa-solid fa-chevron-left"></i></button>
         <div class="gc-dots" id="paraQuemDots"></div>
         <button class="gc-btn" onclick="gcMove('paraQuem',1)"><i class="fa-solid fa-chevron-right"></i></button>
+        <span class="gc-timer-badge"><span class="progress-ring"></span> Auto</span>
       </div>
     </div>
   </div>
@@ -398,6 +414,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <button class="gc-btn" onclick="gcMove('serv',-1)"><i class="fa-solid fa-chevron-left"></i></button>
         <div class="gc-dots" id="servDots"></div>
         <button class="gc-btn" onclick="gcMove('serv',1)"><i class="fa-solid fa-chevron-right"></i></button>
+        <span class="gc-timer-badge"><span class="progress-ring"></span> Auto</span>
       </div>
     </div>
   </div>
@@ -569,175 +586,274 @@ const FAQ_FB=[
   {q:'Qual é o investimento para o Plano Escalador completo?',a:'O investimento varia consoante a dimensão e necessidades específicas do teu negócio. Após o diagnóstico gratuito, apresentamos uma proposta personalizada e transparente.'},
 ];
 
-// ── GRID CAROUSEL ENGINE ─────────────────────────────────
-const GC={};
-function gcPP(){return window.innerWidth<=540?1:window.innerWidth<=860?2:3;}
-function gcCardW(pp){return(100/pp);}
-function gcInit(id,items,tmpl){
-  const pp=gcPP();
-  GC[id]={items,tmpl,idx:0,pages:Math.ceil(items.length/pp)};
+// ── CARROSSEL AUTOMÁTICO AVANÇADO ──
+const GC = {};
+
+function gcPP() {
+  return window.innerWidth <= 540 ? 1 : window.innerWidth <= 860 ? 2 : 3;
+}
+
+function gcCardW(pp) {
+  return (100 / pp) - (16 * (pp - 1) / pp);
+}
+
+function gcInit(id, items, tmpl) {
+  const pp = gcPP();
+  GC[id] = {
+    items,
+    tmpl,
+    idx: 0,
+    pages: Math.ceil(items.length / pp),
+    pp: pp,
+    interval: null,
+    autoPlay: true
+  };
   gcRender(id);
+  gcStartAuto(id);
 }
-function gcRender(id){
-  const {items,tmpl,idx,pages}=GC[id];
-  const pp=gcPP();
-  const w=gcCardW(pp);
-  const gap=14;
-  const track=document.getElementById(id+'Track');
-  const dots=document.getElementById(id+'Dots');
-  track.innerHTML=items.map(it=>{
-    const card=tmpl(it);
-    // injectar largura inline em cada card
-    return card.replace(/^<div /, `<div style="min-width:calc(${w}% - ${gap*(pp-1)/pp}px);margin-right:${gap}px;" `);
+
+function gcRender(id) {
+  const { items, tmpl, idx, pp, pages } = GC[id];
+  const w = gcCardW(pp);
+  const gap = 16;
+  const track = document.getElementById(id + 'Track');
+  const dots = document.getElementById(id + 'Dots');
+  
+  track.innerHTML = items.map((it, i) => {
+    const card = tmpl(it);
+    const isActive = Math.floor(i / pp) === idx;
+    return card.replace(
+      /^<div /,
+      `<div style="min-width:calc(${w}% - ${gap*(pp-1)/pp}px);margin-right:${gap}px;" class="${isActive ? 'active-slide' : ''}" `
+    );
   }).join('');
-  dots.innerHTML=Array.from({length:pages},(_,i)=>
-    `<div class="gc-dot${i===idx?' active':''}" onclick="gcGo('${id}',${i})"></div>`
+  
+  dots.innerHTML = Array.from({ length: pages }, (_, i) =>
+    `<button class="gc-dot${i === idx ? ' active' : ''}" onclick="gcGo('${id}', ${i}, true)"></button>`
   ).join('');
+  
   gcApply(id);
 }
-function gcApply(id){
-  const {idx}=GC[id];
-  const pp=gcPP();
-  const w=gcCardW(pp);
-  const gap=14;
-  const track=document.getElementById(id+'Track');
-  const offset=idx*pp;
-  track.style.transform=`translateX(calc(-${offset*w}% - ${offset*gap}px))`;
-  document.querySelectorAll(`#${id}Dots .gc-dot`).forEach((d,i)=>d.classList.toggle('active',i===GC[id].idx));
-}
-function gcGo(id,i){
-  const pages=GC[id].pages;
-  GC[id].idx=((i%pages)+pages)%pages;
-  gcApply(id);
-}
-function gcMove(id,dir){gcGo(id,GC[id].idx+dir);}
-window.addEventListener('resize',()=>{
-  ['dor','fases','paraQuem','serv'].forEach(id=>{
-    if(GC[id]){GC[id].pages=Math.ceil(GC[id].items.length/gcPP());GC[id].idx=0;gcRender(id);}
+
+function gcApply(id) {
+  const { idx, pp } = GC[id];
+  const w = gcCardW(pp);
+  const gap = 16;
+  const track = document.getElementById(id + 'Track');
+  const offset = idx * pp;
+  track.style.transform = `translateX(calc(-${offset * w}% - ${offset * gap}px))`;
+  
+  const cards = track.querySelectorAll('.dor-card, .fase, .pq-card, .serv-card');
+  cards.forEach((card, i) => {
+    const slideIdx = Math.floor(i / pp);
+    card.classList.toggle('active-slide', slideIdx === idx);
   });
-},{passive:true});
-
-// ── RENDER FUNÇÕES ────────────────────────────────────────
-function renderDor(items){
-  gcInit('dor',items,d=>`<div class="dor-card">
-      <div class="dor-icon"><i class="fa-solid ${d.icon}"></i></div>
-      <div><div class="dor-h">${d.h}</div><div class="dor-p">${d.p}</div></div>
-    </div>`);
-}
-function renderFases(fases){
-  gcInit('fases',fases,f=>`<div class="fase">
-      <div class="fase-n">${f.n}</div>
-      <div class="fase-h">${f.h}</div>
-      <div class="fase-p">${f.p}</div>
-    </div>`);
-}
-function renderParaQuem(items){
-  gcInit('paraQuem',items,p=>`<div class="pq-card">
-      <div class="pq-icon" style="background:var(--${p.cor==='r'?'red':'blue'}-dim);color:var(--${p.cor==='r'?'red':'blue-lt'})"><i class="fa-solid ${p.icon}"></i></div>
-      <div class="pq-h">${p.h}</div>
-      <div class="pq-p">${p.p}</div>
-    </div>`);
-}
-function renderServicos(items){
-  gcInit('serv',items,s=>`<div class="serv-card">
-      <div class="serv-icon serv-icon-${s.cor}"><i class="fa-solid ${s.icon}"></i></div>
-      <div class="serv-h">${s.h}</div>
-      <div class="serv-p">${s.p}</div>
-    </div>`);
+  
+  document.querySelectorAll(`#${id}Dots .gc-dot`).forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
 }
 
-function renderProcesso(passos){
-  document.getElementById('passosGrid').innerHTML=passos.map(p=>`
+function gcGo(id, i, userInteracted = false) {
+  const pages = GC[id].pages;
+  GC[id].idx = ((i % pages) + pages) % pages;
+  gcApply(id);
+  if (userInteracted && GC[id].autoPlay) {
+    gcStopAuto(id);
+    gcStartAuto(id);
+  }
+}
+
+function gcMove(id, dir) {
+  gcGo(id, GC[id].idx + dir, true);
+}
+
+function gcStartAuto(id) {
+  if (GC[id].interval) clearInterval(GC[id].interval);
+  GC[id].interval = setInterval(() => {
+    const { idx, pages } = GC[id];
+    gcGo(id, idx + 1, false);
+  }, 4000);
+}
+
+function gcStopAuto(id) {
+  if (GC[id].interval) {
+    clearInterval(GC[id].interval);
+    GC[id].interval = null;
+  }
+}
+
+window.addEventListener('resize', () => {
+  ['dor', 'fases', 'paraQuem', 'serv'].forEach(id => {
+    if (GC[id]) {
+      const newPP = gcPP();
+      const newPages = Math.ceil(GC[id].items.length / newPP);
+      if (newPages !== GC[id].pages) {
+        GC[id].pp = newPP;
+        GC[id].pages = newPages;
+        GC[id].idx = 0;
+        gcRender(id);
+        gcStopAuto(id);
+        gcStartAuto(id);
+      } else {
+        GC[id].pp = newPP;
+        gcApply(id);
+      }
+    }
+  });
+}, { passive: true });
+
+// ── RENDER FUNÇÕES MELHORADAS ──
+function renderDor(items) {
+  gcInit('dor', items, d => `
+    <div class="dor-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);">
+      <div class="dor-icon" style="background:var(--red-dim);color:var(--red);">
+        <i class="fa-solid ${d.icon}"></i>
+      </div>
+      <div>
+        <div class="dor-h" style="font-size:0.95rem;font-weight:700;color:var(--white);">${d.h}</div>
+        <div class="dor-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${d.p}</div>
+      </div>
+    </div>
+  `);
+}
+
+function renderFases(fases) {
+  gcInit('fases', fases, f => `
+    <div class="fase" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);">
+      <div class="fase-n" style="font-size:3.2rem;font-weight:900;color:rgba(29,78,216,0.08);">${f.n}</div>
+      <div class="fase-h" style="font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;">${f.h}</div>
+      <div class="fase-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${f.p}</div>
+      <div style="position:absolute;bottom:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(29,78,216,0.06);border:1px solid rgba(29,78,216,0.1);display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--blue-lt);font-weight:700;">${f.n}</div>
+    </div>
+  `);
+}
+
+function renderParaQuem(items) {
+  gcInit('paraQuem', items, p => `
+    <div class="pq-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);padding:28px 24px;">
+      <div class="pq-icon" style="background:var(--${p.cor === 'r' ? 'red' : 'blue'}-dim);color:var(--${p.cor === 'r' ? 'red' : 'blue-lt'});width:56px;height:56px;border-radius:14px;font-size:1.5rem;">
+        <i class="fa-solid ${p.icon}"></i>
+      </div>
+      <div class="pq-h" style="font-size:1.05rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">${p.h}</div>
+      <div class="pq-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${p.p}</div>
+    </div>
+  `);
+}
+
+function renderServicos(items) {
+  gcInit('serv', items, s => `
+    <div class="serv-card" style="background:rgba(30,30,35,0.9);backdrop-filter:blur(4px);padding:26px 22px;">
+      <div class="serv-icon serv-icon-${s.cor}" style="width:48px;height:48px;border-radius:12px;font-size:1.1rem;background:var(--${s.cor === 'r' ? 'red' : s.cor === 'b' ? 'blue' : 'green'}-dim);color:var(--${s.cor === 'r' ? 'red' : s.cor === 'b' ? 'blue-lt' : 'green'});">
+        <i class="fa-solid ${s.icon}"></i>
+      </div>
+      <div class="serv-h" style="font-size:0.95rem;font-weight:700;color:var(--white);">${s.h}</div>
+      <div class="serv-p" style="font-size:0.82rem;color:var(--gray-lt);line-height:1.7;">${s.p}</div>
+    </div>
+  `);
+}
+
+function renderProcesso(passos) {
+  document.getElementById('passosGrid').innerHTML = passos.map(p => `
     <div class="passo">
-      <div class="passo-n">${p.n||p.numero}</div>
+      <div class="passo-n">${p.n || p.numero}</div>
       <h3>${p.titulo}</h3>
       <p>${p.desc}</p>
-      ${p.prazo?`<div class="passo-prazo"><i class="fa-solid fa-chart-line"></i>${p.prazo}</div>`:''}
-    </div>`
-  ).join('');
+      ${p.prazo ? `<div class="passo-prazo"><i class="fa-solid fa-chart-line"></i>${p.prazo}</div>` : ''}
+    </div>
+  `).join('');
 }
 
 // ── DEPOIMENTOS SLIDER ────────────────────────────────────
-let depIdx=0,depTimer,depData=[];
-function renderDep(deps){
-  depData=deps;
-  const track=document.getElementById('depTrack');
-  const dots=document.getElementById('depDots');
-  track.innerHTML=deps.map(d=>`
+let depIdx = 0, depTimer, depData = [];
+
+function renderDep(deps) {
+  depData = deps;
+  const track = document.getElementById('depTrack');
+  const dots = document.getElementById('depDots');
+  track.innerHTML = deps.map(d => `
     <div class="dep-item">
       <div class="dep-quote">"</div>
       <p class="dep-txt">${d.texto}</p>
       <div class="dep-author">
         <div class="dep-av"><i class="fa-solid fa-user"></i></div>
-        <div><div class="dep-name">${d.nome}</div><div class="dep-role">${d.negocio||''}</div></div>
+        <div><div class="dep-name">${d.nome}</div><div class="dep-role">${d.negocio || ''}</div></div>
       </div>
-    </div>`
-  ).join('');
-  dots.innerHTML=deps.map((_,i)=>`<div class="ddot${i===0?' active':''}" onclick="goDep(${i})"></div>`).join('');
-  clearInterval(depTimer);depTimer=setInterval(()=>moveDep(1),5000);
+    </div>
+  `).join('');
+  dots.innerHTML = deps.map((_, i) => `<div class="ddot${i === 0 ? ' active' : ''}" onclick="goDep(${i})"></div>`).join('');
+  clearInterval(depTimer);
+  depTimer = setInterval(() => moveDep(1), 5000);
 }
-function goDep(i){
-  depIdx=(i+depData.length)%depData.length;
-  document.getElementById('depTrack').style.transform=`translateX(-${depIdx*100}%)`;
-  document.querySelectorAll('.ddot').forEach((d,j)=>d.classList.toggle('active',j===depIdx));
-  clearInterval(depTimer);depTimer=setInterval(()=>moveDep(1),5000);
+
+function goDep(i) {
+  depIdx = (i + depData.length) % depData.length;
+  document.getElementById('depTrack').style.transform = `translateX(-${depIdx * 100}%)`;
+  document.querySelectorAll('.ddot').forEach((d, j) => d.classList.toggle('active', j === depIdx));
+  clearInterval(depTimer);
+  depTimer = setInterval(() => moveDep(1), 5000);
 }
-function moveDep(dir){goDep(depIdx+dir);}
+
+function moveDep(dir) {
+  goDep(depIdx + dir);
+}
 
 // ── FAQ ───────────────────────────────────────────────────
-function renderFaq(items){
-  document.getElementById('faqList').innerHTML=items.map((f,i)=>`
+function renderFaq(items) {
+  document.getElementById('faqList').innerHTML = items.map((f, i) => `
     <div class="faq-item" id="faq${i}">
       <div class="faq-q" onclick="toggleFaq(${i})">
         <span>${f.q}</span>
         <i class="fa-solid fa-chevron-down"></i>
       </div>
       <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
-    </div>`
-  ).join('');
+    </div>
+  `).join('');
 }
-function toggleFaq(i){
-  const item=document.getElementById('faq'+i);
-  const isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(el=>el.classList.remove('open'));
-  if(!isOpen) item.classList.add('open');
+
+function toggleFaq(i) {
+  const item = document.getElementById('faq' + i);
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
 }
 
 // ── CARREGAR DADOS ────────────────────────────────────────
-async function carregarDados(){
+async function carregarDados() {
   renderDor(DOR_FB);
   renderFases(FASES_FB);
   renderParaQuem(PARA_QUEM_FB);
   renderServicos(SERVICOS_FB);
   renderDep(DEP_FB);
   renderFaq(FAQ_FB);
-  try{
-    const d=await fetch(API+'/api/site/consultoria',{signal:AbortSignal.timeout(5000)}).then(r=>r.ok?r.json():null);
-    if(!d)return;
-    if(d.hero){
-      if(d.hero.titulo)    document.getElementById('consHeroTitle').innerHTML=d.hero.titulo;
-      if(d.hero.slogan)    document.getElementById('consSlogan').textContent='"'+d.hero.slogan+'"';
-      if(d.hero.subtitulo) document.getElementById('consHeroSub').textContent=d.hero.subtitulo;
-      if(d.hero.stats&&d.hero.stats.empresas) document.getElementById('consStatEmpresas').innerHTML=d.hero.stats.empresas+'<span style="font-size:1.4rem">+</span>';
+  
+  try {
+    const d = await fetch(API + '/api/site/consultoria', { signal: AbortSignal.timeout(5000) }).then(r => r.ok ? r.json() : null);
+    if (!d) return;
+    if (d.hero) {
+      if (d.hero.titulo) document.getElementById('consHeroTitle').innerHTML = d.hero.titulo;
+      if (d.hero.slogan) document.getElementById('consSlogan').textContent = '"' + d.hero.slogan + '"';
+      if (d.hero.subtitulo) document.getElementById('consHeroSub').textContent = d.hero.subtitulo;
+      if (d.hero.stats && d.hero.stats.empresas) document.getElementById('consStatEmpresas').innerHTML = d.hero.stats.empresas + '<span style="font-size:1.4rem">+</span>';
     }
-    if(d.intro) document.getElementById('dorIntro').textContent=d.intro;
-    if(d.dor&&d.dor.length)           renderDor(d.dor);
-    if(d.fases&&d.fases.length)        renderFases(d.fases);
-    if(d.escalador){
-      if(d.escalador.desc)      document.getElementById('escaladorDesc').textContent=d.escalador.desc;
-      if(d.escalador.garantias) document.getElementById('escaladorGarantias').innerHTML=d.escalador.garantias.map(g=>`<div class="garantia"><i class="fa-solid fa-check"></i>${g}</div>`).join('');
+    if (d.intro) document.getElementById('dorIntro').textContent = d.intro;
+    if (d.dor && d.dor.length) renderDor(d.dor);
+    if (d.fases && d.fases.length) renderFases(d.fases);
+    if (d.escalador) {
+      if (d.escalador.desc) document.getElementById('escaladorDesc').textContent = d.escalador.desc;
+      if (d.escalador.garantias) document.getElementById('escaladorGarantias').innerHTML = d.escalador.garantias.map(g => `<div class="garantia"><i class="fa-solid fa-check"></i>${g}</div>`).join('');
     }
-    if(d.para_quem&&d.para_quem.length) renderParaQuem(d.para_quem);
-    if(d.servicos&&d.servicos.length)   renderServicos(d.servicos);
-    if(d.processo&&d.processo.length)   renderProcesso(d.processo);
-    if(d.depoimentos&&d.depoimentos.length) renderDep(d.depoimentos);
-    if(d.faq&&d.faq.length)             renderFaq(d.faq);
-    if(d.cta&&d.cta.subtitulo) document.getElementById('consCtaSub').textContent=d.cta.subtitulo;
-  }catch(e){}
+    if (d.para_quem && d.para_quem.length) renderParaQuem(d.para_quem);
+    if (d.servicos && d.servicos.length) renderServicos(d.servicos);
+    if (d.processo && d.processo.length) renderProcesso(d.processo);
+    if (d.depoimentos && d.depoimentos.length) renderDep(d.depoimentos);
+    if (d.faq && d.faq.length) renderFaq(d.faq);
+    if (d.cta && d.cta.subtitulo) document.getElementById('consCtaSub').textContent = d.cta.subtitulo;
+  } catch (e) {}
 }
 
 carregarDados();
-if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
 </script>
 </body>
 </html>
