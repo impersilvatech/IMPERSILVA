@@ -10,6 +10,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{max-width:100%;overflow-x:hidden}
+body, body *:not(i):not([class*="fa"]) { font-family: 'Times New Roman', Times, serif; }
 :root{
   --black:#0e0e0e;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2f2f34;
   --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,0.12);
@@ -19,13 +20,14 @@ html,body{max-width:100%;overflow-x:hidden}
   --divider:rgba(255,255,255,0.07);--border:rgba(255,255,255,0.07);
 }
 html{scroll-behavior:smooth}
-body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;font-weight:400;line-height:1.6;padding-top:68px}
+body{background:var(--dark);color:var(--white);font-weight:400;line-height:1.6;padding-top:68px}
 
 /* ── NAV ── */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:border-color .3s}
 .navbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
 .logo-link{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-decoration:none;line-height:1}
-.logo-wordmark{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1}
+.logo-wordmark{font-weight:800;font-size:1.25rem;text-transform:uppercase;color:var(--white);line-height:1;display:flex;align-items:baseline;gap:.4rem}
+.logo-wordmark .tech-tag{font-size:1.15rem;color:var(--blue-lt);font-weight:800;letter-spacing:.06em;border-left:1px solid var(--divider);padding-left:.4rem}
 .logo-sub{font-size:.5rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray);padding-left:1px}
 .nav-links{display:flex;align-items:center;gap:.1rem;list-style:none}
 .nav-links a{color:var(--gray-lt);text-decoration:none;font-size:.85rem;font-weight:400;padding:.5rem .9rem;border-radius:5px;transition:all .2s}
@@ -47,20 +49,68 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .hero-glow-r{position:absolute;left:-150px;bottom:-150px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(214,40,40,.12) 0%,transparent 65%);pointer-events:none}
 .hero-glow-b{position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(29,78,216,.1) 0%,transparent 65%);pointer-events:none}
 .hero-stripe{position:absolute;top:0;right:30%;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(214,40,40,.2),transparent);pointer-events:none}
-.hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 1.5rem}
+.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 1.5rem}
+@media(min-width:861px){
+  .hero-inner{display:grid;grid-template-columns:1fr minmax(260px,420px);gap:clamp(2rem,4vw,5rem);align-items:center;padding-top:4rem;padding-bottom:4rem}
+  .hero-left{grid-column:1}
+  .hero-visual-col{grid-column:2;display:flex;justify-content:center;position:relative}
+}
+@media(max-width:860px){
+  .hero-visual-col{display:none}
+}
+
+/* mockup portal */
+.portal-mockup{width:280px;background:var(--charcoal);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1rem .8rem;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06);position:relative}
+.pm-notch{width:70px;height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin:0 auto .7rem}
+.pm-screen{background:var(--dark);border-radius:12px;overflow:hidden}
+.pm-bar{height:4px;background:linear-gradient(90deg,var(--red),var(--blue-lt));border-radius:2px}
+.pm-header{display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem .3rem}
+.pm-logo{font-size:.65rem;font-weight:800;letter-spacing:.05em;color:var(--white)}
+.pm-badge{font-size:.45rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--green-dim);color:var(--green);padding:.15rem .4rem;border-radius:50px}
+.pm-section{padding:.4rem .7rem;font-size:.55rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+.pm-tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;padding:0 .7rem .5rem}
+.pm-tpl{border-radius:6px;overflow:hidden;aspect-ratio:4/3;position:relative}
+.pm-tpl-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;background:rgba(214,40,40,.15)}
+.pm-tpl:hover .pm-tpl-overlay{opacity:1}
+.pm-tpl i{font-size:.9rem;color:rgba(255,255,255,.18)}
+.pm-tpl-preview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.pm-btn{margin:.3rem .7rem .6rem;background:var(--red);color:#fff;text-align:center;padding:.35rem;border-radius:5px;font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+/* floating badges */
+.pm-float{position:absolute;background:var(--charcoal);border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;font-size:.58rem;white-space:nowrap;display:flex;align-items:center;gap:.35rem}
+.pm-float-1{top:-18px;right:-28px;animation:float1 3s ease-in-out infinite}
+.pm-float-2{bottom:20px;left:-36px;animation:float2 3.5s ease-in-out infinite}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red-dim);border:1px solid rgba(214,40,40,.25);color:rgba(255,130,130,.9);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:1.5rem}
-.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2.4rem,8vw,5.5rem);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:1.2rem;word-break:break-word}
+.hero-title{font-weight:900;font-size:clamp(2.4rem,8vw,5.5rem);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:1.2rem;word-break:break-word}
 .hero-title .r{color:var(--red)}
 .hero-title .b{color:var(--blue-lt)}
 .hero-title em{font-style:italic}
 .hero-sub{font-size:1rem;color:var(--gray);line-height:1.8;margin-bottom:2rem;max-width:620px;font-weight:300}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--divider)}
-.hstat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.2rem;line-height:1}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding-top:2.5rem;margin-top:.5rem;border-top:1px solid var(--divider)}
+.hstat-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:18px 16px;transition:.25s}
+.hstat-card:hover{border-color:rgba(214,40,40,.3);transform:translateY(-3px)}
+.hstat-n{font-weight:900;font-size:2.2rem;line-height:1;display:flex;align-items:baseline;gap:2px}
 .hstat-n .r{color:var(--red)}
 .hstat-n .b{color:var(--blue-lt)}
 .hstat-n .g{color:var(--green)}
-.hstat-l{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.hstat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;margin-bottom:10px}
+.hstat-l{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+
+/* ── NEWS CARD (igual ao index) ── */
+.news-card{border-radius:14px;overflow:hidden;position:relative;height:380px;margin-top:1.5rem;cursor:pointer}
+.news-slide{display:none;position:absolute;inset:0}
+.news-slide.active{display:block}
+.news-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.news-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.25) 60%,transparent 100%)}
+.news-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.news-body{position:absolute;bottom:0;left:0;right:0;padding:20px}
+.news-badge{font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.news-titulo{font-size:.95rem;font-weight:700;line-height:1.35;margin-bottom:4px}
+.news-data{font-size:.65rem;color:rgba(255,255,255,.4)}
+.news-dots{position:absolute;bottom:14px;right:16px;display:flex;gap:5px;z-index:10}
+.ndot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.25s}
+.ndot.active{background:var(--red);width:16px;border-radius:3px}
+@media(min-width:861px){.news-card{height:420px}}
 
 /* ── BUTTONS ── */
 .btn-red{background:var(--red);color:var(--white);font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 2rem;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
@@ -76,7 +126,7 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
 .sec-tag{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .sec-tag::before{content:'';width:18px;height:1.5px;background:var(--red);flex-shrink:0}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(1.8rem,4vw,3.2rem);line-height:1;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:40px}
+.sec-title{font-weight:900;font-size:clamp(1.8rem,4vw,3.2rem);line-height:1;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:40px}
 .sec-title .r{color:var(--red)}
 .sec-title .b{color:var(--blue-lt)}
 .sec-title em{font-style:italic}
@@ -84,15 +134,15 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 
 /* ── TIPOS DE NEGÓCIO (slider fullscreen) ── */
 .tipos-sec{background:var(--black)}
-.cats-slider{position:relative;overflow:hidden;border-radius:16px}
-.cats-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.cats-slider{position:relative;overflow:hidden;border-radius:16px;width:100%}
+.cats-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);will-change:transform}
 .cat{min-width:100%;border:none;border-radius:16px;cursor:pointer;color:#fff;position:relative;overflow:hidden;height:560px;display:flex;align-items:flex-end;background:var(--charcoal)}
 .cat-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform 6s ease}
 .cat.active .cat-bg{transform:scale(1.06)}
 .cat-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 55%,transparent 100%)}
 .cat-body{position:relative;z-index:2;padding:32px;width:100%}
 .cat i{font-size:1.8rem;color:var(--red);margin-bottom:12px;display:block}
-.cat-nome{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px}
+.cat-nome{font-size:1.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px}
 .cat-desc{font-size:.88rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.6;max-width:580px;margin-bottom:14px}
 .cat-cta{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,120,120,.9);background:rgba(214,40,40,.12);border:1px solid rgba(214,40,40,.25);padding:6px 14px;border-radius:4px;transition:.2s}
 .cat-cta:hover{background:var(--red);color:#fff}
@@ -104,45 +154,49 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .cat-arr{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--gray-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s}
 .cat-arr:hover{background:var(--red);border-color:var(--red);color:#fff}
 
-/* ── TEMPLATES ── */
+/* ── TEMPLATES (CAROUSEL EM PARES) ── */
 .tpl-sec{background:var(--dark)}
-.tpl-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-.tpl-filter-btn{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--gray-lt);cursor:pointer;transition:.2s}
-.tpl-filter-btn:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
-.tpl-filter-btn.active{background:var(--red);border-color:var(--red);color:#fff}
-.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.tpl-card{background:var(--charcoal);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s;position:relative;display:block;text-decoration:none;color:var(--white)}
+.tpl-cat-block{margin-bottom:48px}
+.tpl-cat-block:last-child{margin-bottom:0}
+.tpl-cat-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.tpl-cat-head i{font-size:1.1rem;color:var(--red)}
+.tpl-cat-head h3{font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.tpl-cat-head .tpl-cat-count{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);background:var(--charcoal);border:1px solid var(--border);padding:3px 10px;border-radius:20px}
+
+.tpl-slider{position:relative;overflow:hidden;border-radius:16px}
+.tpl-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.tpl-pair{min-width:100%;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tpl-card{background:var(--charcoal);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:.3s;position:relative;display:block;text-decoration:none;color:var(--white);height:480px;display:flex;flex-direction:column}
 .tpl-card:hover{transform:translateY(-5px);border-color:rgba(214,40,40,.35);box-shadow:0 12px 40px rgba(0,0,0,.4)}
-/* Preview mockup */
-.tpl-preview{height:200px;position:relative;overflow:hidden;background:var(--charcoal-lt)}
-.tpl-preview-screen{width:85%;height:78%;position:absolute;top:10%;left:7.5%;background:#fff;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.tpl-preview-bar{height:20px;background:#e5e5e5;display:flex;align-items:center;padding:0 8px;gap:4px}
-.tpl-preview-dot{width:6px;height:6px;border-radius:50%}
-.tpl-preview-content{background:var(--tpl-bg,#fff);height:calc(100% - 20px);position:relative;overflow:hidden}
+.tpl-preview{flex:1;position:relative;overflow:hidden;background:var(--charcoal-lt);min-height:0}
+.tpl-preview-screen{width:88%;height:84%;position:absolute;top:8%;left:6%;background:#fff;border-radius:6px 6px 0 0;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.45)}
+.tpl-preview-bar{height:26px;background:#e5e5e5;display:flex;align-items:center;padding:0 10px;gap:5px}
+.tpl-preview-dot{width:8px;height:8px;border-radius:50%}
+.tpl-preview-content{background:var(--tpl-bg,#fff);height:calc(100% - 26px);position:relative;overflow:hidden}
 .tpl-preview-hero{width:100%;height:55%;display:flex;align-items:center;justify-content:center;position:relative}
-.tpl-preview-lines{padding:8px;display:flex;flex-direction:column;gap:4px}
-.tpl-preview-line{height:4px;border-radius:2px;background:rgba(0,0,0,.08)}
+.tpl-preview-lines{padding:14px;display:flex;flex-direction:column;gap:7px}
+.tpl-preview-line{height:6px;border-radius:3px;background:rgba(0,0,0,.08)}
 .tpl-preview-line.short{width:60%}
-.tpl-badge-new{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
-.tpl-badge-pop{position:absolute;top:10px;right:10px;background:var(--green);color:#000;font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
-.tpl-overlay{position:absolute;inset:0;background:rgba(214,40,40,.08);opacity:0;transition:.2s;display:flex;align-items:center;justify-content:center}
+.tpl-badge-new{position:absolute;top:14px;right:14px;background:var(--red);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border-radius:4px;z-index:3}
+.tpl-badge-pop{position:absolute;top:14px;right:14px;background:var(--green);color:#000;font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border-radius:4px;z-index:3}
+.tpl-overlay{position:absolute;inset:0;background:rgba(214,40,40,.1);opacity:0;transition:.2s;display:flex;align-items:center;justify-content:center;z-index:2}
 .tpl-card:hover .tpl-overlay{opacity:1}
-.tpl-overlay-btn{background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 18px;border-radius:4px;display:flex;align-items:center;gap:6px}
-.tpl-body{padding:16px}
-.tpl-cat{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
-.tpl-nome{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.03em;text-transform:uppercase;margin-bottom:4px}
-.tpl-desc{font-size:.76rem;color:var(--gray);line-height:1.5;font-weight:300;margin-bottom:10px}
-.tpl-tags{display:flex;gap:4px;flex-wrap:wrap}
-.tpl-tag{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--gray-lt);font-size:.56rem;padding:2px 6px;border-radius:3px;font-weight:500}
-.tpl-empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--gray)}
+.tpl-overlay-btn{background:var(--red);color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 22px;border-radius:4px;display:flex;align-items:center;gap:8px}
+.tpl-body{padding:22px}
+.tpl-cat-label{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.tpl-nome{font-weight:800;font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:6px}
+.tpl-desc{font-size:.85rem;color:var(--gray);line-height:1.6;font-weight:300;margin-bottom:14px}
+.tpl-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tpl-tag{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--gray-lt);font-size:.65rem;padding:4px 10px;border-radius:4px;font-weight:500}
 
 /* ── PROCESSO ── */
 .proc-sec{background:var(--black)}
-.passos{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.passo{padding:28px 22px;border-right:1px solid var(--border);transition:background .2s}
-.passo:last-child{border-right:none}
+.passos{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.passo{padding:28px 22px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .2s}
+.passo:nth-child(3n){border-right:none}
+.passo:nth-child(n+4){border-bottom:none}
 .passo:hover{background:var(--charcoal)}
-.passo-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.8rem;line-height:1;margin-bottom:12px}
+.passo-n{font-weight:900;font-size:2.8rem;line-height:1;margin-bottom:12px}
 .passo:nth-child(odd) .passo-n{color:var(--red)}
 .passo:nth-child(even) .passo-n{color:var(--blue-lt)}
 .passo h3{font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
@@ -151,17 +205,71 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 
 /* ── DIFERENCIAIS ── */
 .dif-sec{background:var(--dark)}
-.dif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.dif-card{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:24px;transition:.25s}
-.dif-card:hover{border-color:rgba(214,40,40,.25);transform:translateY(-3px)}
-.dif-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:14px}
-.dif-icon-r{background:var(--red-dim);color:var(--red)}
-.dif-icon-b{background:var(--blue-dim);color:var(--blue-lt)}
-.dif-icon-g{background:var(--green-dim);color:var(--green)}
-.dif-h{font-size:.88rem;font-weight:700;margin-bottom:6px}
-.dif-p{font-size:.78rem;color:var(--gray);line-height:1.6;font-weight:300}
 
-/* ── CTA ── */
+/* ── PREÇOS ── */
+.preco-sec{background:var(--black)}
+.preco-toggle{display:flex;flex-wrap:wrap;background:var(--charcoal);border:1px solid var(--border);border-radius:40px;padding:4px;gap:4px;margin:0 auto 2.5rem;width:fit-content;max-width:100%;justify-content:center}
+.preco-toggle-btn{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 20px;border-radius:30px;border:none;background:transparent;color:var(--gray);cursor:pointer;transition:all .25s;white-space:nowrap}
+.preco-toggle-btn.active{background:var(--red);color:#fff;box-shadow:0 4px 12px rgba(214,40,40,.3)}
+.preco-toggle-btn:hover:not(.active){color:var(--white)}
+.preco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.preco-model{display:none}.preco-model.active{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.preco-card{background:var(--charcoal);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;transition:.3s;display:flex;flex-direction:column}
+.preco-card:hover{transform:translateY(-4px);border-color:rgba(214,40,40,.3);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.preco-card.destaque{border-color:var(--red);background:linear-gradient(160deg,var(--charcoal) 0%,rgba(214,40,40,.06) 100%)}
+.preco-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.preco-nome{font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:10px}
+.preco-val{font-size:2.6rem;font-weight:900;line-height:1;margin-bottom:4px;display:flex;align-items:baseline;gap:4px}
+.preco-val .moeda{font-size:1rem;font-weight:600;color:var(--gray-lt);margin-top:4px}
+.preco-val .period{font-size:.72rem;color:var(--gray);font-weight:400;margin-left:2px}
+.preco-free-tag{display:inline-block;background:var(--green-dim);border:1px solid rgba(34,197,94,.25);color:var(--green);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.preco-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.6;margin:8px 0 18px}
+.preco-features{list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:24px}
+.preco-features li{font-size:.8rem;color:var(--gray-lt);display:flex;align-items:center;gap:8px;font-weight:300}
+.preco-features li i{color:var(--green);font-size:.7rem;flex-shrink:0}
+.preco-features li.nao{color:rgba(255,255,255,.3)}
+.preco-features li.nao i{color:rgba(255,255,255,.15)}
+.preco-cta{display:block;text-align:center;padding:.85rem;border-radius:8px;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .22s;margin-top:auto;border:none;cursor:pointer}
+.preco-cta-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.2)}
+.preco-cta-outline:hover{border-color:var(--white);background:rgba(255,255,255,.06)}
+.preco-cta-red{background:var(--red);color:#fff}
+.preco-cta-red:hover{background:var(--red-lt);box-shadow:0 8px 24px rgba(214,40,40,.3)}
+.preco-economia{display:inline-block;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);color:var(--green);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:6px}
+
+/* ── FAQ ── */
+.faq-sec{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-bottom:1px solid var(--divider)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;color:var(--white);text-align:left;padding:20px 0;font-size:.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s}
+.faq-q:hover{color:var(--red)}
+.faq-q i{font-size:.8rem;color:var(--gray);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-q i{transform:rotate(45deg);color:var(--red)}
+.faq-item.open .faq-q{color:var(--red)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a p{font-size:.88rem;color:var(--gray);line-height:1.75;font-weight:300;padding-bottom:18px}
+
+/* ── DEPOIMENTOS ── */
+.dep-sec{background:var(--dark)}
+.dep-slide{min-width:100%;width:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;position:relative;min-height:400px;padding:40px;background:var(--charcoal);border-radius:16px;flex-shrink:0}
+.dep-quote-mark{font-size:5rem;font-weight:900;line-height:.8;color:var(--red);opacity:.35;margin-bottom:8px;font-family:Georgia,serif}
+.dep-texto{font-size:1.15rem;font-style:italic;font-weight:300;color:var(--white);line-height:1.75;max-width:680px;margin-bottom:28px}
+.dep-autor{display:flex;align-items:center;gap:14px}
+.dep-av{width:46px;height:46px;border-radius:50%;background:var(--charcoal-lt);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:var(--red);flex-shrink:0}
+.dep-nome{font-size:.9rem;font-weight:700}
+.dep-cargo{font-size:.72rem;color:var(--gray);margin-top:2px}
+.dep-stars{display:flex;gap:3px;margin-bottom:4px}
+.dep-stars i{color:#f59e0b;font-size:.75rem}
+.dep-bg-glow{position:absolute;top:0;right:0;width:40%;height:100%;background:radial-gradient(ellipse at right,rgba(214,40,40,.06) 0%,transparent 70%);pointer-events:none;border-radius:16px}
+
+@media(max-width:860px){
+  .preco-grid{grid-template-columns:1fr}
+  .dep-slide{min-height:320px;padding:28px}
+  .dep-texto{font-size:.95rem}
+}
+
+/* ── CTA desc update ── */
 .cta-section{background:var(--charcoal);border-top:1px solid var(--divider);padding:5.5rem 0;position:relative;overflow:hidden;text-align:center}
 .cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(214,40,40,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 50%,rgba(29,78,216,.07) 0%,transparent 60%);pointer-events:none}
 .cta-section .container{position:relative}
@@ -170,7 +278,7 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .tag-bars span{display:block;width:16px;height:2px;border-radius:2px}
 .tag-bars span:first-child{background:var(--red)}
 .tag-bars span:last-child{background:var(--blue)}
-.cta-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;color:var(--white);margin-bottom:.8rem;text-transform:uppercase}
+.cta-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;color:var(--white);margin-bottom:.8rem;text-transform:uppercase}
 .cta-title .r{color:var(--red)}
 .cta-title .b{color:var(--blue-lt)}
 .cta-desc{font-size:1rem;color:var(--gray);font-weight:300;margin-bottom:2.5rem}
@@ -207,26 +315,38 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 .js-ready .reveal.visible{opacity:1;transform:none}
 .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
 
+/* Reveal direcional (entradas variadas) */
+.js-ready .rv-up{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.js-ready .rv-down{opacity:0;transform:translateY(-28px);transition:opacity .6s ease,transform .6s ease}
+.js-ready .rv-left{opacity:0;transform:translateX(-32px);transition:opacity .6s ease,transform .6s ease}
+.js-ready .rv-right{opacity:0;transform:translateX(32px);transition:opacity .6s ease,transform .6s ease}
+.js-ready .rv-scale{opacity:0;transform:scale(.85);transition:opacity .55s ease,transform .55s ease}
+.rv-up.visible,.rv-down.visible,.rv-left.visible,.rv-right.visible,.rv-scale.visible{opacity:1;transform:none}
+
 /* ── RESPONSIVE ── */
 @media(max-width:860px){
   .sec{padding:56px 0}
   .hero{padding:3rem 0 2.5rem}
   .cat{height:420px}
   .passos{grid-template-columns:1fr 1fr}
-  .passo{border-right:none;border-bottom:1px solid var(--border)}
-  .passo:nth-child(odd){border-right:1px solid var(--border)}
+  .passo{border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .passo:nth-child(even){border-right:none}
   .passo:nth-last-child(-n+2){border-bottom:none}
-  .tpl-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .tpl-pair{grid-template-columns:1fr}
+  .tpl-card{height:420px}
+  .preco-model.active{grid-template-columns:1fr}
+  .dep-slide{min-height:320px;padding:28px}
+  .dep-texto{font-size:.95rem}
+  .preco-toggle{flex-wrap:wrap;justify-content:center}
 }
 @media(max-width:540px){
   .cat{height:360px}
   .passos{grid-template-columns:1fr}
   .passo{border-right:none!important;border-bottom:1px solid var(--border)!important}
   .passo:last-child{border-bottom:none!important}
-  .tpl-grid{grid-template-columns:1fr 1fr}
-  .hero-stats{gap:1.5rem}
+  .hero-stats{grid-template-columns:1fr 1fr;gap:.8rem}
+  .tpl-card{height:380px}
 }
-@media(max-width:380px){.tpl-grid{grid-template-columns:1fr}}
 </style>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
@@ -236,7 +356,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 <nav class="navbar">
   <div class="navbar-inner">
     <a class="logo-link" href="/index.html">
-      <div class="logo-wordmark">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span></div>
+      <div class="logo-wordmark"><span style="letter-spacing:.02em">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span></span><span class="tech-tag">TECH</span></div>
       <span class="logo-sub">Holding SGPS</span>
     </a>
     <ul class="nav-links">
@@ -262,32 +382,71 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   <div class="hero-glow-b"></div>
   <div class="hero-stripe"></div>
   <div class="hero-inner">
-    <div class="hero-badge reveal"><i class="fa-solid fa-bolt"></i> IMPERSILVA TECH</div>
-    <h1 class="hero-title reveal reveal-delay-1" id="techHeroTitle">
-      Criamos sites<br>que <span class="r">vendem</span><br><em>de verdade</em>
-    </h1>
-    <p class="hero-sub reveal reveal-delay-2" id="techHeroSub">Lojas online, sites institucionais e sistemas de encomendas para qualquer negócio angolano. Escolhe um template, personaliza e lança em menos de 7 dias.</p>
-    <div class="hero-btns reveal reveal-delay-3">
-      <a href="#templates" class="btn-red"><i class="fa-solid fa-layer-group"></i> Ver templates</a>
-      <a href="/orcamento.html" class="btn-ghost"><i class="fa-solid fa-rocket"></i> Pedir orçamento</a>
+    <div class="hero-left">
+      <div class="hero-badge reveal"><i class="fa-solid fa-bolt"></i> IMPERSILVA TECH</div>
+      <h1 class="hero-title reveal reveal-delay-1" id="techHeroTitle">
+        Cria o teu<br>site e começa<br>a <span class="r">vender</span> <span class="b">hoje</span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2" id="techHeroSub">Crie você mesmo o seu site ou loja online e comece a vender hoje mesmo!</p>
+      <div class="hero-btns reveal reveal-delay-3">
+        <a href="/verificar-site.html" class="btn-red"><i class="fa-solid fa-user"></i> Criar conta grátis</a>
+        <a href="#templates" class="btn-ghost"><i class="fa-solid fa-layer-group"></i> Ver templates</a>
+      </div>
+      <div class="hero-stats" id="heroStats" data-stagger="180">
+        <div class="hstat-card rv-up">
+          <div class="hstat-icon" style="background:var(--red-dim);color:var(--red)"><i class="fa-solid fa-rocket"></i></div>
+          <div class="hstat-n r" id="statSites">50<span style="font-size:1.4rem">+</span></div>
+          <div class="hstat-l">Sites lançados</div>
+        </div>
+        <div class="hstat-card rv-left">
+          <div class="hstat-icon" style="background:var(--blue-dim);color:var(--blue-lt)"><i class="fa-solid fa-clock"></i></div>
+          <div class="hstat-n b">5<span style="font-size:1.4rem">min</span></div>
+          <div class="hstat-l">Para estar online</div>
+        </div>
+        <div class="hstat-card rv-down">
+          <div class="hstat-icon" style="background:var(--green-dim);color:var(--green)"><i class="fa-solid fa-face-smile"></i></div>
+          <div class="hstat-n g" id="statSat">98<span style="font-size:1.4rem">%</span></div>
+          <div class="hstat-l">Satisfação</div>
+        </div>
+        <div class="hstat-card rv-right">
+          <div class="hstat-icon" style="background:var(--red-dim);color:var(--red)"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="hstat-n r" id="statTpl">10<span style="font-size:1.4rem">+</span></div>
+          <div class="hstat-l">Templates</div>
+        </div>
+      </div>
+      <!-- CARD NOTÍCIAS -->
+      <div class="news-card reveal reveal-delay-3" id="newsCard">
+        <div id="newsSlides"></div>
+        <div class="news-dots" id="newsDots"></div>
+      </div>
     </div>
-    <div class="hero-stats reveal reveal-delay-3">
-      <div>
-        <div class="hstat-n r" id="statSites">50<span style="font-size:1.4rem">+</span></div>
-        <div class="hstat-l">Sites lançados</div>
+    <!-- MOCKUP PORTAL -->
+    <div class="hero-visual-col">
+      <div class="pm-float pm-float-1" style="color:var(--green)"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Site publicado!</div>
+      <div class="portal-mockup reveal reveal-delay-2">
+        <div class="pm-notch"></div>
+        <div class="pm-screen">
+          <div class="pm-bar"></div>
+          <div class="pm-header">
+            <span class="pm-logo">PORTAL DO CLIENTE</span>
+            <span class="pm-badge">Online</span>
+          </div>
+          <div class="pm-section">Escolhe o teu template</div>
+          <div class="pm-tpl-grid">
+            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#1a0505,#3d0f0f)"><i class="fa-solid fa-utensils"></i></div></div>
+            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#050d1a,#0f1f3d)"><i class="fa-solid fa-shirt"></i></div></div>
+            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#200a1a,#3d0f2a)"><i class="fa-solid fa-scissors"></i></div></div>
+            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#1a0a05,#3d1f0f)"><i class="fa-solid fa-burger"></i></div></div>
+          </div>
+          <div class="pm-section" style="margin-top:.2rem">O teu site</div>
+          <div style="margin:.2rem .7rem;background:var(--charcoal);border-radius:6px;padding:.5rem .6rem;font-size:.58rem;color:var(--gray-lt);display:flex;align-items:center;justify-content:space-between">
+            <span>meusite.impersilva.ao</span>
+            <span style="color:var(--green);font-size:.52rem;font-weight:700">● LIVE</span>
+          </div>
+          <div class="pm-btn">Publicar site <i class="fa-solid fa-rocket" style="font-size:.5rem"></i></div>
+        </div>
       </div>
-      <div>
-        <div class="hstat-n b">7<span style="font-size:1.4rem">d</span></div>
-        <div class="hstat-l">Prazo médio</div>
-      </div>
-      <div>
-        <div class="hstat-n g" id="statSat">98<span style="font-size:1.4rem">%</span></div>
-        <div class="hstat-l">Satisfação</div>
-      </div>
-      <div>
-        <div class="hstat-n r" id="statTpl">10<span style="font-size:1.4rem">+</span></div>
-        <div class="hstat-l">Templates</div>
-      </div>
+      <div class="pm-float pm-float-2"><i class="fa-solid fa-arrow-trend-up" style="color:var(--green)"></i> +12 encomendas hoje</div>
     </div>
   </div>
 </section>
@@ -300,16 +459,16 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <div class="sec-tag reveal">Para qualquer negócio</div>
         <div class="sec-title reveal reveal-delay-1" style="margin-bottom:0">Sites para <span class="r">cada</span><br>tipo de negócio</div>
       </div>
-      <div class="cats-arrows reveal reveal-delay-2">
-        <button class="cat-arr" onclick="moveCat(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="cat-arr" onclick="moveCat(1)"><i class="fa-solid fa-chevron-right"></i></button>
-      </div>
     </div>
     <div class="cats-slider reveal reveal-delay-2">
       <div class="cats-track" id="catsTrack"></div>
     </div>
     <div class="cats-nav">
       <div class="cats-dots" id="catsDots"></div>
+      <div class="cats-arrows">
+        <button class="cat-arr" onclick="moveCat(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="cat-arr" onclick="moveCat(1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
     </div>
   </div>
 </section>
@@ -324,16 +483,8 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
       </div>
       <a href="/verificar-site.html" class="btn-blue reveal reveal-delay-2" style="flex-shrink:0"><i class="fa-solid fa-user"></i> Criar o meu site</a>
     </div>
-    <!-- Filtros por categoria -->
-    <div class="tpl-filter reveal reveal-delay-2" id="tplFilter">
-      <button class="tpl-filter-btn active" onclick="filterTpl('todos',this)">Todos</button>
-      <button class="tpl-filter-btn" onclick="filterTpl('loja',this)">Lojas</button>
-      <button class="tpl-filter-btn" onclick="filterTpl('restaurante',this)">Restaurantes</button>
-      <button class="tpl-filter-btn" onclick="filterTpl('servicos',this)">Serviços</button>
-      <button class="tpl-filter-btn" onclick="filterTpl('institucional',this)">Institucional</button>
-    </div>
-    <div class="tpl-grid" id="tplGrid">
-      <div class="tpl-empty"><i class="fa-solid fa-spinner fa-spin"></i> A carregar templates...</div>
+    <div id="tplGroups">
+      <div class="tpl-cat-block"><div class="tpl-empty" style="text-align:center;padding:60px;color:var(--gray)"><i class="fa-solid fa-spinner fa-spin"></i> A carregar templates...</div></div>
     </div>
   </div>
 </section>
@@ -346,22 +497,32 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
     <div class="passos reveal reveal-delay-2" id="passosGrid">
       <div class="passo">
         <div class="passo-n">01</div>
+        <h3>Cria a tua conta</h3>
+        <p>Regista-te no Portal do Cliente — é onde todo o processo de criação do site acontece.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-n">02</div>
         <h3>Escolhe o template</h3>
         <p>Navega pela biblioteca e escolhe o template que mais se adequa ao teu negócio.</p>
       </div>
       <div class="passo">
-        <div class="passo-n">02</div>
+        <div class="passo-n">03</div>
         <h3>Personaliza</h3>
         <p>Define o nome, cores, logo e o conteúdo da tua loja. Sem precisar de código.</p>
       </div>
       <div class="passo">
-        <div class="passo-n">03</div>
+        <div class="passo-n">04</div>
         <h3>Publica</h3>
-        <p>Com um clique o teu site vai ao ar. Recebe o link e o painel de gestão.</p>
-        <div class="passo-prazo"><i class="fa-solid fa-clock"></i> Em menos de 7 dias</div>
+        <p>Com um clique no Portal do Cliente, o teu site é gerado e fica disponível.</p>
+        <div class="passo-prazo"><i class="fa-solid fa-clock"></i> Em menos de 5 minutos</div>
       </div>
       <div class="passo">
-        <div class="passo-n">04</div>
+        <div class="passo-n">05</div>
+        <h3>Recebe o link</h3>
+        <p>O endereço do teu site e o acesso ao painel de gestão ficam disponíveis no Portal.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-n">06</div>
         <h3>Gere e vende</h3>
         <p>Actualiza produtos, responde a encomendas e acompanha as vendas em tempo real.</p>
       </div>
@@ -374,7 +535,62 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   <div class="sec-inner">
     <div class="sec-tag reveal">Por que escolher a IMPERSILVA TECH</div>
     <div class="sec-title reveal reveal-delay-1">O que nos <span class="r">diferencia</span></div>
-    <div class="dif-grid reveal reveal-delay-2" id="difGrid"></div>
+    <div class="cats-slider reveal reveal-delay-2">
+      <div class="cats-track" id="difTrack"></div>
+    </div>
+    <div class="cats-nav">
+      <div class="cats-dots" id="difDots"></div>
+      <div class="cats-arrows">
+        <button class="cat-arr" onclick="moveDif(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="cat-arr" onclick="moveDif(1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section class="sec preco-sec">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Investimento</div>
+    <div class="sec-title reveal reveal-delay-1">Planos <span class="r">simples</span>, sem surpresas</div>
+    <p class="sec-sub reveal reveal-delay-2" style="margin-bottom:2rem">Cria a tua conta gratuitamente. Escolhe como preferes pagar — por mês, por ano ou uma única vez.</p>
+    <div class="preco-toggle reveal reveal-delay-3" id="precoToggle">
+      <button class="preco-toggle-btn active" onclick="setModelo('mensal',this)">Mensal</button>
+      <button class="preco-toggle-btn" onclick="setModelo('trimestral',this)">Trimestral <span class="preco-economia">-10%</span></button>
+      <button class="preco-toggle-btn" onclick="setModelo('semestral',this)">Semestral <span class="preco-economia">-15%</span></button>
+      <button class="preco-toggle-btn" onclick="setModelo('anual',this)">Anual <span class="preco-economia">-25%</span></button>
+    </div>
+    <div id="precoMensal" class="preco-model active"></div>
+    <div id="precoTrimestral" class="preco-model"></div>
+    <div id="precoSemestral" class="preco-model"></div>
+    <div id="precoAnual" class="preco-model"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec faq-sec">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">Dúvidas frequentes</div>
+    <div class="sec-title reveal reveal-delay-1">Per<span class="r">gun</span><span class="b">tas</span> & Respostas</div>
+    <div class="faq-list reveal reveal-delay-2" id="faqList"></div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="sec dep-sec">
+  <div class="sec-inner">
+    <div class="sec-tag reveal">O que dizem os clientes</div>
+    <div class="sec-title reveal reveal-delay-1">Clientes reais.<br><span class="r">Resul</span><span class="b">tados</span> reais.</div>
+    <div class="cats-slider reveal reveal-delay-2">
+      <div class="cats-track" id="depTrack"></div>
+    </div>
+    <div class="cats-nav">
+      <div class="cats-dots" id="depDots"></div>
+      <div class="cats-arrows">
+        <button class="cat-arr" onclick="moveDep(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="cat-arr" onclick="moveDep(1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -383,11 +599,11 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   <div class="container">
     <div class="section-tag reveal"><div class="tag-bars"><span></span><span></span></div>Próximo Passo</div>
     <h2 class="cta-title reveal reveal-delay-1">Pronto para <span class="r">lançar</span><br>o teu site?</h2>
-    <p class="cta-desc reveal reveal-delay-2" id="techCtaSub">Escolhe um template e tens o teu site no ar em menos de 7 dias.</p>
+    <p class="cta-desc reveal reveal-delay-2" id="techCtaSub">Cria a tua conta, escolhe um template e o teu site fica online em menos de 5 minutos.</p>
     <div class="cta-actions reveal reveal-delay-3">
-      <a href="#templates" class="btn-red"><i class="fa-solid fa-layer-group"></i> Escolher template</a>
-      <a href="/orcamento.html" class="btn-ghost">Pedir orçamento</a>
-      <a href="/verificar-site.html" class="btn-blue"><i class="fa-solid fa-user"></i> Criar conta</a>
+      <a href="/verificar-site.html" class="btn-red"><i class="fa-solid fa-user"></i> Criar conta grátis</a>
+      <a href="#templates" class="btn-ghost"><i class="fa-solid fa-layer-group"></i> Ver templates</a>
+      <a href="/orcamento.html" class="btn-blue"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento</a>
     </div>
   </div>
 </section>
@@ -442,6 +658,21 @@ document.documentElement.classList.add('js-ready');
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 document.querySelectorAll('.hero .reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*120));
+
+// Reveal direcional escalonado (um a um) por grupo de container
+function staggerReveal(container,delayStep=150){
+  const obsS=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const items=[...container.querySelectorAll('.rv-up,.rv-down,.rv-left,.rv-right,.rv-scale')];
+        items.forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*delayStep));
+        obsS.unobserve(container);
+      }
+    });
+  },{threshold:0.15});
+  obsS.observe(container);
+}
+document.querySelectorAll('[data-stagger]').forEach(c=>staggerReveal(c, parseInt(c.dataset.stagger)||150));
 
 // ── NAV + FOOTER ─────────────────────────────────────────
 window.addEventListener('scroll',()=>{document.querySelector('.navbar').style.borderBottomColor=window.scrollY>60?'rgba(214,40,40,0.2)':'rgba(255,255,255,0.07)';},{passive:true});
@@ -508,93 +739,411 @@ function goCat(i){
 }
 function moveCat(dir){goCat(catIdx+dir);}
 
-// ── TEMPLATES FALLBACK ────────────────────────────────────
+// ── TEMPLATES FALLBACK (vários por categoria) ────────────
 const TPLS_FB=[
-  {id:'tpl-loja-basica',nome:'Loja Simples',categoria:'loja',cat_label:'Loja Online',desc:'Template limpo e rápido para qualquer tipo de loja.',tags:['Catálogo','WhatsApp','Mobile'],novo:false,popular:true,cor:'#1d4ed8',cor2:'#0a1220'},
-  {id:'tpl-restaurante',nome:'Restaurante Pro',categoria:'restaurante',cat_label:'Restaurante',desc:'Cardápio digital com sistema de pedidos e delivery.',tags:['Pedidos','Cardápio','Delivery'],novo:true,popular:false,cor:'#d62828',cor2:'#1a0505'},
-  {id:'tpl-moda',nome:'Fashion Store',categoria:'loja',cat_label:'Moda & Roupa',desc:'Loja elegante com galeria de produtos e lookbook.',tags:['Lookbook','Tamanhos','Filtros'],novo:false,popular:false,cor:'#7c3aed',cor2:'#1a0528'},
-  {id:'tpl-fast-food',nome:'Fast Food',categoria:'restaurante',cat_label:'Fast Food',desc:'Menu visual com combos, promoções e encomendas rápidas.',tags:['Combos','Promoções','Rápido'],novo:true,popular:false,cor:'#ea580c',cor2:'#1a0a05'},
-  {id:'tpl-salao',nome:'Beauty Salon',categoria:'servicos',cat_label:'Salão & Barbearia',desc:'Agendamento online e galeria de trabalhos realizados.',tags:['Agendamento','Galeria','Serviços'],novo:false,popular:false,cor:'#db2777',cor2:'#200a18'},
-  {id:'tpl-tech-store',nome:'Tech Store',categoria:'loja',cat_label:'Electrónica',desc:'Catálogo de telemóveis e gadgets com especificações.',tags:['Specs','Comparação','Stock'],novo:false,popular:true,cor:'#0ea5e9',cor2:'#05101a'},
-  {id:'tpl-cosmeticos',nome:'Beauty & Skin',categoria:'loja',cat_label:'Cosméticos',desc:'Loja premium de beleza com reviews e guia de produtos.',tags:['Reviews','Skincare','Premium'],novo:true,popular:false,cor:'#f472b6',cor2:'#1a0510'},
-  {id:'tpl-delivery',nome:'Delivery Express',categoria:'restaurante',cat_label:'Delivery',desc:'Plataforma de entregas com rastreio e gestão de pedidos.',tags:['Rastreio','Pedidos','App'],novo:false,popular:false,cor:'#22c55e',cor2:'#051a0a'},
-  {id:'tpl-institucional',nome:'Corporativo',categoria:'institucional',cat_label:'Institucional',desc:'Site profissional com portfólio, equipa e serviços.',tags:['Portfólio','Equipa','Blog'],novo:false,popular:false,cor:'#64748b',cor2:'#0d1017'},
-  {id:'tpl-fitness',nome:'Gym & Fitness',categoria:'servicos',cat_label:'Desporto',desc:'Planos, horários, equipa e loja de suplementos.',tags:['Planos','Horários','Loja'],novo:true,popular:false,cor:'#f59e0b',cor2:'#1a1005'},
+  // Lojas
+  {id:'tpl-loja-basica',nome:'Loja Simples',categoria:'loja',cat_label:'Loja Online',desc:'Template limpo e rápido para qualquer tipo de loja.',tags:['Catálogo','WhatsApp','Mobile'],novo:false,popular:true,cor:'#1d4ed8',cor2:'#0a1220',icon:'fa-store'},
+  {id:'tpl-moda',nome:'Fashion Store',categoria:'loja',cat_label:'Moda & Roupa',desc:'Loja elegante com galeria de produtos e lookbook.',tags:['Lookbook','Tamanhos','Filtros'],novo:false,popular:false,cor:'#7c3aed',cor2:'#1a0528',icon:'fa-shirt'},
+  {id:'tpl-tech-store',nome:'Tech Store',categoria:'loja',cat_label:'Electrónica',desc:'Catálogo de telemóveis e gadgets com especificações.',tags:['Specs','Comparação','Stock'],novo:false,popular:true,cor:'#0ea5e9',cor2:'#05101a',icon:'fa-mobile-screen'},
+  {id:'tpl-cosmeticos',nome:'Beauty & Skin',categoria:'loja',cat_label:'Cosméticos',desc:'Loja premium de beleza com reviews e guia de produtos.',tags:['Reviews','Skincare','Premium'],novo:true,popular:false,cor:'#f472b6',cor2:'#1a0510',icon:'fa-jar'},
+  {id:'tpl-moveis',nome:'Home & Decor',categoria:'loja',cat_label:'Móveis & Decoração',desc:'Showroom digital de mobiliário com fotos e medidas.',tags:['Showroom','Catálogo','Encomenda'],novo:false,popular:false,cor:'#a16207',cor2:'#1a1205',icon:'fa-couch'},
+  // Restaurantes
+  {id:'tpl-restaurante',nome:'Restaurante Pro',categoria:'restaurante',cat_label:'Restaurante',desc:'Cardápio digital com sistema de pedidos e delivery.',tags:['Pedidos','Cardápio','Delivery'],novo:true,popular:false,cor:'#d62828',cor2:'#1a0505',icon:'fa-utensils'},
+  {id:'tpl-fast-food',nome:'Fast Food',categoria:'restaurante',cat_label:'Fast Food',desc:'Menu visual com combos, promoções e encomendas rápidas.',tags:['Combos','Promoções','Rápido'],novo:true,popular:false,cor:'#ea580c',cor2:'#1a0a05',icon:'fa-burger'},
+  {id:'tpl-delivery',nome:'Delivery Express',categoria:'restaurante',cat_label:'Delivery',desc:'Plataforma de entregas com rastreio e gestão de pedidos.',tags:['Rastreio','Pedidos','App'],novo:false,popular:false,cor:'#22c55e',cor2:'#051a0a',icon:'fa-motorcycle'},
+  {id:'tpl-padaria',nome:'Bakery Sweet',categoria:'restaurante',cat_label:'Padaria & Bolos',desc:'Galeria de bolos e doces com encomendas antecipadas.',tags:['Encomendas','Galeria','Calendário'],novo:false,popular:false,cor:'#f59e0b',cor2:'#1a1005',icon:'fa-cake-candles'},
+  // Serviços
+  {id:'tpl-salao',nome:'Beauty Salon',categoria:'servicos',cat_label:'Salão & Barbearia',desc:'Agendamento online e galeria de trabalhos realizados.',tags:['Agendamento','Galeria','Serviços'],novo:false,popular:false,cor:'#db2777',cor2:'#200a18',icon:'fa-scissors'},
+  {id:'tpl-fitness',nome:'Gym & Fitness',categoria:'servicos',cat_label:'Desporto',desc:'Planos, horários, equipa e loja de suplementos.',tags:['Planos','Horários','Loja'],novo:true,popular:false,cor:'#f59e0b',cor2:'#1a1005',icon:'fa-dumbbell'},
+  {id:'tpl-automovel',nome:'Auto Service',categoria:'servicos',cat_label:'Automóvel & Peças',desc:'Catálogo de veículos e agendamento de serviços.',tags:['Catálogo','Agendamento','Peças'],novo:false,popular:false,cor:'#64748b',cor2:'#0d1015',icon:'fa-car'},
+  // Institucional
+  {id:'tpl-institucional',nome:'Corporativo',categoria:'institucional',cat_label:'Institucional',desc:'Site profissional com portfólio, equipa e serviços.',tags:['Portfólio','Equipa','Blog'],novo:false,popular:false,cor:'#64748b',cor2:'#0d1017',icon:'fa-briefcase'},
+  {id:'tpl-educacao',nome:'EduPlatform',categoria:'institucional',cat_label:'Educação & Formação',desc:'Plataforma para cursos e matrículas online.',tags:['Cursos','Matrículas','Materiais'],novo:true,popular:false,cor:'#16a34a',cor2:'#0a1a0a',icon:'fa-graduation-cap'},
 ];
 
-let tplData=[], tplFiltro='todos';
+const TPL_CAT_META={
+  loja:{label:'Lojas Online',icon:'fa-store'},
+  restaurante:{label:'Restaurantes & Delivery',icon:'fa-utensils'},
+  servicos:{label:'Serviços',icon:'fa-scissors'},
+  institucional:{label:'Institucional',icon:'fa-briefcase'},
+};
+
+// ── TEMPLATES CAROUSEL (em pares, agrupado por categoria) ─
+let tplData=[];
+let tplSliders={}; // categoria -> {idx, timer, paused, total}
+
 function renderTpls(tpls){
   tplData=tpls;
-  const filtered=tplFiltro==='todos'?tpls:tpls.filter(t=>t.categoria===tplFiltro);
-  const g=document.getElementById('tplGrid');
-  if(!filtered.length){g.innerHTML='<div class="tpl-empty">Nenhum template nesta categoria ainda.</div>';return;}
-  g.innerHTML=filtered.map(t=>{
-    const cor=t.cor||'#1d4ed8', cor2=t.cor2||'#0a0a0b';
-    return`<div class="tpl-card" onclick="location.href='/portfolio.html?template=${encodeURIComponent(t.id||t.nome)}'">
-      <div class="tpl-preview">
-        ${t.imagem?`<img src="${t.imagem}" alt="${t.nome}" style="width:100%;height:100%;object-fit:cover">`:`
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cor2} 0%,${cor2} 100%)"></div>
-        <div class="tpl-preview-screen">
-          <div class="tpl-preview-bar">
-            <div class="tpl-preview-dot" style="background:#ff5f57"></div>
-            <div class="tpl-preview-dot" style="background:#febc2e"></div>
-            <div class="tpl-preview-dot" style="background:#28c840"></div>
-          </div>
-          <div class="tpl-preview-content">
-            <div class="tpl-preview-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)">
-              <i class="fa-solid ${t.icon||'fa-store'}" style="font-size:1.8rem;color:rgba(255,255,255,.2)"></i>
-            </div>
-            <div class="tpl-preview-lines">
-              <div class="tpl-preview-line"></div>
-              <div class="tpl-preview-line short"></div>
-              <div class="tpl-preview-line"></div>
-            </div>
-          </div>
-        </div>`}
-        ${t.novo?'<div class="tpl-badge-new">Novo</div>':''}
-        ${t.popular&&!t.novo?'<div class="tpl-badge-pop">Popular</div>':''}
-        <div class="tpl-overlay"><div class="tpl-overlay-btn"><i class="fa-solid fa-eye"></i> Ver template</div></div>
+  const groups={};
+  tpls.forEach(t=>{
+    const cat=t.categoria||'outros';
+    if(!groups[cat])groups[cat]=[];
+    groups[cat].push(t);
+  });
+
+  const container=document.getElementById('tplGroups');
+  container.innerHTML=Object.keys(groups).map(cat=>{
+    const meta=TPL_CAT_META[cat]||{label:cat,icon:'fa-layer-group'};
+    const items=groups[cat];
+    const pairs=[];
+    for(let i=0;i<items.length;i+=2){pairs.push(items.slice(i,i+2));}
+    const sliderId=`tplSlider_${cat}`;
+    return`<div class="tpl-cat-block">
+      <div class="tpl-cat-head">
+        <i class="fa-solid ${meta.icon}"></i>
+        <h3>${meta.label}</h3>
+        <span class="tpl-cat-count">${items.length} template${items.length>1?'s':''}</span>
+        ${pairs.length>1?`<div class="cats-arrows" style="margin-left:auto">
+          <button class="cat-arr" onclick="moveTplPair('${cat}',-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="cat-arr" onclick="moveTplPair('${cat}',1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>`:''}
       </div>
-      <div class="tpl-body">
-        <div class="tpl-cat">${t.cat_label||t.categoria}</div>
-        <div class="tpl-nome">${t.nome}</div>
-        <div class="tpl-desc">${t.desc||''}</div>
-        <div class="tpl-tags">${(t.tags||[]).map(tag=>`<span class="tpl-tag">${tag}</span>`).join('')}</div>
+      <div class="tpl-slider">
+        <div class="tpl-track" id="${sliderId}">
+          ${pairs.map(pair=>`<div class="tpl-pair">${pair.map((t,pi)=>renderTplCard(t,pi)).join('')}</div>`).join('')}
+        </div>
       </div>
     </div>`;
   }).join('');
-}
-function filterTpl(cat,btn){
-  tplFiltro=cat;
-  document.querySelectorAll('.tpl-filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTpls(tplData);
+
+  // init slider state + autoplay
+  Object.keys(groups).forEach(cat=>{
+    const items=groups[cat];
+    const totalPairs=Math.ceil(items.length/2);
+    tplSliders[cat]={idx:0,total:totalPairs,paused:false,timer:null};
+    if(totalPairs>1){
+      const track=document.getElementById(`tplSlider_${cat}`);
+      track.querySelectorAll('.tpl-card').forEach(card=>{
+        card.addEventListener('mousedown',()=>tplSliders[cat].paused=true);
+        card.addEventListener('mouseup',()=>tplSliders[cat].paused=false);
+        card.addEventListener('mouseleave',()=>tplSliders[cat].paused=false);
+        card.addEventListener('touchstart',()=>tplSliders[cat].paused=true,{passive:true});
+        card.addEventListener('touchend',()=>tplSliders[cat].paused=false);
+      });
+      tplSliders[cat].timer=setInterval(()=>{
+        if(!tplSliders[cat].paused) moveTplPair(cat,1);
+      },5500);
+    }
+  });
+
+  // Reveal direcional para cada bloco de categoria (cards entram um a um, alternando lado/baixo)
+  document.querySelectorAll('.tpl-cat-block').forEach(block=>staggerReveal(block,140));
 }
 
-// ── DIFERENCIAIS ──────────────────────────────────────────
+function renderTplCard(t,pi){
+  const cor=t.cor||'#1d4ed8', cor2=t.cor2||'#0a0a0b';
+  const dir=pi===0?'rv-left':'rv-right';
+  return`<a class="tpl-card ${dir}" href="/portfolio.html?template=${encodeURIComponent(t.id||t.nome)}">
+    <div class="tpl-preview">
+      ${t.imagem?`<img src="${t.imagem}" alt="${t.nome}" style="width:100%;height:100%;object-fit:cover">`:`
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,${cor2} 0%,${cor2} 100%)"></div>
+      <div class="tpl-preview-screen">
+        <div class="tpl-preview-bar">
+          <div class="tpl-preview-dot" style="background:#ff5f57"></div>
+          <div class="tpl-preview-dot" style="background:#febc2e"></div>
+          <div class="tpl-preview-dot" style="background:#28c840"></div>
+        </div>
+        <div class="tpl-preview-content">
+          <div class="tpl-preview-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)">
+            <i class="fa-solid ${t.icon||'fa-store'}" style="font-size:2.4rem;color:rgba(255,255,255,.22)"></i>
+          </div>
+          <div class="tpl-preview-lines">
+            <div class="tpl-preview-line"></div>
+            <div class="tpl-preview-line short"></div>
+            <div class="tpl-preview-line"></div>
+            <div class="tpl-preview-line short"></div>
+          </div>
+        </div>
+      </div>`}
+      ${t.novo?'<div class="tpl-badge-new">Novo</div>':''}
+      ${t.popular&&!t.novo?'<div class="tpl-badge-pop">Popular</div>':''}
+      <div class="tpl-overlay"><div class="tpl-overlay-btn"><i class="fa-solid fa-eye"></i> Ver template</div></div>
+    </div>
+    <div class="tpl-body">
+      <div class="tpl-cat-label">${t.cat_label||t.categoria}</div>
+      <div class="tpl-nome">${t.nome}</div>
+      <div class="tpl-desc">${t.desc||''}</div>
+      <div class="tpl-tags">${(t.tags||[]).map(tag=>`<span class="tpl-tag">${tag}</span>`).join('')}</div>
+    </div>
+  </a>`;
+}
+
+function moveTplPair(cat,dir){
+  const s=tplSliders[cat];
+  if(!s)return;
+  s.idx=(s.idx+dir+s.total)%s.total;
+  const track=document.getElementById(`tplSlider_${cat}`);
+  if(track)track.style.transform=`translateX(-${s.idx*100}%)`;
+}
+
+// ── DIFERENCIAIS (SLIDER FULLSCREEN) ─────────────────────
 const DIF_FB=[
-  {icon:'fa-rocket',cor:'r',h:'Lançamento em 7 dias',p:'Do template escolhido ao site no ar. Sem esperas longas, sem complicações.'},
-  {icon:'fa-mobile-screen',cor:'b',h:'100% Mobile',p:'Todos os templates são optimizados para telemóvel — onde os teus clientes estão.'},
-  {icon:'fa-whatsapp brands',cor:'g',h:'WhatsApp Integrado',p:'Encomendas e contactos directamente pelo WhatsApp, sem plataformas externas.'},
-  {icon:'fa-sliders',cor:'r',h:'Painel de Gestão',p:'Gere produtos, preços e encomendas sem precisar de saber código.'},
-  {icon:'fa-shield-halved',cor:'b',h:'Seguro & Rápido',p:'Hospedagem na Cloudflare — rápida, segura e fiável em todo o mundo.'},
-  {icon:'fa-headset',cor:'g',h:'Suporte Contínuo',p:'A nossa equipa está disponível para ajudar sempre que precisares.'},
+  {icon:'fa-rocket',cor:'r',h:'Lançamento em poucos minutos',p:'Depois de publicares no Portal do Cliente, o teu site fica disponível em menos de 5 minutos.',cor1:'#1a0505',cor2:'#3d0f0f'},
+  {icon:'fa-mobile-screen',cor:'b',h:'100% Mobile',p:'Todos os templates são optimizados para telemóvel — onde os teus clientes estão.',cor1:'#050d1a',cor2:'#0f1f3d'},
+  {icon:'fab-fa-whatsapp',cor:'g',h:'WhatsApp Integrado',p:'Encomendas e contactos directamente pelo WhatsApp, sem plataformas externas.',cor1:'#051a0a',cor2:'#0f3d1f'},
+  {icon:'fa-sliders',cor:'r',h:'Painel de Gestão',p:'Gere produtos, preços e encomendas sem precisar de saber código.',cor1:'#1a0a05',cor2:'#3d1f0f'},
+  {icon:'fa-shield-halved',cor:'b',h:'Seguro & Rápido',p:'Hospedagem na Cloudflare — rápida, segura e fiável em todo o mundo.',cor1:'#0a0d1a',cor2:'#1f253d'},
+  {icon:'fa-headset',cor:'g',h:'Suporte Contínuo',p:'A nossa equipa está disponível para ajudar sempre que precisares.',cor1:'#0a1a15',cor2:'#0f3d2f'},
 ];
+
+let difIdx=0,difTimer,difData=[],difPaused=false;
 function renderDif(items){
-  document.getElementById('difGrid').innerHTML=items.map(d=>`
-    <div class="dif-card">
-      <div class="dif-icon dif-icon-${d.cor||'r'}"><i class="fa-solid ${d.icon}"></i></div>
-      <div class="dif-h">${d.h}</div>
-      <div class="dif-p">${d.p}</div>
+  difData=items;
+  const track=document.getElementById('difTrack');
+  const dots=document.getElementById('difDots');
+  track.innerHTML=items.map((d,i)=>{
+    const iconClass = d.icon.startsWith('fab-') ? `fa-brands ${d.icon.replace('fab-fa-','fa-')}` : `fa-solid ${d.icon}`;
+    const bg=d.imagem||'';
+    return`<div class="cat${i===0?' active':''}" data-i="${i}">
+      ${bg?`<img class="cat-bg" src="${bg}" alt="" loading="lazy">`:`<div class="cat-bg" style="background:linear-gradient(135deg,${d.cor1||'#0d0d0d'} 0%,${d.cor2||'#1a1a1a'} 100%)"></div>`}
+      <div class="cat-overlay"></div>
+      <div class="cat-body">
+        <i class="${iconClass}"></i>
+        <div class="cat-nome">${d.h}</div>
+        <div class="cat-desc">${d.p}</div>
+      </div>
+    </div>`;
+  }).join('');
+  dots.innerHTML=items.map((_,i)=>`<div class="cdot${i===0?' active':''}" onclick="goDif(${i})"></div>`).join('');
+  track.querySelectorAll('.cat').forEach(card=>{
+    card.addEventListener('mousedown',()=>difPaused=true);
+    card.addEventListener('mouseup',()=>difPaused=false);
+    card.addEventListener('mouseleave',()=>difPaused=false);
+    card.addEventListener('touchstart',()=>difPaused=true,{passive:true});
+    card.addEventListener('touchend',()=>difPaused=false);
+  });
+  clearInterval(difTimer);difTimer=setInterval(()=>{if(!difPaused)moveDif(1);},4500);
+}
+function goDif(i){
+  difIdx=(i+difData.length)%difData.length;
+  document.getElementById('difTrack').style.transform=`translateX(-${difIdx*100}%)`;
+  document.querySelectorAll('#difDots .cdot').forEach((d,j)=>d.classList.toggle('active',j===difIdx));
+  document.querySelectorAll('#difTrack .cat').forEach((c,j)=>c.classList.toggle('active',j===difIdx));
+}
+function moveDif(dir){goDif(difIdx+dir);}
+
+// ── PREÇOS ────────────────────────────────────────────────
+// ── PREÇOS (3 MODELOS) ────────────────────────────────────
+const FEATURES_BASE=[
+  {ok:true, txt:'Criação de conta gratuita'},
+  {ok:true, txt:'Integração WhatsApp'},
+  {ok:true, txt:'Hospedagem gratuita'},
+  {ok:true, txt:'Painel de gestão'},
+];
+const PLANOS=[
+  {
+    nome:'Starter',destaque:false,
+    mensal:{preco:'1.500',period:'/mês'},
+    trimestral:{preco:'4.000',period:'/trimestre',economia:'Poupa 500 Kz'},
+    semestral:{preco:'7.500',period:'/semestre',economia:'Poupa 1.500 Kz'},
+    anual:{preco:'13.000',period:'/ano',economia:'Poupa 5.000 Kz'},
+    desc:'Ideal para quem está a começar.',
+    features:[
+      ...FEATURES_BASE,
+      {ok:true, txt:'1 template à escolha'},
+      {ok:true, txt:'Até 20 produtos'},
+      {ok:false,txt:'Domínio personalizado'},
+      {ok:false,txt:'Suporte prioritário'},
+    ],
+    cta:'Começar grátis',cta_style:'outline'
+  },
+  {
+    nome:'Pro',destaque:true,badge:'Mais popular',
+    mensal:{preco:'3.500',period:'/mês'},
+    trimestral:{preco:'9.500',period:'/trimestre',economia:'Poupa 1.000 Kz'},
+    semestral:{preco:'18.000',period:'/semestre',economia:'Poupa 3.000 Kz'},
+    anual:{preco:'32.000',period:'/ano',economia:'Poupa 10.000 Kz'},
+    desc:'Para negócios que querem crescer com mais funcionalidades.',
+    features:[
+      ...FEATURES_BASE,
+      {ok:true, txt:'Todos os templates'},
+      {ok:true, txt:'Produtos ilimitados'},
+      {ok:true, txt:'Domínio personalizado'},
+      {ok:false,txt:'Suporte prioritário'},
+    ],
+    cta:'Escolher Pro',cta_style:'red'
+  },
+  {
+    nome:'Business',destaque:false,
+    mensal:{preco:'7.000',period:'/mês'},
+    trimestral:{preco:'19.000',period:'/trimestre',economia:'Poupa 2.000 Kz'},
+    semestral:{preco:'36.000',period:'/semestre',economia:'Poupa 6.000 Kz'},
+    anual:{preco:'64.000',period:'/ano',economia:'Poupa 20.000 Kz'},
+    desc:'Solução completa para negócios estabelecidos.',
+    features:[
+      ...FEATURES_BASE,
+      {ok:true, txt:'Todos os templates'},
+      {ok:true, txt:'Produtos ilimitados'},
+      {ok:true, txt:'Domínio personalizado'},
+      {ok:true, txt:'Suporte prioritário 24h'},
+    ],
+    cta:'Escolher Business',cta_style:'outline'
+  },
+];
+
+function renderCardPreco(p,modelo){
+  const info=p[modelo];
+  return`<div class="preco-card${p.destaque?' destaque':''}">
+    ${p.badge?`<div class="preco-badge">${p.badge}</div>`:''}
+    <div class="preco-free-tag"><i class="fa-solid fa-check-circle"></i> Conta grátis</div>
+    <div class="preco-nome">${p.nome}</div>
+    <div class="preco-val">
+      <span class="moeda">Kz</span>
+      <span>${info.preco}</span>
+      <span class="period">${info.period}</span>
+    </div>
+    ${info.economia?`<div style="font-size:.72rem;color:var(--green);margin-bottom:4px"><i class="fa-solid fa-tag"></i> ${info.economia}</div>`:''}
+    <div class="preco-desc">${p.desc}</div>
+    <ul class="preco-features">
+      ${p.features.map(f=>`<li class="${f.ok?'':'nao'}"><i class="fa-solid ${f.ok?'fa-check-circle':'fa-circle-xmark'}"></i>${f.txt}</li>`).join('')}
+    </ul>
+    <a href="/verificar-site.html" class="preco-cta preco-cta-${p.cta_style==='red'?'red':'outline'}">${p.cta}</a>
+  </div>`;
+}
+
+function renderPrecos(){
+  ['mensal','trimestral','semestral','anual'].forEach(modelo=>{
+    const el=document.getElementById('preco'+modelo.charAt(0).toUpperCase()+modelo.slice(1));
+    if(el) el.innerHTML=PLANOS.map(p=>renderCardPreco(p,modelo)).join('');
+  });
+}
+
+let modeloAtivo='mensal';
+function setModelo(modelo,btn){
+  modeloAtivo=modelo;
+  document.querySelectorAll('.preco-toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.preco-model').forEach(m=>m.classList.remove('active'));
+  const id='preco'+modelo.charAt(0).toUpperCase()+modelo.slice(1);
+  document.getElementById(id).classList.add('active');
+}
+
+// ── FAQ ───────────────────────────────────────────────────
+const FAQ_FB=[
+  {cat:'Conta',q:'É mesmo gratuito criar uma conta?',a:'Sim. Criar uma conta no Portal do Cliente é completamente gratuito. Pagas apenas pelo plano que escolheres (mensal, anual ou pagamento único) depois de criares o teu site.'},
+  {cat:'Templates',q:'Posso mudar de template depois de publicar?',a:'Sim. Podes mudar de template a qualquer momento pelo painel de gestão. O teu conteúdo (produtos, textos, imagens) é migrado automaticamente.'},
+  {cat:'Planos',q:'Qual a diferença entre os planos?',a:'O Starter é ideal para começar com até 20 produtos. O Pro dá acesso a todos os templates, produtos ilimitados e domínio personalizado. O Business inclui tudo isso mais suporte prioritário 24 horas.'},
+  {cat:'Planos',q:'O que acontece se cancelar a mensalidade?',a:'O teu site fica em pausa mas não é eliminado. Podes reactivar a qualquer momento sem perder os dados. Com o pagamento único o site fica no ar para sempre.'},
+  {cat:'Técnico',q:'Precisas de saber programar para criar um site?',a:'Não. O Portal do Cliente foi desenhado para qualquer pessoa conseguir criar e gerir o seu site sem qualquer conhecimento técnico.'},
+  {cat:'Técnico',q:'Onde fica hospedado o meu site?',a:'O teu site fica hospedado no GitHub Pages e com cache na Cloudflare — o que garante carregamento rápido em Angola e em todo o mundo, sem custos adicionais.'},
+  {cat:'Técnico',q:'Quanto tempo demora o site a ficar online depois de publicar?',a:'Menos de 5 minutos. Depois de clicares em "Publicar" no Portal do Cliente, o teu site fica disponível no endereço escolhido quase de imediato.'},
+  {cat:'Comercial',q:'Posso vender produtos pelo site?',a:'Sim. Todos os templates incluem catálogo de produtos e integração com WhatsApp para encomendas. Os clientes vêem os produtos e encomendam directamente pelo WhatsApp.'},
+  {cat:'Comercial',q:'Posso ter um domínio próprio (ex: meusite.ao)?',a:'Sim, nos planos Pro e Business. No Starter o teu site fica disponível num subdomínio gratuito (ex: meusite.impersilva.ao).'},
+  {cat:'Suporte',q:'O que está incluído no suporte?',a:'Todos os planos incluem suporte por WhatsApp em horário comercial. O plano Business tem suporte prioritário 24 horas com tempo de resposta garantido de 2 horas.'},
+];
+function renderFaq(items){
+  document.getElementById('faqList').innerHTML=items.map((f,i)=>`
+    <div class="faq-item" id="faq${i}">
+      <button class="faq-q" onclick="toggleFaq(${i})">
+        <span>${f.q}</span>
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <div class="faq-a"><p>${f.a}</p></div>
     </div>`
   ).join('');
 }
+function toggleFaq(i){
+  const item=document.getElementById('faq'+i);
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>el.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+// ── DEPOIMENTOS (SLIDER FULLSCREEN) ──────────────────────
+const DEPS_FB=[
+  {nome:'Maria Fernandes',cargo:'Loja de Moda — Huambo',texto:'Criei o meu site sozinha em menos de 10 minutos. Nunca pensei que fosse tão fácil! As minhas vendas triplicaram no primeiro mês.',iniciais:'MF',cor:'#d62828'},
+  {nome:'Carlos Mendes',cargo:'Restaurante O Candeeiro — Benguela',texto:'O sistema de pedidos pelo WhatsApp mudou completamente o meu negócio. Agora os clientes encomendam sem precisar de ligar.',iniciais:'CM',cor:'#1d4ed8'},
+  {nome:'Ana Lopes',cargo:'Salão Beleza Total — Huíla',texto:'Profissional, rápido e fácil de actualizar. Consigo mudar os preços e as promoções eu mesmo, sem precisar de pedir ajuda.',iniciais:'AL',cor:'#22c55e'},
+  {nome:'João Baptista',cargo:'Tech Store — Luanda',texto:'O template de loja de telemóveis ficou exactamente como eu queria. O suporte da IMPERSILVA TECH é excelente.',iniciais:'JB',cor:'#7c3aed'},
+  {nome:'Rosa Silva',cargo:'Padaria Doce Lar — Malanje',texto:'Os meus clientes adoram encomendar bolos pelo site. Ficou muito mais organizado e profissional do que antes.',iniciais:'RS',cor:'#f59e0b'},
+];
+let depIdx=0,depTimer,depData=[],depPaused=false;
+function renderDeps(items){
+  depData=items;
+  const track=document.getElementById('depTrack');
+  const dots=document.getElementById('depDots');
+  track.innerHTML=items.map((d,i)=>`
+    <div class="dep-slide${i===0?' active':''}">
+      <div class="dep-bg-glow"></div>
+      <div class="dep-stars">${'<i class="fa-solid fa-star"></i>'.repeat(5)}</div>
+      <div class="dep-quote-mark">"</div>
+      <p class="dep-texto">${d.texto}</p>
+      <div class="dep-autor">
+        <div class="dep-av" style="color:${d.cor||'var(--red)'};border-color:${d.cor||'var(--red)'}44">${d.iniciais}</div>
+        <div>
+          <div class="dep-nome">${d.nome}</div>
+          <div class="dep-cargo">${d.cargo}</div>
+        </div>
+      </div>
+    </div>`
+  ).join('');
+  dots.innerHTML=items.map((_,i)=>`<div class="cdot${i===0?' active':''}" onclick="goDep(${i})"></div>`).join('');
+  track.querySelectorAll('.dep-slide').forEach(card=>{
+    card.addEventListener('mousedown',()=>depPaused=true);
+    card.addEventListener('mouseup',()=>depPaused=false);
+    card.addEventListener('mouseleave',()=>depPaused=false);
+    card.addEventListener('touchstart',()=>depPaused=true,{passive:true});
+    card.addEventListener('touchend',()=>depPaused=false);
+  });
+  clearInterval(depTimer);depTimer=setInterval(()=>{if(!depPaused)moveDep(1);},5000);
+}
+function goDep(i){
+  depIdx=(i+depData.length)%depData.length;
+  document.getElementById('depTrack').style.transform=`translateX(-${depIdx*100}%)`;
+  document.querySelectorAll('#depDots .cdot').forEach((d,j)=>d.classList.toggle('active',j===depIdx));
+  document.querySelectorAll('#depTrack .dep-slide').forEach((c,j)=>c.classList.toggle('active',j===depIdx));
+}
+function moveDep(dir){goDep(depIdx+dir);}
 
 // ── CARREGAR DADOS ────────────────────────────────────────
+// ── NEWS CARD (igual ao index) ───────────────────────────
+const NEWS_FB=[
+  {label:'Novidade',titulo:'Cria o teu site sozinho em menos de 5 minutos',data:'Jun 2025',cor1:'#1a0505',cor2:'#3d0f0f',icon:'fa-rocket'},
+  {label:'Dica',titulo:'Como escolher o template certo para o teu negócio',data:'Mai 2025',cor1:'#050d1f',cor2:'#0f2060',icon:'fa-lightbulb'},
+  {label:'Sucesso',titulo:'Mais de 50 sites lançados em Angola',data:'Abr 2025',cor1:'#0d0d0d',cor2:'#1a1a1a',icon:'fa-trophy'},
+  {label:'Planos',titulo:'Novos planos acessíveis a partir de 1.500 Kz/mês',data:'Mar 2025',cor1:'#0a1a3d',cor2:'#1a0505',icon:'fa-tag'},
+  {label:'Tech',titulo:'Painel de gestão: controla vendas e encomendas em tempo real',data:'Fev 2025',cor1:'#1a0a3d',cor2:'#0f2060',icon:'fa-gauge'},
+];
+let newsIdx=0,newsTimer2;
+function renderNews(items){
+  const slides=document.getElementById('newsSlides');
+  const dots=document.getElementById('newsDots');
+  slides.innerHTML=items.map((n,i)=>`
+    <div class="news-slide${i===0?' active':''}" data-i="${i}">
+      ${n.imagem?`<img class="news-bg" src="${n.imagem}" alt="">`:''}
+      <div class="news-placeholder" style="background:linear-gradient(135deg,${n.cor1||'#0d0d0d'} 0%,${n.cor2||'#1a1a1a'} 100%)">
+        <i class="fa-solid ${n.icon||'fa-newspaper'}" style="font-size:5rem;opacity:.06;position:absolute;color:white"></i>
+      </div>
+      <div class="news-gradient"></div>
+      <div class="news-body">
+        <div class="news-badge" style="color:${n.cor||'var(--red)'}">${n.label||'Notícia'}</div>
+        <div class="news-titulo">${n.titulo}</div>
+        <div class="news-data">${n.data||''}</div>
+      </div>
+    </div>`
+  ).join('');
+  dots.innerHTML=items.map((_,i)=>`<div class="ndot${i===0?' active':''}" onclick="goNews(${i})"></div>`).join('');
+  clearInterval(newsTimer2);newsTimer2=setInterval(()=>goNews((newsIdx+1)%items.length),4000);
+}
+function goNews(i){
+  const slides=document.getElementById('newsSlides').querySelectorAll('.news-slide');
+  const dots=document.getElementById('newsDots').querySelectorAll('.ndot');
+  if(!slides.length)return;
+  slides[newsIdx].classList.remove('active');
+  dots[newsIdx].classList.remove('active');
+  newsIdx=i;
+  slides[newsIdx].classList.add('active');
+  dots[newsIdx].classList.add('active');
+}
+
 async function carregarDados(){
   renderCats(CATS_FB);
   renderTpls(TPLS_FB);
   renderDif(DIF_FB);
+  renderPrecos();
+  renderFaq(FAQ_FB);
+  renderDeps(DEPS_FB);
+  renderNews(NEWS_FB);
   try{
     const d=await fetch(API+'/api/site/tech',{signal:AbortSignal.timeout(5000)}).then(r=>r.ok?r.json():null);
     if(!d)return;
@@ -607,29 +1156,15 @@ async function carregarDados(){
         if(d.hero.stats.templates) document.getElementById('statTpl').innerHTML=d.hero.stats.templates+'<span style="font-size:1.4rem">+</span>';
       }
     }
-    if(d.tipos&&d.tipos.length)       renderCats(d.tipos);
-    if(d.templates&&d.templates.length){renderTpls(d.templates);renderFilterBtns(d.templates);}
+    if(d.tipos&&d.tipos.length)              renderCats(d.tipos);
+    if(d.templates&&d.templates.length)       renderTpls(d.templates);
     if(d.diferenciais&&d.diferenciais.length) renderDif(d.diferenciais);
-    if(d.processo&&d.processo.length)  renderProcesso(d.processo);
+    if(d.depoimentos&&d.depoimentos.length)   renderDeps(d.depoimentos);
+    if(d.noticias&&d.noticias.length)         renderNews(d.noticias);
+    if(d.faq&&d.faq.length)                   renderFaq(d.faq);
+    if(d.processo&&d.processo.length)         renderProcesso(d.processo);
     if(d.cta&&d.cta.subtitulo) document.getElementById('techCtaSub').textContent=d.cta.subtitulo;
   }catch(e){}
-}
-
-function renderFilterBtns(tpls){
-  const cats=[...new Set(tpls.map(t=>t.categoria))];
-  const labels={loja:'Lojas',restaurante:'Restaurantes',servicos:'Serviços',institucional:'Institucional'};
-  const existing=document.querySelectorAll('.tpl-filter-btn[data-dyn]');
-  existing.forEach(b=>b.remove());
-  const filter=document.getElementById('tplFilter');
-  cats.forEach(cat=>{
-    if(cat==='todos')return;
-    const btn=document.createElement('button');
-    btn.className='tpl-filter-btn';
-    btn.setAttribute('data-dyn','1');
-    btn.textContent=labels[cat]||cat;
-    btn.onclick=()=>filterTpl(cat,btn);
-    filter.appendChild(btn);
-  });
 }
 
 function renderProcesso(passos){
@@ -644,6 +1179,42 @@ function renderProcesso(passos){
 }
 
 carregarDados();
+
+// ── SWIPE TOUCH em todos os sliders ──────────────────────
+function addSwipe(el, onLeft, onRight){
+  let sx=0, sy=0;
+  el.addEventListener('touchstart',e=>{
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+  },{passive:true});
+  el.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    const dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){
+      dx<0?onLeft():onRight();
+    }
+  },{passive:true});
+}
+
+// Aplicar após renderização (aguarda DOM)
+document.addEventListener('DOMContentLoaded',()=>{});
+setTimeout(()=>{
+  // Categorias
+  const catsTrack=document.getElementById('catsTrack');
+  if(catsTrack) addSwipe(catsTrack,()=>moveCat(1),()=>moveCat(-1));
+  // Diferenciais
+  const difTrack=document.getElementById('difTrack');
+  if(difTrack) addSwipe(difTrack,()=>moveDif(1),()=>moveDif(-1));
+  // Depoimentos
+  const depTrack=document.getElementById('depTrack');
+  if(depTrack) addSwipe(depTrack,()=>moveDep(1),()=>moveDep(-1));
+  // Templates (por categoria)
+  Object.keys(tplSliders).forEach(cat=>{
+    const track=document.getElementById(`tplSlider_${cat}`);
+    if(track) addSwipe(track,()=>moveTplPair(cat,1),()=>moveTplPair(cat,-1));
+  });
+},800);
+
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
 </body>
