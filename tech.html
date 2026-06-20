@@ -51,34 +51,9 @@ body{background:var(--dark);color:var(--white);font-weight:400;line-height:1.6;p
 .hero-stripe{position:absolute;top:0;right:30%;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(214,40,40,.2),transparent);pointer-events:none}
 .hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 1.5rem}
 @media(min-width:861px){
-  .hero-inner{display:grid;grid-template-columns:1fr minmax(260px,420px);gap:clamp(2rem,4vw,5rem);align-items:center;padding-top:4rem;padding-bottom:4rem}
-  .hero-left{grid-column:1}
-  .hero-visual-col{grid-column:2;display:flex;justify-content:center;position:relative}
-}
-@media(max-width:860px){
-  .hero-visual-col{display:none}
+  .hero-inner{padding-top:4rem;padding-bottom:4rem}
 }
 
-/* mockup portal */
-.portal-mockup{width:280px;background:var(--charcoal);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1rem .8rem;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06);position:relative}
-.pm-notch{width:70px;height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin:0 auto .7rem}
-.pm-screen{background:var(--dark);border-radius:12px;overflow:hidden}
-.pm-bar{height:4px;background:linear-gradient(90deg,var(--red),var(--blue-lt));border-radius:2px}
-.pm-header{display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem .3rem}
-.pm-logo{font-size:.65rem;font-weight:800;letter-spacing:.05em;color:var(--white)}
-.pm-badge{font-size:.45rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--green-dim);color:var(--green);padding:.15rem .4rem;border-radius:50px}
-.pm-section{padding:.4rem .7rem;font-size:.55rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
-.pm-tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;padding:0 .7rem .5rem}
-.pm-tpl{border-radius:6px;overflow:hidden;aspect-ratio:4/3;position:relative}
-.pm-tpl-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;background:rgba(214,40,40,.15)}
-.pm-tpl:hover .pm-tpl-overlay{opacity:1}
-.pm-tpl i{font-size:.9rem;color:rgba(255,255,255,.18)}
-.pm-tpl-preview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative}
-.pm-btn{margin:.3rem .7rem .6rem;background:var(--red);color:#fff;text-align:center;padding:.35rem;border-radius:5px;font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-/* floating badges */
-.pm-float{position:absolute;background:var(--charcoal);border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;font-size:.58rem;white-space:nowrap;display:flex;align-items:center;gap:.35rem}
-.pm-float-1{top:-18px;right:-28px;animation:float1 3s ease-in-out infinite}
-.pm-float-2{bottom:20px;left:-36px;animation:float2 3.5s ease-in-out infinite}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red-dim);border:1px solid rgba(214,40,40,.25);color:rgba(255,130,130,.9);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:1.5rem}
 .hero-title{font-weight:900;font-size:clamp(2.4rem,8vw,5.5rem);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:1.2rem;word-break:break-word}
 .hero-title .r{color:var(--red)}
@@ -97,7 +72,7 @@ body{background:var(--dark);color:var(--white);font-weight:400;line-height:1.6;p
 .hstat-l{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
 
 /* ── NEWS CARD (igual ao index) ── */
-.news-card{border-radius:14px;overflow:hidden;position:relative;height:380px;margin-top:1.5rem;cursor:pointer}
+.news-card{border-radius:14px;overflow:hidden;position:relative;height:560px;margin-top:1.5rem;cursor:pointer}
 .news-slide{display:none;position:absolute;inset:0}
 .news-slide.active{display:block}
 .news-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -110,7 +85,7 @@ body{background:var(--dark);color:var(--white);font-weight:400;line-height:1.6;p
 .news-dots{position:absolute;bottom:14px;right:16px;display:flex;gap:5px;z-index:10}
 .ndot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.25s}
 .ndot.active{background:var(--red);width:16px;border-radius:3px}
-@media(min-width:861px){.news-card{height:420px}}
+
 
 /* ── BUTTONS ── */
 .btn-red{background:var(--red);color:var(--white);font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 2rem;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
@@ -329,6 +304,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
   .sec{padding:56px 0}
   .hero{padding:3rem 0 2.5rem}
   .cat{height:420px}
+  .news-card{height:420px}
   .passos{grid-template-columns:1fr 1fr}
   .passo{border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
   .passo:nth-child(even){border-right:none}
@@ -341,6 +317,7 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 }
 @media(max-width:540px){
   .cat{height:360px}
+  .news-card{height:360px}
   .passos{grid-template-columns:1fr}
   .passo{border-right:none!important;border-bottom:1px solid var(--border)!important}
   .passo:last-child{border-bottom:none!important}
@@ -419,34 +396,6 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <div id="newsSlides"></div>
         <div class="news-dots" id="newsDots"></div>
       </div>
-    </div>
-    <!-- MOCKUP PORTAL -->
-    <div class="hero-visual-col">
-      <div class="pm-float pm-float-1" style="color:var(--green)"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Site publicado!</div>
-      <div class="portal-mockup reveal reveal-delay-2">
-        <div class="pm-notch"></div>
-        <div class="pm-screen">
-          <div class="pm-bar"></div>
-          <div class="pm-header">
-            <span class="pm-logo">PORTAL DO CLIENTE</span>
-            <span class="pm-badge">Online</span>
-          </div>
-          <div class="pm-section">Escolhe o teu template</div>
-          <div class="pm-tpl-grid">
-            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#1a0505,#3d0f0f)"><i class="fa-solid fa-utensils"></i></div></div>
-            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#050d1a,#0f1f3d)"><i class="fa-solid fa-shirt"></i></div></div>
-            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#200a1a,#3d0f2a)"><i class="fa-solid fa-scissors"></i></div></div>
-            <div class="pm-tpl"><div class="pm-tpl-preview" style="background:linear-gradient(135deg,#1a0a05,#3d1f0f)"><i class="fa-solid fa-burger"></i></div></div>
-          </div>
-          <div class="pm-section" style="margin-top:.2rem">O teu site</div>
-          <div style="margin:.2rem .7rem;background:var(--charcoal);border-radius:6px;padding:.5rem .6rem;font-size:.58rem;color:var(--gray-lt);display:flex;align-items:center;justify-content:space-between">
-            <span>meusite.impersilva.ao</span>
-            <span style="color:var(--green);font-size:.52rem;font-weight:700">● LIVE</span>
-          </div>
-          <div class="pm-btn">Publicar site <i class="fa-solid fa-rocket" style="font-size:.5rem"></i></div>
-        </div>
-      </div>
-      <div class="pm-float pm-float-2"><i class="fa-solid fa-arrow-trend-up" style="color:var(--green)"></i> +12 encomendas hoje</div>
     </div>
   </div>
 </section>
