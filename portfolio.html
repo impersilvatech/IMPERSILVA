@@ -1,575 +1,673 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-AO" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Portfólio — IMPERSILVA TECH</title>
-<meta name="description" content="Sites profissionais criados pela IMPERSILVA TECH para negócios angolanos. Veja os nossos trabalhos e resultados reais."/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="js/config.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Templates — IMPERSILVA TECH</title>
+<meta name="description" content="Catálogo de templates de sites e lojas online da IMPERSILVA TECH. Vê fotos, funcionalidades e tudo o que está incluído."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,800;0,900;1,700;1,800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="/config.js"></script>
 <style>
-/* ═══════════════════════════════════════
-   IMPERSILVA TECH — BASE STYLES
-   Shared across all tech/ pages
-═══════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{max-width:100%;overflow-x:hidden}
 :root{
-  --black:#0e0e0f;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2e2e33;
-  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,.12);
-  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,.12);
-  --green:#22c55e;--green-dim:rgba(34,197,94,.1);--green-lt:#4ade80;
-  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.1);
-  --white:#fff;--gray:#888896;--gray-lt:#c0c0cc;--divider:rgba(255,255,255,.07);
-  --radius:12px;--radius-lg:18px;
+  --black:#0e0e0e;--dark:#161618;--charcoal:#242428;--charcoal-lt:#2f2f34;
+  --red:#d62828;--red-lt:#e84040;--red-dim:rgba(214,40,40,0.12);
+  --blue:#1d4ed8;--blue-lt:#3b6ef0;--blue-dim:rgba(29,78,216,0.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.1);
+  --white:#ffffff;--gray:#888896;--gray-lt:#c0c0cc;
+  --divider:rgba(255,255,255,0.07);--border:rgba(255,255,255,0.07);
 }
 html{scroll-behavior:smooth}
-body{font-family:'Barlow',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;padding-top:68px}
+body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;font-weight:400;line-height:1.6;padding-top:68px}
 
-/* ── NAVBAR ── */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,15,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:all .3s}
-.navbar-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
-.logo-link{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1}
-.logo-main{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
-.logo-main .r{color:var(--red)}.logo-main .b{color:var(--blue-lt)}
-.logo-sub{font-size:.44rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
-.nav-links{display:flex;align-items:center;gap:2rem}
-.nav-links a{color:var(--gray);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;transition:color .2s;white-space:nowrap}
-.nav-links a:hover,.nav-links a.active{color:var(--white)}
-.nav-links a.active{border-bottom:1px solid var(--red);padding-bottom:2px}
-.nav-cta{background:var(--red)!important;color:#fff!important;padding:.45rem 1.1rem;border-radius:6px;font-weight:700!important;letter-spacing:.06em!important;transition:background .2s!important}
+/* ── NAV ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--divider);transition:border-color .3s}
+.navbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo-link{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-decoration:none;line-height:1}
+.logo-wordmark{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1}
+.logo-sub{font-size:.5rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gray);padding-left:1px}
+.nav-links{display:flex;align-items:center;gap:.1rem;list-style:none}
+.nav-links a{color:var(--gray-lt);text-decoration:none;font-size:.85rem;font-weight:400;padding:.5rem .9rem;border-radius:5px;transition:all .2s}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.05)}
+.nav-links a.active{color:var(--white)}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;font-weight:600!important;padding:.5rem 1.3rem!important;border-radius:5px!important;letter-spacing:.04em!important}
 .nav-cta:hover{background:var(--red-lt)!important}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.3rem}
-.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:1px;transition:all .3s}
-
-/* ── SECTION COMMONS ── */
-.eyebrow{display:flex;align-items:center;gap:.6rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
-.eyebrow::before{content:'';width:14px;height:2px;background:var(--red);border-radius:1px}
-.eyebrow::after{content:'';width:14px;height:2px;background:var(--blue-lt);border-radius:1px}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:.8rem}
-.sec-title .r{color:var(--red)}.sec-title .b{color:var(--blue-lt)}.sec-title .g{color:var(--green)}
-.sec-sub{font-size:.95rem;font-weight:300;color:var(--gray-lt);line-height:1.75;max-width:640px}
-.container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
-section{padding:5rem 1.5rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all .3s}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:860px){.hamburger{display:flex}.nav-links{display:none!important}}
 
 /* ── BUTTONS ── */
-.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s}
-.btn-primary:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.35)}
-.btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);padding:.85rem 1.8rem;border-radius:8px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .25s}
-.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.06)}
-.btn-blue{background:var(--blue)!important}.btn-blue:hover{background:var(--blue-lt)!important}
-.btn-green{background:var(--green)!important}.btn-green:hover{background:var(--green-lt)!important}
-.btn-sm{padding:.55rem 1.1rem!important;font-size:.78rem!important}
+.btn-red{background:var(--red);color:var(--white);font-size:.85rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:.8rem 1.8rem;border:none;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
+.btn-red:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(214,40,40,.3)}
+.btn-blue{background:var(--blue);color:var(--white);font-size:.85rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:.8rem 1.8rem;border:none;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
+.btn-blue:hover{background:var(--blue-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.35)}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--white);font-size:.82rem;font-weight:500;letter-spacing:.04em;padding:.7rem 1.4rem;border:1.5px solid rgba(255,255,255,.16);border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .2s}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
 
-/* ── CARDS ── */
-.card{background:var(--charcoal);border:1px solid var(--divider);border-radius:var(--radius);transition:all .3s}
-.card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
-.card-pad{padding:1.5rem}
+/* ── PAGE HEAD ── */
+.page-head{padding:3.2rem 0 1.8rem}
+.page-inner{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+.p-tag{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.p-tag::before{content:'';width:18px;height:1.5px;background:var(--red);flex-shrink:0}
+.p-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.4rem);line-height:1;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:14px}
+.p-title .r{color:var(--red)}
+.p-title .b{color:var(--blue-lt)}
+.p-sub{font-size:.92rem;color:var(--gray);font-weight:300;max-width:560px;line-height:1.7}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;color:var(--gray-lt);text-decoration:none;margin-bottom:18px;transition:.2s}
+.back-link:hover{color:var(--red)}
 
-/* ── BADGE ── */
-.badge{display:inline-flex;align-items:center;gap:.4rem;border-radius:50px;padding:.3rem .8rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.badge-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
-.badge-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
-.badge-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
-.badge-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+/* ── FILTROS ── */
+.tpl-filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.6rem}
+.tpl-filter{font-size:.74rem;font-weight:600;letter-spacing:.05em;padding:7px 15px;border-radius:20px;border:1px solid var(--border);background:var(--charcoal);color:var(--gray-lt);cursor:pointer;transition:.2s}
+.tpl-filter:hover{border-color:rgba(255,255,255,.25);color:var(--white)}
+.tpl-filter.active{background:var(--red);border-color:var(--red);color:#fff}
 
-/* ── STATS ── */
-.stats-bar{background:var(--charcoal);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:2.5rem 1.5rem}
-.stats-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
-.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:.3rem}
-.stat-lbl{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+/* ── CATÁLOGO GRID ── */
+.cat-sec{padding:1rem 0 5rem}
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.tpl-card{background:var(--charcoal);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s;display:flex;flex-direction:column}
+.tpl-card:hover{transform:translateY(-5px);border-color:rgba(214,40,40,.3);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.tpl-card.hidden{display:none}
+.browser-mock{height:170px;position:relative;background:var(--charcoal-lt);overflow:hidden}
+.browser-bar{height:22px;background:#e8e8ea;display:flex;align-items:center;padding:0 8px;gap:4px}
+.bdot{width:6px;height:6px;border-radius:50%}
+.browser-screen{height:calc(100% - 22px);position:relative;overflow:hidden}
+.browser-screen img{width:100%;height:100%;object-fit:cover;object-position:top}
+.bs-hero{height:60%;display:flex;align-items:center;justify-content:center;position:relative}
+.bs-hero i{font-size:1.8rem;color:rgba(255,255,255,.22)}
+.bs-lines{padding:8px 10px;display:flex;flex-direction:column;gap:5px}
+.bs-line{height:4px;border-radius:2px;background:rgba(0,0,0,.08)}
+.bs-line.s{width:55%}
+.tpl-badge{position:absolute;top:8px;right:8px;font-size:.55rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:3px 8px;border-radius:3px;z-index:2}
+.b-new{background:var(--red);color:#fff}
+.b-pop{background:var(--green);color:#000}
+.tpl-card-body{padding:16px;flex:1;display:flex;flex-direction:column}
+.tpl-cat-label{font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.tpl-card-nome{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.03em;margin-bottom:5px}
+.tpl-card-desc{font-size:.78rem;color:var(--gray);line-height:1.55;font-weight:300;margin-bottom:10px;flex:1}
+.tpl-card-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tpl-card-tag{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--gray-lt);font-size:.58rem;padding:2px 7px;border-radius:3px;font-weight:500}
+.tpl-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray)}
+.spinner{width:30px;height:30px;border:3px solid var(--divider);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── WPP FLOAT ── */
-.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);animation:wpp-pulse 3s ease-in-out infinite}
-.wpp-float:hover{transform:scale(1.12)}
-@keyframes wpp-pulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+/* ── DETALHE ── */
+.det-sec{padding:0 0 5rem}
+.det-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start;margin-bottom:50px}
+/* Galeria */
+.gal-browser{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--charcoal-lt);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.gal-bar{height:32px;background:#e8e8ea;display:flex;align-items:center;padding:0 12px;gap:6px}
+.gal-bar-dot{width:9px;height:9px;border-radius:50%}
+.gal-bar-url{flex:1;margin-left:10px;background:#fff;border-radius:5px;padding:3px 10px;font-size:.68rem;color:#555;font-family:'Barlow',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gal-screen{position:relative;aspect-ratio:16/10;background:#fff;overflow:hidden}
+.gal-screen img{width:100%;height:100%;object-fit:cover;object-position:top}
+.gal-screen-fallback{width:100%;height:100%;display:flex;flex-direction:column}
+.gsf-hero{flex:0 0 55%;display:flex;align-items:center;justify-content:center;position:relative}
+.gsf-hero i{font-size:3rem;color:rgba(255,255,255,.25)}
+.gsf-body{flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:8px}
+.gsf-line{height:7px;border-radius:3px;background:rgba(0,0,0,.07)}
+.gsf-line.w60{width:60%}
+.gsf-line.w40{width:40%}
+.gal-thumbs{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
+.gal-thumb{flex-shrink:0;width:72px;height:48px;border-radius:6px;overflow:hidden;border:2px solid var(--border);cursor:pointer;opacity:.6;transition:.2s;background:var(--charcoal-lt);display:flex;align-items:center;justify-content:center}
+.gal-thumb img{width:100%;height:100%;object-fit:cover}
+.gal-thumb i{font-size:.85rem;color:var(--gray)}
+.gal-thumb:hover{opacity:.9}
+.gal-thumb.active{border-color:var(--red);opacity:1}
+.gal-thumb-label{font-size:.6rem;color:var(--gray);text-align:center;margin-top:3px}
+/* Info */
+.det-badges{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.det-badge{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 11px;border-radius:4px}
+.det-cat{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.25)}
+.det-new{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.25)}
+.det-pop{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.det-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.01em;margin-bottom:14px;line-height:1.05}
+.det-desc{font-size:.92rem;color:var(--gray-lt);line-height:1.8;font-weight:300;margin-bottom:24px}
+.det-cta-box{background:var(--charcoal);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:24px}
+.det-cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.det-cta-note{font-size:.74rem;color:var(--gray);margin-top:12px;display:flex;align-items:center;gap:6px}
+.det-cta-note i{color:var(--green)}
+.det-mini-stats{display:flex;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.dms{text-align:center}
+.dms-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;color:var(--red);line-height:1}
+.dms-l{font-size:.62rem;color:var(--gray);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
 
-/* ── DRAWER (mobile) ── */
-.mm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:8000}
-.mm-overlay.active{display:block}
-.mm-drawer{position:fixed;top:0;right:0;width:80%;max-width:320px;height:100%;background:var(--black);border-left:1px solid rgba(255,255,255,.08);z-index:8001;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
-.mm-drawer.active{transform:translateX(0)}
-.mm-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
-.mm-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white)}
-.mm-close{background:rgba(255,255,255,.08);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
-.mm-body{flex:1;overflow-y:auto;padding:.5rem 0 2rem}
-.mm-section-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);padding:.9rem 1.2rem .4rem}
-.mm-nav a{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;padding:.8rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04);transition:all .15s}
-.mm-nav a i{width:18px;text-align:center;font-size:.85rem;flex-shrink:0}
-.mm-nav a span.mm-badge{margin-left:auto;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3);padding:.15rem .5rem;border-radius:50px}
-.mm-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
-.mm-nav a.mm-active{color:#fff;background:rgba(255,255,255,.05)}
-.mm-divider{height:1px;background:rgba(255,255,255,.06);margin:.5rem 1.2rem}
-.mm-cta{margin:1rem 1.2rem 0}
+/* ── INCLUÍDO / FUNCIONALIDADES ── */
+.det-block{margin-bottom:44px}
+.det-block-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.3rem;text-transform:uppercase;letter-spacing:.03em;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.det-block-title i{color:var(--red);font-size:1rem}
+.incl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.incl-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--gray-lt);font-weight:300;background:var(--charcoal);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.incl-item i{color:var(--green);margin-top:2px;flex-shrink:0}
+.func-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.func-item{background:var(--charcoal);border:1px solid var(--border);border-radius:10px;padding:18px 14px;text-align:center;transition:.2s}
+.func-item:hover{border-color:rgba(214,40,40,.25);transform:translateY(-2px)}
+.func-icon{width:38px;height:38px;border-radius:9px;background:var(--red-dim);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:.95rem;margin:0 auto 10px}
+.func-label{font-size:.72rem;font-weight:600;color:var(--gray-lt)}
 
-/* ── FOOTER ── */
-footer{background:var(--black);border-top:1px solid var(--divider);padding:3rem 1.5rem 2rem}
-.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
-.footer-brand .logo-main{font-size:1.3rem}
-.footer-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.7;margin-top:.7rem;max-width:280px}
-.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.9rem}
-.footer-col a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;font-weight:300;margin-bottom:.5rem;transition:color .2s}
-.footer-col a:hover{color:var(--white)}
-.footer-bottom{max-width:1280px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.72rem;color:var(--gray)}
-.footer-bottom a{color:var(--gray);text-decoration:none}
-.footer-bottom a:hover{color:var(--white)}
+/* ── EXEMPLOS REAIS ── */
+.exemplos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.exemplo-card{display:flex;align-items:center;gap:12px;background:var(--charcoal);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:var(--white);transition:.2s}
+.exemplo-card:hover{border-color:rgba(34,197,94,.3);transform:translateY(-2px)}
+.exemplo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;animation:livePulse 1.5s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}
+.exemplo-nome{font-size:.84rem;font-weight:600}
+.exemplo-url{font-size:.68rem;color:var(--gray);margin-top:2px}
+
+/* ── RELACIONADOS ── */
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* ── CTA FINAL ── */
+.cta-final{text-align:center;padding:44px 28px;background:linear-gradient(135deg,var(--red-dim),var(--blue-dim));border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.cta-final h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);text-transform:uppercase;margin-bottom:10px}
+.cta-final p{color:var(--gray-lt);font-size:.88rem;font-weight:300;margin-bottom:22px;max-width:460px;margin-left:auto;margin-right:auto}
+.cta-final-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER / WPP / DRAWER (padrão) ── */
+footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 0 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.footer-divider{height:1px;background:var(--divider);margin:2.5rem 0 1.5rem}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.73rem;color:rgba(255,255,255,.2);flex-wrap:wrap;gap:.5rem}
+.footer-bottom a{color:var(--red);text-decoration:none}
+.wpp-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.38);transition:.25s;animation:wppPulse 3s ease-in-out infinite}
+.wpp-float:hover{transform:scale(1.1)}
+@keyframes wppPulse{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.38)}50%{box-shadow:0 6px 30px rgba(37,211,102,.6),0 0 0 8px rgba(37,211,102,.07)}}
+#mmOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:998;backdrop-filter:blur(3px)}
+#mmOverlay.active{display:block}
+#mmDrawer{position:fixed;top:0;right:0;width:72%;max-width:280px;max-height:100dvh;background:var(--black);z-index:999;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;border-bottom-left-radius:16px;overflow:hidden}
+#mmDrawer.active{transform:translateX(0)}
+.mmDrawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);flex-shrink:0}
+.mmDrawer-head .mm-title{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.mmDrawer-head .mm-close{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);font-size:.9rem;cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mmDrawer-head .mm-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+#mmDrawer nav{display:flex;flex-direction:column;padding:14px 0 6px;overflow-y:auto}
+#mmDrawer nav a{text-decoration:none;font-size:.92rem;font-weight:600;padding:11px 18px;margin:6px 14px;border-radius:6px;transition:all .15s;display:flex;align-items:center;gap:8px;color:#fff;background:var(--charcoal)}
+#mmDrawer nav a:hover{background:var(--charcoal-lt);padding-left:24px}
 
 /* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:none}
-.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
-
-/* ── PAGE HERO ── */
-.page-hero{background:var(--black);padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
-.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
-.page-hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(214,40,40,.12) 0%,transparent 70%)}
-.page-hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
-.breadcrumb{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.7rem;color:var(--gray);margin-bottom:1.2rem}
-.breadcrumb a{color:var(--gray);text-decoration:none;transition:color .2s}
-.breadcrumb a:hover{color:var(--white)}
-.breadcrumb-sep{opacity:.4}
+.reveal{opacity:1;transform:none}
+.js-ready .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.js-ready .reveal.visible{opacity:1;transform:none}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
-  .footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
-  .footer-brand{grid-column:1/-1}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .det-grid{grid-template-columns:1fr;gap:28px}
+  .rel-grid{grid-template-columns:1fr 1fr}
 }
-@media(max-width:640px){
-  section{padding:3.5rem 1rem}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .footer-inner{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
-  .stat-val{font-size:2rem}
+@media(max-width:600px){
+  .page-head{padding:2.2rem 0 1.2rem}
+  .cat-sec{padding:.5rem 0 3.5rem}
+  .tpl-grid{grid-template-columns:1fr 1fr}
+  .rel-grid{grid-template-columns:1fr}
+  .det-mini-stats{gap:14px}
+  .incl-grid{grid-template-columns:1fr}
 }
-
-/* ── PORTFOLIO PAGE ── */
-.port-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.port-filter{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--gray);font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.45rem .9rem;border-radius:50px;cursor:pointer;transition:all .2s;border-style:solid}
-.port-filter.active,.port-filter:hover{background:var(--red-dim);border-color:rgba(214,40,40,.4);color:var(--white)}
-.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-.port-card{background:var(--charcoal);border:1px solid var(--divider);border-radius:14px;overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
-.port-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.15);box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.port-card.hidden{display:none}
-.port-card-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--charcoal-lt);cursor:pointer}
-.port-card-img .port-thumb{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(255,255,255,.1)}
-.port-card:hover .port-card-img .port-thumb{transform:scale(1.05)}
-.port-stripe{position:absolute;bottom:0;left:0;right:0;height:3px;display:flex}
-.port-stripe span:first-child{flex:1;background:var(--red)}
-.port-stripe span:last-child{flex:1;background:var(--blue-lt)}
-.port-overlay{position:absolute;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
-.port-card:hover .port-overlay{opacity:1}
-.port-overlay-btn{display:flex;align-items:center;gap:.5rem;background:var(--white);color:var(--black);padding:.6rem 1.2rem;border-radius:8px;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s}
-.port-overlay-btn:hover{transform:scale(1.04)}
-.port-card-body{padding:1.3rem;flex:1;display:flex;flex-direction:column}
-.port-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .55rem;border-radius:50px;margin-bottom:.6rem}
-.port-tag.t-blue{background:var(--blue-dim);color:var(--blue-lt);border:1px solid rgba(29,78,216,.3)}
-.port-tag.t-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,40,40,.3)}
-.port-tag.t-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
-.port-tag.t-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
-.port-name{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.35rem}
-.port-desc{font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.55;flex:1;margin-bottom:.8rem}
-.port-result{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--green);font-weight:600;margin-bottom:.8rem}
-.port-result i{font-size:.62rem}
-.port-footer{display:flex;gap:.5rem;padding-top:.7rem;border-top:1px solid var(--divider);flex-wrap:wrap}
-.port-btn{display:inline-flex;align-items:center;gap:.35rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .8rem;border-radius:6px;text-decoration:none;transition:all .2s;cursor:pointer;border:none}
-.port-btn-primary{background:var(--red);color:#fff}
-.port-btn-primary:hover{background:var(--red-lt)}
-.port-btn-secondary{background:rgba(255,255,255,.07);color:var(--gray-lt);border:1px solid var(--divider)!important;border-style:solid!important}
-.port-btn-secondary:hover{color:var(--white);border-color:rgba(255,255,255,.2)!important}
-/* Lightbox */
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;display:none;align-items:center;justify-content:center;padding:1.5rem}
-.lightbox.active{display:flex}
-.lb-inner{max-width:900px;width:100%;position:relative}
-.lb-close{position:absolute;top:-3rem;right:0;background:rgba(255,255,255,.1);border:none;color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
-.lb-img-wrap{aspect-ratio:16/9;background:var(--charcoal);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,.1)}
-.lb-img-wrap img{width:100%;height:100%;object-fit:cover}
-.lb-info{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;flex-wrap:wrap;gap:.8rem}
-.lb-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
-.lb-nav{display:flex;gap:.5rem}
-.lb-nav button{background:rgba(255,255,255,.08);border:1px solid var(--divider);color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s}
-.lb-nav button:hover{background:rgba(255,255,255,.15)}
-/* Stats row */
-.port-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem;padding:1.5rem;background:var(--charcoal);border:1px solid var(--divider);border-radius:14px}
-.port-stat{text-align:center}
-.port-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;line-height:1}
-.port-stat-lbl{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-top:.3rem}
-/* Testimonial cards */
-.port-depo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:4rem}
-.port-depo{background:var(--charcoal);border:1px solid var(--divider);border-radius:12px;padding:1.5rem}
-.port-depo-text{font-size:.84rem;color:var(--gray-lt);font-weight:300;line-height:1.75;margin-bottom:1rem;font-style:italic}
-.port-depo-text::before{content:'"';font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:900;color:var(--red);line-height:0;vertical-align:-.4em;margin-right:.15rem}
-.port-depo-author{display:flex;align-items:center;gap:.7rem}
-.port-depo-av{width:34px;height:34px;border-radius:50%;background:var(--charcoal-lt);border:1px solid var(--divider);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:900;flex-shrink:0}
-.port-depo-name{font-size:.82rem;font-weight:600}
-.port-depo-role{font-size:.68rem;color:var(--gray);font-weight:300}
-.port-depo-badge{display:inline-flex;align-items:center;gap:.35rem;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);border-radius:50px;padding:.25rem .6rem;font-size:.62rem;font-weight:700;color:var(--green);margin-top:.6rem}
-@media(max-width:900px){
-  .port-grid{grid-template-columns:repeat(2,1fr)}
-  .port-depo-grid{grid-template-columns:1fr 1fr}
-  .port-stats{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:640px){
-  .port-grid{grid-template-columns:1fr}
-  .port-depo-grid{grid-template-columns:1fr}
-  .port-stats{grid-template-columns:repeat(2,1fr);gap:.7rem;padding:1rem}
-}
+@media(max-width:420px){.tpl-grid{grid-template-columns:1fr}}
 </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
+
+<!-- NAV -->
 <nav class="navbar">
   <div class="navbar-inner">
-    <a class="logo-link" href="index.html">
-      <span class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> <span style="color:var(--blue-lt);font-size:1rem">|</span> TECH</span>
-      <span class="logo-sub">Customização Digital</span>
+    <a class="logo-link" href="/index.html">
+      <div class="logo-wordmark">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">Λ</span></div>
+      <span class="logo-sub">Holding SGPS</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html">Início</a>
-      <a href="servicos.html">Serviços</a>
-      <a href="portfolio.html" class="active">Portfólio</a>
-      <a href="como-funciona.html">Como Funciona</a>
-      <a href="precos.html">Preços</a>
-      <a href="orcamento.html" class="nav-cta">Orçamento</a>
-      
-    </div>
-    <button class="hamburger" id="hamburger" onclick="openDrawer()">
+    <ul class="nav-links">
+      <li><a href="/index.html">Início</a></li>
+      <li><a href="/sobre.html">Sobre</a></li>
+      <li><a href="/tech.html">Tech</a></li>
+      <li><a href="/consultoria.html">Consultoria</a></li>
+      <li><a href="/portfolio.html" class="active">Portfólio</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+      <li><a href="/verificar-site.html"><i class="fa-solid fa-user" style="font-size:.75rem;opacity:.7"></i> Portal</a></li>
+      <li><a href="/orcamento.html" class="nav-cta">Orçamento</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleDrawer()">
       <span></span><span></span><span></span>
     </button>
   </div>
-</nav><div class="mm-overlay" id="mmOverlay" onclick="closeDrawer()"></div>
-<div class="mm-drawer" id="mmDrawer">
-  <div class="mm-head">
-    <span class="mm-logo">IMPERSIL<span style="color:var(--red)">V</span><span style="color:var(--blue-lt)">&#923;</span> TECH</span>
-    <button class="mm-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-  <div class="mm-body">
-    <div class="mm-section-label">Navegação</div>
-    <nav class="mm-nav">
-      <a href="index.html"><i class="fa-solid fa-house"></i> Início</a>
-      <a href="servicos.html"><i class="fa-solid fa-layer-group"></i> Serviços <span class="mm-badge">9 tipos</span></a>
-      <a href="portfolio.html"><i class="fa-solid fa-briefcase"></i> Portfólio</a>
-      <a href="como-funciona.html"><i class="fa-solid fa-route"></i> Como Funciona</a>
-      <a href="precos.html"><i class="fa-solid fa-tag"></i> Preços</a>
-      <a href="orcamento.html"><i class="fa-solid fa-file-invoice"></i> Orçamento</a>
-    </nav>
-    <div class="mm-divider"></div>
-    <div class="mm-section-label">Tipos de Sites</div>
-    <nav class="mm-nav">
-      <a href="servicos.html#roupa"><i class="fa-solid fa-shirt" style="color:var(--red)"></i> Lojas de Roupa & Sapatos</a>
-      <a href="servicos.html#celulares"><i class="fa-solid fa-mobile-screen" style="color:var(--blue-lt)"></i> Celulares & Acessórios</a>
-      <a href="servicos.html#restaurante"><i class="fa-solid fa-utensils" style="color:var(--green)"></i> Restaurante & Delivery</a>
-      <a href="servicos.html#fastfood"><i class="fa-solid fa-burger" style="color:var(--amber)"></i> Hamburgueria & Fast Food</a>
-      <a href="servicos.html#bolos"><i class="fa-solid fa-cake-candles" style="color:var(--blue-lt)"></i> Padaria & Bolos</a>
-      <a href="servicos.html#eventos"><i class="fa-solid fa-ticket" style="color:var(--green)"></i> Eventos & Bilhetes</a>
-      <a href="servicos.html#salao"><i class="fa-solid fa-scissors" style="color:var(--red)"></i> Salão de Beleza</a>
-      <a href="servicos.html#livros"><i class="fa-solid fa-book-open" style="color:var(--blue-lt)"></i> Livros & Produtos</a>
-      <a href="servicos.html#escritorio"><i class="fa-solid fa-briefcase" style="color:var(--amber)"></i> Escritório & Serviços</a>
-    </nav>
-    <div class="mm-divider"></div>
-    <div class="mm-cta">
-      <a href="orcamento.html" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none" onclick="closeDrawer()">
-        <i class="fa-solid fa-file-invoice"></i> Pedir Orçamento
-      </a>
+</nav>
+
+<!-- ══════════ VISTA: CATÁLOGO ══════════ -->
+<div id="catalogView">
+  <section class="page-head">
+    <div class="page-inner">
+      <div class="p-tag reveal">Biblioteca de templates</div>
+      <h1 class="p-title reveal reveal-delay-1" id="catTitle">Escolhe o teu<br><span class="r">tem</span><span class="b">plate</span></h1>
+      <p class="p-sub reveal reveal-delay-2" id="catSub">Cada template já vem com tudo o que o teu negócio precisa. Escolhe, personaliza e publica.</p>
+      <div class="tpl-filters reveal reveal-delay-2" id="tplFilters">
+        <button class="tpl-filter active" onclick="filterTpl('todos',this)">Todos</button>
+        <button class="tpl-filter" onclick="filterTpl('loja',this)">Lojas</button>
+        <button class="tpl-filter" onclick="filterTpl('restaurante',this)">Restaurantes</button>
+        <button class="tpl-filter" onclick="filterTpl('servicos',this)">Serviços</button>
+        <button class="tpl-filter" onclick="filterTpl('institucional',this)">Institucional</button>
+      </div>
     </div>
-  </div>
-</div><a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA%20TECH!%20Vi%20o%20site%20e%20quero%20saber%20mais." target="_blank" class="wpp-float" title="WhatsApp">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
-</a>
-<div class="page-hero">
-  <div class="page-hero-grid"></div>
-  <div class="page-hero-glow"></div>
-  <div class="page-hero-inner">
-    <div class="breadcrumb"><a href="index.html">Início</a><span class="breadcrumb-sep">/</span><span>Portfólio</span></div>
-    <div class="eyebrow reveal" style="justify-content:center">Resultados reais</div>
-    <h1 class="sec-title reveal rd1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Sites que <span class="r">já criámos</span></h1>
-    <p class="sec-sub reveal rd2" style="margin:0 auto;text-align:center">Cada site é único e construído à medida do negócio. Veja os resultados reais que os nossos clientes alcançaram.</p>
-  </div>
+  </section>
+  <section class="cat-sec">
+    <div class="page-inner">
+      <div class="tpl-grid reveal reveal-delay-2" id="tplGrid">
+        <div class="tpl-empty"><div class="spinner"></div> A carregar templates...</div>
+      </div>
+    </div>
+  </section>
 </div>
 
-<section style="background:var(--black)">
-  <div class="container">
-
-    <!-- Stats -->
-    <div class="port-stats reveal">
-      <div class="port-stat"><div class="port-stat-val" style="color:var(--red)" data-target="47" data-suffix="+">0</div><div class="port-stat-lbl">Sites entregues</div></div>
-      <div class="port-stat"><div class="port-stat-val" style="color:var(--blue-lt)" data-target="9">0</div><div class="port-stat-lbl">Sectores cobertos</div></div>
-      <div class="port-stat"><div class="port-stat-val" style="color:var(--green)" data-target="100" data-suffix="%">0</div><div class="port-stat-lbl">Clientes satisfeitos</div></div>
-      <div class="port-stat"><div class="port-stat-val" style="color:var(--amber)" data-target="7" data-suffix=" dias">0</div><div class="port-stat-lbl">Prazo médio</div></div>
+<!-- ══════════ VISTA: DETALHE ══════════ -->
+<div id="detailView" style="display:none">
+  <section class="page-head" style="padding-bottom:0">
+    <div class="page-inner">
+      <a href="#" class="back-link reveal" onclick="backToCatalog(event)"><i class="fa-solid fa-arrow-left"></i> Voltar aos templates</a>
     </div>
+  </section>
+  <section class="det-sec">
+    <div class="page-inner">
 
-    <!-- Filters -->
-    <div class="port-filters reveal">
-      <button class="port-filter active" onclick="filterPort('all',this)">Todos</button>
-      <button class="port-filter" onclick="filterPort('loja',this)"><i class="fa-solid fa-shirt"></i> Lojas</button>
-      <button class="port-filter" onclick="filterPort('food',this)"><i class="fa-solid fa-utensils"></i> Alimentação</button>
-      <button class="port-filter" onclick="filterPort('eventos',this)"><i class="fa-solid fa-ticket"></i> Eventos</button>
-      <button class="port-filter" onclick="filterPort('servicos',this)"><i class="fa-solid fa-briefcase"></i> Serviços</button>
-    </div>
-
-    <!-- Grid -->
-    <div class="port-grid" id="portGrid">
-      <!-- Os cards são carregados dinamicamente a partir do Cloudflare Worker -->
-      <div id="portLoading" style="grid-column:1/-1;text-align:center;padding:4rem 0;color:var(--gray)">
-        <div style="width:32px;height:32px;border:3px solid var(--divider);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem"></div>
-        A carregar portfólio...
-      </div>
-    </div><!-- end port-grid -->
-
-    <!-- Testimonials -->
-    <div style="margin-top:5rem">
-      <div class="eyebrow reveal">Depoimentos</div>
-      <h2 class="sec-title reveal rd1">O que dizem os <span class="b">nossos clientes</span></h2>
-      <div class="port-depo-grid">
-        <div class="port-depo reveal">
-          <p class="port-depo-text">O site que a IMPERSILVA TECH criou para a minha loja de roupa mudou tudo. No primeiro mês recebi mais de 200 encomendas só pelo site. Nunca imaginei que ia ser tão fácil vender online.</p>
-          <div class="port-depo-author">
-            <div class="port-depo-av" style="color:var(--red)">A</div>
-            <div>
-              <div class="port-depo-name">Ana Rodrigues</div>
-              <div class="port-depo-role">Loja de Moda — Huambo</div>
-              <div class="port-depo-badge"><i class="fa-solid fa-arrow-trend-up"></i> +200 encomendas/mês</div>
+      <div class="det-grid">
+        <!-- GALERIA -->
+        <div class="reveal">
+          <div class="gal-browser">
+            <div class="gal-bar">
+              <span class="gal-bar-dot" style="background:#ff5f57"></span>
+              <span class="gal-bar-dot" style="background:#febc2e"></span>
+              <span class="gal-bar-dot" style="background:#28c840"></span>
+              <div class="gal-bar-url" id="galUrl">nome.impersilva.ao</div>
             </div>
+            <div class="gal-screen" id="galScreen"></div>
           </div>
+          <div class="gal-thumbs" id="galThumbs"></div>
         </div>
-        <div class="port-depo reveal rd1">
-          <p class="port-depo-text">Antes tinha a loja física e mal chegava a 50 clientes por semana. Com o site, os pedidos de delivery triplicaram. O pessoal foi super profissional e rápido.</p>
-          <div class="port-depo-author">
-            <div class="port-depo-av" style="color:var(--blue-lt)">M</div>
-            <div>
-              <div class="port-depo-name">Manuel Costa</div>
-              <div class="port-depo-role">Restaurante — Huambo</div>
-              <div class="port-depo-badge"><i class="fa-solid fa-arrow-trend-up"></i> Pedidos triplicados</div>
+
+        <!-- INFO -->
+        <div class="reveal reveal-delay-1">
+          <div class="det-badges" id="detBadges"></div>
+          <h1 class="det-nome" id="detNome">—</h1>
+          <p class="det-desc" id="detDesc">—</p>
+          <div class="det-mini-stats" id="detStats"></div>
+          <div class="det-cta-box">
+            <div class="det-cta-row">
+              <a href="/orcamento.html" class="btn-red" id="detCtaBtn"><i class="fa-solid fa-rocket"></i> Quero este template</a>
+              <a href="/verificar-site.html" class="btn-ghost"><i class="fa-solid fa-user"></i> Criar conta e publicar</a>
             </div>
-          </div>
-        </div>
-        <div class="port-depo reveal rd2">
-          <p class="port-depo-text">Para o meu salão, o agendamento online foi um game changer. Já não perco clientes por não atender o telemóvel. Elas marcam directamente pelo site a qualquer hora.</p>
-          <div class="port-depo-author">
-            <div class="port-depo-av" style="color:var(--green)">J</div>
-            <div>
-              <div class="port-depo-name">Joana Ferreira</div>
-              <div class="port-depo-role">Salão de Beleza — Huambo</div>
-              <div class="port-depo-badge"><i class="fa-solid fa-arrow-trend-up"></i> Agenda sempre cheia</div>
-            </div>
+            <div class="det-cta-note"><i class="fa-solid fa-circle-check"></i> Site no ar em menos de 7 dias</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- CTA -->
-    <div style="text-align:center;margin-top:4rem;padding:3rem;background:linear-gradient(135deg,var(--red-dim),var(--blue-dim));border:1px solid rgba(255,255,255,.08);border-radius:18px" class="reveal">
-      <h2 class="sec-title" style="margin-bottom:.6rem">Quer um site <span class="r">assim</span>?</h2>
-      <p style="color:var(--gray-lt);font-size:.9rem;font-weight:300;margin-bottom:1.8rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7">Pede um orçamento gratuito e terás o teu site pronto em 3 a 7 dias.</p>
-      <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
-        <a href="orcamento.html" class="btn-primary"><i class="fa-solid fa-file-invoice"></i> Pedir orçamento gratuito</a>
-        <a href="servicos.html" class="btn-outline"><i class="fa-solid fa-layer-group"></i> Ver serviços</a>
+      <!-- O QUE ESTÁ INCLUÍDO -->
+      <div class="det-block reveal">
+        <div class="det-block-title"><i class="fa-solid fa-box-open"></i> O que está incluído</div>
+        <div class="incl-grid" id="inclGrid"></div>
       </div>
-    </div>
 
-  </div>
-</section>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
-  <div class="lb-inner">
-    <button class="lb-close" onclick="closeLb()"><i class="fa-solid fa-xmark"></i></button>
-    <div class="lb-img-wrap" id="lbImg"><i class="fa-solid fa-image"></i></div>
-    <div class="lb-info">
-      <div>
-        <div class="lb-title" id="lbTitle">—</div>
-        <div style="font-size:.78rem;color:var(--gray);font-weight:300;margin-top:.3rem" id="lbDesc">—</div>
+      <!-- FUNCIONALIDADES -->
+      <div class="det-block reveal">
+        <div class="det-block-title"><i class="fa-solid fa-puzzle-piece"></i> Funcionalidades</div>
+        <div class="func-grid" id="funcGrid"></div>
       </div>
-      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap">
-        <a id="lbLink" href="orcamento.html" class="btn-primary btn-sm"><i class="fa-solid fa-copy"></i> Quero igual</a>
-        <div class="lb-nav">
-          <button onclick="lbNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-          <button onclick="lbNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <!-- EXEMPLOS REAIS -->
+      <div class="det-block reveal" id="exemplosBlock" style="display:none">
+        <div class="det-block-title"><i class="fa-solid fa-globe"></i> Sites reais com este template</div>
+        <div class="exemplos-grid" id="exemplosGrid"></div>
+      </div>
+
+      <!-- RELACIONADOS -->
+      <div class="det-block reveal" id="relBlock">
+        <div class="det-block-title"><i class="fa-solid fa-layer-group"></i> Outros templates que podem interessar</div>
+        <div class="rel-grid" id="relGrid"></div>
+      </div>
+
+      <!-- CTA FINAL -->
+      <div class="cta-final reveal">
+        <h3>Gostas deste <span style="color:var(--red)">template?</span></h3>
+        <p>Personaliza as cores, o logo e o conteúdo. O teu site fica pronto em menos de 7 dias.</p>
+        <div class="cta-final-btns">
+          <a href="/orcamento.html" class="btn-red" id="detCtaBtn2"><i class="fa-solid fa-rocket"></i> Pedir este template</a>
+          <a href="/tech.html" class="btn-ghost">Ver mais templates</a>
         </div>
       </div>
+
     </div>
-  </div>
+  </section>
 </div>
+
+<!-- FOOTER -->
 <footer>
-  <div class="footer-inner container">
-    <div class="footer-brand">
-      <div class="logo-main">IMPERSIL<span class="r">V</span><span class="b">&#923;</span> TECH</div>
-      <p class="footer-desc">Criamos sites profissionais para negócios angolanos. Lojas online, restaurantes, delivery, eventos e muito mais. Rápidos, modernos e acessíveis.</p>
+  <div class="footer-inner">
+    <div style="font-size:.55rem;letter-spacing:.25em;color:var(--gray);text-transform:uppercase;margin-bottom:.4rem">Holding SGPS</div>
+    <div style="font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin-bottom:1.2rem">Entre nós, <span style="color:var(--red)">fluem</span> <span style="color:var(--blue-lt)">oportunidades</span></div>
+    <div style="display:flex;gap:.7rem;margin-bottom:0">
+      <a href="https://www.facebook.com/impersilva" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#1877f2';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/impersilva" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#e1306c';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/company/impersilva" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#0a66c2';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://wa.me/244954288128" target="_blank" style="width:36px;height:36px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray-lt);font-size:.9rem;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#25d366';this.style.color='#fff'" onmouseout="this.style.background='var(--charcoal)';this.style.color='var(--gray-lt)'"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
-    <div class="footer-col">
-      <h4>Serviços</h4>
-      <a href="servicos.html#roupa">Lojas de Roupa</a>
-      <a href="servicos.html#restaurante">Restaurantes</a>
-      <a href="servicos.html#fastfood">Hamburguerias</a>
-      <a href="servicos.html#eventos">Eventos</a>
-      <a href="servicos.html#escritorio">Escritórios</a>
-    </div>
-    <div class="footer-col">
-      <h4>Empresa</h4>
-      <a href="portfolio.html">Portfólio</a>
-      <a href="como-funciona.html">Como Funciona</a>
-      <a href="precos.html">Preços</a>
-      <a href="orcamento.html">Orçamento</a>
-      <a href="../index.html">IMPERSILVA Holding</a>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© <span id="yr"></span> IMPERSILVA HOLDING SGPS. Todos os direitos reservados.</span>
+      <span>Desenvolvido por <a href="/tech.html">IMPERSILVA TECH</a></span>
     </div>
   </div>
-  <div class="footer-bottom container">
-    <span>© <span class="yr"></span> IMPERSILVA TECH — Customização Digital · Huambo, Angola</span>
-    <a href="https://wa.me/244954288128" target="_blank">+244 954 288 128</a>
+</footer>
+
+<a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Tenho%20uma%20dúvida%20sobre%20um%20template." target="_blank" class="wpp-float" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+
+<!-- DRAWER -->
+<div id="mmOverlay" onclick="closeDrawer()"></div>
+<div id="mmDrawer">
+  <div class="mmDrawer-head">
+    <span class="mm-title">IMPERSILVA</span>
+    <button class="mm-close" onclick="closeDrawer()">&#10005;</button>
   </div>
-</footer><script>
-// Year
-document.querySelectorAll('.yr').forEach(e => e.textContent = new Date().getFullYear());
-// Reveal
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
-},{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-// Drawer
-function openDrawer(){document.getElementById('mmDrawer').classList.add('active');document.getElementById('mmOverlay').classList.add('active');document.body.style.overflow='hidden';}
-function closeDrawer(){document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.body.style.overflow='';}
-// Counters
-const cObs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const target=parseInt(e.target.dataset.target);
-      const suffix=e.target.dataset.suffix||'';
-      let v=0;const step=target/(1800/16);
-      const t=setInterval(()=>{v=Math.min(v+step,target);e.target.textContent=Math.floor(v)+suffix;if(v>=target){e.target.textContent=target+suffix;clearInterval(t);}},16);
-      cObs.unobserve(e.target);
-    }
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',function(e){
-    const t=document.querySelector(this.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
-  });
-});
-</script>
+  <nav>
+    <a href="/index.html"><i class="fa-solid fa-house" style="width:14px;opacity:.5;font-size:.8rem"></i>Início</a>
+    <a href="/tech.html"><i class="fa-solid fa-code" style="width:14px;opacity:.5;font-size:.8rem"></i>Tech</a>
+    <a href="/consultoria.html"><i class="fa-solid fa-chart-line" style="width:14px;opacity:.5;font-size:.8rem"></i>Consultoria</a>
+    <a href="/portfolio.html"><i class="fa-solid fa-briefcase" style="width:14px;opacity:.5;font-size:.8rem"></i>Portfólio</a>
+    <a href="/sobre.html"><i class="fa-solid fa-circle-info" style="width:14px;opacity:.5;font-size:.8rem"></i>Sobre</a>
+    <a href="/contacto.html"><i class="fa-solid fa-envelope" style="width:14px;opacity:.5;font-size:.8rem"></i>Contacto</a>
+    <a href="/orcamento.html"><i class="fa-solid fa-file-invoice" style="width:14px;opacity:.5;font-size:.8rem"></i>Orçamento</a>
+    <a href="/verificar-site.html"><i class="fa-solid fa-user" style="width:14px;opacity:.5;font-size:.8rem"></i>Portal do Cliente</a>
+  </nav>
+</div>
+
 <script>
-// Filter (funciona com cards dinâmicos)
-function filterPort(cat, btn) {
-  document.querySelectorAll('.port-filter').forEach(b => b.classList.remove('active'));
+const API=(window.IMPERSILVA&&window.IMPERSILVA.api_url)||(window.SITE_CONFIG&&window.SITE_CONFIG.api_url)||'https://impersilva-ao.3miliosilva.workers.dev';
+
+// ── REVEAL ────────────────────────────────────────────────
+document.documentElement.classList.add('js-ready');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.06});
+function observeReveals(scope){ (scope||document).querySelectorAll('.reveal').forEach(el=>obs.observe(el)); }
+
+// ── NAV + FOOTER ─────────────────────────────────────────
+window.addEventListener('scroll',()=>{document.querySelector('.navbar').style.borderBottomColor=window.scrollY>60?'rgba(214,40,40,0.2)':'rgba(255,255,255,0.07)';},{passive:true});
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+// ── DRAWER ────────────────────────────────────────────────
+function toggleDrawer(){document.getElementById('mmDrawer').classList.contains('active')?closeDrawer():openDrawer();}
+function openDrawer(){document.getElementById('mmDrawer').classList.add('active');document.getElementById('mmOverlay').classList.add('active');document.getElementById('hamburger').classList.add('active');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('mmDrawer').classList.remove('active');document.getElementById('mmOverlay').classList.remove('active');document.getElementById('hamburger').classList.remove('active');document.body.style.overflow='';}
+document.querySelectorAll('#mmDrawer nav a').forEach(a=>a.addEventListener('click',closeDrawer));
+
+const TPL_CAT_LABEL={loja:'Loja Online',restaurante:'Restaurante',servicos:'Serviços',institucional:'Institucional'};
+
+// ── DADOS FALLBACK ────────────────────────────────────────
+const TEMPLATES_FB=[
+  {
+    id:'tpl-loja-basica',nome:'Loja Simples',categoria:'loja',
+    desc:'Template limpo e rápido para qualquer tipo de loja online.',
+    desc_longa:'A Loja Simples foi desenhada para negócios que querem começar a vender online sem complicações. Tem catálogo de produtos, checkout via WhatsApp e um painel de gestão fácil de usar — tudo o que precisas para a tua loja arrancar com o pé direito.',
+    cor:'#1d4ed8',cor2:'#0a1220',icon:'fa-store',novo:false,popular:true,
+    screenshots:[{label:'Início',icon:'fa-store'},{label:'Catálogo',icon:'fa-grip'},{label:'Produto',icon:'fa-tag'},{label:'Carrinho',icon:'fa-cart-shopping'},{label:'Admin',icon:'fa-gauge'}],
+    incluido:['Catálogo de produtos ilimitado','Checkout via WhatsApp','Painel de gestão completo','Optimizado para mobile','Domínio .pages.dev incluído','SSL e hospedagem incluídos'],
+    funcionalidades:[{icon:'fa-magnifying-glass',label:'Pesquisa'},{icon:'fa-filter',label:'Filtros'},{icon:'fa-heart',label:'Wishlist'},{icon:'fa-tags',label:'Promoções'},{icon:'fa-truck',label:'Rastreio'},{icon:'fa-language',label:'PT/EN'}],
+    exemplos:[]
+  },
+  {
+    id:'tpl-restaurante',nome:'Restaurante Pro',categoria:'restaurante',
+    desc:'Cardápio digital com sistema de pedidos e delivery.',
+    desc_longa:'O Restaurante Pro transforma o teu cardápio em papel num cardápio digital interactivo. Os clientes navegam pelos pratos, fazem o pedido e tu recebes tudo organizado — com opção de delivery e rastreio incluída.',
+    cor:'#d62828',cor2:'#1a0505',icon:'fa-utensils',novo:true,popular:false,
+    screenshots:[{label:'Início',icon:'fa-utensils'},{label:'Cardápio',icon:'fa-book-open'},{label:'Pedido',icon:'fa-receipt'},{label:'Delivery',icon:'fa-motorcycle'}],
+    incluido:['Cardápio digital com fotos','Sistema de pedidos online','Delivery com rastreio','Gestão de mesas (opcional)','Painel de cozinha','WhatsApp integrado'],
+    funcionalidades:[{icon:'fa-clock',label:'Horários'},{icon:'fa-motorcycle',label:'Delivery'},{icon:'fa-percent',label:'Combos'},{icon:'fa-star',label:'Avaliações'},{icon:'fa-bell',label:'Notificações'},{icon:'fa-credit-card',label:'Pagamentos'}],
+    exemplos:[]
+  },
+  {
+    id:'tpl-moda',nome:'Fashion Store',categoria:'loja',
+    desc:'Loja elegante com galeria de produtos e lookbook.',
+    desc_longa:'Pensada para marcas de moda e lojas de roupa, a Fashion Store traz uma galeria visual elegante, filtros por tamanho e cor, e um lookbook que dá destaque às tuas colecções.',
+    cor:'#7c3aed',cor2:'#1a0528',icon:'fa-shirt',novo:false,popular:false,
+    screenshots:[{label:'Início',icon:'fa-shirt'},{label:'Lookbook',icon:'fa-images'},{label:'Produto',icon:'fa-tag'},{label:'Carrinho',icon:'fa-cart-shopping'}],
+    incluido:['Galeria de produtos em grade','Filtros por tamanho e cor','Lookbook de colecções','Checkout via WhatsApp','Painel de gestão','Mobile optimizado'],
+    funcionalidades:[{icon:'fa-ruler',label:'Tamanhos'},{icon:'fa-palette',label:'Cores'},{icon:'fa-heart',label:'Wishlist'},{icon:'fa-share-nodes',label:'Partilhar'},{icon:'fa-tags',label:'Promoções'}],
+    exemplos:[]
+  },
+  {
+    id:'tpl-fast-food',nome:'Fast Food',categoria:'restaurante',
+    desc:'Menu visual com combos, promoções e encomendas rápidas.',
+    desc_longa:'Feito para fast-food e take-away, este template foca-se na velocidade — menu visual apetecível, combos em destaque e um checkout rapidíssimo via WhatsApp.',
+    cor:'#ea580c',cor2:'#1a0a05',icon:'fa-burger',novo:true,popular:false,
+    screenshots:[{label:'Início',icon:'fa-burger'},{label:'Menu',icon:'fa-list'},{label:'Combos',icon:'fa-gift'}],
+    incluido:['Menu visual com fotos','Combos em destaque','Checkout rápido','Promoções configuráveis','Painel de gestão','WhatsApp integrado'],
+    funcionalidades:[{icon:'fa-bolt',label:'Rápido'},{icon:'fa-percent',label:'Combos'},{icon:'fa-fire',label:'Destaques'},{icon:'fa-motorcycle',label:'Delivery'}],
+    exemplos:[]
+  },
+  {
+    id:'tpl-salao',nome:'Beauty Salon',categoria:'servicos',
+    desc:'Agendamento online e galeria de trabalhos realizados.',
+    desc_longa:'Para salões de beleza e barbearias que querem parar de perder clientes por não atender o telemóvel. Com agendamento online 24h e galeria de trabalhos para mostrar a qualidade do serviço.',
+    cor:'#db2777',cor2:'#200a18',icon:'fa-scissors',novo:false,popular:false,
+    screenshots:[{label:'Início',icon:'fa-scissors'},{label:'Serviços',icon:'fa-list-check'},{label:'Agenda',icon:'fa-calendar'},{label:'Galeria',icon:'fa-images'}],
+    incluido:['Agendamento online 24h','Lista de serviços e preços','Galeria de trabalhos','Confirmação via WhatsApp','Painel de gestão de agenda','Mobile optimizado'],
+    funcionalidades:[{icon:'fa-calendar-check',label:'Agendamento'},{icon:'fa-images',label:'Galeria'},{icon:'fa-star',label:'Avaliações'},{icon:'fa-bell',label:'Lembretes'}],
+    exemplos:[]
+  },
+  {
+    id:'tpl-tech-store',nome:'Tech Store',categoria:'loja',
+    desc:'Catálogo de telemóveis e gadgets com especificações.',
+    desc_longa:'Ideal para lojas de telemóveis e electrónica. Mostra especificações técnicas completas, permite comparar modelos e mantém o stock sempre actualizado.',
+    cor:'#0ea5e9',cor2:'#05101a',icon:'fa-mobile-screen',novo:false,popular:true,
+    screenshots:[{label:'Início',icon:'fa-mobile-screen'},{label:'Catálogo',icon:'fa-grip'},{label:'Specs',icon:'fa-list'},{label:'Comparar',icon:'fa-scale-balanced'}],
+    incluido:['Catálogo com especificações','Comparação de modelos','Gestão de stock','Checkout via WhatsApp','Painel de gestão','Filtros avançados'],
+    funcionalidades:[{icon:'fa-scale-balanced',label:'Comparar'},{icon:'fa-boxes-stacked',label:'Stock'},{icon:'fa-magnifying-glass',label:'Pesquisa'},{icon:'fa-filter',label:'Filtros'}],
+    exemplos:[]
+  },
+];
+
+// ── ESTADO ────────────────────────────────────────────────
+let TPL_DATA=[];
+let tplFiltro='todos';
+
+// ── CATÁLOGO ──────────────────────────────────────────────
+function renderCatalog(tpls){
+  TPL_DATA=tpls;
+  const filtered=tplFiltro==='todos'?tpls:tpls.filter(t=>t.categoria===tplFiltro);
+  const g=document.getElementById('tplGrid');
+  if(!filtered.length){g.innerHTML='<div class="tpl-empty">Nenhum template nesta categoria ainda.</div>';return;}
+  g.innerHTML=filtered.map(t=>{
+    const cor=t.cor||'#1d4ed8', cor2=t.cor2||'#0a0a0b';
+    const ss=(t.screenshots&&t.screenshots[0])||{icon:t.icon||'fa-store'};
+    return`<div class="tpl-card reveal" onclick="openTemplate('${t.id}')">
+      <div class="browser-mock">
+        <div class="browser-bar">
+          <span class="bdot" style="background:#ff5f57"></span>
+          <span class="bdot" style="background:#febc2e"></span>
+          <span class="bdot" style="background:#28c840"></span>
+        </div>
+        <div class="browser-screen">
+          ${ss.img?`<img src="${ss.img}" alt="">`:`
+          <div style="height:100%;display:flex;flex-direction:column">
+            <div class="bs-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${ss.icon||t.icon||'fa-store'}"></i></div>
+            <div class="bs-lines"><div class="bs-line"></div><div class="bs-line s"></div></div>
+          </div>`}
+        </div>
+        ${t.novo?'<div class="tpl-badge b-new">Novo</div>':(t.popular?'<div class="tpl-badge b-pop">Popular</div>':'')}
+      </div>
+      <div class="tpl-card-body">
+        <div class="tpl-cat-label">${TPL_CAT_LABEL[t.categoria]||t.categoria}</div>
+        <div class="tpl-card-nome">${t.nome}</div>
+        <div class="tpl-card-desc">${t.desc||''}</div>
+        <div class="tpl-card-tags">${(t.funcionalidades||[]).slice(0,3).map(f=>`<span class="tpl-card-tag">${f.label}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('');
+  observeReveals(g);
+}
+function filterTpl(cat,btn){
+  tplFiltro=cat;
+  document.querySelectorAll('.tpl-filter').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.port-card').forEach(c => {
-    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
-  });
+  renderCatalog(TPL_DATA);
 }
 
-// Lightbox
-var LB_DATA = {};
-var LB_KEYS = [];
-var lbCurrent = 0;
-
-function openLb(id) {
-  lbCurrent = LB_KEYS.indexOf(id);
-  if (lbCurrent < 0) return;
-  renderLb();
-  document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
+// ── NAVEGAÇÃO CATÁLOGO ↔ DETALHE ──────────────────────────
+function showCatalog(){
+  document.getElementById('catalogView').style.display='block';
+  document.getElementById('detailView').style.display='none';
+  document.title='Templates — IMPERSILVA TECH';
 }
-function closeLb() {
-  document.getElementById('lightbox').classList.remove('active');
-  document.body.style.overflow = '';
+function showDetailUI(){
+  document.getElementById('catalogView').style.display='none';
+  document.getElementById('detailView').style.display='block';
+  window.scrollTo(0,0);
 }
-function lbNav(dir) {
-  lbCurrent = (lbCurrent + dir + LB_KEYS.length) % LB_KEYS.length;
-  renderLb();
+function backToCatalog(e){
+  if(e)e.preventDefault();
+  history.pushState(null,'','/portfolio.html');
+  showCatalog();
 }
-function renderLb() {
-  var d = LB_DATA[LB_KEYS[lbCurrent]];
-  if (!d) return;
-  document.getElementById('lbTitle').textContent = d.title;
-  document.getElementById('lbDesc').textContent = d.desc;
-  document.getElementById('lbLink').href = d.link;
-  var imgWrap = document.getElementById('lbImg');
-  if (d.imagem) {
-    imgWrap.innerHTML = '<img src="' + d.imagem + '" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:' + d.color + ';font-size:5rem;color:rgba(255,255,255,.2)&quot;><i class=&quot;fa-solid ' + d.icon + '&quot;></i></div>\'">';
-  } else {
-    imgWrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:' + d.color + ';font-size:5rem;color:rgba(255,255,255,.2)"><i class="fa-solid ' + d.icon + '"></i></div>';
-  }
+function openTemplate(id){
+  history.pushState(null,'','?template='+id);
+  renderDetail(id);
 }
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeLb();
-  if (e.key === 'ArrowRight') lbNav(1);
-  if (e.key === 'ArrowLeft') lbNav(-1);
+window.addEventListener('popstate',()=>{
+  const id=new URLSearchParams(location.search).get('template')||new URLSearchParams(location.search).get('id');
+  if(id) renderDetail(id); else showCatalog();
 });
 
-// Renderizar card dinamicamente
-function renderCard(item, idx) {
-  var delays = ['', 'rd1', 'rd2'];
-  var delay = delays[idx % 3];
-  var btnVer = item.url_ao_vivo
-    ? '<a href="' + item.url_ao_vivo + '" target="_blank" class="port-btn port-btn-secondary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver ao vivo</a>'
-    : '<button class="port-btn port-btn-secondary" onclick="openLb(\'' + item.id + '\')"><i class="fa-solid fa-eye"></i> Ver site</button>';
-  return '<div class="port-card reveal ' + delay + '" data-cat="' + item.categoria + '" id="' + item.id + '">'
-    + '<div class="port-card-img" onclick="openLb(\'' + item.id + '\')">'
-    + (item.imagem
-        ? '<img class="port-thumb" src="' + item.imagem + '" alt="' + item.nome + '" style="width:100%;height:100%;object-fit:cover">'
-        : '<div class="port-thumb"><i class="fa-solid ' + (item.icone || 'fa-globe') + '"></i></div>')
-    + '<div class="port-stripe"><span></span><span></span></div>'
-    + '<div class="port-overlay"><button class="port-overlay-btn"><i class="fa-solid fa-expand"></i> Ver detalhes</button></div>'
-    + '</div>'
-    + '<div class="port-card-body">'
-    + '<span class="port-tag ' + (item.tag_cor || 't-blue') + '">' + (item.tag_tipo || item.categoria) + '</span>'
-    + '<div class="port-name">' + item.nome + '</div>'
-    + '<div class="port-desc">' + item.descricao + '</div>'
-    + '<div class="port-result"><i class="fa-solid fa-arrow-trend-up"></i> ' + item.resultado + '</div>'
-    + '<div class="port-footer">'
-    + btnVer
-    + '<a href="projeto.html?id=' + item.id + '" class="port-btn port-btn-secondary" style="border-color:rgba(255,255,255,.2)"><i class="fa-solid fa-magnifying-glass"></i> Detalhes</a>'
-    + '<a href="orcamento.html?tipo=' + (item.orcamento_tipo || item.categoria) + '" class="port-btn port-btn-primary"><i class="fa-solid fa-copy"></i> Quero igual</a>'
-    + '</div></div></div>';
-}
+// ── DETALHE ───────────────────────────────────────────────
+let galIdx=0, currentTpl=null;
+function renderDetail(id){
+  const t=TPL_DATA.find(x=>x.id===id);
+  if(!t){ showCatalog(); return; }
+  currentTpl=t;
+  galIdx=0;
 
-// Carregar portfólio do Worker
-async function loadPortfolio() {
-  try {
-    const items = await api.get('/api/portfolio');
-    const grid = document.getElementById('portGrid');
+  document.title=t.nome+' — IMPERSILVA TECH';
+  document.getElementById('galUrl').textContent=(t.id||'meusite')+'.impersilva.ao';
+  document.getElementById('detNome').textContent=t.nome;
+  document.getElementById('detDesc').textContent=t.desc_longa||t.desc||'';
 
-    // Construir LB_DATA dinâmicamente
-    LB_DATA = {};
-    items.forEach(function(item) {
-      LB_DATA[item.id] = {
-        title: item.nome,
-        desc: item.descricao,
-        icon: item.icone || 'fa-globe',
-        color: item.lb_color || 'rgba(29,78,216,.2)',
-        link: item.url_ao_vivo || ('orcamento.html?tipo=' + (item.orcamento_tipo || item.categoria)),
-        imagem: item.imagem || null
-      };
-    });
-    LB_KEYS = Object.keys(LB_DATA);
+  const badges=[`<span class="det-badge det-cat">${TPL_CAT_LABEL[t.categoria]||t.categoria}</span>`];
+  if(t.novo) badges.push(`<span class="det-badge det-new">Novo</span>`);
+  if(t.popular) badges.push(`<span class="det-badge det-pop">Popular</span>`);
+  document.getElementById('detBadges').innerHTML=badges.join('');
 
-    // Renderizar cards
-    grid.innerHTML = items.map(function(item, idx) {
-      return renderCard(item, idx);
-    }).join('');
+  document.getElementById('detStats').innerHTML=`
+    <div class="dms"><div class="dms-n">7d</div><div class="dms-l">Lançamento</div></div>
+    <div class="dms"><div class="dms-n">${(t.screenshots||[]).length||1}</div><div class="dms-l">Páginas</div></div>
+    <div class="dms"><div class="dms-n">${(t.funcionalidades||[]).length}</div><div class="dms-l">Funcionalidades</div></div>`;
 
-    // Reactivar observe para animações reveal
-    document.querySelectorAll('#portGrid .reveal').forEach(el => obs.observe(el));
+  const orcUrl='/orcamento.html?template='+encodeURIComponent(t.id)+'&tipo='+encodeURIComponent(t.nome);
+  document.getElementById('detCtaBtn').href=orcUrl;
+  document.getElementById('detCtaBtn2').href=orcUrl;
 
-    // Activar filtro actual
-    var activeFilter = document.querySelector('.port-filter.active');
-    if (activeFilter) {
-      var cat = activeFilter.textContent.trim() === 'Todos' ? 'all'
-        : activeFilter.onclick ? activeFilter.getAttribute('onclick').match(/'([^']+)'/)?.[1] : 'all';
-    }
+  // Galeria
+  renderGallery(t);
 
-  } catch(e) {
-    document.getElementById('portGrid').innerHTML =
-      '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray)">'
-      + '<p>Não foi possível carregar o portfólio.</p>'
-      + '<p style="font-size:.8rem;margin-top:.5rem">Verifique a ligação ou contacte-nos via WhatsApp.</p>'
-      + '</div>';
+  // Incluído
+  document.getElementById('inclGrid').innerHTML=(t.incluido||[]).map(i=>`<div class="incl-item"><i class="fa-solid fa-check-circle"></i>${i}</div>`).join('') || '<div class="incl-item"><i class="fa-solid fa-check-circle"></i>Informação em breve.</div>';
+
+  // Funcionalidades
+  document.getElementById('funcGrid').innerHTML=(t.funcionalidades||[]).map(f=>`<div class="func-item"><div class="func-icon"><i class="fa-solid ${f.icon}"></i></div><div class="func-label">${f.label}</div></div>`).join('');
+
+  // Exemplos reais
+  const exBlock=document.getElementById('exemplosBlock');
+  if(t.exemplos&&t.exemplos.length){
+    exBlock.style.display='block';
+    document.getElementById('exemplosGrid').innerHTML=t.exemplos.map(ex=>`
+      <a href="${ex.url}" target="_blank" class="exemplo-card">
+        <span class="exemplo-dot"></span>
+        <div><div class="exemplo-nome">${ex.nome}</div><div class="exemplo-url">${ex.url.replace(/^https?:\/\//,'')}</div></div>
+      </a>`).join('');
+  } else {
+    exBlock.style.display='none';
   }
+
+  // Relacionados (mesma categoria, excluindo o actual)
+  const rel=TPL_DATA.filter(x=>x.categoria===t.categoria && x.id!==t.id).slice(0,3);
+  const relPool = rel.length ? rel : TPL_DATA.filter(x=>x.id!==t.id).slice(0,3);
+  document.getElementById('relGrid').innerHTML=relPool.map(r=>{
+    const cor=r.cor||'#1d4ed8', cor2=r.cor2||'#0a0a0b';
+    const ss=(r.screenshots&&r.screenshots[0])||{icon:r.icon||'fa-store'};
+    return`<div class="tpl-card" onclick="openTemplate('${r.id}')">
+      <div class="browser-mock">
+        <div class="browser-bar"><span class="bdot" style="background:#ff5f57"></span><span class="bdot" style="background:#febc2e"></span><span class="bdot" style="background:#28c840"></span></div>
+        <div class="browser-screen">
+          <div style="height:100%;display:flex;flex-direction:column">
+            <div class="bs-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${ss.icon||r.icon||'fa-store'}"></i></div>
+            <div class="bs-lines"><div class="bs-line"></div><div class="bs-line s"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="tpl-card-body">
+        <div class="tpl-cat-label">${TPL_CAT_LABEL[r.categoria]||r.categoria}</div>
+        <div class="tpl-card-nome">${r.nome}</div>
+        <div class="tpl-card-desc">${r.desc||''}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  showDetailUI();
+  observeReveals(document.getElementById('detailView'));
 }
 
-loadPortfolio();
+function renderGallery(t){
+  const screens=(t.screenshots&&t.screenshots.length)?t.screenshots:[{label:'Início',icon:t.icon||'fa-store'}];
+  const cor=t.cor||'#1d4ed8', cor2=t.cor2||'#0a0a0b';
+  function paint(){
+    const s=screens[galIdx];
+    const screen=document.getElementById('galScreen');
+    screen.innerHTML = s.img
+      ? `<img src="${s.img}" alt="${s.label||''}">`
+      : `<div class="gal-screen-fallback">
+          <div class="gsf-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${s.icon||t.icon||'fa-store'}"></i></div>
+          <div class="gsf-body"><div class="gsf-line w60"></div><div class="gsf-line w40"></div><div class="gsf-line"></div></div>
+        </div>`;
+  }
+  document.getElementById('galThumbs').innerHTML=screens.map((s,i)=>`
+    <div style="text-align:center">
+      <div class="gal-thumb${i===galIdx?' active':''}" data-i="${i}" onclick="goGal(${i})">
+        ${s.img?`<img src="${s.img}" alt="">`:`<i class="fa-solid ${s.icon||t.icon||'fa-store'}"></i>`}
+      </div>
+      <div class="gal-thumb-label">${s.label||''}</div>
+    </div>`
+  ).join('');
+  window._galScreens=screens; window._galPaint=paint; window._galCor=[cor,cor2]; window._galIcon=t.icon;
+  paint();
+}
+function goGal(i){
+  galIdx=i;
+  window._galPaint();
+  document.querySelectorAll('.gal-thumb').forEach((el,j)=>el.classList.toggle('active',j===i));
+}
+
+// ── CARREGAR DADOS ────────────────────────────────────────
+async function carregarDados(){
+  renderCatalog(TEMPLATES_FB);
+  try{
+    const d=await fetch(API+'/api/site/portfolio',{signal:AbortSignal.timeout(5000)}).then(r=>r.ok?r.json():null);
+    if(d){
+      if(d.hero){
+        if(d.hero.titulo) document.getElementById('catTitle').innerHTML=d.hero.titulo;
+        if(d.hero.subtitulo) document.getElementById('catSub').textContent=d.hero.subtitulo;
+      }
+      if(d.templates&&d.templates.length) renderCatalog(d.templates);
+    }
+  }catch(e){}
+
+  // Após carregar dados, verificar se há ?template= na URL (vindo do tech.html)
+  const params=new URLSearchParams(location.search);
+  const wanted=params.get('template')||params.get('id');
+  if(wanted) renderDetail(wanted);
+}
+
+carregarDados();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
 </body>
 </html>
