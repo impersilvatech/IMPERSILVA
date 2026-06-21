@@ -102,12 +102,24 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .det-sec{padding:0 0 5rem}
 .det-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start;margin-bottom:50px}
 /* Galeria */
+.gal-toolbar{display:flex;justify-content:flex-end;margin-bottom:10px}
+.gal-toggle{display:flex;background:var(--charcoal);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px}
+.gal-toggle-btn{background:none;border:none;color:var(--gray);font-size:.74rem;font-weight:600;padding:6px 13px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
+.gal-toggle-btn.active{background:var(--red);color:#fff}
 .gal-browser{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--charcoal-lt);box-shadow:0 20px 60px rgba(0,0,0,.4)}
 .gal-bar{height:32px;background:#e8e8ea;display:flex;align-items:center;padding:0 12px;gap:6px}
 .gal-bar-dot{width:9px;height:9px;border-radius:50%}
 .gal-bar-url{flex:1;margin-left:10px;background:#fff;border-radius:5px;padding:3px 10px;font-size:.68rem;color:#555;font-family:'Barlow',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gal-screen{position:relative;aspect-ratio:16/10;background:#fff;overflow:hidden}
-.gal-screen img{width:100%;height:100%;object-fit:cover;object-position:top}
+.gal-progress{display:flex;gap:4px;padding:9px 12px 0;background:#e8e8ea}
+.gal-progress-seg{flex:1;height:3px;border-radius:2px;background:rgba(0,0,0,.15);overflow:hidden;cursor:pointer}
+.gal-progress-fill{display:block;height:100%;width:0%;background:var(--red);border-radius:2px}
+.gal-progress-seg.done .gal-progress-fill{width:100%;transition:none}
+.gal-progress-seg.active .gal-progress-fill{width:100%;transition:width 4.4s linear}
+.gal-screen{position:relative;aspect-ratio:16/10;background:#fff;overflow:hidden;cursor:zoom-in}
+.gal-track{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.gal-track::-webkit-scrollbar{display:none}
+.gal-slide{flex:0 0 100%;scroll-snap-align:start;height:100%;position:relative}
+.gal-slide img{width:100%;height:100%;object-fit:cover;object-position:top}
 .gal-screen-fallback{width:100%;height:100%;display:flex;flex-direction:column}
 .gsf-hero{flex:0 0 55%;display:flex;align-items:center;justify-content:center;position:relative}
 .gsf-hero i{font-size:3rem;color:rgba(255,255,255,.25)}
@@ -115,13 +127,15 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 .gsf-line{height:7px;border-radius:3px;background:rgba(0,0,0,.07)}
 .gsf-line.w60{width:60%}
 .gsf-line.w40{width:40%}
-.gal-thumbs{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
-.gal-thumb{flex-shrink:0;width:72px;height:48px;border-radius:6px;overflow:hidden;border:2px solid var(--border);cursor:pointer;opacity:.6;transition:.2s;background:var(--charcoal-lt);display:flex;align-items:center;justify-content:center}
-.gal-thumb img{width:100%;height:100%;object-fit:cover}
-.gal-thumb i{font-size:.85rem;color:var(--gray)}
-.gal-thumb:hover{opacity:.9}
-.gal-thumb.active{border-color:var(--red);opacity:1}
-.gal-thumb-label{font-size:.6rem;color:var(--gray);text-align:center;margin-top:3px}
+.gal-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(14,14,14,.55);border:1px solid rgba(255,255,255,.18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;font-size:.75rem}
+.gal-arrow.prev{left:8px}.gal-arrow.next{right:8px}
+.gal-zoom-hint{position:absolute;bottom:8px;right:8px;background:rgba(14,14,14,.6);color:#fff;font-size:.6rem;padding:4px 9px;border-radius:5px;display:flex;align-items:center;gap:5px;z-index:3;pointer-events:none}
+/* Mock telemóvel */
+.gal-phone{width:220px;margin:0 auto;border-radius:32px;border:8px solid #1c1c1e;background:#1c1c1e;box-shadow:0 20px 60px rgba(0,0,0,.4);position:relative}
+.gal-phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:84px;height:18px;background:#1c1c1e;border-radius:0 0 12px 12px;z-index:4}
+.gal-phone-screen{aspect-ratio:9/19.5;background:#fff;position:relative;overflow:hidden;border-radius:24px;cursor:zoom-in}
+.gal-phone-screen img{width:100%;height:100%;object-fit:cover;object-position:top}
+.gal-phone-home{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:84px;height:4px;border-radius:3px;background:rgba(255,255,255,.35);z-index:4}
 /* Info */
 .det-badges{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .det-badge{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 11px;border-radius:4px}
@@ -163,6 +177,41 @@ body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;f
 
 /* ── RELACIONADOS ── */
 .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* ── ESPECIFICAÇÕES TÉCNICAS ── */
+.spec-grid{display:flex;flex-wrap:wrap;gap:10px}
+.spec-pill{display:flex;align-items:center;gap:8px;background:var(--charcoal);border:1px solid var(--border);border-radius:30px;padding:9px 16px;font-size:.78rem;font-weight:500;color:var(--gray-lt)}
+.spec-pill i{color:var(--blue-lt);font-size:.85rem}
+
+/* ── COMO FUNCIONA (PROCESSO) ── */
+.proc-timeline{display:flex;flex-direction:column}
+.proc-step{display:flex;gap:18px;position:relative;padding-bottom:26px}
+.proc-step:last-child{padding-bottom:0}
+.proc-step:not(:last-child)::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:1.5px;background:var(--divider)}
+.proc-num{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--red-dim);border:1.5px solid rgba(214,40,40,.3);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:center;z-index:1}
+.proc-body{padding-top:5px}
+.proc-title{font-weight:700;font-size:.92rem;margin-bottom:4px;color:var(--white)}
+.proc-desc{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.6;max-width:480px}
+
+/* ── FAQ ── */
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--charcoal);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--white)}
+.faq-q i{color:var(--gray);font-size:.7rem;transition:transform .25s;flex-shrink:0}
+.faq-item.open .faq-q i{transform:rotate(180deg);color:var(--red)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-a-inner{padding:0 16px 16px;font-size:.8rem;color:var(--gray-lt);font-weight:300;line-height:1.65}
+.faq-item.open .faq-a{max-height:240px}
+
+/* ── LIGHTBOX ── */
+.lightbox-overlay{display:none;position:fixed;inset:0;background:rgba(8,8,10,.94);z-index:1100;align-items:center;justify-content:center;padding:24px}
+.lightbox-overlay.active{display:flex}
+.lightbox-stage{max-width:min(92vw,720px);max-height:78vh;width:100%;border-radius:10px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
+.lightbox-stage img{width:100%;height:100%;object-fit:contain;display:block}
+.lightbox-close{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-arrow.prev{left:14px}.lightbox-arrow.next{right:14px}
+.lightbox-counter{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:.74rem;color:rgba(255,255,255,.55);letter-spacing:.05em;white-space:nowrap}
 
 /* ── CTA FINAL ── */
 .cta-final{text-align:center;padding:44px 28px;background:linear-gradient(135deg,var(--red-dim),var(--blue-dim));border:1px solid rgba(255,255,255,.08);border-radius:16px}
@@ -276,16 +325,34 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
       <div class="det-grid">
         <!-- GALERIA -->
         <div class="reveal">
-          <div class="gal-browser">
+          <div class="gal-toolbar">
+            <div class="gal-toggle">
+              <button class="gal-toggle-btn active" data-mode="desktop" onclick="setGalMode('desktop')"><i class="fa-solid fa-display"></i> Desktop</button>
+              <button class="gal-toggle-btn" data-mode="mobile" onclick="setGalMode('mobile')"><i class="fa-solid fa-mobile-screen-button"></i> Mobile</button>
+            </div>
+          </div>
+
+          <div class="gal-browser" id="galBrowserMock">
             <div class="gal-bar">
               <span class="gal-bar-dot" style="background:#ff5f57"></span>
               <span class="gal-bar-dot" style="background:#febc2e"></span>
               <span class="gal-bar-dot" style="background:#28c840"></span>
               <div class="gal-bar-url" id="galUrl">nome.impersilva.ao</div>
             </div>
-            <div class="gal-screen" id="galScreen"></div>
+            <div class="gal-progress" id="galProgress"></div>
+            <div class="gal-screen" id="galScreen" onclick="openLightbox()">
+              <div class="gal-track" id="galTrack"></div>
+              <button class="gal-arrow prev" onclick="event.stopPropagation();goGal(galIdx-1)"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="gal-arrow next" onclick="event.stopPropagation();goGal(galIdx+1)"><i class="fa-solid fa-chevron-right"></i></button>
+              <span class="gal-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Toca para ampliar</span>
+            </div>
           </div>
-          <div class="gal-thumbs" id="galThumbs"></div>
+
+          <div class="gal-phone" id="galPhoneMock" style="display:none">
+            <div class="gal-phone-notch"></div>
+            <div class="gal-phone-screen" id="galPhoneScreen" onclick="openLightbox()"></div>
+            <div class="gal-phone-home"></div>
+          </div>
         </div>
 
         <!-- INFO -->
@@ -316,10 +383,78 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
         <div class="func-grid" id="funcGrid"></div>
       </div>
 
+      <!-- ESPECIFICAÇÕES TÉCNICAS -->
+      <div class="det-block reveal">
+        <div class="det-block-title"><i class="fa-solid fa-microchip"></i> Especificações técnicas</div>
+        <div class="spec-grid" id="specGrid"></div>
+      </div>
+
       <!-- EXEMPLOS REAIS -->
       <div class="det-block reveal" id="exemplosBlock" style="display:none">
         <div class="det-block-title"><i class="fa-solid fa-globe"></i> Sites reais com este template</div>
         <div class="exemplos-grid" id="exemplosGrid"></div>
+      </div>
+
+      <!-- COMO FUNCIONA -->
+      <div class="det-block reveal">
+        <div class="det-block-title"><i class="fa-solid fa-route"></i> Como funciona</div>
+        <div class="proc-timeline">
+          <div class="proc-step">
+            <div class="proc-num">1</div>
+            <div class="proc-body">
+              <div class="proc-title">Pedes o orçamento</div>
+              <div class="proc-desc">Escolhes este template e preenches um pequeno formulário com as preferências do teu negócio.</div>
+            </div>
+          </div>
+          <div class="proc-step">
+            <div class="proc-num">2</div>
+            <div class="proc-body">
+              <div class="proc-title">Personalizamos</div>
+              <div class="proc-desc">Ajustamos cores, logótipo, textos e imagens à identidade da tua marca.</div>
+            </div>
+          </div>
+          <div class="proc-step">
+            <div class="proc-num">3</div>
+            <div class="proc-body">
+              <div class="proc-title">Revisas e aprovas</div>
+              <div class="proc-desc">Vês uma pré-visualização do site e pedes os ajustes que precisares, sem custo extra.</div>
+            </div>
+          </div>
+          <div class="proc-step">
+            <div class="proc-num">4</div>
+            <div class="proc-body">
+              <div class="proc-title">Site no ar</div>
+              <div class="proc-desc">Publicamos com domínio, SSL e hospedagem incluídos — pronto em menos de 7 dias.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="det-block reveal">
+        <div class="det-block-title"><i class="fa-solid fa-circle-question"></i> Perguntas frequentes</div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">O preço inclui hospedagem e domínio? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-a"><div class="faq-a-inner">Sim, hospedagem e SSL estão sempre incluídos. O domínio pode ser um subdomínio gratuito ou um domínio próprio, com custo adicional.</div></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Posso mudar as cores e o logótipo? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-a"><div class="faq-a-inner">Sim. Todos os templates são personalizados com a identidade visual do teu negócio antes de publicar.</div></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Quanto tempo demora a ficar pronto? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-a"><div class="faq-a-inner">Normalmente menos de 7 dias após recebermos o conteúdo e a aprovação da personalização.</div></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Posso pedir funcionalidades extra? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-a"><div class="faq-a-inner">Sim, podemos adicionar funcionalidades que não estejam no template base — o orçamento é ajustado consoante o pedido.</div></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">E se eu quiser trocar de template depois? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-a"><div class="faq-a-inner">Sem problema — podes trocar antes do início do desenvolvimento sem qualquer custo adicional.</div></div>
+          </div>
+        </div>
       </div>
 
       <!-- RELACIONADOS -->
@@ -364,6 +499,15 @@ footer{background:var(--black);border-top:1px solid var(--divider);padding:4rem 
 <a href="https://wa.me/244954288128?text=Olá%20IMPERSILVA!%20Tenho%20uma%20dúvida%20sobre%20um%20template." target="_blank" class="wpp-float" title="WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.215c-.073.266.162.505.43.437l5.49-1.453A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.388l-.361-.214-3.741.99 1.003-3.648-.235-.374A9.791 9.791 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
 </a>
+
+<!-- LIGHTBOX -->
+<div id="lightboxOverlay" class="lightbox-overlay" onclick="if(event.target===this)closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+  <button class="lightbox-arrow prev" onclick="lightboxNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+  <div class="lightbox-stage" id="lightboxStage"></div>
+  <button class="lightbox-arrow next" onclick="lightboxNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
 
 <!-- DRAWER -->
 <div id="mmOverlay" onclick="closeDrawer()"></div>
@@ -576,6 +720,12 @@ function renderDetail(id){
   // Funcionalidades
   document.getElementById('funcGrid').innerHTML=(t.funcionalidades||[]).map(f=>`<div class="func-item"><div class="func-icon"><i class="fa-solid ${f.icon}"></i></div><div class="func-label">${f.label}</div></div>`).join('');
 
+  // Especificações técnicas (base comuns a todos + extras por categoria)
+  const SPEC_BASE=[{icon:'fa-mobile-screen-button',label:'100% responsivo'},{icon:'fa-bolt',label:'Carregamento rápido'},{icon:'fa-lock',label:'SSL incluído'},{icon:'fa-server',label:'Hospedagem incluída'},{icon:'fa-magnifying-glass-chart',label:'Optimizado para SEO'}];
+  const SPEC_CAT={loja:[{icon:'fa-message',label:'Checkout via WhatsApp'}],restaurante:[{icon:'fa-receipt',label:'Pedidos em tempo real'}],servicos:[{icon:'fa-calendar-check',label:'Agendamento online'}],institucional:[{icon:'fa-envelope',label:'Formulário de contacto'}]};
+  const specs=(t.specs&&t.specs.length)?t.specs:SPEC_BASE.concat(SPEC_CAT[t.categoria]||[]);
+  document.getElementById('specGrid').innerHTML=specs.map(s=>`<div class="spec-pill"><i class="fa-solid ${s.icon}"></i>${s.label}</div>`).join('');
+
   // Exemplos reais
   const exBlock=document.getElementById('exemplosBlock');
   if(t.exemplos&&t.exemplos.length){
@@ -617,35 +767,136 @@ function renderDetail(id){
   observeReveals(document.getElementById('detailView'));
 }
 
+let galMode='desktop', galAutoplayTimer=null;
+const GAL_AUTOPLAY_MS=4400;
+
 function renderGallery(t){
   const screens=(t.screenshots&&t.screenshots.length)?t.screenshots:[{label:'Início',icon:t.icon||'fa-store'}];
   const cor=t.cor||'#1d4ed8', cor2=t.cor2||'#0a0a0b';
-  function paint(){
-    const s=screens[galIdx];
-    const screen=document.getElementById('galScreen');
-    screen.innerHTML = s.img
-      ? `<img src="${s.img}" alt="${s.label||''}">`
-      : `<div class="gal-screen-fallback">
-          <div class="gsf-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${s.icon||t.icon||'fa-store'}"></i></div>
-          <div class="gsf-body"><div class="gsf-line w60"></div><div class="gsf-line w40"></div><div class="gsf-line"></div></div>
-        </div>`;
-  }
-  document.getElementById('galThumbs').innerHTML=screens.map((s,i)=>`
-    <div style="text-align:center">
-      <div class="gal-thumb${i===galIdx?' active':''}" data-i="${i}" onclick="goGal(${i})">
-        ${s.img?`<img src="${s.img}" alt="">`:`<i class="fa-solid ${s.icon||t.icon||'fa-store'}"></i>`}
-      </div>
-      <div class="gal-thumb-label">${s.label||''}</div>
-    </div>`
-  ).join('');
-  window._galScreens=screens; window._galPaint=paint; window._galCor=[cor,cor2]; window._galIcon=t.icon;
-  paint();
+  window._galScreens=screens; window._galCor=[cor,cor2]; window._galIcon=t.icon;
+
+  const slideHTML=s=> s.img
+    ? `<div class="gal-slide"><img src="${s.img}" alt="${s.label||''}"></div>`
+    : `<div class="gal-slide"><div class="gal-screen-fallback">
+        <div class="gsf-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${s.icon||t.icon||'fa-store'}"></i></div>
+        <div class="gsf-body"><div class="gsf-line w60"></div><div class="gsf-line w40"></div><div class="gsf-line"></div></div>
+      </div></div>`;
+
+  document.getElementById('galTrack').innerHTML=screens.map(slideHTML).join('');
+  document.getElementById('galProgress').innerHTML=screens.map((s,i)=>`<div class="gal-progress-seg" data-i="${i}" onclick="goGal(${i})" title="${s.label||''}"><span class="gal-progress-fill"></span></div>`).join('');
+
+  syncGallery(true);
+  startAutoplay();
 }
+
+function paintPhone(){
+  const screens=window._galScreens||[]; const s=screens[galIdx]; if(!s)return;
+  const [cor,cor2]=window._galCor||['#1d4ed8','#0a0a0b'];
+  document.getElementById('galPhoneScreen').innerHTML = s.img
+    ? `<img src="${s.img}" alt="${s.label||''}">`
+    : `<div class="gal-screen-fallback">
+        <div class="gsf-hero" style="background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${s.icon||window._galIcon||'fa-store'}"></i></div>
+        <div class="gsf-body"><div class="gsf-line w60"></div><div class="gsf-line w40"></div><div class="gsf-line"></div></div>
+      </div>`;
+}
+
+function syncGallery(jump){
+  const track=document.getElementById('galTrack');
+  if(jump) track.scrollLeft=galIdx*track.clientWidth;
+  document.querySelectorAll('.gal-progress-seg').forEach((seg,i)=>{
+    seg.classList.toggle('active',i===galIdx);
+    seg.classList.toggle('done',i<galIdx);
+  });
+  paintPhone();
+  if(document.getElementById('lightboxOverlay').classList.contains('active')) paintLightbox();
+}
+
 function goGal(i){
-  galIdx=i;
-  window._galPaint();
-  document.querySelectorAll('.gal-thumb').forEach((el,j)=>el.classList.toggle('active',j===i));
+  const len=(window._galScreens||[]).length; if(!len)return;
+  galIdx=(i+len)%len;
+  const track=document.getElementById('galTrack');
+  track.scrollTo({left:galIdx*track.clientWidth,behavior:'smooth'});
+  syncGallery(false);
+  startAutoplay();
 }
+
+function startAutoplay(){
+  stopAutoplay();
+  if((window._galScreens||[]).length<2)return;
+  galAutoplayTimer=setInterval(()=>{goGal(galIdx+1);},GAL_AUTOPLAY_MS);
+}
+function stopAutoplay(){ if(galAutoplayTimer){clearInterval(galAutoplayTimer);galAutoplayTimer=null;} }
+
+function setGalMode(mode){
+  galMode=mode;
+  document.getElementById('galBrowserMock').style.display=mode==='desktop'?'':'none';
+  document.getElementById('galPhoneMock').style.display=mode==='mobile'?'':'none';
+  document.querySelectorAll('.gal-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  if(mode==='mobile') paintPhone();
+}
+
+// Sincronizar índice quando o utilizador faz scroll/swipe manual no carrossel
+(function(){
+  const track=document.getElementById('galTrack');
+  let to=null;
+  track.addEventListener('scroll',()=>{
+    clearTimeout(to);
+    to=setTimeout(()=>{
+      const len=(window._galScreens||[]).length; if(!len)return;
+      const w=track.clientWidth||1;
+      const i=Math.round(track.scrollLeft/w);
+      if(i!==galIdx && i>=0 && i<len){ galIdx=i; syncGallery(false); startAutoplay(); }
+    },120);
+  },{passive:true});
+  track.addEventListener('mouseenter',stopAutoplay);
+  track.addEventListener('mouseleave',()=>startAutoplay());
+
+  // swipe no mock de telemóvel
+  const ph=document.getElementById('galPhoneScreen');
+  let sx=0;
+  ph.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+  ph.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>40) goGal(dx<0?galIdx+1:galIdx-1);
+  },{passive:true});
+})();
+
+// ── LIGHTBOX ──────────────────────────────────────────────
+function openLightbox(){
+  stopAutoplay();
+  document.getElementById('lightboxOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  paintLightbox();
+}
+function closeLightbox(){
+  document.getElementById('lightboxOverlay').classList.remove('active');
+  document.body.style.overflow='';
+  startAutoplay();
+}
+function lightboxNav(d){
+  const len=(window._galScreens||[]).length; if(!len)return;
+  galIdx=(galIdx+d+len)%len;
+  syncGallery(true);
+  paintLightbox();
+}
+function paintLightbox(){
+  const screens=window._galScreens||[]; const s=screens[galIdx]; if(!s)return;
+  const [cor,cor2]=window._galCor||['#1d4ed8','#0a0a0b'];
+  document.getElementById('lightboxStage').innerHTML = s.img
+    ? `<img src="${s.img}" alt="${s.label||''}">`
+    : `<div style="width:100%;height:60vh;max-height:480px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${cor} 0%,${cor2} 100%)"><i class="fa-solid ${s.icon||window._galIcon||'fa-store'}" style="font-size:4rem;color:rgba(255,255,255,.3)"></i></div>`;
+  document.getElementById('lightboxCounter').textContent=(galIdx+1)+' / '+screens.length+(s.label?'  ·  '+s.label:'');
+}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightboxOverlay').classList.contains('active'))return;
+  if(e.key==='Escape')closeLightbox();
+  if(e.key==='ArrowLeft')lightboxNav(-1);
+  if(e.key==='ArrowRight')lightboxNav(1);
+});
+
+// ── FAQ ───────────────────────────────────────────────────
+function toggleFaq(el){ el.parentElement.classList.toggle('open'); }
+
 
 // ── CARREGAR DADOS ────────────────────────────────────────
 async function carregarDados(){
