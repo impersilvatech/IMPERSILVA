@@ -391,6 +391,7 @@ const API=(window.IMPERSILVA&&window.IMPERSILVA.api_url)||(window.SITE_CONFIG&&w
 document.documentElement.classList.add('js-ready');
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.06});
 function observeReveals(scope){ (scope||document).querySelectorAll('.reveal').forEach(el=>obs.observe(el)); }
+observeReveals(document);
 
 // ── NAV + FOOTER ─────────────────────────────────────────
 window.addEventListener('scroll',()=>{document.querySelector('.navbar').style.borderBottomColor=window.scrollY>60?'rgba(214,40,40,0.2)':'rgba(255,255,255,0.07)';},{passive:true});
